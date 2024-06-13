@@ -1,8 +1,8 @@
 const routes = [
     {
-        path: '/recipe',
-        name: 'recipe',
-        component: () =>  import(/* webpackChunkName: "recipe" */ '@/views/recipe')
+        path: '/Recipe',
+        name: 'Recipe',
+        component: () =>  import(/* webpackChunkName: "Recipe" */ '@/views/Recipe')
     },
 ]
 export default routes;

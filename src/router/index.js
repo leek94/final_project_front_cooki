@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue';
 import Recipe from './Recipe';
 import TotalSearch from './TotalSearch';
 import Class from './Class';
+import Member from './Member';
 
 const routes = [
   {
@@ -12,7 +13,8 @@ const routes = [
   },
   ...Recipe,
   ...TotalSearch,
-  ...Class
+  ...Class,
+  ...Member
 
 ]
 

@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <div class="card-header">classDetail</div>
+        <div class="card-header">RecipeUpdateView</div>
         <div class="card-body">
 
         </div>

@@ -5,15 +5,17 @@
         </div>
         <ul class="d-flex " style="font-weight:bold; margin-left: 70px;">
         <li><RouterLink to="/" class="ms-4">홈</RouterLink></li>
-        <li><RouterLink to="/Class/ClassList" class="ms-4">클래스</RouterLink></li>
-        <li><RouterLink to="#" class="ms-4">레시피</RouterLink></li>
+        <li><RouterLink to="/Class/ClassListView" class="ms-4">클래스</RouterLink></li>
+        <li><RouterLink to="/Recipe/RecipeListView" class="ms-4">레시피</RouterLink></li>
         <li><RouterLink to="#" class="ms-4" >마이 클래스</RouterLink></li>
         </ul>
 
         <div class="d-flex" style="margin-right: 7rem; font-size: 1.3rem;" >
-            <div class="btn me-2" style="font-size: 14px;" @click="logoutBtn">로그아웃</div>
-            <RouterLink to="#"><i class="fa-solid fa-magnifying-glass me-3" ></i></RouterLink>
-            <RouterLink to="#"><i class="fa-solid fa-user me-4" ></i></RouterLink>
+            <div class="btn me-2" style="font-size: 14px;" @click="logoutBtn">
+                <RouterLink to="/Member/LoginView">로그인</RouterLink>
+            </div>
+            <RouterLink to="/TotalSearchView"><i class="fa-solid fa-magnifying-glass me-3" ></i></RouterLink>
+            <RouterLink to="/Member/MypageView"><i class="fa-solid fa-user me-4" ></i></RouterLink>
             <RouterLink to="#" class="btn btn-outline-success btn-md " style="border-radius: 14px;">글쓰기</RouterLink>
         </div>
 

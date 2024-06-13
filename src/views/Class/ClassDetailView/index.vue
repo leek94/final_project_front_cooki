@@ -6,7 +6,7 @@
             <hr/>
             
             <div>
-                <RouterLink class="me-2" to="/Class/ClassDetailView/Curriculume">커리큘럼</RouterLink> 
+                <RouterLink class="me-2" to="/Class/ClassDetailView/Curriculum">커리큘럼</RouterLink> 
                 <RouterLink class="me-2" to="/Class/ClassDetailView/CreatorInfo">에디터경력</RouterLink> 
                 <RouterLink class="me-2" to="/Class/ClassDetailView/QAndA">QAndA</RouterLink> 
                 <RouterLink to="/Class/ClassDetailView/Review">리뷰</RouterLink> 

@@ -1,8 +1,8 @@
 const routes = [
     {
-        path: '/recipe/recipeshareboardView',
-        name: 'Exam01View',
-        component: () =>  import(/* webpackChunkName: "recipe" */ '@/views/recipe/recipeshareboardView.vue')
+        path: '/recipe',
+        name: 'recipe',
+        component: () =>  import(/* webpackChunkName: "recipe" */ '@/views/recipe')
     },
 ]
 export default routes;

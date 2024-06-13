@@ -35,6 +35,27 @@ const routes = [
                 name: 'MyProfile',
                 component: () => import(/* webpackC`hunkName: "Member" */ '@/views/Member/MypageView/MyProfile'),
             },
+            {
+                path: 'MyClassHistory',
+                name: 'MyClassHistory',
+                component: () => import(/* webpackC`hunkName: "Member" */ '@/views/Member/MypageView/MyClassHistory'),
+            },
+            {
+                path: 'MyNowClass',
+                name: 'MyNowClass',
+                component: () => import(/* webpackC`hunkName: "Member" */ '@/views/Member/MypageView/MyNowClass'),
+            },
+            {
+                path: 'EditorRecruitHistory',
+                name: 'EditorRecruitHistory',
+                component: () => import(/* webpackC`hunkName: "Member" */ '@/views/Member/MypageView/EditorRecruitHistory'),
+            },
+            {
+                path: 'EditorNowRecruit',
+                name: 'EditorNowRecruit',
+                component: () => import(/* webpackC`hunkName: "Member" */ '@/views/Member/MypageView/EditorNowRecruit'),
+            },
+            
         ]
     },
 ]

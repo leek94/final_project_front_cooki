@@ -1,20 +1,30 @@
 <template>
-    <div class="container ss">
+    <div class="container_box ss">
         
         <form>
-            <div class="recipe-title mb-4"><h3>레시피</h3></div>
-            <div class="search-box d-flex align-items-center justify-content-center ss">
+            <div class="recipe-title"><h3>레시피</h3></div>
+            <div class="search-box d-flex align-items-center justify-content-center ss mb-5">
                 <!-- 선택하는 셀렉터 -->
                 <select class="select-button ss">
                     <option value="all">전체</option>
                     <option value="title">제목만</option>
                     <option value="content">내용만</option>
                 </select>
-                <!-- 검색바 & 검색 버튼 -->
+                <!-- 검색바 & 검색 버튼 & 카테고리 박스-->
                 <div class="d-flex ss search-input-box">
                     <input class="search-input ss me-1" type="text" placeholder="어떤 레시피가 궁금하신가요?">
                     <button class="search-button align-items-center justify-content-center ss">검색</button>
                 </div>
+                
+            </div>
+            <!-- 카테고리 -->
+            <div class="d-flex mb-5">
+                    <button class="category-button">#한식</button>
+                    <button class="category-button">#중식</button>
+                    <button class="category-button">#일식</button>
+                    <button class="category-button">#양식</button>
+                    <button class="category-button">#디저트</button>
+                    <button class="category-button">#베이커리</button>
             </div>
             <!-- 작성바 & 작성 버튼 -->
             <div class="top-box ss d-flex align-content-center align-content-center mb-5">
@@ -43,6 +53,7 @@
                 <!-- 사진 -->
                 <div class="main-box ss">
                     <ul class="main-img d-flex ss">
+                        <!-- 레시피 카드 -->
                         <li class="img-li ss">
                             <div class="router-div">
                                 <div class="image">
@@ -51,13 +62,18 @@
                                 </div>
                                
                                     <div class="info d-flex mt-3 ">
-                                        <div class="name me-1">김진영</div>
+                                        <div class="name me-2">김진영</div>
                                         <div class="date border-left-solid">2024.06.09 16:43</div>
-                                        
                                     </div>
                                     <div class="text text-start">
                                         <h4>맛있는 행복한 시간</h4>
+                                        <div class="d-flex justify-content-end">
+                                            <div class="me-2">좋아요</div>
+                                            <div class="">히트카운트</div>
+                                        </div>
+                                        
                                     </div>
+                                    
                                 
                             </div>
                         </li>
@@ -133,6 +149,90 @@
                                 
                             </div>
                         </li>
+                        <li class="img-li ss">
+                            <div class="router-div">
+                                <div class="image">
+                                    <img src="/images/photos/140114575djmw.jpg">
+                                    code1
+                                </div>
+                               
+                                    <div class="info d-flex mt-3 ">
+                                        <div class="name me-1">김진영</div>
+                                        <div class="date border-left-solid">2024.06.09 16:43</div>
+                                        
+                                    </div>
+                                    <div class="text text-start">
+                                        <h4>맛있는 행복한 시간</h4>
+                                    </div>
+                                
+                            </div>
+                        </li>
+                        <li class="img-li ss">
+                            <div class="router-div">
+                                <div class="image">
+                                    <img src="/images/photos/140114575djmw.jpg">
+                                    code1
+                                </div>
+                               
+                                    <div class="info d-flex mt-3 ">
+                                        <div class="name me-1">김진영</div>
+                                        <div class="date border-left-solid">2024.06.09 16:43</div>
+                                        
+                                    </div>
+                                    <div class="text text-start">
+                                        <h4>맛있는 행복한 시간</h4>
+                                    </div>
+                                
+                            </div>
+                        </li>
+                        <li class="img-li ss">
+                            <div class="router-div">
+                                <div class="image">
+                                    <img src="/images/photos/140114575djmw.jpg">
+                                    code1
+                                </div>
+                               
+                                    <div class="info d-flex mt-3 ">
+                                        <div class="name me-1">김진영</div>
+                                        <div class="date border-left-solid">2024.06.09 16:43</div>
+                                        
+                                    </div>
+                                    <div class="text text-start">
+                                        <h4>맛있는 행복한 시간</h4>
+                                    </div>
+                                
+                            </div>
+                        </li>
+                        <!-- 클래스 카드 -->
+                        <li class="class-img-li ss">
+                            <div class="router-div">
+                                <div class="class-image">
+                                    <img src="/images/photos/semi2.jpg">
+                                    code1
+                                </div>
+                                <div class="text-start">
+                                    <div class="class-text text-start">
+                                        <h4>생선을 활용한 쿠킹 클래스</h4>
+                                    </div>
+                                    <div>
+                                        <h6>모집강사 : 김진영</h6>
+                                    </div>
+                                    <div>
+                                        <h6>모집인원 : 17/25</h6>
+                                    </div>
+
+                                    <div class="info d-flex mb-3">
+                                        <div class="class-date border-left-solid me-3">강의날짜 : 2024.06.21</div>
+                                        <div class="dday-box">D-5</div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <div class="class-label text-end">참여하기</div>
+                                </div>
+                                
+                            </div>
+                        </li>
+                        <!-- 클래스 카드 끝 -->
                         
                     </ul>
                     <!-- 중간 이벤트바 -->
@@ -162,13 +262,25 @@ const setActive = (index) => {
     text-align: start;
 }
 
-.ss{
-    border: solid 1px;
+.category-button{
+    margin-right: 0.5rem;
+    padding: 0.625rem 1rem;
+    border-radius: 21px;
+    border: solid 1px #d4d4d4;
+    background-color: #fff;
+    margin: 0 10px;
 }
 
-.container{
-    padding: 12.5rem 1.875rem 3rem;
+/* .ss{
+    border: solid 1px;
+} */
+
+.container_box{
+    padding: 6.875rem 1.875rem 6.25rem;
     margin-bottom: 1.25rem;
+    max-width: 110rem;
+    min-width: 75rem;
+    margin: 0 auto;
 }
 
 .search-box{
@@ -192,7 +304,7 @@ const setActive = (index) => {
 }
 
 .search-input{
-    flex: 8;
+    flex: 18;
     width: calc(100%-24rem);
     height: 5rem;
     border-radius: 46px 0 0 46px;
@@ -204,7 +316,7 @@ const setActive = (index) => {
 }
 
 .search-button{
-    flex: 2;
+    flex: 3;
     width: 10rem;
     height: 5rem;
     border-radius: 0 46px 46px 0;
@@ -212,6 +324,7 @@ const setActive = (index) => {
     color: #fff;
     font-size: 1.25rem;
     font-weight: 500;
+    border: none;
 }
 
 .top-box{
@@ -284,6 +397,7 @@ const setActive = (index) => {
     flex-wrap: wrap;
 }
 
+/* 레시피 카드 */
 .img-li{
     width: calc(25% - 2rem);
     margin: 0 1rem 5rem;
@@ -306,17 +420,16 @@ const setActive = (index) => {
     object-fit: cover;
     transform: translate(-50%, -50%);
     transition: all 0.2s ease-out;
-    z-index: 10;
 }
 
 .name{
     color: #c4c4c4;
-    font-size: 0.5rem;
+    font-size: 0.75rem;
 }
 
 .date{
     color: #c4c4c4;
-    font-size: 0.5rem;
+    font-size: 0.75rem;
     border-left: 1px solid black;
     border-color: #c4c4c4;
     padding-left: 0.5rem;
@@ -325,5 +438,62 @@ const setActive = (index) => {
 .text{
     padding: 1.25rem 0 2rem;
 }
+/* 레시피 카드 끝 */
+
+/* 클래스 카드 시작 */
+.class-img-li{
+    width: calc(25% - 2rem);
+    margin: 0 1rem 5rem;
+}
+
+.class-image{
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    padding-top: 90%; /* 자식 요소의 세로 길이를 부모 요소의 너비에 맞춤 */
+    border-radius: 20px;
+}
+
+.class-image > img{
+    position: absolute;
+    width: 100%;
+    height: auto;
+    top: 50%;
+    left: 50%;
+    object-fit: cover;
+    transform: translate(-50%, -50%);
+    transition: all 0.2s ease-out;
+}
+
+.class-name{
+    color: #c4c4c4;
+    font-size: 0.75rem;
+}
+
+.class-date{
+   
+    
+}
+
+.class-text{
+    padding: 1.25rem 0 0.5rem;
+}
+
+.dday-box{
+    color:red;
+}
+
+.class-label{
+    display: inline-block;
+    margin-bottom: 0.625rem;
+    padding: 0.7rem 1rem;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 5px;
+    background-color: #0bab6d;
+}
+/* 클래스 카드 끝 */
+
 
 </style>

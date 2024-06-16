@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
-import Recipe from './Recipe'
+import Recipe from './Recipe';
 import TotalSearch from './TotalSearch';
 import Class from './Class';
 import Member from './Member';
+import test from './test';
 
 const routes = [
   {
@@ -14,7 +15,8 @@ const routes = [
   ...Recipe,
   ...TotalSearch,
   ...Class,
-  ...Member
+  ...Member,
+  ...test
 
 ]
 

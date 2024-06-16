@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <div class="card-header">Curriculume</div>
+        <div class="card-header">Curriculum</div>
         <div class="card-body">
             <Items></Items>
         </div>

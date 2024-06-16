@@ -3,7 +3,7 @@ const routes = [
         path: '/Class/ClassDetailView',
         name: 'ClassDetail',
         component: () => import(/* webpackC`hunkName: "Class" */ '@/views/Class/ClassDetailView'),
-        redirect: '/Class/ClassDetailView/Curriculume',
+        redirect: '/Class/ClassDetailView/Curriculum',
         children : [
             {
                 path: 'CreatorInfo',
@@ -11,9 +11,9 @@ const routes = [
                 component: () => import(/* webpackC`hunkName: "Class" */ '@/views/Class/ClassDetailView/CreatorInfo'),
             },
             {
-                path: 'Curriculume',
-                name: 'Curriculume',
-                component: () => import(/* webpackC`hunkName: "Class" */ '@/views/Class/ClassDetailView/Curriculume'),
+                path: 'Curriculum',
+                name: 'Curriculum',
+                component: () => import(/* webpackC`hunkName: "Class" */ '@/views/Class/ClassDetailView/Curriculum'),
             },
             {
                 path: 'QAndA',

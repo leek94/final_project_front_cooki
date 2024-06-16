@@ -19,5 +19,15 @@ const routes = [
         name: 'RecipeUpdateView',
         component: () =>  import(/* webpackChunkName: "Recipe" */ '@/views/Recipe/RecipeUpdateView')
     },
+    {         
+        path: '/Recipe/RecipeListTest',
+        name: 'RecipeUpdateView',
+        component: () =>  import(/* webpackChunkName: "Recipe" */ '@/views/Recipe/RecipeListTest')
+    },
+    {         
+        path: '/Recipe/RecipeDetailTest',
+        name: 'RecipeDetailTest',
+        component: () =>  import(/* webpackChunkName: "Recipe" */ '@/views/Recipe/RecipeDetailTest')
+    },
 ]
 export default routes;

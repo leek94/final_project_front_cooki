@@ -1,23 +1,22 @@
 <template>
     <nav class="navbar bg-white text-dark" >
         <div class="header" style="margin-left: 7rem; margin-right: 20px;">
-            <img style="top:50%" src="@/assets/logo.png" width="40" height="40"/>
+            <RouterLink to="/"><img style="top:50%" src="@/assets/logo.png" width="40" height="40"/></RouterLink>
         </div>
-        <ul class="d-flex " style="font-weight:bold; margin-left: 70px;">
-        <li><RouterLink to="/" class="ms-4">홈</RouterLink></li>
-        <li><RouterLink to="/Class/ClassListView" class="ms-4">클래스</RouterLink></li>
-        <li><RouterLink to="/Recipe/RecipeListView" class="ms-4">레시피</RouterLink></li>
-        <li><RouterLink to="#" class="ms-4" >마이 클래스</RouterLink></li>
+        <ul class="d-flex " style="font-weight:bold; margin-left: 200px">
+        <li><RouterLink to="/" class="ms-4" style="margin-right:80px">홈</RouterLink></li>
+        <li><RouterLink to="/Class/ClassListView" class="ms-4" style="margin-right:80px">클래스</RouterLink></li>
+        <li><RouterLink to="/Recipe/RecipeListView" class="ms-4" style="margin-right:80px">레시피</RouterLink></li>
+
         </ul>
 
-        <div class="d-flex" style="margin-right: 7rem; font-size: 1.3rem;" >
-            <div class="btn me-2" style="font-size: 14px;" @click="logoutBtn">
-                <RouterLink to="/Member/LoginView">로그인</RouterLink>
+        <div class="d-flex" style="margin-right: 9rem" >
+            <div style="font-size: 17px;" >
+                <RouterLink  class="me-4" to="/Member/LoginView" >로그인</RouterLink>
+                <RouterLink  to="/TotalSearchView"><i class="fa-solid fa-magnifying-glass me-4" ></i></RouterLink>   
             </div>
-            <RouterLink to="/TotalSearchView"><i class="fa-solid fa-magnifying-glass me-3" ></i></RouterLink>
-            <RouterLink to="/Member/MypageView"><i class="fa-solid fa-user me-4" ></i></RouterLink>
-            <RouterLink to="#" class="btn btn-outline-success btn-md " style="border-radius: 14px;">글쓰기</RouterLink>
-        </div>
+      
+        </div> 
 
     </nav>
 </template>
@@ -43,19 +42,22 @@ import { RouterLink } from 'vue-router';
 li{
     text-align: center;
     list-style-type: none;
-    background: url(@/assets/star.png) no-repeat 0px 0px;
+    background: url(/public/images/assets/star.png) no-repeat 0px 0px;
     padding: 10px 20px 0px 27px;
+    text-decoration: none;
+    color: black
 
 
 }
 li::before{
-    margin-right: 15px;
-    background-image:url(@/assets/star.png);
-    background-size:20px 20px;
+    margin-right: 25px;
+    background-image:url(/public/images/assets/star.png);
+    background-size:30px 30px;
 }
 
 i{
     color:#0bab6d;
+    font-size: 1.5rem;
 }
 
 

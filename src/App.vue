@@ -1,11 +1,13 @@
 <template>
-  <div>
-    <Header></Header>
-  </div>
-  <router-view/>
-  <div>
-    <Footer></Footer>
-  </div>
+  <div class="app">
+    <div>
+      <Header></Header>
+    </div>
+    <router-view/>
+    <div>
+      <Footer></Footer>
+    </div>
+</div>
 </template>
 
 <script setup>
@@ -19,6 +21,8 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  height: auto;
+  min-height: 100%;
 }
 
 nav {
@@ -32,5 +36,9 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+Footer{
+  position : relative;
+  transform : translateY(-100%);
 }
 </style>

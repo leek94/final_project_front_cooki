@@ -169,7 +169,7 @@ onMounted(()=>{
 }
 .recipe-title{
     background-color: #eff9ef;
-    background-image: url('C:\project\projects-vue\cooki_final_front_web\public\images\photos\bg_pattern_green.png');
+    background-image: url('C:\SelfStudy-vue\final_project_front_cooki\public\images\photos\bg_pattern_green.png');
     padding: 4.875rem 0;
     background-repeat: no-repeat;
     background-position: center;

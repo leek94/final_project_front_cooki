@@ -171,14 +171,6 @@ onMounted(()=>{
     border: 1px solid ;
 }
 
-.recipe-title{
-    background-color: #eff9ef;
-    background-image: url('C:\project\projects-vue\cooki_final_front_web\public\images\photos\bg_pattern_green.png');
-    padding: 4.875rem 0;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
 .inner{
     width: 100%;
     max-width: 45rem;
@@ -236,17 +228,6 @@ onMounted(()=>{
 
 .green-point::marker {
     color: #15a775;
-}
-
-.green-checker{
-    top: 0;
-    left: 0;
-    width: 1.5rem;
-    height: 1.5rem;
-    background-image: url('C:\project\projects-vue\cooki_final_front_web\public\images\photos\li_checker.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    list-style-type: none;
 }
 
 

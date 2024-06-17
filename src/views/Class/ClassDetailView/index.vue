@@ -4,8 +4,8 @@
             <div class="col-6 position-relative">
             <!-- Additional required wrapper -->
                 <swiper-container loop="true" class="swiper-container" >
-                    <swiper-slide><img src="/images/photos/cooki-thumb.png"></swiper-slide>
-                    <swiper-slide><img src="/images/photos/thumb2.png"></swiper-slide>
+                    <swiper-slide><img src="/images/photos/thumb1.jpg"></swiper-slide>
+                    <swiper-slide><img src="/images/photos/thumb2.jpg"></swiper-slide>
                 </swiper-container>
 
                 <button class="prevBtn btn btn-lg position-absolute top-50 start-0 translate-middle-y">
@@ -16,7 +16,7 @@
                 </button> 
             </div>
             <div class="col-6">
-                <span class="ClassTitle"> 일주일 만에 베이커로 거듭나기! 인기폭발 이런날케이크의 (필수 베이킹 6종 레시피) </span>
+                <span class="ClassTitle"> 쫀득쫀득 스모어쿠키 만들기! </span>
                 <div class="Classinfo">
                     <ul style="text-align:start; padding-top:20px">
                         <li class="border-top pt-3 pb-3"><span>장소    </span>
@@ -56,19 +56,36 @@
     </div>
     </div>
         </div>
-        <hr/>
-        <h5 class="mt-5 fw-bold">건강하고 맛있게 즐기는 찌니빵공장의 비건 홈카페 디저트</h5>
-                <p class="ClassContent mt-5" rows="20" cols=" 100" >
-                반갑습니다! 이런날케이크의 대표 천보람입니다.
-                저는 대전에서 수제 디저트샵을 운영하며, 달콤한 하루를 보내고 있습니다.
-                처음 매장을 오픈했을 땐, 문제가 발생하면 하나하나 부딪혀 가며 해결할 수밖에 없었어요. 이런 경험이 저를 더 단단하게 만들어 준 거 같습니다.
-                지금은 일이 많아 몸이 힘들지만 저희 디저트 맛있다며 칭찬해 주시고 재방문 해주실 때, 오픈하고 짧은 기간 내 단골 고객님들이 많이 생겼다는 점에서 큰 보람을 느낀답니다.
-                </p>
-                <blockquote class="mt-5" style="font-weight: 800; margin-bottom: 80px;">
-                눈과 입이 즐거운 트렌디한 디자인의 감각적인 디저트,
-                저와 함께 만들어 보실래요?
-                </blockquote>
-                <hr style="border-width:5px; margin:10px"/>
+        <hr class="mt-5"/>
+        <h5 class="mt-5 fw-bold" style="text-align: left;">#스모어쿠키 만들기!</h5>
+                <pre class="ClassContent mt-5" style="overflow: hidden; white-space: pre-wrap" >
+안녕하세요!
+포뇨솜작가와 함께 석촌역에서 3호점으로 찾아뵙게 된 투데이오브베이킹입니다:)
+수업 후에 석촌호수를 돌거나 송리단길 데이트하기에 너무 좋은 공간으로 찾아왔답니다!
+이번 수업은 쫀득한 마시멜로우를 넣고 이것저것 꾸미는 재미가 있는 스모어쿠키 입니다.
+쭉 늘어나는 재미가 있는 스모어쿠키:) 개별포장 후 박스에 넣어드려 선물로도 좋답니다!
+저희 공방은 최소2명부터 가능한 공방이며 단체의 경우 15인이상도 가능하니 따로 문의주세요!.
+넓고 쾌적한 공방에서 다정하고 재미있게, 좋은 추억만드실 수 있도록 도와드릴게요:)
+- 초등 고학년 이상부터 참여 가능합니다.
+(이 외의 나이는 꼭 미리 문의주세요!!)
+- 스모어쿠키 6pcs를 가져가실 수 있습니다.
+- 맛은 단호박/말차/초코 3종 중 1가지 맛 선택이 가능하며 일행분들과 나누어 다양한 맛으로 나누어가실 수 있어요:)
+- 재료비는 무료입니다.
+준비물은 설레이는 마음과 열정만 가져오셔도 충분합니다.
+- 레시피는 제공되지 않습니다(납품하여 판매하는 레시피라 제공이 어려운점 양해 부탁드려요ㅜ.ㅜ)
+- 쿠키가 구워지는 동안 케이스에 마스킹테이프, 크레용을 이용해 꾸미실 수 있어요:)
+- 주차불가한 매장입니다.<br/>
+역에서 도보2분거리로 대중교통이나
+송파여성문화회관 공영주차장 이용을 추천드려요:)
+
+* 본 수업은 정시에 시작으로 10분 전 입실을 필수로 하고 있습니다!
+* 수업 시간 10분 이상 지각시 어떤 사유에서든 클래스 참여가 불가하며 이에 따른 환불은 진행되지 않습니다. 
+(정시 수업 시작 후 다른 수강생님을 방치하고 다시 수업을 할 수 없기에 불가합니다.즐거운 수업을 위해 시간은 꼭 지켜주세요)<br/>
+* 매장에 주차가 불가합니다. 대중교통을 추천드립니다.(역에서 도보3분)
+* 예약제임으로 수업일 기준 4일 전부터 날짜변경 불가합니다.
+* 즐거운 수업이 되도록 항상 최선을 다하겠습니다. 찾아주셔서 감사합니다:)
+              </pre>
+                <hr style="border-width:5px; margin:30px 0px"/>
         <nav class="navbar navbar-expand-sm navbar-light" style="text-align: center">
             <div class="container-fluid">
                 <ul class="navbar-nav d-flex w-100">
@@ -127,7 +144,8 @@ register();
 .ClassTitle{
     margin-top:30px;
     margin-bottom: 60px;
-    font-size: 1.4rem;
+    margin-left:30px;
+    font-size: 1.6rem;
     font-weight: bold;
     text-align: start;
 
@@ -137,8 +155,7 @@ register();
     resize:none;
     border-style: none;
     font-size: 1rem;
-    word-break: keep-all;
-    text-align: center;
+    word-break: break-all;
 
 }  
 

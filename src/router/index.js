@@ -4,7 +4,7 @@ import Recipe from './Recipe';
 import TotalSearch from './TotalSearch';
 import Class from './Class';
 import Member from './Member';
-import test from './test';
+
 
 const routes = [
   {
@@ -16,7 +16,7 @@ const routes = [
   ...TotalSearch,
   ...Class,
   ...Member,
-  ...test
+
 
 ]
 

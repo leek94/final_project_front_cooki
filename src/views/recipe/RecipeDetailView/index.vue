@@ -21,7 +21,6 @@
             <!-- 재료 -->
              <Items></Items>
 
-            
             <div class="recipe-step mt-3">
                 <div class="recipe-step-tit text-start">
                     <h4>한 단계씩 따라해 보세요😄</h4>
@@ -237,18 +236,6 @@ onMounted(()=>{
 .green-point::marker {
     color: #15a775;
 }
-
-.green-checker{
-    top: 0;
-    left: 0;
-    width: 1.5rem;
-    height: 1.5rem;
-    background-image: url('C:\project\projects-vue\cooki_final_front_web\public\images\photos\li_checker.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    list-style-type: none;
-}
-
 
 /* 레시피 캐러셀 */
 

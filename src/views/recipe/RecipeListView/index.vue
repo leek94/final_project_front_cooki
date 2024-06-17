@@ -56,7 +56,6 @@
 </template>
 
 <script setup>
-import ClassCard from '@/components/ClassCard.vue';
 import SearchBar from '@/components/SearchBar.vue';
 import RecipeCard from '@/components/RecipeCard.vue';
 import { ref } from 'vue';
@@ -84,7 +83,7 @@ const setActive = (index) => {
 .container_box{
     padding: 6.875rem 1.875rem 6.25rem;
     margin-bottom: 1.25rem;
-    max-width: 110rem;
+    max-width: 85rem;
     min-width: 75rem;
     margin: 0 auto;
 }

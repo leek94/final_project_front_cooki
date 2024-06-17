@@ -3,8 +3,8 @@
         <!-- 선택하는 셀렉터 -->
         <select class="select-button ss">
             <option value="all">전체</option>
-            <option value="title">제목만</option>
-            <option value="content">내용만</option>
+            <option value="title">제목&내용만</option>
+            <option value="content">재료만</option>
         </select>
         <!-- 검색바 & 검색 버튼 & 카테고리 박스-->
         <div class="d-flex search-input-box">
@@ -21,6 +21,7 @@
         <button class="category-button">#디저트</button>
         <button class="category-button">#베이커리</button>
     </div>
+    
 </template>
 
 <script setup>

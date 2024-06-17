@@ -1,10 +1,5 @@
 <template>
-    <div class="card">
-        <div class="card-header">Items</div>
-        <div class="card-body">
-
-        </div>
-    </div>
+    <div></div>
 </template>
 
 <script setup>

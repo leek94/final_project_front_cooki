@@ -24,7 +24,7 @@ const routes = [
                 path: 'Review',
                 name: 'Review',
                 component: () => import(/* webpackC`hunkName: "Class" */ '@/views/Class/ClassDetailView/Review'),
-            },
+            }
         ]
     },    
     {         

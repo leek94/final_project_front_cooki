@@ -14,6 +14,7 @@
             <div style="font-size: 17px;" >
                 <RouterLink  class="me-4" to="/Member/LoginView" >로그인</RouterLink>
                 <RouterLink  to="/TotalSearchView"><i class="fa-solid fa-magnifying-glass me-4" ></i></RouterLink>   
+                <RouterLink to="/Member/MypageView"><i class="fa-solid fa-user me-4" ></i></RouterLink>
             </div>
       
         </div> 

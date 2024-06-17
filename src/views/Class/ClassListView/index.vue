@@ -17,7 +17,7 @@
                 </div>
                 <!-- 사진 -->
                 <RouterLink to="./ClassDetailView" class="me-3">클래스 디테일</RouterLink>
-                <RouterLink to="./ClassRegisterView">클래스 디테일</RouterLink>
+                <RouterLink to="./ClassRegisterView">클래스 등록</RouterLink>
                 <div class="main-box ss">
                     <ul class="main-img d-flex ss">
 
@@ -129,6 +129,7 @@ const setActive = (index) => {
     color: #000;
 }
 
+/* 카드 컴포넌트 설정시 필요한 */
 .main-box{
     width: 100%;
     height: auto;

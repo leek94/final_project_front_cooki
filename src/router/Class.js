@@ -23,8 +23,10 @@ const routes = [
             {
                 path: 'Review',
                 name: 'Review',
+
                 component: () => import(/* webpackChunkName: "Class" */ '@/views/Class/ClassDetailView/Review'),
             },
+
         ]
     },    
     {         

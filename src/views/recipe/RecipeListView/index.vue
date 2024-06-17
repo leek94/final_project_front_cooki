@@ -38,8 +38,16 @@
                     </ul>
                 </div>
                 <!-- 사진 -->
+                
                 <div class="main-box ss">
                     <ul class="main-img d-flex ss">
+                    <RecipeCard></RecipeCard>
+                    <RecipeCard></RecipeCard>
+                    <RecipeCard></RecipeCard>
+                    <RecipeCard></RecipeCard>
+                    <RecipeCard></RecipeCard>
+                    <RecipeCard></RecipeCard>
+                    <RecipeCard></RecipeCard>
                         <!-- 레시피 카드 -->
                         <li class="img-li ss">
                             <div class="router-div">
@@ -47,149 +55,20 @@
                                     <img src="/images/photos/140114575djmw.jpg">
                                     code1
                                 </div>
-                               
-                                    <div class="info d-flex mt-3 ">
-                                        <div class="name me-2">김진영</div>
-                                        <div class="date border-left-solid">2024.06.09 16:43</div>
-                                    </div>
-                                    <div class="text text-start">
-                                        <h4>맛있는 행복한 시간</h4>
-                                        <div class="d-flex justify-content-end">
-                                            <div class="me-2">좋아요</div>
-                                            <div class="">히트카운트</div>
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                
-                            </div>
-                        </li>
-                        <li class="img-li ss">
-                            <div class="router-div">
-                                <div class="image">
-                                    <img src="/images/photos/140114575djmw.jpg">
-                                    code1
+                                <div class="info d-flex mt-3 ">
+                                    <div class="name me-2">김진영</div>
+                                    <div class="date border-left-solid">2024.06.09 16:43</div>
                                 </div>
-                               
-                                    <div class="info d-flex mt-3 ">
-                                        <div class="name me-1">김진영</div>
-                                        <div class="date border-left-solid">2024.06.09 16:43</div>
-                                        
+                                <div class="text text-start">
+                                    <h4>맛있는 행복한 시간</h4>
+                                    <div class="d-flex justify-content-end">
+                                        <div class="me-2">좋아요</div>
+                                        <div class="">히트카운트</div>
                                     </div>
-                                    <div class="text text-start">
-                                        <h4>맛있는 행복한 시간</h4>
-                                    </div>
-                                
+                                </div> 
                             </div>
                         </li>
-                        <li class="img-li ss">
-                            <div class="router-div">
-                                <div class="image">
-                                    <img src="/images/photos/140114575djmw.jpg">
-                                    code1
-                                </div>
-                               
-                                    <div class="info d-flex mt-3 ">
-                                        <div class="name me-1">김진영</div>
-                                        <div class="date border-left-solid">2024.06.09 16:43</div>
-                                        
-                                    </div>
-                                    <div class="text text-start">
-                                        <h4>맛있는 행복한 시간</h4>
-                                    </div>
-                                
-                            </div>
-                        </li>
-                        <li class="img-li ss">
-                            <div class="router-div">
-                                <div class="image">
-                                    <img src="/images/photos/140114575djmw.jpg">
-                                    code1
-                                </div>
-                               
-                                    <div class="info d-flex mt-3 ">
-                                        <div class="name me-1">김진영</div>
-                                        <div class="date border-left-solid">2024.06.09 16:43</div>
-                                        
-                                    </div>
-                                    <div class="text text-start">
-                                        <h4>맛있는 행복한 시간</h4>
-                                    </div>
-                                
-                            </div>
-                        </li>
-                        <li class="img-li ss">
-                            <div class="router-div">
-                                <div class="image">
-                                    <img src="/images/photos/140114575djmw.jpg">
-                                    code1
-                                </div>
-                               
-                                    <div class="info d-flex mt-3 ">
-                                        <div class="name me-1">김진영</div>
-                                        <div class="date border-left-solid">2024.06.09 16:43</div>
-                                        
-                                    </div>
-                                    <div class="text text-start">
-                                        <h4>맛있는 행복한 시간</h4>
-                                    </div>
-                                
-                            </div>
-                        </li>
-                        <li class="img-li ss">
-                            <div class="router-div">
-                                <div class="image">
-                                    <img src="/images/photos/140114575djmw.jpg">
-                                    code1
-                                </div>
-                               
-                                    <div class="info d-flex mt-3 ">
-                                        <div class="name me-1">김진영</div>
-                                        <div class="date border-left-solid">2024.06.09 16:43</div>
-                                        
-                                    </div>
-                                    <div class="text text-start">
-                                        <h4>맛있는 행복한 시간</h4>
-                                    </div>
-                                
-                            </div>
-                        </li>
-                        <li class="img-li ss">
-                            <div class="router-div">
-                                <div class="image">
-                                    <img src="/images/photos/140114575djmw.jpg">
-                                    code1
-                                </div>
-                               
-                                    <div class="info d-flex mt-3 ">
-                                        <div class="name me-1">김진영</div>
-                                        <div class="date border-left-solid">2024.06.09 16:43</div>
-                                        
-                                    </div>
-                                    <div class="text text-start">
-                                        <h4>맛있는 행복한 시간</h4>
-                                    </div>
-                                
-                            </div>
-                        </li>
-                        <li class="img-li ss">
-                            <div class="router-div">
-                                <div class="image">
-                                    <img src="/images/photos/140114575djmw.jpg">
-                                    code1
-                                </div>
-                               
-                                    <div class="info d-flex mt-3 ">
-                                        <div class="name me-1">김진영</div>
-                                        <div class="date border-left-solid">2024.06.09 16:43</div>
-                                        
-                                    </div>
-                                    <div class="text text-start">
-                                        <h4>맛있는 행복한 시간</h4>
-                                    </div>
-                                
-                            </div>
-                        </li>
+
                         <!-- 클래스 카드 -->
                         <li class="class-img-li ss">
                             <div class="router-div">
@@ -233,6 +112,7 @@
 
 <script setup>
 import SearchBar from '@/components/SearchBar.vue';
+import RecipeCard from '@/components/RecipeCard.vue';
 import { ref } from 'vue';
 
 const activeIndex = ref(0);
@@ -275,7 +155,6 @@ const setActive = (index) => {
 .search-box{
     width: 100%;
     margin-bottom: 4rem;
-  
 }
 
 .select-button{
@@ -285,7 +164,6 @@ const setActive = (index) => {
     border-radius: 46px;
     padding: 0 2.5rem;
     border: solid 3px #e5e5e5;
-    
 }
 
 .search-input-box{
@@ -327,7 +205,6 @@ const setActive = (index) => {
     background-color: #fbb9bf;
     border-radius: 0.625rem;
     color:#fff;
-    
 }
 
 .regist-recipe{
@@ -341,7 +218,6 @@ const setActive = (index) => {
     bottom: 0;
     height: 9.75rem;
     margin-left: 3rem;
-
 }
 
 .sorted-box{
@@ -364,7 +240,6 @@ const setActive = (index) => {
 .sorted-box li{
     color: #c4c4c4;
 }
-
 
 .sorted-box li.active {
     color: #000;

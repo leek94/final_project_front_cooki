@@ -1,10 +1,10 @@
 <template>
             <Items></Items>
-    <h4 class="fw-bold mt-5 ms-5">커리큘럼</h4>
-    <div class="curriculum mt-5 ms-5">
+    <h4 class="fw-bold" style="margin-top:80px">커리큘럼</h4>
+    <div class="curriculum mt-5 ">
         <div class="d-flex mb-5">
             <div class="cimg">
-                <img style="width:140p; height:140px; border-radius: 20px" src="https://d1x9f5mf11b8gz.cloudfront.net/class%2F20230604%2Fd432deb8-5ab6-42af-8a90-8fde121ae88c.jpg">
+                <img style= "width:140p; height:140px; border-radius: 20px" src="https://d1x9f5mf11b8gz.cloudfront.net/class%2F20230604%2Fd432deb8-5ab6-42af-8a90-8fde121ae88c.jpg">
             </div>
             <div class="cinfo" style=" text-align: left; margin-left: 50px; align-content: center">
                 <span style="color:rgb(91, 91, 91)">CHAPTER 1</span>

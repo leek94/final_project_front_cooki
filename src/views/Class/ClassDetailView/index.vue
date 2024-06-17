@@ -56,7 +56,7 @@
     </div>
     </div>
         </div>
-        <hr/>
+        <hr class="mt-5"/>
         <h5 class="mt-5 fw-bold" style="text-align: left;">#스모어쿠키 만들기!</h5>
                 <pre class="ClassContent mt-5" style="overflow: hidden; white-space: pre-wrap" >
 안녕하세요!
@@ -85,7 +85,7 @@
 * 예약제임으로 수업일 기준 4일 전부터 날짜변경 불가합니다.
 * 즐거운 수업이 되도록 항상 최선을 다하겠습니다. 찾아주셔서 감사합니다:)
               </pre>
-                <hr style="border-width:5px; margin:10px"/>
+                <hr style="border-width:5px; margin:30px 0px"/>
         <nav class="navbar navbar-expand-sm navbar-light" style="text-align: center">
             <div class="container-fluid">
                 <ul class="navbar-nav d-flex w-100">
@@ -145,7 +145,7 @@ register();
     margin-top:30px;
     margin-bottom: 60px;
     margin-left:30px;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     font-weight: bold;
     text-align: start;
 

@@ -35,7 +35,8 @@ import { RouterLink } from 'vue-router';
     height:5.625rem;
     border-bottom: 1px solid #15a775;
     box-shadow: 2px 2px 20px 0 rgba(0, 0, 0, 0.08);
-    font-size: 100%
+    font-size: 100%;
+    min-width: 75rem;
 }
 .header{
     font-size: 1.125rem;

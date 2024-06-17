@@ -85,7 +85,7 @@
 * 예약제임으로 수업일 기준 4일 전부터 날짜변경 불가합니다.
 * 즐거운 수업이 되도록 항상 최선을 다하겠습니다. 찾아주셔서 감사합니다:)
               </pre>
-                <hr style="border-width:5px; margin:30px 0px"/>
+                <hr style="border-width:5px; margin:10px 0px"/>
         <nav class="navbar navbar-expand-sm navbar-light" style="text-align: center">
             <div class="container-fluid">
                 <ul class="navbar-nav d-flex w-100">
@@ -106,8 +106,11 @@
         </nav>
         <hr style="margin:10px"/>
         <RouterView/>
+        <div style="text-align: center; margin-top: 100px;">
+            <button class="backList btn btn-outline-success btn-sm">목록으로</button>
         </div>
-
+        </div>
+        
 </template>
 
 <script setup>
@@ -188,5 +191,12 @@ li{
   bottom: 200px;
   z-index: 9999;
   border: 1px solid #dee2e6;
+}
+.backList{
+    font-size: 1rem;
+    font-weight: bold;
+    padding:1.5rem 2.938rem 1.438rem 3rem; 
+    border-radius: 38px;
+
 }
 </style>

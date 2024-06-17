@@ -18,42 +18,42 @@ const routes = [
             {
                 path: 'MyRecipe',
                 name: 'MyRecipe',
-                component: () => import(/* webpackC`hunkName: "Member" */ '@/views/Member/MypageView/MyRecipe'),
+                component: () => import(/* webpackChunkName: "Member" */ '@/views/Member/MypageView/MyRecipe'),
             },
             {
                 path: 'MyLikeRecipe',
                 name: 'MyLikeRecipe',
-                component: () => import(/* webpackC`hunkName: "Member" */ '@/views/Member/MypageView/MyLikeRecipe'),
+                component: () => import(/* webpackChunkName: "Member" */ '@/views/Member/MypageView/MyLikeRecipe'),
             },
             {
                 path: 'MyQAndA',
                 name: 'MyQAndA',
-                component: () => import(/* webpackC`hunkName: "Member" */ '@/views/Member/MypageView/MyQAndA'),
+                component: () => import(/* webpackChunkName: "Member" */ '@/views/Member/MypageView/MyQAndA'),
             },
             {
                 path: 'MyProfile',
                 name: 'MyProfile',
-                component: () => import(/* webpackC`hunkName: "Member" */ '@/views/Member/MypageView/MyProfile'),
+                component: () => import(/* webpackChunkName: "Member" */ '@/views/Member/MypageView/MyProfile'),
             },
             {
                 path: 'MyClassHistory',
                 name: 'MyClassHistory',
-                component: () => import(/* webpackC`hunkName: "Member" */ '@/views/Member/MypageView/MyClassHistory'),
+                component: () => import(/* webpackChunkName: "Member" */ '@/views/Member/MypageView/MyClassHistory'),
             },
             {
                 path: 'MyNowClass',
                 name: 'MyNowClass',
-                component: () => import(/* webpackC`hunkName: "Member" */ '@/views/Member/MypageView/MyNowClass'),
+                component: () => import(/* webpackChunkName: "Member" */ '@/views/Member/MypageView/MyNowClass'),
             },
             {
                 path: 'EditorRecruitHistory',
                 name: 'EditorRecruitHistory',
-                component: () => import(/* webpackC`hunkName: "Member" */ '@/views/Member/MypageView/EditorRecruitHistory'),
+                component: () => import(/* webpackChunkName: "Member" */ '@/views/Member/MypageView/EditorRecruitHistory'),
             },
             {
                 path: 'EditorNowRecruit',
                 name: 'EditorNowRecruit',
-                component: () => import(/* webpackC`hunkName: "Member" */ '@/views/Member/MypageView/EditorNowRecruit'),
+                component: () => import(/* webpackChunkName: "Member" */ '@/views/Member/MypageView/EditorNowRecruit'),
             },
             
         ]

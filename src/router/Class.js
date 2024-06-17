@@ -8,22 +8,22 @@ const routes = [
             {
                 path: 'CreatorInfo',
                 name: 'CreatorInfo',
-                component: () => import(/* webpackC`hunkName: "Class" */ '@/views/Class/ClassDetailView/CreatorInfo'),
+                component: () => import(/* webpackChunkName: "Class" */ '@/views/Class/ClassDetailView/CreatorInfo'),
             },
             {
                 path: 'Curriculum',
                 name: 'Curriculum',
-                component: () => import(/* webpackC`hunkName: "Class" */ '@/views/Class/ClassDetailView/Curriculum'),
+                component: () => import(/* webpackChunkName: "Class" */ '@/views/Class/ClassDetailView/Curriculum'),
             },
             {
                 path: 'QAndA',
                 name: 'QAndA',
-                component: () => import(/* webpackC`hunkName: "Class" */ '@/views/Class/ClassDetailView/QAndA'),
+                component: () => import(/* webpackChunkName: "Class" */ '@/views/Class/ClassDetailView/QAndA'),
             },
             {
                 path: 'Review',
                 name: 'Review',
-                component: () => import(/* webpackC`hunkName: "Class" */ '@/views/Class/ClassDetailView/Review'),
+                component: () => import(/* webpackChunkName: "Class" */ '@/views/Class/ClassDetailView/Review'),
             },
         ]
     },    

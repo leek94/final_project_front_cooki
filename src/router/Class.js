@@ -35,9 +35,9 @@ const routes = [
         component: () =>  import(/* webpackChunkName: "Class" */ '@/views/Class/ClassListView')
     },
     {         
-        path: '/Class/ClassResisterView',
+        path: '/Class/ClassRegisterView',
         name: 'ClassResisterView',
-        component: () =>  import(/* webpackChunkName: "Class" */ '@/views/Class/ClassResisterView')
+        component: () =>  import(/* webpackChunkName: "Class" */ '@/views/Class/ClassRegisterView')
     },
     {         
         path: '/Class/ClassUpdateView',

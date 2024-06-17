@@ -10,9 +10,9 @@ const routes = [
         component: () =>  import(/* webpackChunkName: "Recipe" */ '@/views/Recipe/RecipeDetailView')
     },
     {         
-        path: '/Recipe/RecipeResisterView',
+        path: '/Recipe/RecipeRegisterView',
         name: 'RecipeResisterView',
-        component: () =>  import(/* webpackChunkName: "Recipe" */ '@/views/Recipe/RecipeResisterView')
+        component: () =>  import(/* webpackChunkName: "Recipe" */ '@/views/Recipe/RecipeRegisterView')
     },
     {         
         path: '/Recipe/RecipeUpdateView',

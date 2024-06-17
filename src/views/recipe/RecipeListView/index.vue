@@ -48,58 +48,14 @@
                     <RecipeCard></RecipeCard>
                     <RecipeCard></RecipeCard>
                     <RecipeCard></RecipeCard>
-                        <!-- 레시피 카드 -->
-                        <li class="img-li ss">
-                            <div class="router-div">
-                                <div class="image">
-                                    <img src="/images/photos/140114575djmw.jpg">
-                                    code1
-                                </div>
-                                <div class="info d-flex mt-3 ">
-                                    <div class="name me-2">김진영</div>
-                                    <div class="date border-left-solid">2024.06.09 16:43</div>
-                                </div>
-                                <div class="text text-start">
-                                    <h4>맛있는 행복한 시간</h4>
-                                    <div class="d-flex justify-content-end">
-                                        <div class="me-2">좋아요</div>
-                                        <div class="">히트카운트</div>
-                                    </div>
-                                </div> 
-                            </div>
-                        </li>
+                    <RecipeCard></RecipeCard>
 
-                        <!-- 클래스 카드 -->
-                        <li class="class-img-li ss">
-                            <div class="router-div">
-                                <div class="class-image">
-                                    <img src="/images/photos/semi2.jpg">
-                                    code1
-                                </div>
-                                <div class="text-start">
-                                    <div class="class-text text-start">
-                                        <h4>생선을 활용한 쿠킹 클래스</h4>
-                                    </div>
-                                    <div>
-                                        <h6>모집강사 : 김진영</h6>
-                                    </div>
-                                    <div>
-                                        <h6>모집인원 : 17/25</h6>
-                                    </div>
-
-                                    <div class="info d-flex mb-3">
-                                        <div class="class-date border-left-solid me-3">강의날짜 : 2024.06.21</div>
-                                        <div class="dday-box">D-5</div>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-end">
-                                    <div class="class-label text-end">참여하기</div>
-                                </div>
-                                
-                            </div>
-                        </li>
-                        <!-- 클래스 카드 끝 -->
-                        
+                    <!-- 클래스 카드 -->
+                    <ClassCard></ClassCard>
+                    <ClassCard></ClassCard>
+                    <ClassCard></ClassCard>
+                    <ClassCard></ClassCard>
+                       
                     </ul>
                     <!-- 중간 이벤트바 -->
                     <div></div>
@@ -111,6 +67,7 @@
 </template>
 
 <script setup>
+import ClassCard from '@/components/ClassCard.vue';
 import SearchBar from '@/components/SearchBar.vue';
 import RecipeCard from '@/components/RecipeCard.vue';
 import { ref } from 'vue';
@@ -334,11 +291,6 @@ const setActive = (index) => {
 .class-name{
     color: #c4c4c4;
     font-size: 0.75rem;
-}
-
-.class-date{
-   
-    
 }
 
 .class-text{

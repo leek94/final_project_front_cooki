@@ -26,24 +26,10 @@
 
 <style scoped>
 /* 레시피 카드 */
-.main-box{
-    width: 100%;
-    height: auto;
-}
-
-.main-img{
-    width: 100%;
-    height: auto;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    flex-wrap: wrap;
-}
-
 ul ::marker{
     content: none;
-    
 }
+
 ul{
     padding: 0;
 }

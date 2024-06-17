@@ -21,7 +21,6 @@
             <!-- 재료 -->
              <Items></Items>
 
-            
             <div class="recipe-step mt-3">
                 <div class="recipe-step-tit text-start">
                     <h4>한 단계씩 따라해 보세요😄</h4>
@@ -39,7 +38,7 @@
                 <swiper-container class="swiper-container border-bottom" >
                     <swiper-slide>
                         <img src="/images/photos/semi2.jpg" class="swiper-img">
-                        
+
                         <div class="recipe-step-cont">
                             <p class="step-h mt-3 text-start">
                                 <span>Step 1.</span>
@@ -64,7 +63,7 @@
                     </swiper-slide>
                     <swiper-slide>
                         <img src="/images/photos/recipeimg1.jpg" class="swiper-img">
-                        
+
                         <div class="recipe-step-cont">
                             <p class="step-h mt-3 text-start">
                                 <span>Step 1.</span>
@@ -89,7 +88,7 @@
                     </swiper-slide>
                     <swiper-slide>
                         <img src="/images/photos/semi2.jpg" class="swiper-img">
-                        
+
                         <div class="recipe-step-cont">
                             <p class="step-h mt-3 text-start">
                                 <span>Step 1.</span>
@@ -114,7 +113,7 @@
                     </swiper-slide>
                     <swiper-slide>
                         <img src="/images/photos/recipeimg1.jpg" class="swiper-img">
-                        
+
                         <div class="recipe-step-cont">
                             <p class="step-h mt-3 text-start">
                                 <span>Step 1.</span>
@@ -137,7 +136,7 @@
                             </ol>
                         </div>
                     </swiper-slide>
-                    
+
                 </swiper-container>
             </div>
 
@@ -150,7 +149,6 @@ import Items from '@/components/Items.vue'
 import { register } from 'swiper/element/bundle';
 import { ref, onMounted } from "vue";
 register();
-
 onMounted(()=>{
     const swiperEl = document.querySelector('.swiper-container');
     const nextBtn = document.querySelector('.nextBtn');
@@ -163,26 +161,29 @@ onMounted(()=>{
       swiperEl.swiper.slidePrev();
     });
   });
-
 </script>
 
 <style scoped>
 .ss{
     border: 1px solid ;
 }
-
+.recipe-title{
+    background-color: #eff9ef;
+    background-image: url('C:\project\projects-vue\cooki_final_front_web\public\images\photos\bg_pattern_green.png');
+    padding: 4.875rem 0;
+    background-repeat: no-repeat;
+    background-position: center;
+}
 .inner{
     width: 100%;
     max-width: 45rem;
     margin: 0 auto;
     text-align: left;
 }
-
 .inner > h3{
     font-size: 3rem;
     font-weight: 800;
 }
-
 .label{
     display: inline-block;
     margin-bottom: 0.625rem;
@@ -193,76 +194,60 @@ onMounted(()=>{
     border-radius: 5px;
     background-color: #0bab6d;
 }
-
 .recipe-view-content{
     width: 100%;
     max-width: 45rem;
     margin: 0 auto;
     padding: 3.75rem 0;
 }
-
 .recipe-content{
     width: 100%;
 }
-
 .content-top{
     margin-bottom: 7rem;
     text-align: center;
 }
-
 .ingredient-box{
     padding: 2.5rem;
 }
-
 .ingredient-title{
     width: 50%;
     text-align: left;
     flex: 1;
 }
-
 .ingredient-content{
     width: 50%;
     text-align: left;
     flex: 1;
 }
-
 .green-point::marker {
     color: #15a775;
 }
-
-
 /* 레시피 캐러셀 */
-
 swiper-container{
     padding: 2rem 0;
     
 }
-
 .swiper-img{
     padding-bottom: 2rem;
     border-bottom: 1px solid #e5e5e5;
 }
-
 .recipe-step-tit{
     border-bottom: 1px solid;
 }
-
 .swiper-container{
     display: flex; 
     border-style: none;
 }
-
 .swiper-container img {
     display: block;
     width: 100%;
     height: auto;
 }
-
 .step-button{
     border-bottom: 1px solid #e5e5e5;
     padding: 0.5rem;
 }
-
 .prevBtn{
     border-radius: 100%;
     background-color: white;
@@ -270,7 +255,6 @@ swiper-container{
     padding: 15px 25px;
     color: #15a775;
 }
-
 .nextBtn{
     border-radius: 100%;
     background-color: white;
@@ -278,26 +262,21 @@ swiper-container{
     padding: 15px 25px;
     color: #15a775;
 }
-
 .step-h{
     font-size: 1.2rem;
     font-weight: bold;
 }
-
 .step-desc{
     font-size: 0.8rem;
 }
-
 li{
     list-style: none;
     
 }
-
 ol{
     padding-left: 0; /* 기본 패딩 제거 */
     margin-left: 0; /* 기본 마진 제거 */
 }
-
 .tip-list li::before{
     text-align: center;
     display: inline-block;
@@ -316,7 +295,6 @@ ol{
     content: "TIP." counter(step-counter);
     
 }
-
 .tip{
     display: flex;
     font-size: 0.7rem;

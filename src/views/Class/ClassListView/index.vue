@@ -16,7 +16,8 @@
                     </ul>
                 </div>
                 <!-- 사진 -->
-                <RouterLink to="./ClassDetailView">클래스 디테일</RouterLink>
+                <RouterLink to="./ClassDetailView" class="me-3">클래스 디테일</RouterLink>
+                <RouterLink to="./ClassRegisterView">클래스 등록</RouterLink>
                 <div class="main-box ss">
                     <ul class="main-img d-flex ss">
 
@@ -47,7 +48,6 @@
 <script setup>
 import ClassCard from '@/components/ClassCard.vue';
 import SearchBar from '@/components/SearchBar.vue';
-import RecipeCard from '@/components/RecipeCard.vue';
 import { ref } from 'vue';
 
 const activeIndex = ref(0);
@@ -58,14 +58,6 @@ const setActive = (index) => {
 </script>
 
 <style scoped>
-
-.recipe-title{
-    font-size: 3.75rem;
-    font-weight: 800;
-    text-align: start;
-}
-
-
 /* .ss{
     border: solid 1px;
 } */
@@ -73,11 +65,16 @@ const setActive = (index) => {
 .container_box{
     padding: 6.875rem 1.875rem 6.25rem;
     margin-bottom: 1.25rem;
-    max-width: 110rem;
+    max-width: 85rem;
     min-width: 75rem;
     margin: 0 auto;
 }
 
+.recipe-title{
+    font-size: 3.75rem;
+    font-weight: 800;
+    text-align: start;
+}
 
 .top-box{
     position: relative;
@@ -132,6 +129,7 @@ const setActive = (index) => {
     color: #000;
 }
 
+/* 카드 컴포넌트 설정시 필요한 */
 .main-box{
     width: 100%;
     height: auto;

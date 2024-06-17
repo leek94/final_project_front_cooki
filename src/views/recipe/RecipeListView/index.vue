@@ -3,20 +3,7 @@
         
         <form>
             <div class="recipe-title"><h3>레시피</h3></div>
-            <div class="search-box d-flex align-items-center justify-content-center ss mb-5">
-                <!-- 선택하는 셀렉터 -->
-                <select class="select-button ss">
-                    <option value="all">전체</option>
-                    <option value="title">제목만</option>
-                    <option value="content">내용만</option>
-                </select>
-                <!-- 검색바 & 검색 버튼 & 카테고리 박스-->
-                <div class="d-flex ss search-input-box">
-                    <input class="search-input ss me-1" type="text" placeholder="어떤 레시피가 궁금하신가요?">
-                    <button class="search-button align-items-center justify-content-center ss">검색</button>
-                </div>
-                
-            </div>
+            <SearchBar></SearchBar>
             <!-- 카테고리 -->
             <div class="d-flex mb-5">
                     <button class="category-button">#한식</button>
@@ -245,6 +232,7 @@
 </template>
 
 <script setup>
+import SearchBar from '@/components/SearchBar.vue';
 import { ref } from 'vue';
 
 const activeIndex = ref(0);
@@ -283,6 +271,7 @@ const setActive = (index) => {
     margin: 0 auto;
 }
 
+/* 검색바 시작 */
 .search-box{
     width: 100%;
     margin-bottom: 4rem;
@@ -326,6 +315,8 @@ const setActive = (index) => {
     font-weight: 500;
     border: none;
 }
+
+/* 검색바 끝 */
 
 .top-box{
     position: relative;

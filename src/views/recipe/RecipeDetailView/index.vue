@@ -10,8 +10,8 @@
         </div>
 
         <div class="recipe-view-content">
-            <div class="recipe-content ss">
-                <div class="content-top ss">
+            <div class="recipe-content">
+                <div class="content-top">
                     <h3>촉촉하게, 감칠맛 가득 불고기 만드는 법!</h3>
                     <div>좋아하는 채소와 떡, 당면 등 재료를 마음껏 추가해 완성</div>
                 </div>
@@ -19,27 +19,10 @@
                 <img src="/images/photos/recipeimg1.jpg" width="700" heigth="700">
             </div>
             <!-- 재료 -->
-            <div class="ingredient-box d-flex ss mb-5">
-                <ul class="ingredient-title ss">
-                    <li class="green-point">주재료</li>
-                </ul>
-                <div class="ingredient-content ss">
-                    <div class="checker-parent d-flex"><div class="green-checker ss"></div><div class="ss">완숙토마토 2개(300g)</div></div>
-                    <div class="checker-parent d-flex"><div class="green-checker ss"></div><div class="ss">완숙토마토 2개(300g)</div></div>
-                    <div class="checker-parent d-flex"><div class="green-checker ss"></div><div class="ss">완숙토마토 2개(300g)</div></div>
-                    <div class="checker-parent d-flex"><div class="green-checker ss"></div><div class="ss">완숙토마토 2개(300g)</div></div>
-                    <div class="checker-parent d-flex"><div class="green-checker ss"></div><div class="ss">완숙토마토 2개(300g)</div></div>
-                    <div class="checker-parent d-flex"><div class="green-checker ss"></div><div class="ss">완숙토마토 2개(300g)</div></div>
-                    <div class="checker-parent d-flex"><div class="green-checker ss"></div><div class="ss">완숙토마토 2개(300g)</div></div>
-                    <div class="checker-parent d-flex"><div class="green-checker ss"></div><div class="ss">완숙토마토 2개(300g)</div></div>
-                    <div class="checker-parent d-flex"><div class="green-checker ss"></div><div class="ss">완숙토마토 2개(300g)</div></div>
-                    <div class="checker-parent d-flex"><div class="green-checker ss"></div><div class="ss">완숙토마토 2개(300g)</div></div>
-                    <div class="checker-parent d-flex"><div class="green-checker ss"></div><div class="ss">완숙토마토 2개(300g)</div></div>
-                    <div class="checker-parent d-flex"><div class="green-checker ss"></div><div class="ss">완숙토마토 2개(300g)</div></div>
-                </div>
-            </div>
+             <Items></Items>
+
             
-            <div class="recipe-step">
+            <div class="recipe-step mt-3">
                 <div class="recipe-step-tit text-start">
                     <h4>한 단계씩 따라해 보세요😄</h4>
                 </div>
@@ -53,7 +36,7 @@
                     <i class="fa-solid fa-chevron-right" ></i>
                 </button> 
                  </div>
-                <swiper-container class="swiper-container ss border-bottom" >
+                <swiper-container class="swiper-container border-bottom" >
                     <swiper-slide>
                         <img src="/images/photos/semi2.jpg" class="swiper-img">
                         
@@ -163,6 +146,7 @@
 </template>
 
 <script setup>
+import Items from '@/components/Items.vue'
 import { register } from 'swiper/element/bundle';
 import { ref, onMounted } from "vue";
 register();

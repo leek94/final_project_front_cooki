@@ -24,7 +24,7 @@
 
                 <div class="regist-recipe d-flex align-items-center justify-content-center">
                     <!-- 라우터로 변경 예정 -->
-                    <div>작성하기</div>
+                    <RouterLink to="./RecipeRegisterView">작성하기</RouterLink>
                 </div>
             </div>
             <!-- main 시작 -->

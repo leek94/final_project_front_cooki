@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <div class="card-header">RecipeResister</div>
+        <div class="card-header">RecipeRegister</div>
         <div class="card-body">
 
         </div>

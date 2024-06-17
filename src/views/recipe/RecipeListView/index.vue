@@ -2,17 +2,8 @@
     <div class="container_box ss">
         
         <form>
-            <div class="recipe-title"><h3>레시피</h3></div>
+            <div class="recipe-title mb-5"><h3>레시피</h3></div>
             <SearchBar></SearchBar>
-            <!-- 카테고리 -->
-            <div class="d-flex mb-5">
-                    <button class="category-button">#한식</button>
-                    <button class="category-button">#중식</button>
-                    <button class="category-button">#일식</button>
-                    <button class="category-button">#양식</button>
-                    <button class="category-button">#디저트</button>
-                    <button class="category-button">#베이커리</button>
-            </div>
             <!-- 작성바 & 작성 버튼 -->
             <div class="top-box ss d-flex align-content-center align-content-center mb-5">
                 <img src="/images/photos/il_samie_3.png">
@@ -38,27 +29,25 @@
                     </ul>
                 </div>
                 <!-- 사진 -->
-                
+                <RouterLink to="./RecipeDetailView">레시피 디테일</RouterLink>
                 <div class="main-box ss">
                     <ul class="main-img d-flex ss">
                     <RecipeCard></RecipeCard>
                     <RecipeCard></RecipeCard>
                     <RecipeCard></RecipeCard>
                     <RecipeCard></RecipeCard>
+
+                    <RecipeCard></RecipeCard>
+                    <RecipeCard></RecipeCard>
+                    <RecipeCard></RecipeCard>
+                    <RecipeCard></RecipeCard>
+                    
                     <RecipeCard></RecipeCard>
                     <RecipeCard></RecipeCard>
                     <RecipeCard></RecipeCard>
                     <RecipeCard></RecipeCard>
 
-                    <!-- 클래스 카드 -->
-                    <ClassCard></ClassCard>
-                    <ClassCard></ClassCard>
-                    <ClassCard></ClassCard>
-                    <ClassCard></ClassCard>
-                       
                     </ul>
-                    <!-- 중간 이벤트바 -->
-                    <div></div>
                 </div>
             </div>
 
@@ -87,14 +76,6 @@ const setActive = (index) => {
     text-align: start;
 }
 
-.category-button{
-    margin-right: 0.5rem;
-    padding: 0.625rem 1rem;
-    border-radius: 21px;
-    border: solid 1px #d4d4d4;
-    background-color: #fff;
-    margin: 0 10px;
-}
 
 /* .ss{
     border: solid 1px;
@@ -108,50 +89,6 @@ const setActive = (index) => {
     margin: 0 auto;
 }
 
-/* 검색바 시작 */
-.search-box{
-    width: 100%;
-    margin-bottom: 4rem;
-}
-
-.select-button{
-    flex: 1;
-    width: 14rem;
-    height: 5rem;
-    border-radius: 46px;
-    padding: 0 2.5rem;
-    border: solid 3px #e5e5e5;
-}
-
-.search-input-box{
-   flex: 10;
-}
-
-.search-input{
-    flex: 18;
-    width: calc(100%-24rem);
-    height: 5rem;
-    border-radius: 46px 0 0 46px;
-    font-size: 1.25rem;
-    font-weight: bold;
-    border: none;
-    padding: 0 2.5rem;
-    background-color: #f3f3f3;
-}
-
-.search-button{
-    flex: 3;
-    width: 10rem;
-    height: 5rem;
-    border-radius: 0 46px 46px 0;
-    background-color: #15a775;
-    color: #fff;
-    font-size: 1.25rem;
-    font-weight: 500;
-    border: none;
-}
-
-/* 검색바 끝 */
 
 .top-box{
     position: relative;
@@ -219,99 +156,5 @@ const setActive = (index) => {
     margin: 0;
     flex-wrap: wrap;
 }
-
-/* 레시피 카드 */
-.img-li{
-    width: calc(25% - 2rem);
-    margin: 0 1rem 5rem;
-}
-
-.image{
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-    padding-top: 90%; /* 자식 요소의 세로 길이를 부모 요소의 너비에 맞춤 */
-    border-radius: 20px;
-}
-
-.image > img{
-    position: absolute;
-    width: 100%;
-    height: auto;
-    top: 50%;
-    left: 50%;
-    object-fit: cover;
-    transform: translate(-50%, -50%);
-    transition: all 0.2s ease-out;
-}
-
-.name{
-    color: #c4c4c4;
-    font-size: 0.75rem;
-}
-
-.date{
-    color: #c4c4c4;
-    font-size: 0.75rem;
-    border-left: 1px solid black;
-    border-color: #c4c4c4;
-    padding-left: 0.5rem;
-}
-
-.text{
-    padding: 1.25rem 0 2rem;
-}
-/* 레시피 카드 끝 */
-
-/* 클래스 카드 시작 */
-.class-img-li{
-    width: calc(25% - 2rem);
-    margin: 0 1rem 5rem;
-}
-
-.class-image{
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-    padding-top: 90%; /* 자식 요소의 세로 길이를 부모 요소의 너비에 맞춤 */
-    border-radius: 20px;
-}
-
-.class-image > img{
-    position: absolute;
-    width: 100%;
-    height: auto;
-    top: 50%;
-    left: 50%;
-    object-fit: cover;
-    transform: translate(-50%, -50%);
-    transition: all 0.2s ease-out;
-}
-
-.class-name{
-    color: #c4c4c4;
-    font-size: 0.75rem;
-}
-
-.class-text{
-    padding: 1.25rem 0 0.5rem;
-}
-
-.dday-box{
-    color:red;
-}
-
-.class-label{
-    display: inline-block;
-    margin-bottom: 0.625rem;
-    padding: 0.7rem 1rem;
-    color: #fff;
-    font-size: 0.75rem;
-    font-weight: 600;
-    border-radius: 5px;
-    background-color: #0bab6d;
-}
-/* 클래스 카드 끝 */
-
 
 </style>

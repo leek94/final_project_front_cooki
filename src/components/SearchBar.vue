@@ -12,6 +12,15 @@
             <button class="search-button align-items-center justify-content-center">검색</button>
         </div>
     </div>
+
+    <div class="d-flex mb-5">
+        <button class="category-button">#한식</button>
+        <button class="category-button">#중식</button>
+        <button class="category-button">#일식</button>
+        <button class="category-button">#양식</button>
+        <button class="category-button">#디저트</button>
+        <button class="category-button">#베이커리</button>
+    </div>
 </template>
 
 <script setup>
@@ -64,4 +73,14 @@
 }
 
 /* 검색바 끝 */
+
+.category-button{
+    margin-right: 0.5rem;
+    padding: 0.625rem 1rem;
+    border-radius: 21px;
+    border: solid 1px #d4d4d4;
+    background-color: #fff;
+    margin: 0 10px;
+}
+
 </style>

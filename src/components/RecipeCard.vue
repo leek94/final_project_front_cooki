@@ -3,6 +3,7 @@
     <li class="img-li ss">
         <div class="router-div">
             <div class="image">
+                <i class="icon-heart fa-solid fa-heart like-heart" :class="{ active: isActive}" @click="toggleLike"></i>
                 <img src="/images/photos/140114575djmw.jpg">
                 code1
             </div>
@@ -22,9 +23,37 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
+
+// 좋아요 버튼 자바스크립트 시작
+const isActive = ref(false);
+
+const toggleLike = () => {
+    isActive.value = !isActive.value;
+    console.log("레시피 리스트 좋아요 클릭");
+};
+// 좋아요 버튼 자바스크립트 끝
+
 </script>
 
 <style scoped>
+
+/* 좋아요 시작 */
+.active {
+    color:red !important;
+}
+
+.icon-heart{
+    position: absolute;
+    top: 1.5rem ;
+    right: 0;
+    width: 2.25rem;
+    height: 2.25rem;
+    z-index: 12;
+    color: #e5e5e5;
+}
+/* 좋아요 끝 */
+
 /* 레시피 카드 */
 ul ::marker{
     content: none;

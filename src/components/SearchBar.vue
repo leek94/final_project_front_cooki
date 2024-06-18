@@ -1,7 +1,7 @@
 <template>
     <div class="search-box d-flex align-items-center justify-content-center mb-5">
         <!-- 선택하는 셀렉터 -->
-        <select class="select-button ss">
+        <select class="select-button">
             <option value="all">전체</option>
             <option value="title">제목&내용만</option>
             <option value="content">재료만</option>
@@ -29,6 +29,11 @@
 
 <style scoped>
 /* 검색바 시작 */
+
+.select-button > option{
+    font-size: 1.2rem;
+}
+
 .search-box{
     width: 100%;
     margin-bottom: 4rem;
@@ -42,7 +47,7 @@
     border-radius: 46px;
     padding: 0 2.5rem;
     border: solid 3px #e5e5e5;
-    
+    font-size: 1.2rem;
 }
 
 .search-input-box{
@@ -82,6 +87,11 @@
     border: solid 1px #d4d4d4;
     background-color: #fff;
     margin: 0 10px;
+}
+
+.select-button option:hover {
+  background-color: #04AA6D;
+  color: white;
 }
 
 </style>

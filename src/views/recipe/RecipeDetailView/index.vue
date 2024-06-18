@@ -1,11 +1,19 @@
 <template>
     <div class="container-box">
+        <!-- 좋아요 -->
+        <button id="like" class="like-button align-item-center" style="align-content: center;">
+            <i class="fa-solid fa-heart like-heart"></i>
+            <div class="like-text">좋아요</div>
+        </button>
         <!-- 레시피 내용 -->
         <div class="recipe-title">
             <div class="inner">
                 <span class="label">레시피</span>
                 <h3 class="mb-4">자작자작 서울식 소불고기</h3>
-                <p class="">2024.06.11 08:00</p>
+                <div class="d-flex">
+                    <p class="me-3">2024.06.11 08:00</p>
+                </div>
+                
             </div>
         </div>
 
@@ -157,16 +165,56 @@ onMounted(()=>{
     nextBtn.addEventListener('click', () => {
       swiperEl.swiper.slideNext();
     });
+
     prevBtn.addEventListener('click', () => {
       swiperEl.swiper.slidePrev();
     });
-  });
+
+    // DOM에 있어야 Id 값을 찾을 수가 있음
+    var btn = document.getElementById("like")
+    btn.addEventListener('click', function(){
+    console.log("좋아요 클릭")
+    // 클래스에 active를 넣었다가 뺄 수 있게 함
+    btn.classList.toggle('active')
+    })
+});
+
+
 </script>
 
 <style scoped>
+/* 좋아요 시작 */
+.like-button{
+    position: fixed;
+    top: 27rem;
+    right: 7rem;
+    bottom: 27.625rem;
+    width: 3rem;
+    height: 5rem;
+    border-radius: 40px;
+    border: solid 1px #e5e5e5;
+    background-color: #fff;
+    z-index: 100;
+    text-align: center;
+}
+
+.like-text{
+    font-size: 0.7rem;
+}
+
+.like-heart{
+    color:#e5e5e5;
+}
+/* 토글로 class에 active가 들어갈 경우만 색상을 변경함 */
+.active i{
+    color:red;
+}
+/* 좋아요 끝 */
+
 .ss{
     border: 1px solid ;
 }
+
 .recipe-title{
     background-color: #eff9ef;
     background-image: url(/public/images/photos/bg_pattern_green.png);
@@ -174,16 +222,19 @@ onMounted(()=>{
     background-repeat: no-repeat;
     background-position: center;
 }
+
 .inner{
     width: 100%;
     max-width: 45rem;
     margin: 0 auto;
     text-align: left;
 }
+
 .inner > h3{
     font-size: 3rem;
     font-weight: 800;
 }
+
 .label{
     display: inline-block;
     margin-bottom: 0.625rem;
@@ -194,60 +245,74 @@ onMounted(()=>{
     border-radius: 5px;
     background-color: #0bab6d;
 }
+
 .recipe-view-content{
     width: 100%;
     max-width: 45rem;
     margin: 0 auto;
     padding: 3.75rem 0;
 }
+
 .recipe-content{
     width: 100%;
 }
+
 .content-top{
     margin-bottom: 7rem;
     text-align: center;
 }
+
 .ingredient-box{
     padding: 2.5rem;
 }
+
 .ingredient-title{
     width: 50%;
     text-align: left;
     flex: 1;
 }
+
 .ingredient-content{
     width: 50%;
     text-align: left;
     flex: 1;
 }
+
 .green-point::marker {
     color: #15a775;
 }
+
 /* 레시피 캐러셀 */
 swiper-container{
     padding: 2rem 0;
     
 }
+
 .swiper-img{
     padding-bottom: 2rem;
     border-bottom: 1px solid #e5e5e5;
 }
+
 .recipe-step-tit{
     border-bottom: 1px solid;
 }
+
 .swiper-container{
     display: flex; 
     border-style: none;
 }
+
 .swiper-container img {
     display: block;
     width: 100%;
     height: auto;
 }
+
 .step-button{
     border-bottom: 1px solid #e5e5e5;
     padding: 0.5rem;
 }
+
 .prevBtn{
     border-radius: 100%;
     background-color: white;
@@ -255,6 +320,7 @@ swiper-container{
     padding: 15px 25px;
     color: #15a775;
 }
+
 .nextBtn{
     border-radius: 100%;
     background-color: white;
@@ -262,21 +328,26 @@ swiper-container{
     padding: 15px 25px;
     color: #15a775;
 }
+
 .step-h{
     font-size: 1.2rem;
     font-weight: bold;
 }
+
 .step-desc{
     font-size: 0.8rem;
 }
+
 li{
     list-style: none;
     
 }
+
 ol{
     padding-left: 0; /* 기본 패딩 제거 */
     margin-left: 0; /* 기본 마진 제거 */
 }
+
 .tip-list li::before{
     text-align: center;
     display: inline-block;
@@ -295,6 +366,7 @@ ol{
     content: "TIP." counter(step-counter);
     
 }
+
 .tip{
     display: flex;
     font-size: 0.7rem;

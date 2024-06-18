@@ -50,11 +50,14 @@ import ClassCard from '@/components/ClassCard.vue';
 import SearchBar from '@/components/SearchBar.vue';
 import { ref } from 'vue';
 
+// 정렬을 위한 자바스크립트 시작
 const activeIndex = ref(0);
 
 const setActive = (index) => {
   activeIndex.value = index;
 };
+
+// 정렬을 위한 자바스크립트 끝
 </script>
 
 <style scoped>
@@ -108,6 +111,7 @@ const setActive = (index) => {
     height: 1.75rem;
 }
 
+/* 정렬 부분 시작 */
 .clicked-li{
     font-size: 0.75rem;
     color: #c4c4c4;
@@ -128,6 +132,7 @@ const setActive = (index) => {
 .sorted-box li.active::marker{
     color: #000;
 }
+/* 정렬 부분 끝 */
 
 /* 카드 컴포넌트 설정시 필요한 */
 .main-box{

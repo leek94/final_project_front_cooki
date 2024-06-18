@@ -38,12 +38,12 @@
                     <button class="prevBtn btn btn-lg">
                     <i class="fa-solid fa-chevron-left "></i>
                 </button>
-                <div class="">Step.1</div>
+                <div id="step">Step.1</div>
                 <button class="nextBtn btn btn-lg" >
                     <i class="fa-solid fa-chevron-right" ></i>
                 </button> 
                  </div>
-                <swiper-container class="swiper-container border-bottom" >
+                <swiper-container class="swiper-container border-bottom">
                     <swiper-slide>
                         <img src="/images/photos/semi2.jpg" class="swiper-img">
 
@@ -161,13 +161,19 @@ onMounted(()=>{
     const swiperEl = document.querySelector('.swiper-container');
     const nextBtn = document.querySelector('.nextBtn');
     const prevBtn = document.querySelector('.prevBtn');
-  
+    var step = document.getElementById("step")
+    let currentStep = 1;
+
     nextBtn.addEventListener('click', () => {
       swiperEl.swiper.slideNext();
+      currentStep = Math.min(currentStep + 1, swiperEl.swiper.slides.length);
+      step.innerText = `Step.${currentStep}`;
     });
 
     prevBtn.addEventListener('click', () => {
       swiperEl.swiper.slidePrev();
+      currentStep = Math.max(currentStep - 1, 1);
+      step.innerText = `Step.${currentStep}`;
     });
 
     // DOM에 있어야 Id 값을 찾을 수가 있음
@@ -177,6 +183,10 @@ onMounted(()=>{
     // 클래스에 active를 넣었다가 뺄 수 있게 함
     btn.classList.toggle('active')
     })
+
+    // step ++하기 위한 자바스크립트
+
+    
 });
 
 

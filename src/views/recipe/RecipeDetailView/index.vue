@@ -1,5 +1,5 @@
 <template>
-    <div class="container-box ss">
+    <div class="container-box">
         <!-- 레시피 내용 -->
         <div class="recipe-title">
             <div class="inner">

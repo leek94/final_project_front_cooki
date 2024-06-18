@@ -17,7 +17,7 @@
                     <li><RouterLink to="/Member/MypageView/MyProfile">프로필 관리</RouterLink></li>
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="false">
                             마이 클래스 
                         </a>
                         <ul class="dropdown-menu w-100 p-0 border-0 align-middle text-center" aria-labelledby="navbarDarkDropdownMenuLink">
@@ -50,7 +50,6 @@
   height: 100%;
   width:30.5rem;
   min-height: 100vh;
-  margin-right:4.375rem;
   text-align: center;
 }
 
@@ -76,8 +75,8 @@ li a:hover:not(.active) {
 }
 .mypage_cont{
     width:100%;
-    max-width: 73.75rem;
-    margin-top:25rem;
+    margin-top:50px;
+    align-items: center;
 }
 .dropdown-item{
     background-color: #eff9ef;

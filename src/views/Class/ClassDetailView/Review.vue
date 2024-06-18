@@ -1,7 +1,7 @@
 <template>
     <!-- 평점 -->
-    <div class="d-flex py-1 px-4" style="align-items: center;">
-        <h4 class="m-2 d-flex align-content-center" style="font-weight: bold;"> 클래스 평점</h4>
+    <div class="d-flex" style="align-items: center;">
+        <h4 class="m-5 d-flex fw-bold"> 클래스 평점</h4>
         <div class="star">
             <img src="/images/photos/ic_star.png">
             <img src="/images/photos/ic_star.png">

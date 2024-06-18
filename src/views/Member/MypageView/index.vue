@@ -31,7 +31,7 @@
                                 </li>
                             </ul>
 
-                        </nav>
+                </nav>
                     
                 </ul>
             </div>   
@@ -80,6 +80,9 @@ li a:hover:not(.active) {
     width:100%;
     max-width: 73.75rem;
     margin-top:25rem;
+}
+.dropdown-item{
+    background-color: #eff9ef;
 }
 
 a {

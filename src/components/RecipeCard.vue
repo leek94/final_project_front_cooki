@@ -35,7 +35,9 @@ ul{
 }
 .img-li{
     width: calc(25% - 2rem);
+    list-style-type: none;
     margin: 0 1rem 4rem;
+
 }
 
 .image{

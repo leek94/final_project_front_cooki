@@ -1,5 +1,9 @@
 <template>
+<<<<<<< HEAD
     <h4 class="fw-bold m-5">Q&A</h4>
+=======
+    <h4 class="fw-bold m-5" >Q&A</h4>
+>>>>>>> f382f93395e8f0f1f3f3902b24ec1ede250f815e
     <!-- 댓글 등록 -->
     <!-- 로그인 한 유저만 등록 가능 v-show로 -->
     <div class="d-flex p-2 m-2 border rounded bg-light">

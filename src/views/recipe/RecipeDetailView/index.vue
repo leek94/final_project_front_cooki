@@ -1,5 +1,5 @@
 <template>
-    <div class="container-box ss">
+    <div class="container-box">
         <!-- 레시피 내용 -->
         <div class="recipe-title">
             <div class="inner">
@@ -16,7 +16,7 @@
                     <div>좋아하는 채소와 떡, 당면 등 재료를 마음껏 추가해 완성</div>
                 </div>
 
-                <img src="/images/photos/recipeimg1.jpg" width="700" heigth="700">
+                <img src="/images/photos/recipeimg1.jpg" width="100%">
             </div>
             <!-- 재료 -->
              <Items></Items>
@@ -166,7 +166,7 @@ onMounted(()=>{
 <style scoped>
 .ss{
     border: 1px solid ;
-} 
+}
 .recipe-title{
     background-color: #eff9ef;
     background-image: url(/public/images/photos/bg_pattern_green.png);

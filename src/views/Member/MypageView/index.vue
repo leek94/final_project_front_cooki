@@ -15,6 +15,7 @@
                     <li><RouterLink to="/Member/MypageView/MyLikeRecipe">내가 찜한 레시피</RouterLink></li>
                     <li><RouterLink to="/Member/MypageView/MyQAndA">내가 작성한 QAndA</RouterLink></li>
                     <li><RouterLink to="/Member/MypageView/MyProfile">프로필 관리</RouterLink></li>
+
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="false">
@@ -28,8 +29,6 @@
                         </ul>
                         </li>
                     </ul>
-
-       
                     
                 </ul>
             </div>   
@@ -82,6 +81,9 @@ li a:hover:not(.active) {
     background-color: #eff9ef;
 }
 
+a {
+    display: block;
+}
 
 
 </style>

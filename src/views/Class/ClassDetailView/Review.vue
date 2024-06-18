@@ -1,7 +1,8 @@
 <template>
+    <h4 class="fw-bold m-5">리뷰</h4>
     <!-- 평점 -->
     <div class="d-flex py-1 px-4" style="align-items: center;">
-        <h4 class="m-2 d-flex align-content-center" style="font-weight: bold;"> 클래스 평점</h4>
+        <h5 class="m-2 d-flex align-content-center" style="font-weight: bold;"> 클래스 평점</h5>
         <div class="star">
             <img src="/images/photos/ic_star.png">
             <img src="/images/photos/ic_star.png">

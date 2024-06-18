@@ -36,7 +36,7 @@
 /* 클래스 카드 시작 */
 .class-img-li{
     width: calc(25% - 2rem);
-    margin: 0 1rem 5rem;
+    margin: 0 1rem 4rem;
 }
 
 .class-image{

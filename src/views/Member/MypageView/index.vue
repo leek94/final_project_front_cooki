@@ -18,7 +18,7 @@
                     <nav class="navbar navbar-expand-lg ">
                            
                             <ul class="navbar-nav">
-                                <li class="nav-item dropdown">
+                                <li class="nav-item dropdown d-flex">
                                 <a class="nav-link dropdown-toggle" id="navbarDarkDropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                     마이 클래스 
                                 </a>
@@ -82,6 +82,9 @@ li a:hover:not(.active) {
     margin-top:25rem;
 }
 
+a {
+    display: block;
+}
 
 
 </style>

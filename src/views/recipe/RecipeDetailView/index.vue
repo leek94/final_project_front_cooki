@@ -16,7 +16,7 @@
                     <div>좋아하는 채소와 떡, 당면 등 재료를 마음껏 추가해 완성</div>
                 </div>
 
-                <img src="/images/photos/recipeimg1.jpg" width="700" heigth="700">
+                <img src="/images/photos/recipeimg1.jpg" width="100%">
             </div>
             <!-- 재료 -->
              <Items></Items>
@@ -169,7 +169,7 @@ onMounted(()=>{
 }
 .recipe-title{
     background-color: #eff9ef;
-    background-image: url('C:\SelfStudy-vue\final_project_front_cooki\public\images\photos\bg_pattern_green.png');
+    background-image: url(/public/images/photos/bg_pattern_green.png);
     padding: 4.875rem 0;
     background-repeat: no-repeat;
     background-position: center;

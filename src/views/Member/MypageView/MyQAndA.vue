@@ -13,7 +13,7 @@
             <div class="card-body">
                 <div class="qnaAnswered mb-3" style="background-color: #eff9ef; color:gray">미답변</div>
             </div>
-            <div class="qtitle d-flex" style="font-size: 22px; color:grey">
+            <div class="qtitle d-flex" style="font-size: 19px; color:grey">
                 <div style="border-right:1px solid grey; padding:0 20px">원글</div>
                 <diV style="padding:0 30px">깻잎이 질겨졌어요</diV>
             </div>
@@ -29,11 +29,11 @@
             <div class="card-body">
                 <div class="qnaAnswered mb-3" style="background-color: #0bab6d; color:#eff9ef">답변 완료</div>
             </div>
-            <div class="qtitle d-flex" style="font-size: 22px; color:grey">
+            <div class="qtitle d-flex" style="font-size: 19px; color:grey">
                 <div style="border-right:1px solid grey; padding:0 20px">원글</div>
                 <diV style="padding:0 30px">깻잎이 질겨졌어요</diV>
             </div>
-            <div class="qcont mt-4"  style="font-size: 21px; font-weight:bold ;color:black;">
+            <div class="qcont mt-4"  style="font-size: 19px; font-weight:bold ;color:black;">
                 <diV style="padding:0 20px;">마트에서 뒷다리살을 사서 수육을 했어요 보통 앞다리나 삼겹살로 많이 하시던데 뒷다리가 싸서 해봤거든요 
                     마늘 양파 등 재료넣고 잡내제거로 인스터트 커피넣고 된장넣고 1시간 30분 삶았는데 넘 질기더라규요 ㅠ.ㅠ
                     부드러운 수육맛을 원했는데 고기종류가 문제였을까요 아님 시간이 문제였을까요?</diV>

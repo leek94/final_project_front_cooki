@@ -1,43 +1,79 @@
 <template>
     <div class="myRecipe">
-        <div class="d-flex fw-bold">
-            <p style="font-size: 25px">찜한 레시피 </p>
-            <p style="font-size: 26px">(5)</p>
-        </div>
-        <hr>
-        <div class="recipeCard d-flex">
-        <RecipeCard style="margin:1rem 1.65rem 0; width:260px;"/>
-        <RecipeCard style="margin:1rem 1.65rem 0; width:260px;"/>
-        <RecipeCard style="margin:1rem 1.65rem 0; width:260px;"/>
-        <RecipeCard style="margin:1rem 1.65rem 0; width:260px;"/>
-        <RecipeCard style="margin:1rem 1.65rem 0; width:260px;"/>
-        </div>
-    </div>
-</template>
-
-<script setup>
-import RecipeCard from '@/components/RecipeCard.vue';
-</script>
-
-<style scoped>
-.myRecipe{
-    border:solid 1px #e5e5e5;
-    border-radius: 0.7rem;
-    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.05);
-    padding:50px 50px 0;
-    width:70%;
-    height:auto;
-    text-align:center;
-    margin:0 auto;
-}
-.recipeCard{
-    list-style-type: none;
-    flex-wrap: wrap;
-    display: grid;
-    grid-template-columns: auto auto auto auto;
-    grid-gap: 10px;
-    padding: 10px;
-  
-
-}
-</style>
+     <h3 class="fw-bold text-start mb-4" >찜한 레시피 </h3>
+         <div class="d-flex" style="font-size:24px">
+             <p>총 &ensp;</p>
+             <p style="color:darkseagreen"> 4</p>
+             <p>개</p>
+         </div>
+ 
+         <hr class="mt-0"/>
+         <div class="qcards d-flex">
+         <div class="card qnaCard mt-3" style="padding:10px 0 0 0 ">
+             <div class="card-body text-center">
+                 <RecipeCard style="margin:0 ;padding:16px 0 0 16px; width:300px"/>
+             </div>
+         </div>
+ 
+         <div class="card qnaCard mt-3" style="padding:10px 0 0 0 ">
+             <div class="card-body text-center">
+                 <RecipeCard style="margin:0 ;padding:16px 0 0 16px; width:300px"/>
+             </div>
+         </div>
+ 
+         <div class="card qnaCard mt-3" style="padding:10px 0 0 0 ">
+             <div class="card-body text-center">
+                 <RecipeCard style="margin:0 ;padding:16px 0 0 16px; width:300px"/>
+             </div>
+         </div>
+ 
+         <div class="card qnaCard mt-3" style="padding:10px 0 0 0 ">
+             <div class="card-body text-center">
+                 <RecipeCard style="margin:0 ;padding:16px 0 0 16px; width:300px"/>
+             </div>
+         </div>
+ 
+ 
+         <div class="card qnaCard mt-3" style="padding:10px 0 0 0 ">
+             <div class="card-body text-center">
+                 <RecipeCard style="margin:0 ;padding:16px 0 0 16px; width:300px"/>
+             </div>
+         </div>
+ 
+     </div>
+ 
+     
+     </div>
+ </template>
+ 
+ <script setup>
+ import RecipeCard from '@/components/RecipeCard.vue';
+ 
+ </script>
+ 
+ <style scoped>
+ .myRecipe{
+     padding:50px 50px 0;
+     width:80%;
+     height:auto;
+     text-align:center;
+     margin:0 auto;
+     
+ 
+ }
+ .qcards{ 
+     flex-wrap: wrap;
+ }
+ 
+ .qnaCard{
+     border:solid 1px #e5e5e5;
+     border-radius: 0.7rem;
+     box-shadow: 0 2px 20px 0 rgba(0, 0, 3, 0.2);
+     width: 400px;
+     height:450px;
+     margin-top:3.5rem;
+     width: calc(25% - 2rem);
+     margin:0 1rem;
+ }
+ 
+ </style>

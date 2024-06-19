@@ -1,12 +1,12 @@
 <template>
     <!-- 클래스 카드 -->
     <li class="class-img-li ss">
-        <div class="router-div">
+        <div class="router-div" :style="prop.style">
             <div class="class-image">
                 <img src="/images/photos/semi2.jpg">
                 code1
             </div>
-            <div class="text-start">
+            <div class="text-start" >
                 <div class="class-text text-start">
                     <h4>생선을 활용한 쿠킹 클래스</h4>
                 </div>
@@ -18,11 +18,11 @@
                 </div>
                 <div class="info d-flex mb-3">
                     <div class="class-date border-left-solid me-3">강의날짜 : 2024.06.21</div>
-                    <div class="dday-box">D-5</div>
+                    <div class="dday-box" :class="prop.class" >D-5</div>
                 </div>
             </div>
             <div class="d-flex justify-content-end">
-                <div class="class-label text-end">참여하기</div>
+                <div class="class-label text-end" :class="prop.class">참여하기</div>
             </div>
         </div>
     </li>
@@ -30,6 +30,7 @@
 </template>
 
 <script setup>
+const prop= defineProps([ "class", "style"])
 </script>
 
 <style scoped>
@@ -37,6 +38,7 @@
 .class-img-li{
     width: calc(25% - 2rem);
     margin: 0 1rem 4rem;
+    list-style: none;
 }
 
 .class-image{

@@ -48,7 +48,7 @@
 <style scoped>
 .mypage_bg{
   background-color:#eff9ef;
-  height: 100%;
+  height: auto;
   width:35rem;
   min-height: 100vh;
   text-align: center;
@@ -75,8 +75,8 @@ li a:hover{
 
 .mypage_cont{
     width:100%;
-    margin:auto 0;
     padding:0 1.875rem 0;
+    margin-bottom:100px;
     
 }
 .dropdown-item{

@@ -44,5 +44,10 @@ const routes = [
         name: 'ClassUpdateView',
         component: () =>  import(/* webpackChunkName: "Class" */ '@/views/Class/ClassUpdateView')
     },
+    {         
+        path: '/Class/ParticipantCheckView',
+        name: 'ClassUpdateView',
+        component: () =>  import(/* webpackChunkName: "Class" */ '@/views/Class/ParticipantCheckView')
+    },
 ]
 export default routes;

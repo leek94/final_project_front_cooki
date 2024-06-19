@@ -9,7 +9,7 @@
         <!-- 검색바 & 검색 버튼 & 카테고리 박스-->
         <div class="d-flex search-input-box">
             <input class="search-input me-1" type="text" placeholder="어떤 레시피가 궁금하신가요?">
-            <button class="search-button align-items-center justify-content-center">검색</button>
+            <button class="search-button align-items-center justify-content-center">검색 &ensp;<i class="fa-solid fa-magnifying-glass"></i></button>
         </div>
     </div>
 
@@ -74,7 +74,7 @@
     background-color: #15a775;
     color: #fff;
     font-size: 1.25rem;
-    font-weight: 500;
+    font-weight: bold;
     border: none;
 }
 

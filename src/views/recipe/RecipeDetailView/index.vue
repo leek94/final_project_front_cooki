@@ -157,23 +157,27 @@ import Items from '@/components/Items.vue'
 import { register } from 'swiper/element/bundle';
 import { ref, onMounted } from "vue";
 register();
+
 onMounted(()=>{
     const swiperEl = document.querySelector('.swiper-container');
     const nextBtn = document.querySelector('.nextBtn');
     const prevBtn = document.querySelector('.prevBtn');
+    // step 태그를 찾아옴
     var step = document.getElementById("step")
     let currentStep = 1;
 
+    // Swiper 인스턴스가 이미 존재하는 경우
+    const swiper = swiperEl.swiper;
+
+    // step뒤의 숫자를 추가하는 자바스크립트 & 버튼으로 캐러셀 움직이는 자바스크립트
     nextBtn.addEventListener('click', () => {
       swiperEl.swiper.slideNext();
-      currentStep = Math.min(currentStep + 1, swiperEl.swiper.slides.length);
-      step.innerText = `Step.${currentStep}`;
+      
     });
 
     prevBtn.addEventListener('click', () => {
       swiperEl.swiper.slidePrev();
-      currentStep = Math.max(currentStep - 1, 1);
-      step.innerText = `Step.${currentStep}`;
+      
     });
 
     // DOM에 있어야 Id 값을 찾을 수가 있음
@@ -182,13 +186,28 @@ onMounted(()=>{
     console.log("좋아요 클릭")
     // 클래스에 active를 넣었다가 뺄 수 있게 함
     btn.classList.toggle('active')
+    });
+
+    // var nextSlide;
+    // nextSlide.addEventListener('slidenexttransitionstart', function(){
+    //     console.log("슬라이드 다음으로 실행")
+    // })
+
+    swiper.on('slideNextTransitionStart', function(){
+        console.log("슬라이드 다음으로 실행")
+        // 현재 슬라이드의 번호를 받아서 넣어줌
+        currentStep = swiper.activeIndex + 1;
+        step.innerText = `Step.${currentStep}`;
     })
 
-    // step ++하기 위한 자바스크립트
+    swiper.on('slidePrevTransitionStart', function(){
+        console.log("슬라이드 이전으로 실행")
+        currentStep = swiper.activeIndex + 1;
+        step.innerText = `Step.${currentStep}`;
+    })
 
     
 });
-
 
 </script>
 
@@ -321,6 +340,10 @@ swiper-container{
 .step-button{
     border-bottom: 1px solid #e5e5e5;
     padding: 0.5rem;
+}
+
+#step{
+    color: #15a775;
 }
 
 .prevBtn{

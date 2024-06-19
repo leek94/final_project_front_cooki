@@ -4,7 +4,6 @@
         <div class="router-div" :style="prop.style">
             <div class="class-image">
                 <img src="/images/photos/semi2.jpg">
-                code1
             </div>
             <div class="text-start" >
                 <div class="class-text text-start">
@@ -45,7 +44,7 @@ const prop= defineProps([ "class", "style"])
     overflow: hidden;
     position: relative;
     width: 100%;
-    padding-top: 90%; /* 자식 요소의 세로 길이를 부모 요소의 너비에 맞춤 */
+    padding-top: 100%; /* 자식 요소의 세로 길이를 부모 요소의 너비에 맞춤 */
     border-radius: 20px;
 }
 
@@ -63,11 +62,6 @@ const prop= defineProps([ "class", "style"])
 .class-name{
     color: #c4c4c4;
     font-size: 0.75rem;
-}
-
-.class-date{
-   
-    
 }
 
 .class-text{
@@ -89,4 +83,10 @@ const prop= defineProps([ "class", "style"])
     background-color: #0bab6d;
 }
 /* 클래스 카드 끝 */
+
+.class-image:hover img {
+    transform: translate(-50%, -50%) scale(1.1);
+    transition: all 0.2s linear;
+}
+
 </style>

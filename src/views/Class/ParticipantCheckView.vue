@@ -67,7 +67,8 @@ const cookClasses = ref([
     overflow: hidden; /* 오버플로우 제어 */
 }
 h1 {
-    margin:2rem 2rem 0 2rem;
+    margin:3rem 2rem 0 2rem;
+    text-align: center;
 }
 
 .table{

@@ -4,7 +4,6 @@
             <div class="image">
                 <i class="icon-heart fa-solid fa-heart like-heart" :class="{ active: isActive}" @click="toggleLike"></i>
                 <img src="/images/photos/140114575djmw.jpg">
-                code1
             </div>
 
             <div>
@@ -75,7 +74,7 @@ ul{
     overflow: hidden;
     position: relative;
     width: 100%;
-    padding-top: 90%; /* 자식 요소의 세로 길이를 부모 요소의 너비에 맞춤 */
+    padding-top: 100%; /* 자식 요소의 세로 길이를 부모 요소의 너비에 맞춤 */
     border-radius: 20px;
 }
 

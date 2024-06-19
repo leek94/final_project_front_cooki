@@ -27,7 +27,9 @@
 
 <style scoped>
 /* 레시피 카드 */
-
+.img-li{
+    border: 1px solid;
+}
 
 .image{
     overflow: hidden;

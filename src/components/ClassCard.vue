@@ -4,7 +4,6 @@
         <div class="router-div">
             <div class="class-image">
                 <img src="/images/photos/semi2.jpg">
-                code1
             </div>
             <div class="text-start">
                 <div class="class-text text-start">
@@ -43,7 +42,7 @@
     overflow: hidden;
     position: relative;
     width: 100%;
-    padding-top: 90%; /* 자식 요소의 세로 길이를 부모 요소의 너비에 맞춤 */
+    padding-top: 100%; /* 자식 요소의 세로 길이를 부모 요소의 너비에 맞춤 */
     border-radius: 20px;
 }
 

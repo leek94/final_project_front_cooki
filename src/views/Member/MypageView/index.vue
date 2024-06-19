@@ -2,13 +2,15 @@
         <div class="d-flex">
             <div class="mypage_bg"> 
                 <div>
-                    <img src="/images/photos/profile.png" width="120px" height="120px" style="margin-top: 100px; ">
+                    <img src="/images/photos/profile.png" width="120px" height="120px" style="margin-top: 120px; ">
                 </div>
                 <div class="d-flex username" style="justify-content: center">
                     <div style="color:#04AA6D">손혜선  </div>
                     <div> 님</div>
                  </div>
-                
+                 <div>
+                    <button class="btn btn-outline-success btn-lg ">에디터 신청</button>
+                    </div>
                 <ul style="list-style-type: none;margin-top:80px; padding:0px;">
                     
                     <li><RouterLink to="/Member/MypageView/MyRecipe">나의 레시피</RouterLink></li>
@@ -47,7 +49,7 @@
 .mypage_bg{
   background-color:#eff9ef;
   height: 100%;
-  width:30.5rem;
+  width:35rem;
   min-height: 100vh;
   text-align: center;
 }
@@ -62,8 +64,7 @@ li a {
   color: #000;
   padding: 12px 16px;
   text-decoration: none;
-  font-size: 20px;
-
+  font-size: 22px;
 
 }
 
@@ -74,8 +75,9 @@ li a:hover:not(.active) {
 }
 .mypage_cont{
     width:100%;
-    margin-top:50px;
-    align-items: center;
+    margin:auto 0;
+    padding:0 1.875rem 0;
+    
 }
 .dropdown-item{
     background-color: #eff9ef;

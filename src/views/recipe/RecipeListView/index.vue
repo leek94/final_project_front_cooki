@@ -43,9 +43,8 @@
                     <RecipeCard></RecipeCard>
                     
                     <RecipeCard></RecipeCard>
-                    <RecipeCard></RecipeCard>
-                    <RecipeCard></RecipeCard>
-                    <RecipeCard></RecipeCard>
+             
+                 
 
                     </ul>
                 </div>

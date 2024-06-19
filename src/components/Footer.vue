@@ -46,13 +46,15 @@
 
 <style scoped>
 .footer{
+    position:relative;
     bottom:0px;
     left:0px;
     height:180px;
     background-color: #f2f2f2;
     width:100%;
     margin:0 auto;
-    padding:2.75rem 5rem
+    padding:2.75rem 5rem;
+    min-width: 1300px;
 }
 .footer_link{
     margin-bottom: 2.25rem;

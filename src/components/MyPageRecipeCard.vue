@@ -1,18 +1,16 @@
 <template>
-    <li class="img-li ss">
-        <div class="router-div">
+    <div class="img-li ss">
+        <div class="router-div d-flex">
             <div class="image">
                 <img src="/images/photos/140114575djmw.jpg">
-                code1
             </div>
-
+            <h4>맛있는 행복한 시간</h4>
             <div>
-            <div class="info d-flex mt-3 ">
+        
                 <div class="name me-2">이경환</div>
                 <div class="date border-left-solid">2024.06.09 16:43</div>
-            </div>
+      
             <div class="text text-start">
-                <h4>맛있는 행복한 시간</h4>
                 <div class="d-flex justify-content-end">
                     <div class="me-2">좋아요</div>
                     <div class="">히트카운트</div>
@@ -20,7 +18,7 @@
             </div>
         </div>
         </div>
-    </li>
+    </div>
 </template>
 
 <script setup>
@@ -29,23 +27,12 @@
 
 <style scoped>
 /* 레시피 카드 */
-ul ::marker{
-    content: none;
-}
-ul{
-    padding: 0;
-}
-.img-li{
-    width: calc(25% - 2rem);
-    list-style-type: none;
-    margin: 0 1rem 4rem;
 
-}
 
 .image{
     overflow: hidden;
     position: relative;
-    width: 100%;
+    width: 300px;
     padding-top: 90%; /* 자식 요소의 세로 길이를 부모 요소의 너비에 맞춤 */
     border-radius: 20px;
 }

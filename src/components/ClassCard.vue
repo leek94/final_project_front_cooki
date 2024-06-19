@@ -62,11 +62,6 @@
     font-size: 0.75rem;
 }
 
-.class-date{
-   
-    
-}
-
 .class-text{
     padding: 1.25rem 0 0.5rem;
 }
@@ -86,4 +81,10 @@
     background-color: #0bab6d;
 }
 /* 클래스 카드 끝 */
+
+.class-image:hover img {
+    transform: translate(-50%, -50%) scale(1.1);
+    transition: all 0.2s linear;
+}
+
 </style>

@@ -106,4 +106,9 @@ ul{
     padding: 1.25rem 0 2rem;
 }
 /* 레시피 카드 끝 */
+
+.image:hover img{
+    transform: translate(-50%, -50%) scale(1.1);
+    transition: all 0.2s linear;
+}
 </style>

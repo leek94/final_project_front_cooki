@@ -15,7 +15,7 @@
 
                 <div class="regist-recipe d-flex align-items-center justify-content-center">
                     <!-- 라우터로 변경 예정 -->
-                    <RouterLink to="./RecipeRegisterView">작성하기</RouterLink>
+                    <RouterLink to="./RecipeRegisterView" class="regist-button">작성하기 &ensp;<i class="fa-solid fa-pen"></i></RouterLink>
                 </div>
             </div>
             <!-- main 시작 -->
@@ -102,6 +102,12 @@ const setActive = (index) => {
 .regist-recipe{
     padding-left: 2.625rem;
     border-left: 1px solid #fff
+}
+
+.regist-button{
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 .top-box > img {

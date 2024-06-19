@@ -11,32 +11,39 @@
                     <h4 class="p-2 border-bottom border-dark border-3" style="font-weight: bold;">기본 정보</h4>
                     <div class="row my-3 px-3">
                         <li class="green-point">아이디(이메일)</li>
-                        <input class="p-2 border" placeholder="cooki123@naver.com"/>
+                        <input class="p-2 border" v-model="member.mid" placeholder="이메일 형식의 아이디를 입력해주세요" @keyup="midCheck"/>
+                        <div class="checkError m-1" v-if="midResultError">올바른 형식의 아이디를 입력해주세요</div>
                     </div>
                 
                     <div class="row my-3 px-3">
                         <li class="green-point">이름</li>
-                        <input class="p-2 border" placeholder="이름을 입력해주세요."/>
+                        <input class="p-2 border" v-model="member.mname" placeholder="한글 이름 2~5자 이내" @keyup="mnameCheck"/>
+                        <div class="checkError m-1" v-if="mnameResultError">올바른 형식의 이름을 입력해주세요</div>
                     </div>
                 
                     <div class="row my-3 px-3">
                         <li class="green-point">휴대폰 번호</li>
-                        <input class="p-2 border" placeholder="하이픈(-) 없이 숫자만 입력해주세요"/>
+                        <input class="p-2 border" v-model="member.mphonenum" placeholder="하이픈(-)을 넣어서 작성해주세요" @keyup="mphonenumCheck"/>
+                        <div class="checkError m-1" v-if="mphonenumResultError">올바른 형식의 휴대폰 번호를 입력해주세요</div>
                     </div>
                 
                     <div class="row my-3 px-3">
                         <li class="green-point">닉네임</li>
-                        <input class="p-2 border" placeholder="닉네임을 입력해주세요"/>
+                        <input class="p-2 border" v-model="member.mnickname" placeholder="3~16자 이내" @keyup="mnicknameCheck"/>
+                        <div class="checkError m-1" v-if="mnicknameResultError">올바른 형식의 닉네임을 입력해주세요</div>
                     </div>
                 
                     <div class="row my-3 px-3">
                         <li class="green-point">비밀번호</li>
-                        <input class="p-2 border" placeholder="비밀번호를 입력해주세요"/>
+                        <input class="p-2 border" v-model="member.mpassword" placeholder="알파벳 대소문자, 숫자를 혼용해서 8자 이상 15장 이하" @keyup="mpasswordCheck"/>
+                        <div class="checkError m-1" v-if="mpasswordResultError">올바른 형식의 비밀번호를 입력해주세요</div>
                     </div>
                 
                     <div class="row my-3 px-3">
                         <li class="green-point">비밀번호 확인</li>
-                        <input class="p-2 border" placeholder="비밀번호를 한 번 더입력해주세요"/>
+                        <input class="p-2 border" v-model="member.mpasswordcheck" placeholder="비밀번호를 한 번 더입력해주세요" @keyup="mpasswordMatchCheck"/>
+                        <div class="checkError m-1" v-if="mpasswordMatchError">입력한 비밀번호와 일치하지않습니다</div>
+                        
                     </div>
                 </div>
             
@@ -74,11 +81,11 @@
                     </div>
                     <div class="mx-2 my-3">
                         <input class="checkbox me-2" type="checkbox" id="switch" name="editor" value="yes" checked/>
-                        <label for="switch"> [필수] <RouterLink>이용약관</RouterLink> 확인</label>
+                        <label for="switch"> [필수] <a href="https://member.sempio.com/legal/terms-and-condition">이용약관</a> 확인</label>
                     </div>
                     <div class="mx-2 my-3">
                         <input class="checkbox me-2" type="checkbox" id="switch" name="editor" value="yes" checked/>
-                        <label for="switch"> [필수] <RouterLink>개인정보처리방침</RouterLink> 확인</label>
+                        <label for="switch"> [필수] <a href="https://member.sempio.com/legal/privacy-policy">개인정보처리방침</a> 확인</label>
                     </div>
                     <div class="mx-2 my-3">
                         <input class="checkbox me-2" type="checkbox" id="switch" name="editor" value="yes" checked/>
@@ -101,6 +108,89 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
+
+const member = ref( {
+    mid: "",
+    mname: "",
+    mphonenum: "",
+    mnickname: "",
+    mpassword: "",
+    mpasswordcheck: ""
+});
+
+const midResultError = ref(false);
+const mnameResultError = ref(false);
+const mphonenumResultError = ref(false);
+const mnicknameResultError = ref(false);
+const mpasswordResultError = ref(false);
+const mpasswordMatchError = ref(false);
+
+// function midCheck() {
+//     var midPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
+//     var midResult = midPattern.test(member.value.mid);
+//     //member.value.mid == null || member.value.mid.equals("")
+//     if(midResult == false) {
+//         this.midResultError = true;
+//     } else {
+//         this.midResultError = false;
+//     } 
+//     return midResult;
+// }
+
+//아이디 정규 표현식 검사
+function midCheck() {
+  const midPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
+  const midResult = midPattern.test(member.value.mid);
+  midResultError.value = !midResult;
+  return midResult;
+}
+
+//이름 정규 표현식 검사
+function mnameCheck() {
+  const mnamePattern = /^[가-힣]{2,5}$/;	
+  const mnameResult = mnamePattern.test(member.value.mname);
+  mnameResultError.value = !mnameResult;
+  return mnameResult;
+}
+
+//폰번호 정규 표현식 검사
+function mphonenumCheck() {
+    const mphonenumPattern = /^(010|011)-\d{3,4}-\d{4}$/;
+    const mphonenumResult = mphonenumPattern.test(member.value.mphonenum); //입력 폰번호가 패턴 일치하면 true
+    mphonenumResultError.value = !mphonenumResult; //result가 true면  !true->false->v-if 안나옴 / result가 false면 !false->true->v-if 나옴
+    return mphonenumResult;
+}
+
+//닉네임 정규 표현식 검사
+function mnicknameCheck() {
+    const mnicknamePattern = /^[가-힣a-zA-Z0-9-_]{3,10}$/;
+    const mnicknameResult = mnicknamePattern.test(member.value.mnickname);
+    mnicknameResultError.value = !mnicknameResult;
+    return mnicknameResult;
+}
+
+//비밀번호 정규 표현식 검사
+function mpasswordCheck() {
+    const mpasswordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$/;
+    const mpasswordResult = mpasswordPattern.test(member.value.mpassword);
+    mpasswordResultError.value = !mpasswordResult;
+    return mpasswordResult;
+}
+
+//비밀번호 일치 검사
+function mpasswordMatchCheck() {
+    const mpasswordCheckResult = false;
+    if(member.value.mpassword != member.value.mpasswordcheck) {
+        mpasswordMatchError.value = !mpasswordCheckResult;
+    } else {
+        mpasswordMatchError.value = mpasswordCheckResult;
+    }
+    return mpasswordCheckResult;
+}
+
+
+
 </script>
 
 <style scoped>
@@ -130,5 +220,11 @@ button:hover {
 h6::marker {
     color: black;
 }
+
+.checkError {
+    font-size: 13px;
+    color: red;
+}
+
 
 </style>

@@ -68,11 +68,11 @@ li a {
 
 }
 
-
-li a:hover:not(.active) {
+li a:hover{
   background-color: #04AA6D;
   color: white;
 }
+
 .mypage_cont{
     width:100%;
     margin:auto 0;

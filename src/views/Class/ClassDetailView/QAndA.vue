@@ -1,5 +1,6 @@
 <template>
-    <h4 class="fw-bold m-5" >Q&A</h4>
+    <h4 class="fw-bold m-5">Q&A</h4>
+
     <!-- 댓글 등록 -->
     <!-- 로그인 한 유저만 등록 가능 v-show로 -->
     <div class="d-flex p-2 m-2 border rounded bg-light">

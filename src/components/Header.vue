@@ -1,11 +1,11 @@
 <template>
     <nav class="navbar bg-white text-dark" style="min-width: 1300px;" >
         <div class="header" style="margin-left: 7rem; margin-right: 20px;">
-            <RouterLink to="/"><img style="top:50%" src="@/assets/logo.png" width="40" height="40"/></RouterLink>
+            <RouterLink to="/"><img style="top:50%" src="@/assets/cooki_logo1.png" width="100" height="60"/></RouterLink>
         </div>
 
         <div class="nav-wrapper" >
-            <ul class="d-flex " style="font-weight:bold; margin-left: 200px">
+            <ul class="d-flex " style="font-weight:bold; margin-left: 100px">
                 <li><RouterLink to="/" class="ms-4" style="margin-right:80px">홈</RouterLink></li>
                 <li><RouterLink to="/Class/ClassListView" class="ms-4" style="margin-right:80px">클래스</RouterLink></li>
                 <li><RouterLink to="/Recipe/RecipeListView" class="ms-4" style="margin-right:80px">레시피</RouterLink></li>

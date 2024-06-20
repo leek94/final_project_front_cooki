@@ -1,23 +1,23 @@
 <template>
     <!-- 클래스 카드 -->
-    <li class="class-img-li ss">
+    <li class="class-img-li ss" v-for="(cookClass, cno) in cookClasses" :key="cno">
         <div class="router-div" :style="prop.style">
             <div class="class-image">
                 <img src="/images/photos/semi2.jpg">
             </div>
             <div class="text-start" >
                 <div class="class-text text-start">
-                    <h4>생선을 활용한 쿠킹 클래스</h4>
+                    <h4>{{ cookClass.ctitle }}</h4>
                 </div>
                 <div>
-                    <h6>모집강사 : 김진영</h6>
+                    <h6>모집강사 : {{ cookClass.mname }}</h6>
                 </div>
                 <div>
-                    <h6>모집인원 : 17/25</h6>
+                    <h6>모집인원 : 17/{{ cookClass.cpersoncount }}</h6>
                 </div>
                 <div class="info d-flex mb-3">
-                    <div class="class-date border-left-solid me-3">강의날짜 : 2024.06.21</div>
-                    <div class="dday-box" :class="prop.class" >D-5</div>
+                    <div class="class-date border-left-solid me-3">강의날짜 : {{ cookClass.cdday }}</div>
+                    <div class="dday-box" :class="prop.class" >D-{{ checker(cno) }}</div>
                 </div>
             </div>
             <div class="d-flex justify-content-end">
@@ -25,11 +25,31 @@
             </div>
         </div>
     </li>
-                        <!-- 클래스 카드 끝 -->
+    <!-- 클래스 카드 끝 -->
 </template>
 
 <script setup>
 const prop= defineProps([ "class", "style"])
+import { ref } from 'vue';
+
+// 데이터 바인딩을 위한 더미 데이터
+const cookClasses = ref([
+    { cno:1, ctitle:"쿠키쿠킹클래스", ccontent:"맛있는 쿠키를 만들어볼까요? 유후", cpersoncount: 30, cprice:48000, 
+    mname: "손혜선", cdday: "2024-06-21", ctime:"14:00" },
+    { cno:1, ctitle:"쿠키쿠킹클래스", ccontent:"맛있는 쿠키를 만들어볼까요? 유후", cpersoncount: 30, cprice:48000, 
+    mname: "손혜선", cdday: "2024-06-22", ctime:"14:00" },
+]);
+
+// D-Day 구하는 함수
+function checker(cno){
+const today = new Date();
+// 날짜 형태가 2024-06-20여야만 가능 아니면 형태를 변경해서 넣어줘야함
+const cday = new Date(cookClasses.value[cno].cdday);
+const diff = cday - today; // 초 단위로 나와서 밑에서 변경해줘야함
+const diffDays = Math.ceil(diff / (1000 * 60 * 60 * 24));
+return diffDays
+}
+
 </script>
 
 <style scoped>
@@ -75,7 +95,7 @@ const prop= defineProps([ "class", "style"])
 .class-label{
     display: inline-block;
     margin-bottom: 0.625rem;
-    padding: 0.7rem 1rem;
+    padding: 0.4rem 0.8rem;
     color: #fff;
     font-size: 0.75rem;
     font-weight: 600;

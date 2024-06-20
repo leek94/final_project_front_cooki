@@ -95,7 +95,7 @@ return diffDays
 .class-label{
     display: inline-block;
     margin-bottom: 0.625rem;
-    padding: 0.7rem 1rem;
+    padding: 0.4rem 0.8rem;
     color: #fff;
     font-size: 0.75rem;
     font-weight: 600;

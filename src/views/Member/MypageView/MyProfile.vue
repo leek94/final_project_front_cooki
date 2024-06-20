@@ -5,7 +5,7 @@
         
         <div class="row mx-2 mb-3">
             <li class="green-point m-3" >프로필 사진</li>
-            <img class="border rounded p-2 mx-3 mb-3 mt-1" style="width:300px" src="/images/photos/profile.png">
+            <img class="border rounded p-2 mx-3 mb-3 mt-1" style="width:220px" src="/images/photos/profile.png">
             <div class="input-group  w-100">
                 <input type="file" class="form-control" id="inputGroupFile" aria-describedby="inputGroupFileAddon" aria-label="파일첨부">
                 <button class="btn border" type="button" id="inputGroupFileAddon" >변경</button>
@@ -104,7 +104,7 @@
     color: white;
 }
 .input-group-box{
-    height:60px;
+    height:50px;
     margin-top:10px;
 }
 </style>

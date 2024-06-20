@@ -154,10 +154,14 @@ const setActive = (index) => {
 
 .sorted-box li.active {
     color: #000;
+    font-weight: bold;
 }
 
 .sorted-box li.active::marker{
-    color: #000;
+    content: "✔"; /* 체크 표시 추가 */
+    color: #000; /* 체크 표시 색상 */
+     /* 체크 표시 굵기 */
+    font-size: 1em; /* 체크 표시 크기 */ 
 }
 
 .main-box{

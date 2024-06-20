@@ -12,43 +12,43 @@
          <div class="qcards d-flex">
          <div class="card qnaCard mt-3">
              <div class="card-body text-center">
-                 <ClassCard class="d-none" style="width:300px" />
+                 <ClassCard class="d-none" style="width:250px" />
              </div>
          </div>
 
          <div class="card qnaCard mt-3">
              <div class="card-body text-center">
-                 <ClassCard class="d-none" style="width:300px" />
+                 <ClassCard class="d-none" style="width:250px" />
              </div>
          </div>
 
          <div class="card qnaCard mt-3">
              <div class="card-body text-center">
-                 <ClassCard class="d-none" style="width:300px" />
+                 <ClassCard class="d-none" style="width:250px" />
              </div>
          </div>
 
          <div class="card qnaCard mt-3">
              <div class="card-body text-center">
-                 <ClassCard class="d-none" style="width:300px" />
+                 <ClassCard class="d-none" style="width:250px" />
              </div>
          </div>
 
          <div class="card qnaCard mt-3">
              <div class="card-body text-center">
-                 <ClassCard class="d-none" style="width:300px" />
+                 <ClassCard class="d-none" style="width:250px" />
              </div>
          </div>
 
          <div class="card qnaCard mt-3">
              <div class="card-body text-center">
-                 <ClassCard class="d-none" style="width:300px" />
+                 <ClassCard class="d-none" style="width:250px" />
              </div>
          </div>
 
          <div class="card qnaCard mt-3">
              <div class="card-body text-center">
-                 <ClassCard class="d-none" style="width:300px" />
+                 <ClassCard class="d-none" style="width:250px" />
              </div>
          </div>
 

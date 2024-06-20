@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex" style="justify-content: center;">
 
-        <form>
+        <form @submit.prevent="handleSubmit">
         <div class="row m-5 px-5 " style=" width: 700px; ">
             <h3 style="font-weight: bold; text-align: center">회원가입</h3>
             <div class="">
@@ -55,17 +55,22 @@
                         <label for="switch">에디터로 가입하기</label>
                     </div>
 
+                    <!-- 버튼 온클릭 -> inner html -> 계속 반복되게 그 안에 또 inner html -->
                     <div class="row my-3 px-3">
                         <li class="green-point">경력</li>
-                        <div class="d-flex">
-                            <input class="flex-grow-1 p-2 border" placeholder="경력을 입력해주세요"/>
-                            <button class="p-2 ms-3 border"> + </button>
+                        <div class="d-flex m-1" v-for="(career, index) in careerArray" :key="index">
+                            <input class="flex-grow-1 p-2 border" placeholder="경력을 입력해주세요" v-model="career.cacontent"/>
+                            <!-- 삭제 버튼은 index=0(첫행)일 때만 안보이고 항상 보임-->
+                            <button class="p-2 ms-3 border" v-if="index > 0" @click="careerRemove(index)"> - </button>
+                            <!-- 추가 버튼은 마지막행일 때만 보임 -->
+                            <button class="p-2 ms-3 border" v-if="index+1===careerArray.length" @click="careerAdd(index)"> + </button>
                         </div>
+                        
                     </div>
 
                     <div class="row my-3 px-3">
                         <li class="green-point">수상 내역</li>
-                        <div class="d-flex">
+                        <div class="d-flex m-1">
                             <input class="flex-grow-1 p-2 border" placeholder="수상 이력을 입력해주세요"/>
                             <button class="p-2 ms-3 border"> + </button>
                         </div>
@@ -87,14 +92,9 @@
                         <input class="checkbox me-2" type="checkbox" id="switch" name="editor" value="yes" checked/>
                         <label for="switch"> [필수] <a href="https://member.sempio.com/legal/privacy-policy">개인정보처리방침</a> 확인</label>
                     </div>
-                    <div class="mx-2 my-3">
-                        <input class="checkbox me-2" type="checkbox" id="switch" name="editor" value="yes" checked/>
-                        <label for="switch"> [선택] 광고성메세지 수신 동의</label>
-                    </div>
 
                     <div class="mx-2 my-3 p-3" style="background-color: #D9EDBF;">
                         <li>회원 탈퇴 시까지 회원으로서 자격이 유지됩니다.</li>
-                        <li>광고성메세지 수신에 동의하지 않더라도, 이벤트 당첨 안내 등 원활환 서비스 이용과 관련된 메세지는 발송됩니다.</li>
                     </div>
                 </div>
 
@@ -125,6 +125,7 @@ const mphonenumResultError = ref(false);
 const mnicknameResultError = ref(false);
 const mpasswordResultError = ref(false);
 const mpasswordMatchError = ref(false);
+
 
 // function midCheck() {
 //     var midPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
@@ -189,7 +190,50 @@ function mpasswordMatchCheck() {
     return mpasswordCheckResult;
 }
 
+// const career = ref();
+// const careerNo = ref(1);
+// const careerArray = ref([
+//     {careerNo, career}
+// ]);
 
+// function careerAdd() {
+//     // careerArray.value.careerNo = +1;
+//     careerArray.value.careerNo = +1;
+//     careerArray.value.push({careerNo, career});
+//     console.log(careerArray.value.careerNo);
+//     console.log(careerArray.value.career);
+// }
+
+
+
+ const career = ref({
+    cano: 1,
+    cacontent: ''
+ })
+
+ const careerArray = ref([career.value]);
+//const careerArray = ref([{ cano: '', cacontent: '' }]);
+//let nextCano = 2;
+
+const careerAddAfter = ref(false);
+
+function careerAdd(index) {
+    careerArray.value.push({cano: index+2, cacontent: ''});
+    careerAddAfter.value = !careerAddAfter.value;
+    //careerArray.value.push({ cano: index+2, cacontent: '' });
+    //console.log("다음인덱스번호",nextCano );
+    console.log("배열객체",JSON.parse(JSON.stringify(careerArray.value)));
+    //console.log("커리어이름",careerArray.value[index].cacontent);
+    //console.log("인덱스번호",careerArray.value[index].cano);
+}
+
+function careerRemove(index) {
+    careerArray.value.splice(index,index);
+}
+
+function handleSubmit() {
+
+}
 
 </script>
 

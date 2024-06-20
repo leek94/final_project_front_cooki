@@ -18,18 +18,20 @@
              <div class="d-flex mb-1">
                   <div class="me-3" style="font-weight: bold;">닉네임</div>
              </div>
-            <form>
+            <form @submit.prevent="handleSubmit">
+
+                <!-- 별점 체크 시작 -->
                 <!-- onclick 이벤트로 클릭스 하얀별에서 노란별로 바뀌고 폼 저장할 때 별점도 입력되게 하기 -->
                 <div class="d-flex pb-2" style="align-items: center;">
-                    <div class="star">
-                        <img src="/images/photos/ic_star_white.png">
-                        <img src="/images/photos/ic_star_white.png">
-                        <img src="/images/photos/ic_star_white.png">
-                        <img src="/images/photos/ic_star_white.png">
-                        <img src="/images/photos/ic_star_white.png">
+                    <div class="star" v-for="index in 5" :key="index" @click="starCheck(index)">
+                        <!-- 클릭된 별의 인덱스보다 작은 숫자의 별들은 star로 표시/ 크거나 같은 숫자의 별들은 star_white로 표시 -->
+                        <div v-show="index<starClick"><img src="/images/photos/ic_star.png"> </div>
+                        <div v-show="index>=starClick"><img src="/images/photos/ic_star_white.png"></div>                
                     </div>
                     <h6 class="m-2">평점을 입력해주세요</h6>
                 </div>
+                <!-- 별점 선택 끝 -->
+
                 <div class="w-100 row pe-5">
                      <textarea class="p-3 ms-3 me-3 border rounded" style="color: grey;" placeholder="리뷰 내용을 입력해주세요."></textarea>
                 </div>
@@ -86,6 +88,17 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
+
+//별점 체크 디폴트값 설정
+const starClick = ref(0);
+
+//별점 체크 함수
+function starCheck(index) {
+    starClick.value = index + 1;
+}
+
+
 </script>
 
 <style scoped>

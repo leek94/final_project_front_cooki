@@ -12,50 +12,50 @@
          <div class="qcards d-flex">
          <div class="card qnaCard mt-3">
              <div class="card-body  text-center">
-                <button class="reBtn btn btn-danger btn-md">다시 열기</button>
-                 <ClassCard class="d-none" style="width:300px" />
+                <button class="reBtn btn btn-danger btn-sm">다시 열기</button>
+                 <ClassCard class="d-none" style="width:250px" />
              </div>
          </div>
 
          <div class="card qnaCard mt-3">
              <div class="card-body  text-center">
-                <button class="reBtn btn btn-danger btn-md">다시 열기</button>
-                 <ClassCard class="d-none" style="width:300px" />
+                <button class="reBtn btn btn-danger btn-sm">다시 열기</button>
+                 <ClassCard class="d-none" style="width:250px" />
              </div>
          </div>
 
          <div class="card qnaCard mt-3">
              <div class="card-body text-center">
-                <button class="reBtn btn btn-danger btn-md">다시 열기</button>
-                 <ClassCard class="d-none" style="width:300px" />
+                <button class="reBtn btn btn-danger btn-sm">다시 열기</button>
+                 <ClassCard class="d-none" style="width:250px" />
              </div>
          </div>
 
          <div class="card qnaCard mt-3">
              <div class="card-body  text-center">
-                <button class="reBtn btn btn-danger btn-md">다시 열기</button>
-                 <ClassCard class="d-none" style="width:300px" />
+                <button class="reBtn btn btn-danger btn-sm">다시 열기</button>
+                 <ClassCard class="d-none" style="width:250px" />
              </div>
          </div>
 
          <div class="card qnaCard mt-3">
              <div class="card-body  text-center">
-                <button class="reBtn btn btn-danger btn-md">다시 열기</button>
-                 <ClassCard class="d-none" style="width:300px" />
+                <button class="reBtn btn btn-danger btn-sm">다시 열기</button>
+                 <ClassCard class="d-none" style="width:250px" />
              </div>
          </div>
 
          <div class="card qnaCard mt-3">
              <div class="card-body  text-center">
-                <button class="reBtn btn btn-danger btn-md">다시 열기</button>
-                 <ClassCard class="d-none" style="width:300px" />
+                <button class="reBtn btn btn-danger btn-sm">다시 열기</button>
+                 <ClassCard class="d-none" style="width:250px" />
              </div>
          </div>
 
          <div class="card qnaCard mt-3">
              <div class="card-body text-center">
-                <button class="reBtn btn btn-danger btn-md">다시 열기</button>
-                 <ClassCard class="d-none" style="width:300px" />
+                <button class="reBtn btn btn-danger btn-sm">다시 열기</button>
+                 <ClassCard class="d-none" style="width:250px" />
              </div>
          </div>
 

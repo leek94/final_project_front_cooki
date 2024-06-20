@@ -9,7 +9,7 @@
                     <div> 님</div>
                  </div>
                  <div>
-                    <button class="btn btn-outline-success btn-lg ">에디터 신청</button>
+                    <button class="btn btn-outline-success btn-md ">에디터 신청</button>
                     </div>
                 <ul style="list-style-type: none;margin-top:80px; padding:0px;">
                     
@@ -55,7 +55,7 @@
 }
 
 .username{
-    font-size:30px;
+    font-size:26px;
     font-weight: 800;
     margin:1.5rem 0;
 }
@@ -64,7 +64,7 @@ li a {
   color: #000;
   padding: 12px 16px;
   text-decoration: none;
-  font-size: 22px;
+  font-size: 19px;
 
 }
 

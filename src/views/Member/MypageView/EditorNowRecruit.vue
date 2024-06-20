@@ -12,49 +12,49 @@
          <div class="qcards d-flex">
          <div class="card qnaCard mt-3">
              <div class="card-body text-center">
-                <RouterLink to="/Class/ParticipantCheckView"><button class="reBtn btn btn-success btn-md">출석 확인</button></RouterLink>
-                 <ClassCard class="d-none" style="width:300px" />
+                <RouterLink to="/Class/ParticipantCheckView"><button class="reBtn btn btn-success btn-sm">출석 확인</button></RouterLink>
+                 <ClassCard class="d-none" style="width:250px" />
              </div>
          </div>
          <div class="card qnaCard mt-3">
              <div class="card-body text-center">
-                <RouterLink to="/Class/ParticipantCheckView"><button class="reBtn btn btn-success btn-md">출석 확인</button></RouterLink>
-                 <ClassCard class="d-none" style="width:300px" />
-             </div>
-         </div>
-
-         <div class="card qnaCard mt-3">
-             <div class="card-body text-center">
-                <RouterLink to="/Class/ParticipantCheckView"><button class="reBtn btn btn-success btn-md">출석 확인</button></RouterLink>
-                 <ClassCard class="d-none" style="width:300px" />
+                <RouterLink to="/Class/ParticipantCheckView"><button class="reBtn btn btn-success btn-sm">출석 확인</button></RouterLink>
+                 <ClassCard class="d-none" style="width:250px" />
              </div>
          </div>
 
          <div class="card qnaCard mt-3">
              <div class="card-body text-center">
-                <RouterLink to="/Class/ParticipantCheckView"><button class="reBtn btn btn-success btn-md">출석 확인</button></RouterLink>
-                 <ClassCard class="d-none" style="width:300px" />
+                <RouterLink to="/Class/ParticipantCheckView"><button class="reBtn btn btn-success btn-sm">출석 확인</button></RouterLink>
+                 <ClassCard class="d-none" style="width:250px" />
              </div>
          </div>
 
          <div class="card qnaCard mt-3">
              <div class="card-body text-center">
-                <RouterLink to="/Class/ParticipantCheckView"><button class="reBtn btn btn-success btn-md">출석 확인</button></RouterLink>
-                 <ClassCard class="d-none" style="width:300px" />
+                <RouterLink to="/Class/ParticipantCheckView"><button class="reBtn btn btn-success btn-sm">출석 확인</button></RouterLink>
+                 <ClassCard class="d-none" style="width:250px" />
              </div>
          </div>
 
          <div class="card qnaCard mt-3">
              <div class="card-body text-center">
-                <RouterLink to="/Class/ParticipantCheckView"><button class="reBtn btn btn-success btn-md">출석 확인</button></RouterLink>
-                 <ClassCard class="d-none" style="width:300px" />
+                <RouterLink to="/Class/ParticipantCheckView"><button class="reBtn btn btn-success btn-sm">출석 확인</button></RouterLink>
+                 <ClassCard class="d-none" style="width:250px" />
              </div>
          </div>
 
          <div class="card qnaCard mt-3">
              <div class="card-body text-center">
-                <RouterLink to="/Class/ParticipantCheckView"><button class="reBtn btn btn-success btn-md">출석 확인</button></RouterLink>
-                 <ClassCard class="d-none" style="width:300px" />
+                <RouterLink to="/Class/ParticipantCheckView"><button class="reBtn btn btn-success btn-sm">출석 확인</button></RouterLink>
+                 <ClassCard class="d-none" style="width:250px" />
+             </div>
+         </div>
+
+         <div class="card qnaCard mt-3">
+             <div class="card-body text-center">
+                <RouterLink to="/Class/ParticipantCheckView"><button class="reBtn btn btn-success btn-sm">출석 확인</button></RouterLink>
+                 <ClassCard class="d-none" style="width:250px" />
              </div>
          </div>
 

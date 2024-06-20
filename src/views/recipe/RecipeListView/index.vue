@@ -127,12 +127,16 @@ const setActive = (index) => {
 }
 
 .clicked-li{
-    font-size: 0.75rem;
+    font-size: 0.9rem;
     color: #c4c4c4;
 }
 
 .sorted-box li::marker {
     color: #c4c4c4;
+}
+
+.sorted-box li:hover {
+    cursor: pointer;
 }
 
 .sorted-box li{

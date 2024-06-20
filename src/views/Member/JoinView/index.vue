@@ -51,12 +51,12 @@
                 <div class="text-start bg-light p-5 my-5">
                     <h4 class=" p-2 border-bottom border-dark border-3" style="font-weight: bold;">추가 정보</h4>
                     <div class="mx-2 my-3">
-                        <input class="checkbox me-2" type="checkbox" id="switch" name="editor" value="yes" checked/>
+                        <input class="checkbox me-2" type="checkbox" id="switch" name="editor" value="yes" @click="joinEditor"/>
                         <label for="switch">에디터로 가입하기</label>
                     </div>
 
                     <!-- 버튼 온클릭 -> inner html -> 계속 반복되게 그 안에 또 inner html -->
-                    <div class="row my-3 px-3">
+                    <div class="row my-3 px-3" v-if="isEditor">
                         <li class="green-point">경력</li>
                         <div class="d-flex m-1" v-for="(career, index) in careerArray" :key="index">
                             <input class="flex-grow-1 p-2 border" placeholder="경력을 입력해주세요" v-model="career.cacontent"/>
@@ -65,16 +65,19 @@
                             <!-- 추가 버튼은 마지막행일 때만 보임 -->
                             <button class="p-2 ms-3 border" v-if="index+1===careerArray.length" @click="careerAdd(index)"> + </button>
                         </div>
+                        <div class="checkError m-1" v-if="cacontentNullError">내용을 입력하신 후 추가해주세요</div>
                         
                     </div>
 
-                    <div class="row my-3 px-3">
+                    <div class="row my-3 px-3" v-if="isEditor">
                         <li class="green-point">수상 내역</li>
                         <div class="d-flex m-1">
                             <input class="flex-grow-1 p-2 border" placeholder="수상 이력을 입력해주세요"/>
+                            <button class="p-2 ms-3 border"> - </button>
                             <button class="p-2 ms-3 border"> + </button>
                         </div>
                     </div>
+
                 </div>
 
                 <!-- 약관 동의 -->
@@ -204,7 +207,12 @@ function mpasswordMatchCheck() {
 //     console.log(careerArray.value.career);
 // }
 
+const isEditor = ref(false);
 
+function joinEditor() {
+    isEditor.value = !isEditor.value;
+    console.log(isEditor.value);
+}
 
  const career = ref({
     cano: 1,
@@ -216,15 +224,17 @@ function mpasswordMatchCheck() {
 //let nextCano = 2;
 
 const careerAddAfter = ref(false);
+const cacontentNullError = ref(false);
 
 function careerAdd(index) {
-    careerArray.value.push({cano: index+2, cacontent: ''});
-    careerAddAfter.value = !careerAddAfter.value;
-    //careerArray.value.push({ cano: index+2, cacontent: '' });
-    //console.log("다음인덱스번호",nextCano );
-    console.log("배열객체",JSON.parse(JSON.stringify(careerArray.value)));
-    //console.log("커리어이름",careerArray.value[index].cacontent);
-    //console.log("인덱스번호",careerArray.value[index].cano);
+        //cacontentNullError.value = !cacontentNullError.value;
+        careerArray.value.push({cano: index+2, cacontent: ''});
+        careerAddAfter.value = !careerAddAfter.value;
+        //careerArray.value.push({ cano: index+2, cacontent: '' });
+        //console.log("다음인덱스번호",nextCano );
+        console.log("배열객체",JSON.parse(JSON.stringify(careerArray.value)));
+        //console.log("커리어이름",careerArray.value[index].cacontent);
+        //console.log("인덱스번호",careerArray.value[index].cano);
 }
 
 function careerRemove(index) {

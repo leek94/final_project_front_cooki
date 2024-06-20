@@ -1,7 +1,7 @@
 <template>
     <form>
 
-        <div class="d-flex row" style="justify-content: center;">
+        <div class="d-flex" style="justify-content: center;">
                 <div class="row mx-5 p-5 " style="width: 500px; justify-content: center;">
                     <h3 class="mb-5" style="font-weight: bold; text-align: center">로그인</h3>
                     <input class="p-2 mb-3 border" placeholder="이메일 형식의 아이디"/>

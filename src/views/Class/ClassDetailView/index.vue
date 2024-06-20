@@ -125,7 +125,16 @@ import CCancelModal from'./CCancelModal.vue'
 import { Modal } from 'bootstrap';
 // register Swiper custom elements
 register();
+let Class1={
+    ctitle:"쫀득쫀득 스모어쿠키 만들기!",
+    caddress:"장소 서울시 송파구 중대로 135 아이티 벤처타워 16층",
+    cstartDate:"2024년 7월 26일",
+    cdday:5,
+    ctime:"1시간 30분",
+    
 
+
+}
 let registerModal=null;
 let CancelModal=null;
     

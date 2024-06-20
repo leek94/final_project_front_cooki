@@ -123,6 +123,9 @@ import { register } from 'swiper/element/bundle';
 import CRegisterModal from'./CRegisterModal.vue'
 import CCancelModal from'./CCancelModal.vue'
 import { Modal } from 'bootstrap';
+import CRegisterModal from'./CRegisterModal.vue'
+import CCancelModal from'./CCancelModal.vue'
+import { Modal } from 'bootstrap';
 // register Swiper custom elements
 register();
 
@@ -143,6 +146,7 @@ let CancelModal=null;
          prevBtn.addEventListener('click', () => {
             swiperEl.swiper.slidePrev();
          });
+
 
 
     });

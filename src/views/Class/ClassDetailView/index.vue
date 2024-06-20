@@ -107,7 +107,7 @@
         <hr style="margin:10px"/>
         <RouterView/>
         <div style="text-align: center; margin-top: 100px;">
-            <button class="backList btn btn-outline-success btn-sm">목록으로</button>
+            <RouterLink to="/Class/ClassListView"><button class="backList btn btn-outline-success btn-sm">목록으로</button></RouterLink>
         </div>
         </div>
         

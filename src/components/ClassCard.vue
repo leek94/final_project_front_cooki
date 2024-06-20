@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-end">
-                <div class="class-label text-end" :class="prop.class">참여하기</div>
+                <div class="class-label btn text-end" :class="prop.class">참여하기</div>
             </div>
         </div>
     </li>

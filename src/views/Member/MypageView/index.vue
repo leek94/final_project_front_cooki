@@ -24,10 +24,10 @@
                             마이 클래스 
                         </a>
                         <ul class="dropdown-menu w-100 p-0 border-0 align-middle text-center" aria-labelledby="navbarDarkDropdownMenuLink">
-                            <li><RouterLink class="dropdown-item me-2" to="/Member/MypageView/MyNowClass">내가 참여한 클래스</RouterLink> </li>
-                            <li><RouterLink class="dropdown-item me-2" to="/Member/MypageView/MyClassHistory">내가 현재 신청한</RouterLink> </li>
-                            <li><RouterLink class="dropdown-item me-2" to="/Member/MypageView/EditorNowRecruit">현재 모집 중인 </RouterLink> </li>
-                            <li><RouterLink class="dropdown-item me-2" to="/Member/MypageView/EditorRecruitHistory">모집이 마감된</RouterLink> </li>
+                            <li><RouterLink class="dropdown-item me-2" to="/Member/MypageView/MyNowClass">내가 신청한 클래스</RouterLink> </li>
+                            <li><RouterLink class="dropdown-item me-2" to="/Member/MypageView/MyClassHistory">내가 수강한 클래스</RouterLink> </li>
+                            <li><RouterLink class="dropdown-item me-2" to="/Member/MypageView/EditorNowRecruit">현재 모집 중인 클래스</RouterLink> </li>
+                            <li><RouterLink class="dropdown-item me-2" to="/Member/MypageView/EditorRecruitHistory">모집 마감된 클래스</RouterLink> </li>
                         </ul>
                         </li>
                     </ul>

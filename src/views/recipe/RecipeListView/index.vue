@@ -18,6 +18,7 @@
                     <RouterLink to="./RecipeRegisterView" class="regist-button">작성하기 &ensp;<i class="fa-solid fa-pen"></i></RouterLink>
                 </div>
             </div>
+            <RouterLink to="./RecipeDetailView">레시피 디테일</RouterLink>
             <!-- main 시작 -->
             <div class="main-box ss">
                 <!-- 정렬 버튼 -->
@@ -29,7 +30,7 @@
                     </ul>
                 </div>
                 <!-- 사진 -->
-                <RouterLink to="./RecipeDetailView">레시피 디테일</RouterLink>
+                
                 <div class="main-box ss">
                     <ul class="main-img d-flex ss">
                     <RecipeCard></RecipeCard>
@@ -63,6 +64,14 @@ const activeIndex = ref(0);
 
 const setActive = (index) => {
   activeIndex.value = index;
+  // 로직 axios
+  if(index == 0){
+    // 최신순 axios
+  } else if(index == 1) {
+    // 조회순 axios
+  } else {
+    // 좋아요순 axios
+  }
 };
 </script>
 
@@ -127,12 +136,16 @@ const setActive = (index) => {
 }
 
 .clicked-li{
-    font-size: 0.75rem;
+    font-size: 0.9rem;
     color: #c4c4c4;
 }
 
 .sorted-box li::marker {
     color: #c4c4c4;
+}
+
+.sorted-box li:hover {
+    cursor: pointer;
 }
 
 .sorted-box li{

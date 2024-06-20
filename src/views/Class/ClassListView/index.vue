@@ -5,6 +5,8 @@
             <div class="recipe-title mb-5"><h3>클래스</h3></div>
             <SearchBar></SearchBar>
             <!-- 작성바 & 작성 버튼 -->
+            <RouterLink to="./ClassDetailView" class="me-3">클래스 디테일</RouterLink>
+            <RouterLink to="./ClassRegisterView">클래스 등록</RouterLink>
             <!-- main 시작 -->
             <div class="main-box ss">
                 <!-- 정렬 버튼 -->
@@ -16,8 +18,7 @@
                     </ul>
                 </div>
                 <!-- 사진 -->
-                <RouterLink to="./ClassDetailView" class="me-3">클래스 디테일</RouterLink>
-                <RouterLink to="./ClassRegisterView">클래스 등록</RouterLink>
+                
                 <div class="main-box ss">
                     <ul class="main-img d-flex ss">
 
@@ -55,9 +56,19 @@ const activeIndex = ref(0);
 
 const setActive = (index) => {
   activeIndex.value = index;
+  
+  // 로직 axios
+  if(index == 0){
+    // 최신순 axios
+  } else if(index == 1) {
+    // 조회순 axios
+  } else {
+    // 좋아요순 axios
+  }
 };
 
 // 정렬을 위한 자바스크립트 끝
+
 </script>
 
 <style scoped>
@@ -113,12 +124,16 @@ const setActive = (index) => {
 
 /* 정렬 부분 시작 */
 .clicked-li{
-    font-size: 0.75rem;
+    font-size: 0.9rem;
     color: #c4c4c4;
 }
 
 .sorted-box li::marker {
     color: #c4c4c4;
+}
+
+.sorted-box li:hover {
+    cursor: pointer;
 }
 
 .sorted-box li{

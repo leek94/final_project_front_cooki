@@ -9,34 +9,34 @@
  
          <hr class="mt-0"/>
          <div class="qcards d-flex">
-         <div class="card qnaCard mt-3" style="padding:10px 0 0 0 ">
+         <div class="card qnaCard mt-3" style="padding:0 ">
              <div class="card-body text-center">
-                 <RecipeCard style="margin:0 ;padding:16px 0 0 16px; width:300px"/>
+                 <RecipeCard style="margin:0 ;padding:16px 0 0 16px; width:250px"/>
              </div>
          </div>
  
-         <div class="card qnaCard mt-3" style="padding:10px 0 0 0 ">
+         <div class="card qnaCard mt-3" style="padding:0 ">
              <div class="card-body text-center">
-                 <RecipeCard style="margin:0 ;padding:16px 0 0 16px; width:300px"/>
+                 <RecipeCard style="margin:0 ;padding:16px 0 0 16px; width:250px"/>
              </div>
          </div>
  
-         <div class="card qnaCard mt-3" style="padding:10px 0 0 0 ">
+         <div class="card qnaCard mt-3" style="padding:0 ">
              <div class="card-body text-center">
-                 <RecipeCard style="margin:0 ;padding:16px 0 0 16px; width:300px"/>
+                 <RecipeCard style="margin:0 ;padding:16px 0 0 16px; width:250px"/>
              </div>
          </div>
  
-         <div class="card qnaCard mt-3" style="padding:10px 0 0 0 ">
+         <div class="card qnaCard mt-3" style="padding:0 ">
              <div class="card-body text-center">
-                 <RecipeCard style="margin:0 ;padding:16px 0 0 16px; width:300px"/>
+                 <RecipeCard style="margin:0 ;padding:16px 0 0 16px; width:250px"/>
              </div>
          </div>
  
  
-         <div class="card qnaCard mt-3" style="padding:10px 0 0 0 ">
+         <div class="card qnaCard mt-3" style="padding:0 ">
              <div class="card-body text-center">
-                 <RecipeCard style="margin:0 ;padding:16px 0 0 16px; width:300px"/>
+                 <RecipeCard style="margin:0 ;padding:16px 0 0 16px; width:250px"/>
              </div>
          </div>
  
@@ -69,10 +69,10 @@
      border:solid 1px #e5e5e5;
      border-radius: 0.7rem;
      box-shadow: 0 2px 20px 0 rgba(0, 0, 3, 0.2);
-     width: 400px;
-     height:450px;
+     width: 200px;
+     height:400px;
      margin-top:3.5rem;
-     width: calc(25% - 2rem);
+     width: calc(33% - 2rem);
      margin:0 1rem;
  }
  

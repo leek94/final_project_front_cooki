@@ -52,7 +52,10 @@
     <hr/>
     <div class="d-flex" style="justify-content: end; align-items: center">
         <div style="font-size: 26px;font-weight: bold; margin-right: 60px;">48,000원</div>
-        <button class="btn btn-success btn-lg">신청하기</button>
+        <button class="btn btn-success btn-lg" @click="showDialogRegister">신청하기</button>
+        <button class="btn btn-success btn-lg" @click="showDialogCancel">취소하기</button>
+        <CRegisterModal id="registerModal" @close="hideDialogR"/>
+        <CCancelModal id="cancelModal" @close="hideDialogC"/>
     </div>
     </div>
         </div>
@@ -117,10 +120,19 @@
 import { onMounted } from 'vue';
 // import function to register Swiper custom elements
 import { register } from 'swiper/element/bundle';
+import CRegisterModal from'./CRegisterModal.vue'
+import CCancelModal from'./CCancelModal.vue'
+import { Modal } from 'bootstrap';
 // register Swiper custom elements
 register();
 
-    onMounted(()=>{
+let registerModal=null;
+let CancelModal=null;
+    
+     onMounted(()=>{ 
+        registerModal=new Modal(document.querySelector("#registerModal"))
+        CancelModal = new Modal(document.querySelector("#cancelModal"))
+       
         const swiperEl = document.querySelector('.swiper-container');
         const nextBtn = document.querySelector('.nextBtn');
         const prevBtn = document.querySelector('.prevBtn');
@@ -132,9 +144,24 @@ register();
             swiperEl.swiper.slidePrev();
          });
 
+
     });
 
 
+function showDialogRegister(){
+    registerModal.show();
+}
+
+function hideDialogR(){
+    registerModal.hide();
+}
+
+function showDialogCancel(){
+    CancelModal.show();
+}
+function hideDialogC(){
+    CancelModal.hide();
+}
 </script>
 
 <style scoped>

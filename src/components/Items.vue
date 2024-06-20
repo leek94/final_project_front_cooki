@@ -30,7 +30,7 @@ const RecipeItems= ref(
 .ingredient-box{
     padding: 2.5rem;
     margin-top:3.75rem;
-    border:1px solid #e5e5e5
+    border:1px solid #e5e5e5 !important;
 }
 
 .ingredient-title{

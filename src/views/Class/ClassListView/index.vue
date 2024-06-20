@@ -56,9 +56,19 @@ const activeIndex = ref(0);
 
 const setActive = (index) => {
   activeIndex.value = index;
+  
+  // 로직 axios
+  if(index == 0){
+    // 최신순 axios
+  } else if(index == 1) {
+    // 조회순 axios
+  } else {
+    // 좋아요순 axios
+  }
 };
 
 // 정렬을 위한 자바스크립트 끝
+
 </script>
 
 <style scoped>

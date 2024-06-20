@@ -41,10 +41,21 @@ function changeData(index) {
     const cookClass = cookClasses.value[index];
     cookClass.attendence = cookClass.attendence === "결석" ? "출석" : "결석";
     cookClass.isActive = !cookClass.isActive;
+
+    //test
+    const today = new Date();
+    const cday = new Date(cookClasses.value[0].cdate);
+    console.log(cookClasses.value[0].cdate);
+    const diff = today - cday;
+    console.log(diff);
+    const diffDays = Math.floor(diff / (1000 * 60 * 60 * 24));
+    console.log(diffDays);
+    console.log(`현재 날짜와 cdday 사이의 차이는 ${diffDays}일 입니다.`);
+    
 }
 
 const cookClasses = ref([
-    {cno:1, name:"손혜선", classname: "쿠키쿠킹클래스", cdate:"2024.06.19", starttime:"14:00", email:"heaSon@naver.com",attendence:"결석", isActive: false },
+    {cno:1, name:"손혜선", classname: "쿠키쿠킹클래스", cdate:"2024-06-19", starttime:"14:00", email:"heaSon@naver.com",attendence:"결석", isActive: false },
     {cno:2, name:"손혜선", classname: "쿠키쿠킹클래스", cdate:"2024.06.19", starttime:"14:00", email:"heaSon@naver.com",attendence:"결석", isActive: false },
     {cno:3, name:"손혜선", classname: "쿠키쿠킹클래스", cdate:"2024.06.19", starttime:"14:00", email:"heaSon@naver.com",attendence:"결석", isActive: false },
     {cno:4, name:"손혜선", classname: "쿠키쿠킹클래스", cdate:"2024.06.19", starttime:"14:00", email:"heaSon@naver.com",attendence:"결석", isActive: false },

@@ -5,6 +5,8 @@
             <div class="recipe-title mb-5"><h3>클래스</h3></div>
             <SearchBar></SearchBar>
             <!-- 작성바 & 작성 버튼 -->
+            <RouterLink to="./ClassDetailView" class="me-3">클래스 디테일</RouterLink>
+            <RouterLink to="./ClassRegisterView">클래스 등록</RouterLink>
             <!-- main 시작 -->
             <div class="main-box ss">
                 <!-- 정렬 버튼 -->
@@ -16,8 +18,7 @@
                     </ul>
                 </div>
                 <!-- 사진 -->
-                <RouterLink to="./ClassDetailView" class="me-3">클래스 디테일</RouterLink>
-                <RouterLink to="./ClassRegisterView">클래스 등록</RouterLink>
+                
                 <div class="main-box ss">
                     <ul class="main-img d-flex ss">
 

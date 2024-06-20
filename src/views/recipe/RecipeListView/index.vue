@@ -18,6 +18,7 @@
                     <RouterLink to="./RecipeRegisterView" class="regist-button">작성하기 &ensp;<i class="fa-solid fa-pen"></i></RouterLink>
                 </div>
             </div>
+            <RouterLink to="./RecipeDetailView">레시피 디테일</RouterLink>
             <!-- main 시작 -->
             <div class="main-box ss">
                 <!-- 정렬 버튼 -->
@@ -29,7 +30,7 @@
                     </ul>
                 </div>
                 <!-- 사진 -->
-                <RouterLink to="./RecipeDetailView">레시피 디테일</RouterLink>
+                
                 <div class="main-box ss">
                     <ul class="main-img d-flex ss">
                     <RecipeCard></RecipeCard>

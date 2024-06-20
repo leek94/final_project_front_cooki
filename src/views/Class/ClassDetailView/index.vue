@@ -15,24 +15,27 @@
                     <i class="fa-solid fa-chevron-right" style="font-size: 40px" ></i>
                 </button> 
             </div>
-            <div class="col-6">
-                <span class="ClassTitle"> 쫀득쫀득 스모어쿠키 만들기! </span>
+            <div class="col-6" v-for="(Class,index) in Class1" :key="index">
+                <span class="ClassTitle"> {{Class.ctitle}}</span>
                 <div class="Classinfo">
                     <ul style="text-align:start; padding-top:20px">
-                        <li class="border-top pt-3 pb-3"><span>장소    </span>
-                        <span>서울시 송파구 중대로 135 아이티 벤처타워 16층 </span></li>
-                        <li class="border-top pt-3 pb-3"><span>날짜    </span>
-                        <span>2024년 7월 26일 </span>
+                        <li class="border-top pt-3 pb-3"><span>장소 &ensp;</span>
+                        <span>{{Class.caddress}} </span></li>
+                        <li class="border-top pt-3 pb-3"><span>날짜 &ensp;</span>
+                        <span>{{Class.cdday}} </span>
                         <span class="fw-bold ps-3" style="font-size: large; color:crimson">모집 마감 D - 5</span></li>
                         <li class="border-top pt-3 pb-3  ">
                             <div style="display:inline-block;text-align: center ;width:100%;padding:0px 5% 0px 5%;">
                                 <div style="display:inline-block;width:30%; border-right: 1px solid #dee2e6 ; margin-right: 50px;padding-right:50px">
                                     <span style="display:inline-block;">소요시간</span>
-                                    <span class="fw-bold" style="display:inline-block;">1시간 30분</span>
+                                    <span class="fw-bold" style="display:inline-block;">{{Class.ctime}}</span>
                                 </div>
                                 <div style="display:inline-block;width:30%; padding:0px 20px;">
-                                    <span style="display:inline-block;">모집인원  </span>
-                                    <span class="fw-bold" style="display:inline-block;">24 / 30</span>
+                                    <span style="display:inline-block;">모집인원</span>
+                                    <div class="d-flex" style="justify-content: center;">
+                                        <span class="fw-bold" style="display:inline-block;">24</span>
+                                        <span class="fw-bold" style="display:inline-block;"> / {{Class.cpersonCount}}</span>
+                                    </div>
                                 </div>
                 
 
@@ -44,7 +47,7 @@
                                 <img class="rounded-circle" style=" width:50px; height:50px; margin-right: 30px;" 
                                 src="https://cdn.class101.net/images/7ee5dd7f-be19-4e0c-89b1-d250ef0a2e2f/1920xauto.webp">
                             </div>
-                          <span style="align-content: center;">찌니의 빵공장</span>
+                          <span style="align-content: center;">{{Class.mnickname}}</span>
                         </div>
                     </li>
                     </ul>
@@ -117,7 +120,7 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 // import function to register Swiper custom elements
 import { register } from 'swiper/element/bundle';
 import CRegisterModal from'./CRegisterModal.vue'
@@ -125,6 +128,21 @@ import CCancelModal from'./CCancelModal.vue'
 import { Modal } from 'bootstrap';
 // register Swiper custom elements
 register();
+
+
+const Class1=ref([{
+    cno:1,
+    ctitle:"쫀득쫀득 스모어쿠키 만들기!",
+    caddress:"장소 서울시 송파구 중대로 135 아이티 벤처타워 16층",
+    cdday:"2024년 7월 26일",
+    ctime:"1시간 30분",
+    cpersonCount:30,
+    mnickname:"찌니의 빵공장",
+    cprice:"46,000원",
+    },
+])
+console.log(Class1.value);
+
 
 let registerModal=null;
 let CancelModal=null;

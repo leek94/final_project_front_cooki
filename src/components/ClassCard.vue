@@ -40,6 +40,7 @@ const cookClasses = ref([
     mname: "손혜선", cdday: "2024-06-22", ctime:"14:00" },
 ]);
 
+// D-Day 구하는 함수
 function checker(cno){
 const today = new Date();
 // 날짜 형태가 2024-06-20여야만 가능 아니면 형태를 변경해서 넣어줘야함
@@ -94,7 +95,7 @@ return diffDays
 .class-label{
     display: inline-block;
     margin-bottom: 0.625rem;
-    padding: 0.7rem 1rem;
+    padding: 0.4rem 0.8rem;
     color: #fff;
     font-size: 0.75rem;
     font-weight: 600;

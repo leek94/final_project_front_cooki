@@ -2,6 +2,7 @@
     <!-- 클래스 카드 -->
     <li class="class-img-li ss">
         <div class="router-div" >
+>>>>>>> a8ac368ae9a106e79f8a03524745b1ed23b888a5
             <div class="class-image">
                 <img src="/images/photos/semi2.jpg">
             </div>
@@ -32,12 +33,13 @@ import { ref } from 'vue';
 
 const prop = defineProps(["objectProp"]);
 console.log(prop.objectProp);
-// 데이터 바인딩을 위한 더미 데이터
+
 
 // D-Day 구하는 함수
-function checker(){
+function checker(cno){
 const today = new Date();
 // 날짜 형태가 2024-06-20여야만 가능 아니면 형태를 변경해서 넣어줘야함
+
 const cday = new Date(prop.objectProp.cdday);
 const diff = cday - today; // 초 단위로 나와서 밑에서 변경해줘야함
 const diffDays = Math.ceil(diff / (1000 * 60 * 60 * 24));

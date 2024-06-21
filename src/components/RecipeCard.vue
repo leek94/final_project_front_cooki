@@ -2,20 +2,20 @@
     <li class="img-li ss">
         <div class="router-div">
             <div class="image">
-                <i class="icon-heart fa-solid fa-heart like-heart" :class="{active: cookRecipes.isActive}" @click="toggleLike(index)"></i>
+                <i class="icon-heart fa-solid fa-heart like-heart" :class="{active: prop.objectProp.isActive}" @click="toggleLike(index)"></i>
                 <img src="/images/photos/140114575djmw.jpg">
             </div>
 
             <div>
             <div class="info d-flex mt-3 ">
-                <div class="name me-2">{{ cookRecipes.mname }}</div>
-                <div class="date border-left-solid">{{cookRecipes.bdate}}</div>
+                <div class="name me-2">{{ prop.objectProp.mname }}</div>
+                <div class="date border-left-solid">{{ prop.objectProp.bdate}}</div>
             </div>
             <div class="text text-start">
-                <h4>{{ cookRecipes.btitle }}</h4>
+                <h4>{{  prop.objectProp.btitle }}</h4>
                 <div class="d-flex justify-content-end">
-                    <div class="me-2"><i class="fa-solid fa-heart like-heart" style="color:red;">&ensp;</i>{{ cookRecipes.blike }}</div>
-                    <div><i class="fa-solid fa-eye">&ensp;</i>{{ cookRecipes.bhitcount }}</div>
+                    <div class="me-2"><i class="fa-solid fa-heart like-heart" style="color:red;">&ensp;</i>{{  prop.objectProp.blike }}</div>
+                    <div><i class="fa-solid fa-eye">&ensp;</i>{{  prop.objectProp.bhitcount }}</div>
                 </div>
             </div>
         </div>
@@ -24,21 +24,17 @@
 </template>
 
 <script setup>
-
 import { ref } from 'vue';
 
-// 데이터 바인딩을 위한 더미 데이터
-const cookRecipes = ref(
-    { bno:1, btitle:"이거 맛있겠죠?", blike: 30, bhitcount:129, mname: "Sonhehesun", bdate: "2024-06-21 14:00", isActive: false },
-    
-);
+const prop=defineProps(["objectProp"])
+console.log(prop.objectProp.value);
 
 // 좋아요 버튼 자바스크립트 시작
 
-const toggleLike = () => {
-    cookRecipes.value.isActive = !cookRecipes.value.isActive;
+// const toggleLike = () => {
+//     prop.objectProp.value.isActive = ! prop.objectProp.value.isActive;
 
-};
+// };
 // 좋아요 버튼 자바스크립트 끝
 
 </script>

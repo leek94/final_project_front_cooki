@@ -128,8 +128,8 @@
         <h1 class="mb-5">카테고리</h1>
       </div>
       
-      <div class="position-absolute top-50 start-0 translate-middle" style="z-index: 99;"><img src="/images/assets/ic_prev.png" class="left2 btn"/></div>
-      <div class="position-absolute top-50 start-100 translate-middle" style="z-index: 99;"><img src="/images/assets/ic_next.png" class="right2 btn"/></div>
+      <div class="position-absolute top-50 start-0 translate-middle" style="z-index: 99;"><img src="/images/assets/ic_left.png" class="left2 btn"/></div>
+      <div class="position-absolute top-50 start-100 translate-middle" style="z-index: 99;"><img src="/images/assets/ic_right.png" class="right2 btn"/></div>
       <swiper-container class="categorySwiper  border-top" style="width: 100%; height: 80%"
       space-between="0"
       loop="true"
@@ -143,7 +143,7 @@
               <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
                 <p class="fs-5 m-0 m-0 p-0">한식</p>
               </span>
-              <p class="fs-4 m-0 mt-3 p-0">고향이 생각나는 우리의 한식</p>
+              <p class="fs-4 m-0 mt-3 p-0">집에서 좀 먹고 싶은</p>
               <p class="fs-6 m-0 mt-3 p-0">
                 <span class="badge rounded-pill text-bg-light">#비빔밥</span>
                 <span class="badge rounded-pill text-bg-light ms-1">#불고기</span>
@@ -159,7 +159,7 @@
               <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
                 <p class="fs-5 m-0 m-0 p-0">양식</p>
               </span>
-              <p class="fs-4 m-0 mt-3 p-0">다빈치의 공부 비법?!!</p>
+              <p class="fs-4 m-0 mt-3 p-0">송파에서는 먹기 힘든</p>
               <p class="fs-6 m-0 mt-3 p-0">
                 <span class="badge rounded-pill text-bg-light">#파스타</span>
                 <span class="badge rounded-pill text-bg-light ms-1">#스테이크</span>
@@ -175,7 +175,7 @@
               <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
                 <p class="fs-5 m-0 m-0 p-0">디저트</p>
               </span>
-              <p class="fs-4 m-0 mt-3 p-0">배불러도 참을 수가 없는</p>
+              <p class="fs-4 m-0 mt-3 p-0">빵이 없다면???</p>
               <p class="fs-6 m-0 mt-3 p-0">
                 <span class="badge rounded-pill text-bg-light">#쿠키</span>
                 <span class="badge rounded-pill text-bg-light ms-1">#도넛</span>
@@ -207,9 +207,9 @@
               <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
                 <p class="fs-5 m-0 m-0 p-0">퓨전</p>
               </span>
-              <p class="fs-4 m-0 mt-3 p-0">이 세상에 존재하지 않던</p>
+              <p class="fs-4 m-0 mt-3 p-0">없는 건 이유가 있다</p>
               <p class="fs-6 m-0 mt-3 p-0">
-                <span class="badge rounded-pill text-bg-light">#김피탕</span>
+                <span class="badge rounded-pill text-bg-light">#북극곰 폴라베어</span>
                 <span class="badge rounded-pill text-bg-light ms-1">#고추장 파스타</span>
                 <span class="badge rounded-pill text-bg-light ms-1">#된장 피자</span>
               </p>
@@ -310,10 +310,10 @@
 
          <div class="position-relative" style="width: 30%; height: 100%">
            <div class="position-absolute top-50 start-25 translate-middle border-5" style="z-index: 99;">
-             <img src="/images/assets/ic_prev.png" class="left3 btn">
+             <img src="/images/assets/ic_left.png" class="left3 btn">
            </div>
            <div class="position-absolute top-50 start-100 translate-middle" style="z-index: 99;">
-             <img src="/images/assets/ic_next.png" class="right3 btn">
+             <img src="/images/assets/ic_right.png" class="right3 btn">
            </div>
            <swiper-container class="recipeCenterSwiper rCard"
            space-between="30" 

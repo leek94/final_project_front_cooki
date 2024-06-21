@@ -113,6 +113,7 @@
 <script setup>
 import { ref } from 'vue';
 
+// 멤버 객체 선언
 const member = ref( {
     mid: "",
     mname: "",
@@ -122,6 +123,7 @@ const member = ref( {
     mpasswordcheck: ""
 });
 
+// 유효성 검사를 위한 상태 변수 선언
 const midResultError = ref(false);
 const mnameResultError = ref(false);
 const mphonenumResultError = ref(false);
@@ -142,7 +144,7 @@ const mpasswordMatchError = ref(false);
 //     return midResult;
 // }
 
-//아이디 정규 표현식 검사
+// 아이디 정규 표현식 검사
 function midCheck() {
   const midPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
   const midResult = midPattern.test(member.value.mid);
@@ -150,7 +152,7 @@ function midCheck() {
   return midResult;
 }
 
-//이름 정규 표현식 검사
+// 이름 정규 표현식 검사
 function mnameCheck() {
   const mnamePattern = /^[가-힣]{2,5}$/;	
   const mnameResult = mnamePattern.test(member.value.mname);
@@ -158,7 +160,7 @@ function mnameCheck() {
   return mnameResult;
 }
 
-//폰번호 정규 표현식 검사
+// 폰번호 정규 표현식 검사
 function mphonenumCheck() {
     const mphonenumPattern = /^(010|011)-\d{3,4}-\d{4}$/;
     const mphonenumResult = mphonenumPattern.test(member.value.mphonenum); //입력 폰번호가 패턴 일치하면 true
@@ -166,7 +168,7 @@ function mphonenumCheck() {
     return mphonenumResult;
 }
 
-//닉네임 정규 표현식 검사
+// 닉네임 정규 표현식 검사
 function mnicknameCheck() {
     const mnicknamePattern = /^[가-힣a-zA-Z0-9-_]{3,10}$/;
     const mnicknameResult = mnicknamePattern.test(member.value.mnickname);
@@ -174,7 +176,7 @@ function mnicknameCheck() {
     return mnicknameResult;
 }
 
-//비밀번호 정규 표현식 검사
+// 비밀번호 정규 표현식 검사
 function mpasswordCheck() {
     const mpasswordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$/;
     const mpasswordResult = mpasswordPattern.test(member.value.mpassword);
@@ -182,7 +184,7 @@ function mpasswordCheck() {
     return mpasswordResult;
 }
 
-//비밀번호 일치 검사
+// 비밀번호 일치 검사
 function mpasswordMatchCheck() {
     const mpasswordCheckResult = false;
     if(member.value.mpassword != member.value.mpasswordcheck) {
@@ -207,18 +209,23 @@ function mpasswordMatchCheck() {
 //     console.log(careerArray.value.career);
 // }
 
+
+// 에디터로 가입 선택에 따라 폼을 보여주기 위한 상태변수
 const isEditor = ref(false);
 
+// 에디터로 가입하기 선택시 폼을 열어주는 함수
 function joinEditor() {
     isEditor.value = !isEditor.value;
     console.log(isEditor.value);
 }
 
+// 커리어 상태 객체 선언
  const career = ref({
     cano: 1,
     cacontent: ''
  })
 
+ // 커리어 상태 배열 선언
  const careerArray = ref([career.value]);
 //const careerArray = ref([{ cano: '', cacontent: '' }]);
 //let nextCano = 2;
@@ -226,6 +233,7 @@ function joinEditor() {
 const careerAddAfter = ref(false);
 const cacontentNullError = ref(false);
 
+//커리어 입력 태그 추가 함수
 function careerAdd(index) {
         //cacontentNullError.value = !cacontentNullError.value;
         careerArray.value.push({cano: index+2, cacontent: ''});
@@ -237,10 +245,12 @@ function careerAdd(index) {
         //console.log("인덱스번호",careerArray.value[index].cano);
 }
 
+// 커리어 입력 태그 삭제 함수
 function careerRemove(index) {
     careerArray.value.splice(index,index);
 }
 
+//폼 제출 함수
 function handleSubmit() {
 
 }

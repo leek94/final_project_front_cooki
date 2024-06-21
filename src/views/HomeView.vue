@@ -1,35 +1,35 @@
 <template>
    <div class="d-flex flex-column justify-content-center align-items-center w-100 m-0 p-0">
       <div class="mt-5"></div>
-      <div class="d-flex m-0 mt-5 p-0" style="width:80%; height: 800px;">
-       <div class="m-0 px-2 h-100" style="width: 25%; height: 100%">
-         <swiper-container class="classLeftSwiper" style=" width: 100%; height: 35%;"
+      <div class="d-flex m-0 my-5 p-0" style="width:80%; height: 700px;">
+       <div class="m-0 px-2 h-100" style="width: 27%; height: 100%">
+         <swiper-container class="classLeftSwiper" style=" width: 100%; height: 40%;"
            loop="true"
            speed="800"
            allow-touch-move="false"
            space-between="30"
            >
            <swiper-slide>
-             <img src="/images/photos/main/class1.jpg" class="rounded"/>
+             <img src="/images/photos/main/class1.jpg" class="rounded-4"/>
            </swiper-slide>
            <swiper-slide>
-             <img src="/images/photos/main/class2.jpg"  class="rounded"/>
+             <img src="/images/photos/main/class2.jpg"  class="rounded-4"/>
            </swiper-slide>
            <swiper-slide>
-             <img src="/images/photos/main/class3.jpg"  class="rounded"/>
+             <img src="/images/photos/main/class3.jpg"  class="rounded-4"/>
            </swiper-slide>
            <swiper-slide>
-             <img src="/images/photos/main/class4.jpg"  class="rounded"/>
+             <img src="/images/photos/main/class4.jpg"  class="rounded-4"/>
            </swiper-slide>
            <swiper-slide>
-             <img src="/images/photos/main/class5.jpg"  class="rounded"/>
+             <img src="/images/photos/main/class5.jpg"  class="rounded-4"/>
            </swiper-slide>
            <swiper-slide>
-             <img src="/images/photos/main/class6.jpg"  class="rounded"/>
+             <img src="/images/photos/main/class6.jpg"  class="rounded-4"/>
            </swiper-slide>
          </swiper-container>
  
-         <div class="d-flex flex-column justify-content-end align-items-start m-0 p-0" style=" width: 100%; height: 55%;">
+         <div class="d-flex flex-column justify-content-end align-items-start m-0 p-0" style=" width: 100%; height: 50%;">
            <div class="mb-5">
            <h6>추천드려요!</h6>
            <h1>요리 초보를 위한</h1>
@@ -42,34 +42,34 @@
          </div>
        </div>
  
-       <div class=" m-0 p-0 px-2" style="width: 50%; height: 100%;">
-             <swiper-container class="classCenterSwiper" style="width: 70%; height: 90%"
+       <div class=" m-0 p-0 px-2" style="width: 46%; height: 100%;">
+             <swiper-container class="classCenterSwiper" style="width: 75%; height: 90%"
                loop="true"
                speed="800"
                space-between="30"
                autoplay-delay="3000">
                <swiper-slide>
-                 <img src="/images/photos/main/class2.jpg" class="rounded"/>
+                 <img src="/images/photos/main/class2.jpg" class="rounded-4"/>
                </swiper-slide>
                <swiper-slide>
-                 <img src="/images/photos/main/class3.jpg" class="rounded"/>
+                 <img src="/images/photos/main/class3.jpg" class="rounded-4"/>
                </swiper-slide>
                <swiper-slide>
-                 <img src="/images/photos/main/class4.jpg" class="rounded"/>
+                 <img src="/images/photos/main/class4.jpg" class="rounded-4"/>
                </swiper-slide>
                <swiper-slide>
-                 <img src="/images/photos/main/class5.jpg" class="rounded"/>
+                 <img src="/images/photos/main/class5.jpg" class="rounded-4"/>
                </swiper-slide>
                <swiper-slide>
-                 <img src="/images/photos/main/class6.jpg" class="rounded"/>
+                 <img src="/images/photos/main/class6.jpg" class="rounded-4"/>
                </swiper-slide>
                <swiper-slide>
-                 <img src="/images/photos/main/class1.jpg" class="rounded"/>
+                 <img src="/images/photos/main/class1.jpg" class="rounded-4"/>
                </swiper-slide>
              </swiper-container>
        </div>
        
-       <div class="d-flex flex-column m-0 p-0" style="width: 25%; height: 100%">
+       <div class="d-flex flex-column m-0 p-0" style="width: 27%; height: 100%">
          <div class="m-0 p-0" style="height: 20%;"></div>
          <swiper-container class="classRightSwiper" style="width: 100%; height: 50%;"
            loop="true"
@@ -77,22 +77,22 @@
            speed="800"
            space-between="30">
            <swiper-slide>
-             <img src="/images/photos/main/class3.jpg" class="rounded"/>
+             <img src="/images/photos/main/class3.jpg" class="rounded-4"/>
            </swiper-slide>
            <swiper-slide>
-             <img src="/images/photos/main/class4.jpg" class="rounded"/>
+             <img src="/images/photos/main/class4.jpg" class="rounded-4"/>
            </swiper-slide>
            <swiper-slide>
-             <img src="/images/photos/main/class5.jpg" class="rounded"/>
+             <img src="/images/photos/main/class5.jpg" class="rounded-4"/>
            </swiper-slide>
            <swiper-slide>
-             <img src="/images/photos/main/class6.jpg" class="rounded"/>
+             <img src="/images/photos/main/class6.jpg" class="rounded-4"/>
            </swiper-slide>
            <swiper-slide>
-             <img src="/images/photos/main/class1.jpg" class="rounded"/>
+             <img src="/images/photos/main/class1.jpg" class="rounded-4"/>
            </swiper-slide>
            <swiper-slide>
-             <img src="/images/photos/main/class2.jpg" class="rounded"/>
+             <img src="/images/photos/main/class2.jpg" class="rounded-4"/>
            </swiper-slide>
          </swiper-container>
  
@@ -124,52 +124,95 @@
      <hr class="m-0 p-0" style="width: 100%;"/>
  
      <div class="my-5 position-relative" style="width:80%; height: 800px">
-      <h1 class="mb-5">카테고리</h1>
-      <div class="position-absolute top-50 start-0 translate-middle" style="z-index: 99;"><img src="/images/assets/ic_prev.png" class="left2 btn"/></div>
-      <div class="position-absolute top-50 start-100 translate-middle" style="z-index: 99;"><img src="/images/assets/ic_next.png" class="right2 btn"/></div>
-      <swiper-container class="categorySwiper  border-top" style="width: 100%; height: 90%"
+      <div class="d-flex justify-content-start align-items-center" style="height: 20%;">
+        <h1 class="mb-5">카테고리</h1>
+      </div>
+      
+      <div class="position-absolute top-50 start-0 translate-middle" style="z-index: 99;"><img src="/images/assets/ic_left.png" class="left2 btn"/></div>
+      <div class="position-absolute top-50 start-100 translate-middle" style="z-index: 99;"><img src="/images/assets/ic_right.png" class="right2 btn"/></div>
+      <swiper-container class="categorySwiper  border-top" style="width: 100%; height: 80%"
       space-between="0"
       loop="true"
       slides-per-view="4"
       speed="800">
          <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===0? '': 'border-end'"> 
-            <div class="m-0 p-0" style="width: 90%; height: 60%;">
-               <img src="/images/photos/main/hansick.jpg" class="rounded"/>
+            <div class="m-0 p-0" style="width: 80%; height: 45%;">
+               <img src="/images/photos/main/category1.jpg" class="rounded-4"/>
             </div>
-            <div class="m-0 p-0 d-flex justify-content-center align-items-center" style="width: 90%; height: 35%;">
-               <h1>한식</h1>
+            <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 45%;">
+              <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
+                <p class="fs-5 m-0 m-0 p-0">한식</p>
+              </span>
+              <p class="fs-4 m-0 mt-3 p-0">집에서 좀 먹고 싶은</p>
+              <p class="fs-6 m-0 mt-3 p-0">
+                <span class="badge rounded-pill text-bg-light">#비빔밥</span>
+                <span class="badge rounded-pill text-bg-light ms-1">#불고기</span>
+                <span class="badge rounded-pill text-bg-light ms-1">#육계장</span>
+              </p>
             </div>
          </swiper-slide>
          <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===1? '': 'border-end'"> 
-            <div class="m-0 p-0" style="width: 90%; height: 60%;">
-               <img src="/images/photos/main/yangsick.jpg" class="rounded" width="100%" height="100%"/>
+            <div class="m-0 p-0" style="width: 80%; height: 45%;">
+               <img src="/images/photos/main/category2.jpg" class="rounded-4"/>
             </div>
-            <div class="m-0 p-0 d-flex justify-content-center align-items-center" style="width: 90%; height: 35%;">
-               <h1>양식</h1>
+            <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 45%;">
+              <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
+                <p class="fs-5 m-0 m-0 p-0">양식</p>
+              </span>
+              <p class="fs-4 m-0 mt-3 p-0">송파에서는 먹기 힘든</p>
+              <p class="fs-6 m-0 mt-3 p-0">
+                <span class="badge rounded-pill text-bg-light">#파스타</span>
+                <span class="badge rounded-pill text-bg-light ms-1">#스테이크</span>
+                <span class="badge rounded-pill text-bg-light ms-1">#피자</span>
+              </p>
             </div>
          </swiper-slide>
          <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===2? '': 'border-end'"> 
-            <div class="m-0 p-0" style="width: 90%; height: 60%;">
-               <img src="/images/photos/main/fushion.jpg" class="rounded"/>
+            <div class="m-0 p-0" style="width: 80%; height: 45%;">
+               <img src="/images/photos/main/category3.jpg" class="rounded-4"/>
             </div>
-            <div class="m-0 p-0 d-flex justify-content-center align-items-center" style="width: 90%; height: 35%;">
-               <h1>퓨전</h1>
+            <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 45%;">
+              <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
+                <p class="fs-5 m-0 m-0 p-0">디저트</p>
+              </span>
+              <p class="fs-4 m-0 mt-3 p-0">빵이 없다면???</p>
+              <p class="fs-6 m-0 mt-3 p-0">
+                <span class="badge rounded-pill text-bg-light">#쿠키</span>
+                <span class="badge rounded-pill text-bg-light ms-1">#도넛</span>
+                <span class="badge rounded-pill text-bg-light ms-1">#찹쌀떡</span>
+              </p>
             </div>
          </swiper-slide>
          <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===3? '': 'border-end'"> 
-            <div class="m-0 p-0" style="width: 90%; height: 60%;">
-               <img src="/images/photos/main/dosirack.jpg" class="rounded"/>
+            <div class="m-0 p-0" style="width: 80%; height: 45%;">
+               <img src="/images/photos/main/category4.jpg" class="rounded-4"/>
             </div>
-            <div class="m-0 p-0 d-flex justify-content-center align-items-center" style="width: 90%; height: 35%;">
-               <h1>도시락</h1>
+            <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 45%;">
+              <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
+                <p class="fs-5 m-0 m-0 p-0">간식</p>
+              </span>
+              <p class="fs-4 m-0 mt-3 p-0">뽀로로가 필요없는 비법</p>
+              <p class="fs-6 m-0 mt-3 p-0">
+                <span class="badge rounded-pill text-bg-light">#떡볶이</span>
+                <span class="badge rounded-pill text-bg-light ms-1">#핫도그</span>
+                <span class="badge rounded-pill text-bg-light ms-1">#쿠키</span>
+              </p>
             </div>
          </swiper-slide>
          <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===4? '': 'border-end'"> 
-            <div class="m-0 p-0" style="width: 90%; height: 60%;">
-               <img src="/images/photos/main/busick.jpg" class="rounded"/>
+            <div class="m-0 p-0" style="width: 80%; height: 45%;">
+               <img src="/images/photos/main/category5.jpg" class="rounded-4"/>
             </div>
-            <div class="m-0 p-0 d-flex justify-content-center align-items-center" style="width: 90%; height: 35%;">
-               <h1>분식</h1>
+            <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 45%;">
+              <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
+                <p class="fs-5 m-0 m-0 p-0">퓨전</p>
+              </span>
+              <p class="fs-4 m-0 mt-3 p-0">없는 건 이유가 있다</p>
+              <p class="fs-6 m-0 mt-3 p-0">
+                <span class="badge rounded-pill text-bg-light">#북극곰 폴라베어</span>
+                <span class="badge rounded-pill text-bg-light ms-1">#고추장 파스타</span>
+                <span class="badge rounded-pill text-bg-light ms-1">#된장 피자</span>
+              </p>
             </div>
          </swiper-slide>
       </swiper-container>
@@ -191,31 +234,31 @@
             <swiper-slide>
                <div style="height: 30%"></div>
                <div style="height: 40%">
-                  <img src="/images/photos/main/recpie1.jpg" class="rounded"/>
+                  <img src="/images/photos/main/recpie1.jpg" class="rounded-4"/>
                </div>
                </swiper-slide>
                <swiper-slide>
                <div style="height: 30%"></div>
                <div style="height: 40%">
-                  <img src="/images/photos/main/recpie2.jpg" class="rounded"/>
+                  <img src="/images/photos/main/recpie2.jpg" class="rounded-4"/>
                </div>
                </swiper-slide>
                <swiper-slide>
                <div style="height: 30%"></div>
                <div style="height: 40%">
-                  <img src="/images/photos/main/recpie3.jpg" class="rounded"/>
+                  <img src="/images/photos/main/recpie3.jpg" class="rounded-4"/>
                </div>
                </swiper-slide>
                <swiper-slide>
                <div style="height: 30%"></div>
                <div style="height: 40%">
-                  <img src="/images/photos/main/recpie4.jpg" class="rounded"/>
+                  <img src="/images/photos/main/recpie4.jpg" class="rounded-4"/>
                </div>
                </swiper-slide>
                <swiper-slide>
                <div style="height: 30%"></div>
                <div style="height: 40%">
-                  <img src="/images/photos/main/recpie5.jpg" class="rounded"/>
+                  <img src="/images/photos/main/recpie5.jpg" class="rounded-4"/>
                </div>
                </swiper-slide>
             </swiper-container>
@@ -233,31 +276,31 @@
                <swiper-slide>
                <div style="height: 30%"></div>
                <div style="height: 40%">
-                  <img src="/images/photos/main/recpie2.jpg" class="rounded"/>
+                  <img src="/images/photos/main/recpie2.jpg" class="rounded-4"/>
                </div>
                </swiper-slide>
                <swiper-slide>
                <div style="height: 30%"></div>
                <div style="height: 40%">
-                  <img src="/images/photos/main/recpie3.jpg" class="rounded"/>
+                  <img src="/images/photos/main/recpie3.jpg" class="rounded-4"/>
                </div>
                </swiper-slide>
                <swiper-slide>
                <div style="height: 30%"></div>
                <div style="height: 40%">
-                  <img src="/images/photos/main/recpie4.jpg" class="rounded"/>
+                  <img src="/images/photos/main/recpie4.jpg" class="rounded-4"/>
                </div>
                </swiper-slide>
                <swiper-slide>
                <div style="height: 30%"></div>
                <div style="height: 40%">
-                  <img src="/images/photos/main/recpie5.jpg" class="rounded"/>
+                  <img src="/images/photos/main/recpie5.jpg" class="rounded-4"/>
                </div>
                </swiper-slide>
                <swiper-slide>
                <div style="height: 30%"></div>
                <div style="height: 40%">
-                  <img src="/images/photos/main/recpie1.jpg" class="rounded"/>
+                  <img src="/images/photos/main/recpie1.jpg" class="rounded-4"/>
                </div>
                </swiper-slide>
             </swiper-container>
@@ -267,10 +310,10 @@
 
          <div class="position-relative" style="width: 30%; height: 100%">
            <div class="position-absolute top-50 start-25 translate-middle border-5" style="z-index: 99;">
-             <img src="/images/assets/ic_prev.png" class="left3 btn">
+             <img src="/images/assets/ic_left.png" class="left3 btn">
            </div>
            <div class="position-absolute top-50 start-100 translate-middle" style="z-index: 99;">
-             <img src="/images/assets/ic_next.png" class="right3 btn">
+             <img src="/images/assets/ic_right.png" class="right3 btn">
            </div>
            <swiper-container class="recipeCenterSwiper rCard"
            space-between="30" 
@@ -281,35 +324,35 @@
              <swiper-slide>
                <div style="height: 30%"></div>
                <div style="height: 40%">
-                   <img src="/images/photos/main/recpie3.jpg" class="rounded"/>
+                   <img src="/images/photos/main/recpie3.jpg" class="rounded-4"/>
                </div>
                <div style="height: 30%"></div>
              </swiper-slide>
              <swiper-slide>
                <div style="height: 30%"></div>
                <div style="height: 40%">
-                   <img src="/images/photos/main/recpie4.jpg" class="rounded"/>
+                   <img src="/images/photos/main/recpie4.jpg" class="rounded-4"/>
                </div>
                <div style="height: 30%"></div>
              </swiper-slide>
              <swiper-slide>
                <div style="height: 30%"></div>
                <div style="height: 40%">
-                  <img src="/images/photos/main/recpie5.jpg" class="rounded"/>
+                  <img src="/images/photos/main/recpie5.jpg" class="rounded-4"/>
                </div>
                <div style="height: 30%"></div>
              </swiper-slide>
              <swiper-slide>
                <div style="height: 30%"></div>
                <div style="height: 40%">
-                   <img src="/images/photos/main/recpie1.jpg" class="rounded"/>
+                   <img src="/images/photos/main/recpie1.jpg" class="rounded-4"/>
                </div>
                <div style="height: 30%"></div>
              </swiper-slide>
              <swiper-slide>
                <div style="height: 30%"></div>
                <div style="height: 40%">
-                   <img src="/images/photos/main/recpie2.jpg" class="rounded"/>
+                   <img src="/images/photos/main/recpie2.jpg" class="rounded-4"/>
                </div>
                <div style="height: 30%"></div>
              </swiper-slide>
@@ -328,31 +371,31 @@
            <swiper-slide>
              <div style="height: 30%"></div>
              <div style="height: 40%">
-                 <img src="/images/photos/main/recpie4.jpg" class="rounded"/>
+                 <img src="/images/photos/main/recpie4.jpg" class="rounded-4"/>
              </div>
            </swiper-slide>
            <swiper-slide>
              <div style="height: 30%"></div>
              <div style="height: 40%">
-               <img src="/images/photos/main/recpie5.jpg" class="rounded"/>
+               <img src="/images/photos/main/recpie5.jpg" class="rounded-4"/>
              </div>
            </swiper-slide>
            <swiper-slide>
              <div style="height: 30%"></div>
              <div style="height: 40%">
-               <img src="/images/photos/main/recpie1.jpg" class="rounded"/>
+               <img src="/images/photos/main/recpie1.jpg" class="rounded-4"/>
              </div>
            </swiper-slide>
            <swiper-slide>
              <div style="height: 30%"></div>
              <div style="height: 40%">
-               <img src="/images/photos/main/recpie2.jpg" class="rounded"/>
+               <img src="/images/photos/main/recpie2.jpg" class="rounded-4"/>
              </div>
            </swiper-slide>
            <swiper-slide>
              <div style="height: 30%"></div>
              <div style="height: 40%">
-               <img src="/images/photos/main/recpie3.jpg" class="rounded"/>
+               <img src="/images/photos/main/recpie3.jpg" class="rounded-4"/>
              </div>
            </swiper-slide>
            </swiper-container>
@@ -370,31 +413,31 @@
            <swiper-slide>
              <div style="height: 30%"></div>
              <div style="height: 40%">
-                 <img src="/images/photos/main/recpie5.jpg" class="rounded"/>
+                 <img src="/images/photos/main/recpie5.jpg" class="rounded-4"/>
                </div>
              </swiper-slide>
              <swiper-slide>
                <div style="height: 30%"></div>
                <div style="height: 40%">
-                 <img src="/images/photos/main/recpie1.jpg" class="rounded"/>
+                 <img src="/images/photos/main/recpie1.jpg" class="rounded-4"/>
                </div>
              </swiper-slide>
              <swiper-slide>
                <div style="height: 30%"></div>
                <div style="height: 40%">
-                 <img src="/images/photos/main/recpie2.jpg" class="rounded"/>
+                 <img src="/images/photos/main/recpie2.jpg" class="rounded-4"/>
                </div>
              </swiper-slide>
              <swiper-slide>
                <div style="height: 30%"></div>
                <div style="height: 40%">
-                 <img src="/images/photos/main/recpie3.jpg" class="rounded"/>
+                 <img src="/images/photos/main/recpie3.jpg" class="rounded-4"/>
                </div>
              </swiper-slide>
              <swiper-slide>
                <div style="height: 30%"></div>
                <div style="height: 40%">
-                 <img src="/images/photos/main/recpie4.jpg" class="rounded"/>
+                 <img src="/images/photos/main/recpie4.jpg" class="rounded-4"/>
                </div>
              </swiper-slide>
            </swiper-container>

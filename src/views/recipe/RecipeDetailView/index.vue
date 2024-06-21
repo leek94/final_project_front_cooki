@@ -14,16 +14,13 @@
                     <div class="d-flex">
                         <p class="me-3">{{ cookRecipes.rdate }}</p>
                     </div>
-                    
                 </div>
             </div>
             <div class="recipe-view-content">
                 <div class="recipe-content">
                     <div class="content-top">
                         <h4>{{ cookRecipes.rcontent }}</h4>
-                        
                     </div>
-
                     <img src="/images/photos/recipeimg1.jpg" width="100%">
                 </div>
             </div>
@@ -40,16 +37,17 @@
                 <!-- Additional required wrapper -->
                  <div class="step-button d-flex justify-content-between align-items-center">
                     <button class="prevBtn btn btn-lg">
-                    <i class="fa-solid fa-chevron-left "></i>
+                        <i class="fa-solid fa-chevron-left "></i>
                     </button>
                 <div id="step">Step.1</div>
-                <button class="nextBtn btn btn-lg" >
-                    <i class="fa-solid fa-chevron-right" ></i>
-                </button> 
-                 </div>
+                    <button class="nextBtn btn btn-lg" >
+                        <i class="fa-solid fa-chevron-right" ></i>
+                    </button> 
+                </div>
                 <swiper-container class="swiper-container border-bottom">
                     <swiper-slide v-for="(recipe, index) in recipeCurriculumes" :key="index">
-                        <img src="/images/photos/semi2.jpg" class="swiper-img">
+                        <!-- 이미지 주소 매핑하는 법 -->
+                        <img :src="recipe.rcimg" class="swiper-img">
 
                         <div class="recipe-step-cont">
                             <p class="step-h mt-3 text-start">
@@ -319,30 +317,5 @@ li{
 ol{
     padding-left: 0; /* 기본 패딩 제거 */
     margin-left: 0; /* 기본 마진 제거 */
-}
-
-.tip-list li::before{
-    text-align: center;
-    display: inline-block;
-    min-width: 3rem;
-    max-height: 1.9rem;
-    margin-right: 1.2rem;
-    margin-top: 0.25rem;
-    padding: 0.25rem 0.8rem;
-    color: #15a775;
-    font-size: 0.875rem;
-    font-weight: bold;
-    text-align: center;
-    border-radius: 5px;
-    border: solid 1px #15a775;
-    counter-increment: step-counter;
-    content: "TIP." counter(step-counter);
-    
-}
-
-.tip{
-    display: flex;
-    font-size: 0.7rem;
-    font-weight: bold;
 }
 </style>

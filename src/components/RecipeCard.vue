@@ -26,7 +26,7 @@
 <script setup>
 import { ref } from 'vue';
 
-const prop=defineProps(["objectProp"])
+const prop=defineProps(["objectProp"]);
 console.log(prop.objectProp.value);
 
 // 좋아요 버튼 자바스크립트 시작

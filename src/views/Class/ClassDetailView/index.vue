@@ -129,7 +129,6 @@ import { Modal } from 'bootstrap';
 // register Swiper custom elements
 register();
 
-
 const Class1=ref([{
     cno:1,
     ctitle:"쫀득쫀득 스모어쿠키 만들기!",
@@ -142,7 +141,6 @@ const Class1=ref([{
     },
 ])
 console.log(Class1.value);
-
 
 let registerModal=null;
 let CancelModal=null;

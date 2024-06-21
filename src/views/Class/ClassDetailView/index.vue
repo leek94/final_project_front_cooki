@@ -120,7 +120,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, provide } from 'vue';
 // import function to register Swiper custom elements
 import { register } from 'swiper/element/bundle';
 import CRegisterModal from'./CRegisterModal.vue'
@@ -129,7 +129,7 @@ import { Modal } from 'bootstrap';
 // register Swiper custom elements
 register();
 
-const Class1=ref([{
+const Class1=([{
     cno:1,
     ctitle:"쫀득쫀득 스모어쿠키 만들기!",
     caddress:"장소 서울시 송파구 중대로 135 아이티 벤처타워 16층",
@@ -140,6 +140,28 @@ const Class1=ref([{
     cprice:"46,000원",
     },
 ])
+
+const classItems = [
+    {
+        classItem1:"완숙토마토 2개(300g)"
+    },
+    {
+        classItem1:"돼지고기 (잡채용) 150g"
+    },
+    {
+        classItem1:"소고기 우둔살 200g,"
+    },
+    {
+        classItem1:"설탕 1스푼(10g)"
+        
+    },
+    {
+        classItem1:"배 1/6개(50g)"
+    }
+    
+]
+provide("cItems",{classItems});
+
 console.log(Class1.value);
 
 let registerModal=null;

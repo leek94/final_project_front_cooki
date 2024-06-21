@@ -2,7 +2,6 @@
     <!-- 클래스 카드 -->
     <li class="class-img-li ss">
         <div class="router-div" >
->>>>>>> a8ac368ae9a106e79f8a03524745b1ed23b888a5
             <div class="class-image">
                 <img src="/images/photos/semi2.jpg">
             </div>

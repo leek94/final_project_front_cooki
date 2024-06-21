@@ -143,7 +143,9 @@ import { ref } from 'vue';
 const isQna = ref(false);
 const isQnaArray = ref([
     {
+
         isQna: isQna.value
+
     }
 ]);
 const isWrite = ref(false);

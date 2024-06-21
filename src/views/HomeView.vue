@@ -105,8 +105,8 @@
              <div class="progress w-100" role="progressbar"  style="height: 4px;">
                <div class="progress-bar" style="width: 25%; background-color: green;"></div>
              </div>
-             <button class="btn" v-show="isRun" @click="stopAuto">></button>
-             <button class="btn" v-show="!isRun" @click="runAuto">||</button>
+             <button class="btn" v-show="isRun" @click="stopAuto">&#8214;</button>
+             <button class="btn" v-show="!isRun" @click="runAuto">&#9654;</button>
            </div>
  
            <div class="d-flex justify-content-center align-items-center col-1 m-0 p-0">

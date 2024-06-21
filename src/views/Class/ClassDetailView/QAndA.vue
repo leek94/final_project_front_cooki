@@ -142,11 +142,7 @@ import { ref } from 'vue';
 
 const isQna = ref(false);
 const isQnaArray = ref([
-    {
 
-        isQna: isQna.value
-
-    }
 ]);
 const isWrite = ref(false);
 const isWriteArray = ref([]);
@@ -183,6 +179,7 @@ function qnaInsert() {
 function qnaUpdate(index) {
     console.log("큐앤에이수정시작")
     isQnaArray.value[index] = !isQnaArray.value[index];
+    console.log(isQnaArray.value[0], isQnaArray.value[1])
 }
 
 function qnaClose(index) {
@@ -190,6 +187,9 @@ function qnaClose(index) {
 }
 
 function qnaDelete(index) {
+    if(index==0) {
+        qnaArray.value.splice(index, 1);
+    }
     qnaArray.value.splice(index, index);
     console.log("큐앤에이 삭제 함수 클릭")
 }

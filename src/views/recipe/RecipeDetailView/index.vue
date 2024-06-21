@@ -6,26 +6,27 @@
             <div class="like-text">좋아요</div>
         </button>
         <!-- 레시피 내용 -->
-        <div class="recipe-title">
-            <div class="inner">
-                <span class="label">레시피</span>
-                <h3 class="mb-4">자작자작 서울식 소불고기</h3>
-                <div class="d-flex">
-                    <p class="me-3">2024.06.11 08:00</p>
+        <div>
+            <div class="recipe-title">
+                <div class="inner">
+                    <span class="label">레시피</span>
+                    <h3 class="mb-4">{{ cookRecipes.rtitle}}</h3>
+                    <div class="d-flex">
+                        <p class="me-3">{{ cookRecipes.rdate }}</p>
+                    </div>
                 </div>
-                
+            </div>
+            <div class="recipe-view-content">
+                <div class="recipe-content">
+                    <div class="content-top">
+                        <h4>{{ cookRecipes.rcontent }}</h4>
+                    </div>
+                    <img src="/images/photos/recipeimg1.jpg" width="100%">
+                </div>
             </div>
         </div>
 
         <div class="recipe-view-content">
-            <div class="recipe-content">
-                <div class="content-top">
-                    <h3>촉촉하게, 감칠맛 가득 불고기 만드는 법!</h3>
-                    <div>좋아하는 채소와 떡, 당면 등 재료를 마음껏 추가해 완성</div>
-                </div>
-
-                <img src="/images/photos/recipeimg1.jpg" width="100%">
-            </div>
             <!-- 재료 -->
              <Items></Items>
 
@@ -36,115 +37,29 @@
                 <!-- Additional required wrapper -->
                  <div class="step-button d-flex justify-content-between align-items-center">
                     <button class="prevBtn btn btn-lg">
-                    <i class="fa-solid fa-chevron-left "></i>
-                </button>
+                        <i class="fa-solid fa-chevron-left "></i>
+                    </button>
                 <div id="step">Step.1</div>
-                <button class="nextBtn btn btn-lg" >
-                    <i class="fa-solid fa-chevron-right" ></i>
-                </button> 
-                 </div>
+                    <button class="nextBtn btn btn-lg" >
+                        <i class="fa-solid fa-chevron-right" ></i>
+                    </button> 
+                </div>
                 <swiper-container class="swiper-container border-bottom">
-                    <swiper-slide>
-                        <img src="/images/photos/semi2.jpg" class="swiper-img">
+                    <swiper-slide v-for="(recipe, index) in recipeCurriculumes" :key="index">
+                        <!-- 이미지 주소 매핑하는 법 -->
+                        <img :src="recipe.rcimg" class="swiper-img">
 
                         <div class="recipe-step-cont">
                             <p class="step-h mt-3 text-start">
-                                <span>Step 1.</span>
-                                <span> 양념 만들기</span>
+                                <span>Step {{ recipe.rcorderNum }}.</span>
+                                <span>{{ recipe.rctitle }}</span>
                             </p>
                             <p class="step-desc mt-2 text-start">
-                                생강과 대파는 곱게 다져주세요. 모든 양념 재료를 넣고 잘 섞어 양념을 만들어 주세요.
-                                <br>
-                                (간장6, 연두진3, 물 1.5컵, 설탕3, 물엿2, 참기름2, 다진 마늘4, 다진 생강1, 다진 대파1컵, 후추)
-
+                                {{ recipe.rccontent }}
                             </p>
-                            <ol class="tip-list text-start">
-                                <li class="tip">
-                                    <span>
-                                        설탕과 함께 물엿을 따로 넣는 이유는 끈적이는 점도의 단맛을 부여하기 위해서!
-                                        <br>
-                                        물엿 대신 올리고당이나 꿀로 대체 가능해요!
-                                    </span>
-                                </li>
-                            </ol>
+                            
                         </div>
                     </swiper-slide>
-                    <swiper-slide>
-                        <img src="/images/photos/recipeimg1.jpg" class="swiper-img">
-
-                        <div class="recipe-step-cont">
-                            <p class="step-h mt-3 text-start">
-                                <span>Step 1.</span>
-                                <span> 양념 만들기</span>
-                            </p>
-                            <p class="step-desc mt-2 text-start">
-                                생강과 대파는 곱게 다져주세요. 모든 양념 재료를 넣고 잘 섞어 양념을 만들어 주세요.
-                                <br>
-                                (간장6, 연두진3, 물 1.5컵, 설탕3, 물엿2, 참기름2, 다진 마늘4, 다진 생강1, 다진 대파1컵, 후추)
-
-                            </p>
-                            <ol class="tip-list text-start">
-                                <li class="tip">
-                                    <span>
-                                        설탕과 함께 물엿을 따로 넣는 이유는 끈적이는 점도의 단맛을 부여하기 위해서!
-                                        <br>
-                                        물엿 대신 올리고당이나 꿀로 대체 가능해요!
-                                    </span>
-                                </li>
-                            </ol>
-                        </div>
-                    </swiper-slide>
-                    <swiper-slide>
-                        <img src="/images/photos/semi2.jpg" class="swiper-img">
-
-                        <div class="recipe-step-cont">
-                            <p class="step-h mt-3 text-start">
-                                <span>Step 1.</span>
-                                <span> 양념 만들기</span>
-                            </p>
-                            <p class="step-desc mt-2 text-start">
-                                생강과 대파는 곱게 다져주세요. 모든 양념 재료를 넣고 잘 섞어 양념을 만들어 주세요.
-                                <br>
-                                (간장6, 연두진3, 물 1.5컵, 설탕3, 물엿2, 참기름2, 다진 마늘4, 다진 생강1, 다진 대파1컵, 후추)
-
-                            </p>
-                            <ol class="tip-list text-start">
-                                <li class="tip">
-                                    <span>
-                                        설탕과 함께 물엿을 따로 넣는 이유는 끈적이는 점도의 단맛을 부여하기 위해서!
-                                        <br>
-                                        물엿 대신 올리고당이나 꿀로 대체 가능해요!
-                                    </span>
-                                </li>
-                            </ol>
-                        </div>
-                    </swiper-slide>
-                    <swiper-slide>
-                        <img src="/images/photos/recipeimg1.jpg" class="swiper-img">
-
-                        <div class="recipe-step-cont">
-                            <p class="step-h mt-3 text-start">
-                                <span>Step 1.</span>
-                                <span> 양념 만들기</span>
-                            </p>
-                            <p class="step-desc mt-2 text-start">
-                                생강과 대파는 곱게 다져주세요. 모든 양념 재료를 넣고 잘 섞어 양념을 만들어 주세요.
-                                <br>
-                                (간장6, 연두진3, 물 1.5컵, 설탕3, 물엿2, 참기름2, 다진 마늘4, 다진 생강1, 다진 대파1컵, 후추)
-
-                            </p>
-                            <ol class="tip-list text-start">
-                                <li class="tip">
-                                    <span>
-                                        설탕과 함께 물엿을 따로 넣는 이유는 끈적이는 점도의 단맛을 부여하기 위해서!
-                                        <br>
-                                        물엿 대신 올리고당이나 꿀로 대체 가능해요!
-                                    </span>
-                                </li>
-                            </ol>
-                        </div>
-                    </swiper-slide>
-
                 </swiper-container>
             </div>
 
@@ -156,6 +71,27 @@
 import Items from '@/components/Items.vue'
 import { register } from 'swiper/element/bundle';
 import { ref, onMounted } from "vue";
+
+const cookRecipes = ref({
+    rtitle:'자작자작 서울식 소불고기',rdate:'2024.06.11 08:00' , rcontent:'촉촉하게, 감칠맛 가득 불고기 만드는 법! 좋아하는 채소와 떡, 당면 등 재료를 마음껏 추가해 완성',
+});
+
+const recipeCurriculumes = ref([
+    {rcimg:'/images/photos/semi2.jpg',rcorderNum:1, rctitle:'양념 만들기', 
+    rccontent:'생강과 대파는 곱게 다져주세요. 모든 양념 재료를 넣고 잘 섞어 양념을 만들어 주세요. (간장6, 연두진3, 물 1.5컵, 설탕3, 물엿2, 참기름2, 다진 마늘4, 다진 생강1, 다진 대파1컵, 후추)' },
+    {rcimg:'/images/photos/recipeimg1.jpg',rcorderNum:2, rctitle:'양념 만들기', 
+    rccontent:'생강과 대파는 곱게 다져주세요. 모든 양념 재료를 넣고 잘 섞어 양념을 만들어 주세요. (간장6, 연두진3, 물 1.5컵, 설탕3, 물엿2, 참기름2, 다진 마늘4, 다진 생강1, 다진 대파1컵, 후추)' },
+    {rcimg:'/images/photos/thumb1.jpg',rcorderNum:3, rctitle:'양념 만들기', 
+    rccontent:'생강과 대파는 곱게 다져주세요. 모든 양념 재료를 넣고 잘 섞어 양념을 만들어 주세요. (간장6, 연두진3, 물 1.5컵, 설탕3, 물엿2, 참기름2, 다진 마늘4, 다진 생강1, 다진 대파1컵, 후추)' },
+    {rcimg:'/images/photos/thumb2.jpg',rcorderNum:4, rctitle:'양념 만들기', 
+    rccontent:'생강과 대파는 곱게 다져주세요. 모든 양념 재료를 넣고 잘 섞어 양념을 만들어 주세요. (간장6, 연두진3, 물 1.5컵, 설탕3, 물엿2, 참기름2, 다진 마늘4, 다진 생강1, 다진 대파1컵, 후추)' },
+    {rcimg:'/images/photos/thumb2.jpg',rcorderNum:5, rctitle:'양념 만들기', 
+    rccontent:'생강과 대파는 곱게 다져주세요. 모든 양념 재료를 넣고 잘 섞어 양념을 만들어 주세요. (간장6, 연두진3, 물 1.5컵, 설탕3, 물엿2, 참기름2, 다진 마늘4, 다진 생강1, 다진 대파1컵, 후추)' },
+    {rcimg:'/images/photos/thumb2.jpg',rcorderNum:6, rctitle:'양념 만들기', 
+    rccontent:'생강과 대파는 곱게 다져주세요. 모든 양념 재료를 넣고 잘 섞어 양념을 만들어 주세요. (간장6, 연두진3, 물 1.5컵, 설탕3, 물엿2, 참기름2, 다진 마늘4, 다진 생강1, 다진 대파1컵, 후추)' },
+
+])
+
 register();
 
 onMounted(()=>{
@@ -163,7 +99,7 @@ onMounted(()=>{
     const nextBtn = document.querySelector('.nextBtn');
     const prevBtn = document.querySelector('.prevBtn');
     // step 태그를 찾아옴
-    var step = document.getElementById("step")
+    var step = document.getElementById("step");
     let currentStep = 1;
 
     // Swiper 인스턴스가 이미 존재하는 경우
@@ -183,9 +119,9 @@ onMounted(()=>{
     // DOM에 있어야 Id 값을 찾을 수가 있음
     var btn = document.getElementById("like")
     btn.addEventListener('click', function(){
-    console.log("좋아요 클릭")
+    console.log("좋아요 클릭");
     // 클래스에 active를 넣었다가 뺄 수 있게 함
-    btn.classList.toggle('active')
+    btn.classList.toggle('active');
     });
 
     // var nextSlide;
@@ -194,20 +130,22 @@ onMounted(()=>{
     // })
 
     swiper.on('slideNextTransitionStart', function(){
-        console.log("슬라이드 다음으로 실행")
+        console.log("슬라이드 다음으로 실행");
         // 현재 슬라이드의 번호를 받아서 넣어줌
         currentStep = swiper.activeIndex + 1;
         step.innerText = `Step.${currentStep}`;
     })
 
     swiper.on('slidePrevTransitionStart', function(){
-        console.log("슬라이드 이전으로 실행")
+        console.log("슬라이드 이전으로 실행");
         currentStep = swiper.activeIndex + 1;
         step.innerText = `Step.${currentStep}`;
     })
 
     
 });
+
+
 
 </script>
 
@@ -379,30 +317,5 @@ li{
 ol{
     padding-left: 0; /* 기본 패딩 제거 */
     margin-left: 0; /* 기본 마진 제거 */
-}
-
-.tip-list li::before{
-    text-align: center;
-    display: inline-block;
-    min-width: 3rem;
-    max-height: 1.9rem;
-    margin-right: 1.2rem;
-    margin-top: 0.25rem;
-    padding: 0.25rem 0.8rem;
-    color: #15a775;
-    font-size: 0.875rem;
-    font-weight: bold;
-    text-align: center;
-    border-radius: 5px;
-    border: solid 1px #15a775;
-    counter-increment: step-counter;
-    content: "TIP." counter(step-counter);
-    
-}
-
-.tip{
-    display: flex;
-    font-size: 0.7rem;
-    font-weight: bold;
 }
 </style>

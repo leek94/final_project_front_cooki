@@ -50,5 +50,6 @@ import RecipeCard from '@/components/RecipeCard.vue';
     background-color: #f3f3f3;
     border-radius: 30px;
     padding: 10px 20px;
+    margin-bottom: 3rem;
 }
 </style>

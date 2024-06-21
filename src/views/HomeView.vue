@@ -123,7 +123,7 @@
  
      <hr class="m-0 p-0" style="width: 100%;"/>
  
-     <div class="my-5 position-relative" style="width:80%; height: 800px">
+     <div class="my-5 position-relative" style="width:80%; height: 700px">
       <div class="d-flex justify-content-start align-items-center" style="height: 20%;">
         <h1 class="mb-5">카테고리</h1>
       </div>
@@ -136,10 +136,10 @@
       slides-per-view="4"
       speed="800">
          <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===0? '': 'border-end'"> 
-            <div class="m-0 p-0" style="width: 80%; height: 45%;">
+            <div class="m-0 p-0" style="width: 80%; height: 50%;">
                <img src="/images/photos/main/category1.jpg" class="rounded-4"/>
             </div>
-            <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 45%;">
+            <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 40%;">
               <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
                 <p class="fs-5 m-0 m-0 p-0">한식</p>
               </span>
@@ -152,10 +152,10 @@
             </div>
          </swiper-slide>
          <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===1? '': 'border-end'"> 
-            <div class="m-0 p-0" style="width: 80%; height: 45%;">
+            <div class="m-0 p-0" style="width: 80%; height: 50%;">
                <img src="/images/photos/main/category2.jpg" class="rounded-4"/>
             </div>
-            <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 45%;">
+            <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 40%;">
               <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
                 <p class="fs-5 m-0 m-0 p-0">양식</p>
               </span>
@@ -168,10 +168,10 @@
             </div>
          </swiper-slide>
          <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===2? '': 'border-end'"> 
-            <div class="m-0 p-0" style="width: 80%; height: 45%;">
+            <div class="m-0 p-0" style="width: 80%; height: 50%;">
                <img src="/images/photos/main/category3.jpg" class="rounded-4"/>
             </div>
-            <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 45%;">
+            <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 40%;">
               <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
                 <p class="fs-5 m-0 m-0 p-0">디저트</p>
               </span>
@@ -184,10 +184,10 @@
             </div>
          </swiper-slide>
          <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===3? '': 'border-end'"> 
-            <div class="m-0 p-0" style="width: 80%; height: 45%;">
+            <div class="m-0 p-0" style="width: 80%; height: 50%;">
                <img src="/images/photos/main/category4.jpg" class="rounded-4"/>
             </div>
-            <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 45%;">
+            <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 40%;">
               <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
                 <p class="fs-5 m-0 m-0 p-0">간식</p>
               </span>
@@ -200,10 +200,10 @@
             </div>
          </swiper-slide>
          <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===4? '': 'border-end'"> 
-            <div class="m-0 p-0" style="width: 80%; height: 45%;">
+            <div class="m-0 p-0" style="width: 80%; height: 50%;">
                <img src="/images/photos/main/category5.jpg" class="rounded-4"/>
             </div>
-            <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 45%;">
+            <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 40%;">
               <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
                 <p class="fs-5 m-0 m-0 p-0">퓨전</p>
               </span>
@@ -218,12 +218,12 @@
       </swiper-container>
    </div>
    
-   <div id="rDiv" class="d-flex flex-column align-items-center m-0 my-5 p-0" style="width:100%; height: 800px;">
-      <div class="d-flex justify-content-start align align-items-center m-0 p-0" style="width:80%; height: 15%" >
+   <div id="rDiv" class="d-flex flex-column align-items-center m-0 my-5 p-0" style="width:100%; height: 700px;">
+      <div class="d-flex justify-content-start align align-items-center m-0 p-0" style="width:80%; height: 10%" >
          <h1>이달의 추천 레시피!!!</h1>
       </div>
 
-      <div class="d-flex m-0 p-0" style="width: 80%; height: 70%">
+      <div class="d-flex m-0 p-0" style="width: 80%; height: 80%">
          <div style="width: 15%; height: 100%">
             <swiper-container class="recipeLeftSwiper1"
             space-between="30"
@@ -445,7 +445,7 @@
  
      </div>
  
-     <div style="height: 15%"></div>
+     <div style="height: 10%"></div>
    </div>
 
 <div class="my-5"></div>

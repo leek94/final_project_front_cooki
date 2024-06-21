@@ -36,11 +36,8 @@ const cookRecipes = ref(
 // 좋아요 버튼 자바스크립트 시작
 
 const toggleLike = () => {
-    const cookRecipe = cookRecipes.value;
-    console.log(cookRecipe.isActive);
-    cookRecipe.isActive = !cookRecipe.isActive;
-    console.log(cookRecipe.isActive);
-    console.log("레시피 리스트 좋아요 클릭");
+    cookRecipes.value.isActive = !cookRecipes.value.isActive;
+
 };
 // 좋아요 버튼 자바스크립트 끝
 

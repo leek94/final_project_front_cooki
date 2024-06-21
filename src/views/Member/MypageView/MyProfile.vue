@@ -1,6 +1,6 @@
 <template>
     <div class="myprofile" style="max-width: 1000px;">
-        <h3 class="fw-bold text-start mb-4" >프로필 관리 </h3>
+        <h4 class="fw-bold text-start mb-4" >프로필 관리 </h4>
         
         
         <div class="row mx-2 mb-3">

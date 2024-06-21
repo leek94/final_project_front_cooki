@@ -23,15 +23,7 @@
                     <ul class="main-img d-flex ss">
 
                     <!-- 클래스 카드 -->
-                    <ClassCard/>
-                    <ClassCard/>
-                    <ClassCard/>
-                    <ClassCard/>
-
-                    <ClassCard/>
-                    <ClassCard/>
-                    <ClassCard/>
-                    <ClassCard/>
+                    <ClassCard v-for="(clcard, index) in classCard" :key="index" :objectProp="clcard"/>
                     </ul>
                 </div>
             </div>
@@ -44,6 +36,117 @@
 import ClassCard from '@/components/ClassCard.vue';
 import SearchBar from '@/components/SearchBar.vue';
 import { ref } from 'vue';
+
+const classCard = ref([
+    {
+        mname: '손혜선씨',
+        ctitle: '쿠킹클래스 쿡쿠키스',
+        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
+        cdday: '2024-06-25', 
+        ctime:'14:00',
+        cpersoncount: 30,
+        cprice:48000,
+    },
+    {
+        mname: '손혜삼씨',
+        ctitle: '쿠킹클래스 쿡쿠키스',
+        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
+        cdday: '2024-06-25', 
+        ctime:'14:00',
+        cpersoncount: 30,
+        cprice:48000,
+    },
+    {
+        mname: '손혜사씨',
+        ctitle: '쿠킹클래스 쿡쿠키스',
+        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
+        cdday: '2024-06-25', 
+        ctime:'14:00',
+        cpersoncount: 30,
+        cprice:48000,
+    },
+    {
+        mname: '손혜선씨',
+        ctitle: '쿠킹클래스 쿡쿠키스',
+        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
+        cdday: '2024-06-25', 
+        ctime:'14:00',
+        cpersoncount: 30,
+        cprice:48000,
+    },
+    {
+        mname: '손혜삼씨',
+        ctitle: '쿠킹클래스 쿡쿠키스',
+        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
+        cdday: '2024-06-25', 
+        ctime:'14:00',
+        cpersoncount: 30,
+        cprice:48000,
+    },
+    {
+        mname: '손혜사씨',
+        ctitle: '쿠킹클래스 쿡쿠키스',
+        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
+        cdday: '2024-06-25', 
+        ctime:'14:00',
+        cpersoncount: 30,
+        cprice:48000,
+    },
+    {
+        mname: '손혜선씨',
+        ctitle: '쿠킹클래스 쿡쿠키스',
+        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
+        cdday: '2024-06-25', 
+        ctime:'14:00',
+        cpersoncount: 30,
+        cprice:48000,
+    },
+    {
+        mname: '손혜삼씨',
+        ctitle: '쿠킹클래스 쿡쿠키스',
+        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
+        cdday: '2024-06-25', 
+        ctime:'14:00',
+        cpersoncount: 30,
+        cprice:48000,
+    },
+    {
+        mname: '손혜사씨',
+        ctitle: '쿠킹클래스 쿡쿠키스',
+        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
+        cdday: '2024-06-25', 
+        ctime:'14:00',
+        cpersoncount: 30,
+        cprice:48000,
+    },
+    {
+        mname: '손혜선씨',
+        ctitle: '쿠킹클래스 쿡쿠키스',
+        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
+        cdday: '2024-06-25', 
+        ctime:'14:00',
+        cpersoncount: 30,
+        cprice:48000,
+    },
+    {
+        mname: '손혜삼씨',
+        ctitle: '쿠킹클래스 쿡쿠키스',
+        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
+        cdday: '2024-06-25', 
+        ctime:'14:00',
+        cpersoncount: 30,
+        cprice:48000,
+    },
+    {
+        mname: '손혜사씨',
+        ctitle: '쿠킹클래스 쿡쿠키스',
+        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
+        cdday: '2024-06-25', 
+        ctime:'14:00',
+        cpersoncount: 30,
+        cprice:48000,
+    },
+])
 
 // 정렬을 위한 자바스크립트 시작
 const activeIndex = ref(0);

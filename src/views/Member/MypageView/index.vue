@@ -74,7 +74,7 @@ li a:hover{
 }
 
 .mypage_cont{
-    width:100%;
+    width:1800px;
     padding:0 1.875rem 0;
     margin-bottom:100px;
     

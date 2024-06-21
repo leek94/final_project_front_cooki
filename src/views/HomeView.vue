@@ -2,7 +2,7 @@
    <div class="d-flex flex-column justify-content-center align-items-center w-100 m-0 p-0">
       <div class="mt-5"></div>
       <div class="d-flex m-0 mt-5 p-0" style="width:80%; height: 800px;">
-       <div class="m-0 px-2 h-100" style="width: 30%; height: 100%">
+       <div class="m-0 px-2 h-100" style="width: 25%; height: 100%">
          <swiper-container class="classLeftSwiper" style=" width: 100%; height: 35%;"
            loop="true"
            speed="800"
@@ -42,7 +42,7 @@
          </div>
        </div>
  
-       <div class=" m-0 p-0 px-2" style="width: 40%; height: 100%;">
+       <div class=" m-0 p-0 px-2" style="width: 50%; height: 100%;">
              <swiper-container class="classCenterSwiper" style="width: 70%; height: 90%"
                loop="true"
                speed="800"
@@ -69,7 +69,7 @@
              </swiper-container>
        </div>
        
-       <div class="d-flex flex-column m-0 p-0" style="width: 30%; height: 100%">
+       <div class="d-flex flex-column m-0 p-0" style="width: 25%; height: 100%">
          <div class="m-0 p-0" style="height: 20%;"></div>
          <swiper-container class="classRightSwiper" style="width: 100%; height: 50%;"
            loop="true"

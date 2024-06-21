@@ -33,20 +33,7 @@
                 
                 <div class="main-box ss">
                     <ul class="main-img d-flex ss">
-                    <RecipeCard></RecipeCard>
-                    <RecipeCard></RecipeCard>
-                    <RecipeCard></RecipeCard>
-                    <RecipeCard></RecipeCard>
-
-                    <RecipeCard></RecipeCard>
-                    <RecipeCard></RecipeCard>
-                    <RecipeCard></RecipeCard>
-                    <RecipeCard></RecipeCard>
-                    
-                    <RecipeCard></RecipeCard>
-             
-                 
-
+                        <RecipeCard v-for="(recard, index) in recipeCard" :key="index" :objectProp="recard"/>
                     </ul>
                 </div>
             </div>
@@ -60,6 +47,107 @@ import SearchBar from '@/components/SearchBar.vue';
 import RecipeCard from '@/components/RecipeCard.vue';
 import { ref } from 'vue';
 
+//
+const recipeCard = ref([
+    {
+        mname: '손혜선씨',
+        bdate: '2024-06-25 14:00',
+        btitle:'이거 맛있어 보이세요?',
+        blike: 30,
+        bhitcount: 112,
+        isActive: false,
+    },
+    {
+        mname: '손혜삼씨',
+        bdate: '2024-06-25 14:00',
+        btitle:'이거 맛있어 보이세요?',
+        blike: 330,
+        bhitcount: 8112,
+        isActive: false,
+    },
+    {
+        mname: '손혜사씨',
+        bdate: '2024-06-25 14:00',
+        btitle:'이거 맛있어 보이세요?',
+        blike: 26,
+        bhitcount: 1122,
+        isActive: false,
+    },
+    {
+        mname: '손혜사씨',
+        bdate: '2024-06-25 14:00',
+        btitle:'이거 맛있어 보이세요?',
+        blike: 26,
+        bhitcount: 1122,
+        isActive: false,
+    },
+    {
+        mname: '손혜사씨',
+        bdate: '2024-06-25 14:00',
+        btitle:'이거 맛있어 보이세요?',
+        blike: 26,
+        bhitcount: 1122,
+        isActive: false,
+    },
+    {
+        mname: '손혜사씨',
+        bdate: '2024-06-25 14:00',
+        btitle:'이거 맛있어 보이세요?',
+        blike: 26,
+        bhitcount: 1122,
+        isActive: false,
+    },
+    {
+        mname: '손혜사씨',
+        bdate: '2024-06-25 14:00',
+        btitle:'이거 맛있어 보이세요?',
+        blike: 26,
+        bhitcount: 1122,
+        isActive: false,
+    },
+    {
+        mname: '손혜사씨',
+        bdate: '2024-06-25 14:00',
+        btitle:'이거 맛있어 보이세요?',
+        blike: 26,
+        bhitcount: 1122,
+        isActive: false,
+    },
+    {
+        mname: '손혜사씨',
+        bdate: '2024-06-25 14:00',
+        btitle:'이거 맛있어 보이세요?',
+        blike: 26,
+        bhitcount: 1122,
+        isActive: false,
+    },
+    {
+        mname: '손혜선씨',
+        bdate: '2024-06-25 14:00',
+        btitle:'이거 맛있어 보이세요?',
+        blike: 30,
+        bhitcount: 112,
+        isActive: false,
+    },
+    {
+        mname: '손혜선씨',
+        bdate: '2024-06-25 14:00',
+        btitle:'이거 맛있어 보이세요?',
+        blike: 30,
+        bhitcount: 112,
+        isActive: false,
+    },
+    {
+        mname: '손혜선씨',
+        bdate: '2024-06-25 14:00',
+        btitle:'이거 맛있어 보이세요?',
+        blike: 30,
+        bhitcount: 112,
+        isActive: false,
+    },
+])
+
+// 정렬을 위한 코드
 const activeIndex = ref(0);
 
 const setActive = (index) => {

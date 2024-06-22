@@ -9,7 +9,8 @@
                     <div> 님</div>
                  </div>
                  <div>
-                    <button class="btn btn-outline-success btn-md ">에디터 신청</button>
+                    <button class="btn btn-outline-success btn-md" @click="EidtorRegister">에디터 신청</button>
+                    <EditorRegisterModal id="editorRegisterModal" @close="hideEditorform"/>
                     </div>
                 <ul style="list-style-type: none;margin-top:80px; padding:0px;">
                     
@@ -20,7 +21,7 @@
 
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="true" data-bs-display="static">
                             마이 클래스 
                         </a>
                         <ul class="dropdown-menu w-100 p-0 border-0 align-middle text-center" aria-labelledby="navbarDarkDropdownMenuLink">
@@ -42,7 +43,20 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue';
+import EditorRegisterModal from './EditorRegisterModal.vue'
+import { Modal } from 'bootstrap';
 
+let eRegisterModal=null;
+onMounted(()=>{
+    eRegisterModal=new Modal(document.querySelector("#editorRegisterModal"))
+})
+function EidtorRegister(){
+    eRegisterModal.show();
+}
+function hideEditorform(){
+    eRegisterModal.hide();
+}
 </script>
 
 <style scoped>

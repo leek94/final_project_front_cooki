@@ -35,7 +35,7 @@
 import { computed, ref } from 'vue';
 
 
-const qnaCard=ref([
+const qnaCard=([
     {
         qno:1,
         qtitle:"깻잎이 질겨요",
@@ -62,7 +62,7 @@ const qnaCard=ref([
     }
 
 ])
-const qnaCount = computed(() => qnaCard.value.length);
+const qnaCount = computed(() => qnaCard.length);
 </script>
 
 <style scoped>

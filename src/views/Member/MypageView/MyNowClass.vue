@@ -21,7 +21,7 @@
  <script setup>
  import MypageClassCard from '@/components/MypageClassCard.vue';
 import { computed, ref } from 'vue';
-const cookClasses = ref([
+const cookClasses = ([
     { 
         cno:1, 
         ctitle:"쿠키쿠킹클래스1",
@@ -74,7 +74,7 @@ const cookClasses = ref([
     },
    
 ]);
-const countClass=computed(()=> cookClasses.value.length)
+const countClass=computed(()=> cookClasses.length)
  </script>
  
  <style scoped>

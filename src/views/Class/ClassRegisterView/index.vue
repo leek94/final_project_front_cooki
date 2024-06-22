@@ -1,5 +1,7 @@
 <template>
     <div class="d-flex flex-column justify-content-center align-items-center">
+        <div class="my-5"></div>
+
         <div class="w-50 my-5">
             <label class="form-label mb-3">제목</label>
             <input type="text" class="form-control" v-model="c.ctitle" placeholder="클래스 이름을 입력해주세요.">
@@ -74,11 +76,19 @@
             <div><input type="text" v-model="c.cdetailaddress" placeholder="상세주소" class="w-50 mb-3 form-control"></div>
         </div>
 
-        <div class="w-50 mb-5">
-            <swiper-container class="mySwiper m-0 p-0" style="height: 0px;"
-            loop="true">
-            </swiper-container>
-            <div class="tInputForm">            
+        <div class="d-flex flex-column align-items-center w-50 mb-5">
+            <div class="swiperDiv w-75 position-relative">
+                <div class="position-absolute top-50 start-25 translate-middle" style="z-index: 99; display: none;">
+                    <img src="/images/assets/ic_left.png" class="left btn">
+                </div>
+                <div class="position-absolute top-50 start-100 translate-middle" style="z-index: 99; display: none;">
+                    <img src="/images/assets/ic_right.png" class="right btn">
+                </div>
+                <swiper-container class="mySwiper" loop="true">
+                </swiper-container>
+            </div>
+
+            <div class="tInputForm w-100">            
                 <label for="tFile" class="form-label"> 완성품 사진(필수!!!!)</label>
                 <input id="tFile" type="file" class="form-control" ref="presetImg" multiple @change="setPreviewImg($event)">
             </div>
@@ -166,9 +176,9 @@ const itemErrorMessage = ref(null);
 const cuErrorMessage = ref(null); 
 
 const c = ref({
-    ctitle:"",
-    ccontent:"",
-    cpersoncount:"",
+    ctitle:null,
+    ccontent:null,
+    cpersoncount:null,
     cdday: null,
     cstarttime: null,
     cendtime: null,
@@ -176,6 +186,7 @@ const c = ref({
     cdetailaddress: null,
     cpirce:null
 })
+
 const presetImg = ref(null);
 
 const citems = ref([
@@ -198,15 +209,13 @@ const curiculums = ref([
 const cuImgs = ref([]);
 
 function setPreviewImg(e){
+    const swiperDiv = document.querySelector(".swiperDiv");
+    const left = document.querySelector(".left");
+    const right = document.querySelector(".right");
     const swiper = document.querySelector("swiper-container");  
     
     while(swiper.hasChildNodes()){
         swiper.removeChild(swiper.firstChild);
-    }
-    if(e.target.files.length > 0){
-        swiper.style.height="300px";    
-    }else{
-        swiper.style.height="0px";
     }
 
     for(let img of e.target.files){
@@ -214,9 +223,19 @@ function setPreviewImg(e){
         reader.readAsDataURL(img);
         reader.onload = function(e){
         swiper.swiper.appendSlide(
-            "<swiper-slide><img src='"+ e.target.result +"' class='rounded w-50 h-100'/></swiper-slide>"
+            "<swiper-slide><img src='"+ e.target.result +"' class='rounded-4' style='width:100%; height:100%'/></swiper-slide>"
         );
         }
+    }
+
+    if(e.target.files.length > 0){
+        swiperDiv.style.height = '300px';
+        left.style.display = 'block';
+        right.style.display = 'block';   
+    }else{
+        swiperDiv.style.height = '0px';
+        left.style.display = 'none';
+        right.style.display = 'none';   
     }
 }
 
@@ -267,6 +286,7 @@ function addCu(){
 }
 
 function removeCu(){
+    
     if(curiculums.value.length > 1){
         curiculums.value.splice(-1,1);
     }
@@ -288,7 +308,9 @@ function setTime(){
         c.value.cendtime = minTime.value;
 
         isStart = true;
+
     }else{
+
         minTime.value = null;
         maxTime.value = null;
         c.value.cendtime = null;
@@ -326,14 +348,23 @@ function isvalidPersonCount(){
 
 <style scoped>
 
-    swiper-slide {
-      text-align: center;
-      font-size: 18px;
-      background: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+swiper-container {
+       width: 100%;
+       height: 100%;
+}
 
+swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+swiper-slide img {
+    width: 100%;
+    height: 100%;
+}
 
 </style>

@@ -136,8 +136,8 @@
       slides-per-view="4"
       speed="800">
          <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===0? '': 'border-end'"> 
-            <div class="my m-0 p-0" style="width: 80%; height: 50%;">
-               <img src="/images/photos/main/category1.jpg" class="rounded-4"/>
+            <div class="m-0 p-0 rounded-4" style="width: 80%; height: 50%; overflow: hidden;">
+               <img src="/images/photos/main/category1.jpg"  style="transition: all 0.2s ease-out;">
             </div>
             <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 40%;">
               <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
@@ -152,7 +152,7 @@
             </div>
          </swiper-slide>
          <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===1? '': 'border-end'"> 
-            <div class="m-0 p-0" style="width: 80%; height: 50%;">
+            <div class="m-0 p-0 rounded-4" style="width: 80%; height: 50%; overflow:hidden">
                <img src="/images/photos/main/category2.jpg" class="rounded-4"/>
             </div>
             <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 40%;">
@@ -168,7 +168,7 @@
             </div>
          </swiper-slide>
          <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===2? '': 'border-end'"> 
-            <div class="m-0 p-0" style="width: 80%; height: 50%;">
+            <div class="m-0 p-0 rounded-4" style="width: 80%; height: 50%; overflow:hidden">
                <img src="/images/photos/main/category3.jpg" class="rounded-4"/>
             </div>
             <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 40%;">
@@ -184,7 +184,7 @@
             </div>
          </swiper-slide>
          <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===3? '': 'border-end'"> 
-            <div class="m-0 p-0" style="width: 80%; height: 50%;">
+            <div class="m-0 p-0 rounded-4" style="width: 80%; height: 50%; overflow:hidden">
                <img src="/images/photos/main/category4.jpg" class="rounded-4"/>
             </div>
             <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 40%;">
@@ -200,11 +200,11 @@
             </div>
          </swiper-slide>
          <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===4? '': 'border-end'"> 
-            <div class="m-0 p-0" style="width: 80%; height: 50%;">
+            <div class="m-0 p-0 rounded-4" style="width: 80%; height: 50%; overflow:hidden">
                <img src="/images/photos/main/category5.jpg" class="rounded-4"/>
             </div>
             <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 40%;">
-              <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
+              <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10;">
                 <p class="fs-5 m-0 m-0 p-0">퓨전</p>
               </span>
               <p class="fs-4 m-0 mt-3 p-0">없는 건 이유가 있다</p>
@@ -309,7 +309,7 @@
          <div style="width:2.5%"></div>
 
          <div class="position-relative" style="width: 30%; height: 100%">
-           <div class="position-absolute top-50 start-25 translate-middle border-5" style="z-index: 99;">
+           <div class="position-absolute top-50 start-25 translate-middle" style="z-index: 99;">
              <img src="/images/assets/ic_left.png" class="left3 btn">
            </div>
            <div class="position-absolute top-50 start-100 translate-middle" style="z-index: 99;">
@@ -323,15 +323,18 @@
            >
             <swiper-slide>
               <div class="d-flex flex-column m-0 p-0" style="width:100%; height: 100%;">
-                <div class="d-flex flex-column justify-content-center align-items-start ms-3" style="width: 100%; height: 30%">
-                  <h3>아이를 위한 도시락?</h3>
+                <div class="d-flex flex-column justify-content-center align-items-start ms-3" style="height: 30%;">
+                  <h3 class="text-start" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;">
+                    아이를 위한 도시락?아이를 위한 도시락?아이를 위한 도시락?아이를 위한 도시락?
+                  </h3>
                   <p>나는요 | 2024-06-21</p>
                 </div>
                 <div style="height: 40%">
                     <img src="/images/photos/main/recpie3.jpg" class="rounded-4" style="width: 50%; height: 100%;"/>
                 </div>
-                <div style="height: 30%">
-                  <p class="m-0 p-3 text-start">
+                <div class="d-flex align-items-center justify-content-center" style="height: 30%">
+                  <p class="m-0 p-3 text-center" style="width: 100%; height:75%; display: -webkit-box; word-wrap: break-word; -webkit-line-clamp: 4; -webkit-box-orient: vertical; text-overflow: ellipsis; overflow: hidden;">
+                    맞습니다 아이를 위한 도시락 소풍에서 다른 아이들의 기를 확실히 눌러 주기 위한 도시락 비법입니다 모두 공유하시죠
                     맞습니다 아이를 위한 도시락 소풍에서 다른 아이들의 기를 확실히 눌러 주기 위한 도시락 비법입니다 모두 공유하시죠
                   </p>
                 </div>
@@ -340,14 +343,17 @@
             <swiper-slide>
               <div class="d-flex flex-column m-0 p-0" style="width:100%; height: 100%;">
                 <div class="d-flex flex-column justify-content-center align-items-start ms-3" style="width: 100%; height: 30%">
-                  <h3>아이를 위한 도시락?</h3>
+                  <h3 class="text-start" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;">
+                    아이를 위한 도시락?아이를 위한 도시락?아이를 위한 도시락?아이를 위한 도시락?
+                  </h3>
                   <p>나는요 | 2024-06-21</p>
                 </div>
                 <div style="height: 40%">
                     <img src="/images/photos/main/recpie4.jpg" class="rounded-4" style="width: 50%; height: 100%;"/>
                 </div>
                 <div style="height: 30%">
-                  <p class="m-0 p-3 text-start">
+                  <p class="m-0 p-3 text-center" style="width: 100%; height:75%; display: -webkit-box; word-wrap: break-word; -webkit-line-clamp: 4; -webkit-box-orient: vertical; text-overflow: ellipsis; overflow: hidden;">
+                    맞습니다 아이를 위한 도시락 소풍에서 다른 아이들의 기를 확실히 눌러 주기 위한 도시락 비법입니다 모두 공유하시죠
                     맞습니다 아이를 위한 도시락 소풍에서 다른 아이들의 기를 확실히 눌러 주기 위한 도시락 비법입니다 모두 공유하시죠
                   </p>
                 </div>
@@ -356,14 +362,17 @@
             <swiper-slide>
               <div class="d-flex flex-column m-0 p-0" style="width:100%; height: 100%;">
                 <div class="d-flex flex-column justify-content-center align-items-start ms-3" style="width: 100%; height: 30%">
-                  <h3>아이를 위한 도시락?</h3>
+                  <h3 class="text-start" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;">
+                    아이를 위한 도시락?아이를 위한 도시락?아이를 위한 도시락?아이를 위한 도시락?
+                  </h3>
                   <p>나는요 | 2024-06-21</p>
                 </div>
                 <div style="height: 40%">
                     <img src="/images/photos/main/recpie5.jpg" class="rounded-4" style="width: 50%; height: 100%;"/>
                 </div>
                 <div style="height: 30%">
-                  <p class="m-0 p-3 text-start">
+                  <p class="m-0 p-3 text-center" style="width: 100%; height:75%; display: -webkit-box; word-wrap: break-word; -webkit-line-clamp: 4; -webkit-box-orient: vertical; text-overflow: ellipsis; overflow: hidden;">
+                    맞습니다 아이를 위한 도시락 소풍에서 다른 아이들의 기를 확실히 눌러 주기 위한 도시락 비법입니다 모두 공유하시죠
                     맞습니다 아이를 위한 도시락 소풍에서 다른 아이들의 기를 확실히 눌러 주기 위한 도시락 비법입니다 모두 공유하시죠
                   </p>
                 </div>
@@ -371,15 +380,18 @@
             </swiper-slide>
             <swiper-slide>
               <div class="d-flex flex-column m-0 p-0" style="width:100%; height: 100%;">
-                <div class="d-flex flex-column justify-content-center align-items-start ms-3" style="width: 100%; height: 30%">
-                  <h3>아이를 위한 도시락?</h3>
+                <div class="d-flex flex-column justify-content-center align-items-start ms-3" style="height: 30%">
+                  <h3 class="text-start" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;">
+                    아이를 위한 도시락?아이를 위한 도시락?아이를 위한 도시락?아이를 위한 도시락?
+                  </h3>
                   <p>나는요 | 2024-06-21</p>
                 </div>
                 <div style="height: 40%">
                     <img src="/images/photos/main/recpie1.jpg" class="rounded-4" style="width: 50%; height: 100%;"/>
                 </div>
                 <div style="height: 30%">
-                  <p class="m-0 p-3 text-start">
+                  <p class="m-0 p-3 text-center" style="width: 100%; height:75%; display: -webkit-box; word-wrap: break-word; -webkit-line-clamp: 4; -webkit-box-orient: vertical; text-overflow: ellipsis; overflow: hidden;">
+                    맞습니다 아이를 위한 도시락 소풍에서 다른 아이들의 기를 확실히 눌러 주기 위한 도시락 비법입니다 모두 공유하시죠
                     맞습니다 아이를 위한 도시락 소풍에서 다른 아이들의 기를 확실히 눌러 주기 위한 도시락 비법입니다 모두 공유하시죠
                   </p>
                 </div>
@@ -388,14 +400,17 @@
             <swiper-slide>
               <div class="d-flex flex-column m-0 p-0" style="width:100%; height: 100%;">
                 <div class="d-flex flex-column justify-content-center align-items-start ms-3" style="width: 100%; height: 30%">
-                  <h3>아이를 위한 도시락?</h3>
+                  <h3 class="text-start" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;">
+                    아이를 위한 도시락?아이를 위한 도시락?아이를 위한 도시락?아이를 위한 도시락?
+                  </h3>
                   <p>나는요 | 2024-06-21</p>
                 </div>
                 <div style="height: 40%">
                     <img src="/images/photos/main/recpie2.jpg" class="rounded-4" style="width: 50%; height: 100%;"/>
                 </div>
                 <div style="height: 30%">
-                  <p class="m-0 p-3 text-start">
+                  <p class="m-0 p-3 text-center" style="width: 100%; height:75%; display: -webkit-box; word-wrap: break-word; -webkit-line-clamp: 4; -webkit-box-orient: vertical; text-overflow: ellipsis; overflow: hidden;">
+                    맞습니다 아이를 위한 도시락 소풍에서 다른 아이들의 기를 확실히 눌러 주기 위한 도시락 비법입니다 모두 공유하시죠
                     맞습니다 아이를 위한 도시락 소풍에서 다른 아이들의 기를 확실히 눌러 주기 위한 도시락 비법입니다 모두 공유하시죠
                   </p>
                 </div>
@@ -620,4 +635,11 @@
        width: 100%;
        height: 100%;
      }
+
+
+     .categorySwiper swiper-slide img:hover{
+      transform: scale(1.1);
+      transition: all 0.2s linear;
+     }
+     
    </style>

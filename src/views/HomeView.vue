@@ -323,15 +323,18 @@
            >
             <swiper-slide>
               <div class="d-flex flex-column m-0 p-0" style="width:100%; height: 100%;">
-                <div class="d-flex flex-column justify-content-center align-items-start ms-3" style="width: 100%; height: 30%">
-                  <h3>아이를 위한 도시락?</h3>
+                <div class="d-flex flex-column justify-content-center align-items-start ms-3" style="height: 30%;">
+                  <h3 class="text-start" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;">
+                    아이를 위한 도시락?
+                  </h3>
                   <p>나는요 | 2024-06-21</p>
                 </div>
                 <div style="height: 40%">
                     <img src="/images/photos/main/recpie3.jpg" class="rounded-4" style="width: 50%; height: 100%;"/>
                 </div>
-                <div style="height: 30%">
-                  <p class="m-0 p-3 text-start">
+                <div class="d-flex align-items-center justify-content-center" style="height: 30%">
+                  <p class="m-0 p-3 text-center" style="width: 100%; height:75%; display: -webkit-box; word-wrap: break-word; -webkit-line-clamp: 4; -webkit-box-orient: vertical; text-overflow: ellipsis; overflow: hidden;">
+                    맞습니다 아이를 위한 도시락 소풍에서 다른 아이들의 기를 확실히 눌러 주기 위한 도시락 비법입니다 모두 공유하시죠
                     맞습니다 아이를 위한 도시락 소풍에서 다른 아이들의 기를 확실히 눌러 주기 위한 도시락 비법입니다 모두 공유하시죠
                   </p>
                 </div>
@@ -340,14 +343,17 @@
             <swiper-slide>
               <div class="d-flex flex-column m-0 p-0" style="width:100%; height: 100%;">
                 <div class="d-flex flex-column justify-content-center align-items-start ms-3" style="width: 100%; height: 30%">
-                  <h3>아이를 위한 도시락?</h3>
+                  <h3 class="text-start" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;">
+                    아이를 위한 도시락?
+                  </h3>
                   <p>나는요 | 2024-06-21</p>
                 </div>
                 <div style="height: 40%">
                     <img src="/images/photos/main/recpie4.jpg" class="rounded-4" style="width: 50%; height: 100%;"/>
                 </div>
                 <div style="height: 30%">
-                  <p class="m-0 p-3 text-start">
+                  <p class="m-0 p-3 text-center" style="width: 100%; height:75%; display: -webkit-box; word-wrap: break-word; -webkit-line-clamp: 4; -webkit-box-orient: vertical; text-overflow: ellipsis; overflow: hidden;">
+                    맞습니다 아이를 위한 도시락 소풍에서 다른 아이들의 기를 확실히 눌러 주기 위한 도시락 비법입니다 모두 공유하시죠
                     맞습니다 아이를 위한 도시락 소풍에서 다른 아이들의 기를 확실히 눌러 주기 위한 도시락 비법입니다 모두 공유하시죠
                   </p>
                 </div>
@@ -356,14 +362,17 @@
             <swiper-slide>
               <div class="d-flex flex-column m-0 p-0" style="width:100%; height: 100%;">
                 <div class="d-flex flex-column justify-content-center align-items-start ms-3" style="width: 100%; height: 30%">
-                  <h3>아이를 위한 도시락?</h3>
+                  <h3 class="text-start" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;">
+                    아이를 위한 도시락?
+                  </h3>
                   <p>나는요 | 2024-06-21</p>
                 </div>
                 <div style="height: 40%">
                     <img src="/images/photos/main/recpie5.jpg" class="rounded-4" style="width: 50%; height: 100%;"/>
                 </div>
                 <div style="height: 30%">
-                  <p class="m-0 p-3 text-start">
+                  <p class="m-0 p-3 text-center" style="width: 100%; height:75%; display: -webkit-box; word-wrap: break-word; -webkit-line-clamp: 4; -webkit-box-orient: vertical; text-overflow: ellipsis; overflow: hidden;">
+                    맞습니다 아이를 위한 도시락 소풍에서 다른 아이들의 기를 확실히 눌러 주기 위한 도시락 비법입니다 모두 공유하시죠
                     맞습니다 아이를 위한 도시락 소풍에서 다른 아이들의 기를 확실히 눌러 주기 위한 도시락 비법입니다 모두 공유하시죠
                   </p>
                 </div>
@@ -371,15 +380,18 @@
             </swiper-slide>
             <swiper-slide>
               <div class="d-flex flex-column m-0 p-0" style="width:100%; height: 100%;">
-                <div class="d-flex flex-column justify-content-center align-items-start ms-3" style="width: 100%; height: 30%">
-                  <h3>아이를 위한 도시락?</h3>
+                <div class="d-flex flex-column justify-content-center align-items-start ms-3" style="height: 30%">
+                  <h3 class="text-start" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;">
+                    아이를 위한 도시락
+                  </h3>
                   <p>나는요 | 2024-06-21</p>
                 </div>
                 <div style="height: 40%">
                     <img src="/images/photos/main/recpie1.jpg" class="rounded-4" style="width: 50%; height: 100%;"/>
                 </div>
                 <div style="height: 30%">
-                  <p class="m-0 p-3 text-start">
+                  <p class="m-0 p-3 text-center" style="width: 100%; height:75%; display: -webkit-box; word-wrap: break-word; -webkit-line-clamp: 4; -webkit-box-orient: vertical; text-overflow: ellipsis; overflow: hidden;">
+                    맞습니다 아이를 위한 도시락 소풍에서 다른 아이들의 기를 확실히 눌러 주기 위한 도시락 비법입니다 모두 공유하시죠
                     맞습니다 아이를 위한 도시락 소풍에서 다른 아이들의 기를 확실히 눌러 주기 위한 도시락 비법입니다 모두 공유하시죠
                   </p>
                 </div>
@@ -388,14 +400,17 @@
             <swiper-slide>
               <div class="d-flex flex-column m-0 p-0" style="width:100%; height: 100%;">
                 <div class="d-flex flex-column justify-content-center align-items-start ms-3" style="width: 100%; height: 30%">
-                  <h3>아이를 위한 도시락?</h3>
+                  <h3 class="text-start" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;">
+                    아이를 위한 도시락?
+                  </h3>
                   <p>나는요 | 2024-06-21</p>
                 </div>
                 <div style="height: 40%">
                     <img src="/images/photos/main/recpie2.jpg" class="rounded-4" style="width: 50%; height: 100%;"/>
                 </div>
                 <div style="height: 30%">
-                  <p class="m-0 p-3 text-start">
+                  <p class="m-0 p-3 text-center" style="width: 100%; height:75%; display: -webkit-box; word-wrap: break-word; -webkit-line-clamp: 4; -webkit-box-orient: vertical; text-overflow: ellipsis; overflow: hidden;">
+                    맞습니다 아이를 위한 도시락 소풍에서 다른 아이들의 기를 확실히 눌러 주기 위한 도시락 비법입니다 모두 공유하시죠
                     맞습니다 아이를 위한 도시락 소풍에서 다른 아이들의 기를 확실히 눌러 주기 위한 도시락 비법입니다 모두 공유하시죠
                   </p>
                 </div>

@@ -136,7 +136,7 @@
       slides-per-view="4"
       speed="800">
          <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===0? '': 'border-end'"> 
-            <div class="m-0 p-0" style="width: 80%; height: 50%;">
+            <div class="my m-0 p-0" style="width: 80%; height: 50%;">
                <img src="/images/photos/main/category1.jpg" class="rounded-4"/>
             </div>
             <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 40%;">
@@ -620,5 +620,4 @@
        width: 100%;
        height: 100%;
      }
-     
    </style>

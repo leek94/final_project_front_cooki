@@ -1,11 +1,9 @@
 <template>
 
 <ModalTemplate>
-    <template v-slot:header>
-        class 신청 완료
-    </template>
 
     <template v-slot:body>
+        <h4 class="text-center mb-4">class 신청 완료</h4>
         <pre style="overflow: hidden; text-wrap: wrap">
 **주의 사항
 
@@ -20,7 +18,7 @@
         </pre>
     </template>
     <template v-slot:footer>
-        <button class="btn btn-success btn-md" @click="emit('close')">확인</button>
+        <button class="btn btn-success" style="width:80px;height:40px" @click="emit('close')">확인</button>
     </template>
 </ModalTemplate>
 

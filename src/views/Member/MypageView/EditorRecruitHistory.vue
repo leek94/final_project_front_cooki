@@ -52,7 +52,7 @@ import { computed, ref } from 'vue';
 
 
  // 데이터 바인딩을 위한 더미 데이터
-const cookClasses = ref([
+const cookClasses = ([
     { 
         cno:1, 
         ctitle:"쿠키쿠킹클래스1",
@@ -105,7 +105,7 @@ const cookClasses = ref([
    
 ]);
 
-const countClass=computed(()=> cookClasses.value.length)
+const countClass=computed(()=> cookClasses.length)
  
  </script>
  

@@ -21,7 +21,7 @@
 
 import { computed, ref } from 'vue';
  
-const recipeCard = ref([
+const recipeCard = ([
     { 
         bno:1, 
         btitle:"이거 맛있겠죠1", 
@@ -69,7 +69,7 @@ const recipeCard = ref([
     },
 
 ])
-const countR= computed(()=>recipeCard.value.length)
+const countR= computed(()=>recipeCard.length)
  </script>
  
  <style scoped>

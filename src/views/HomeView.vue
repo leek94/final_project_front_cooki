@@ -314,7 +314,7 @@
          <div style="width:2.5%"></div>
 
          <div class="position-relative" style="width: 30%; height: 100%">
-           <div class="position-absolute top-50 start-25 translate-middle border-5" style="z-index: 99;">
+           <div class="position-absolute top-50 start-25 translate-middle" style="z-index: 99;">
              <img src="/images/assets/ic_left.png" class="left3 btn">
            </div>
            <div class="position-absolute top-50 start-100 translate-middle" style="z-index: 99;">

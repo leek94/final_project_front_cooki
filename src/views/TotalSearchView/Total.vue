@@ -43,6 +43,7 @@ function handleClick(index) {
     recipeCardes.value[index].isActive = !recipeCardes.value[index].isActive;
     console.log(recipeCardes.value[index].isActive)
 }
+
 const classCardes = ref([
     {
         mname: '손혜선씨',

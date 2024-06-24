@@ -238,7 +238,6 @@ function joinEditor() {
 
 // 커리어 상태 객체 선언
 const career = ref({
-    cano: 1,
     cacontent: ''
  })
 
@@ -253,13 +252,14 @@ const cacontentNullError = ref(false);
 //커리어 입력 태그 추가 함수
 function careerAdd(index) {
         //cacontentNullError.value = !cacontentNullError.value;
-        careerArray.value.push({cano: index+2, cacontent: ''});
+        careerArray.value.push({cacontent: ''});
         careerAddAfter.value = !careerAddAfter.value;
         //careerArray.value.push({ cano: index+2, cacontent: '' });
         //console.log("다음인덱스번호",nextCano );
         console.log("배열객체",JSON.parse(JSON.stringify(careerArray.value)));
         console.log("커리어이름",careerArray.value[index].cacontent);
         console.log("인덱스번호",careerArray.value[index].cano);
+
 }
 
 // 수상내역 입력 태그 삭제 함수
@@ -331,5 +331,20 @@ h6::marker {
     color: red;
 }
 
+a:link {
+    color: #15a775;
+}
+
+a:visited {
+    color: #15a775;
+}
+
+a:hover {
+    color: #D9EDBF;
+}
+
+a:active {
+    color: #D9EDBF;
+} 
 
 </style>

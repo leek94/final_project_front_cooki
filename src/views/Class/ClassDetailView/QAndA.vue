@@ -187,10 +187,7 @@ function qnaClose(index) {
 }
 
 function qnaDelete(index) {
-    if(index==0) {
-        qnaArray.value.splice(index, 1);
-    }
-    qnaArray.value.splice(index, index);
+    qnaArray.value.splice(index, 1);
     console.log("큐앤에이 삭제 함수 클릭")
 }
 

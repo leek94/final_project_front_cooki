@@ -5,10 +5,7 @@
             <h5 class="class-name mb-3">클래스</h5>
             <div class="main-box mb-5">
                 <ul class="main-img d-flex">
-                    <ClassCard></ClassCard>
-                    <ClassCard></ClassCard>
-                    <ClassCard></ClassCard>
-                    <ClassCard></ClassCard>
+                    <ClassCard v-for="(clcard, index) in classCardes" :key="index" :objectProp="clcard"/>
                 </ul>
 
                 <div class="d-flex justify-content-center">
@@ -22,6 +19,56 @@
 
 <script setup>
 import ClassCard from '@/components/ClassCard.vue';
+import { ref } from 'vue';
+
+
+const classCardes = ref([
+    {
+        mname: '손혜선씨',
+        ctitle: '쿠킹클래스 쿡쿠키스',
+        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
+        cdday: '2024-06-25', 
+        ctime:'14:00',
+        cpersoncount: 30,
+        cprice:48000,
+    },
+    {
+        mname: '손혜선씨',
+        ctitle: '쿠킹클래스 쿡쿠키스',
+        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
+        cdday: '2024-06-25', 
+        ctime:'14:00',
+        cpersoncount: 30,
+        cprice:48000,
+    },
+    {
+        mname: '손혜선씨',
+        ctitle: '쿠킹클래스 쿡쿠키스',
+        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
+        cdday: '2024-06-25', 
+        ctime:'14:00',
+        cpersoncount: 30,
+        cprice:48000,
+    },
+    {
+        mname: '손혜선씨',
+        ctitle: '쿠킹클래스 쿡쿠키스',
+        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
+        cdday: '2024-06-25', 
+        ctime:'14:00',
+        cpersoncount: 30,
+        cprice:48000,
+    },
+    {
+        mname: '손혜선씨',
+        ctitle: '쿠킹클래스 쿡쿠키스',
+        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
+        cdday: '2024-06-25', 
+        ctime:'14:00',
+        cpersoncount: 30,
+        cprice:48000,
+    },
+]);
 </script>
 
 <style scoped>

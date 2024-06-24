@@ -83,6 +83,18 @@
 
         </div>
         </div>
+
+            <div class="row  mx-2 mb-3 " v-if="pluscareer">
+                <div class="d-flex" v-for="(career, index) in careerArray" :key="index" >
+                     <div class="input-group input-group-box w-100 mb-1">
+                        <input type="text" class="form-control input-box" placeholder="경력을 입력해주세요" v-model="career.cacontent" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <button class="btn border" type="button" id="button-addon2">변경</button>
+                        <button class="btn border" type="button" id="button-addon2" @click="pluscareerRemove(index)">삭제</button>
+                    </div>
+                </div>
+                <div class="checkError m-1" v-if="cacontentNullError">내용을 입력하신 후 추가해주세요</div>
+            </div>
+
         
 
         <!-- 에디터한테만 보이는 화면 -->
@@ -185,30 +197,9 @@ function mpasswordMatchCheck(){
 
     return mpasswordCheckResult;
 }
-const editingMnickname=ref(false);
-const editingCareers=ref(false);
-const editingAwards=ref(false);
 
-function changeMnickname(){
-    editingMnickname.value= !editingMnickname.value;
-}
-function changeCareers(){
-    editingCareers.value= !editingCareers.value;
-}
-function changeAwards(){
-    editingAwards.value= !editingAwards.value;
-}
 
-function savenickname(){
-    editingMnickname.value= !editingMnickname.value;
-}
-function saveCareers(){
-    editingCareers.value= !editingCareers.value;
-}
-function saveAwards(){
-    editingAwards.value= !editingAwards.value;
-}
-
+const cacontentNullError =ref (false);
 
 function careerAdd() {
     const newcareer=ref({

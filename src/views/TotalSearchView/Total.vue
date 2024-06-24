@@ -39,10 +39,11 @@ import RecipeCard from '@/components/RecipeCard.vue';
 import { ref } from 'vue';
 
 function handleClick(index) {
-    console.log(recipeCardes.value[index].isActive)
+    console.log(recipeCardes.value[index].isActive);
     recipeCardes.value[index].isActive = !recipeCardes.value[index].isActive;
-    console.log(recipeCardes.value[index].isActive)
+    console.log(recipeCardes.value[index].isActive);
 }
+
 const classCardes = ref([
     {
         mname: '손혜선씨',

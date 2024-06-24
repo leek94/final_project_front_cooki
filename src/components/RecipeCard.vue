@@ -2,7 +2,7 @@
     <li class="img-li ss">
         <div class="router-div">
             <div class="image">
-                <i class="icon-heart fa-solid fa-heart like-heart" :class="{active: prop.objectProp.isActive}" @click="toggleLike(index)"></i>
+                <i class="icon-heart fa-solid fa-heart like-heart" :class="{active: prop.objectProp.isActive}" @click="$emit('click')"></i>
                 <img src="/images/photos/140114575djmw.jpg">
             </div>
 
@@ -26,16 +26,17 @@
 <script setup>
 import { ref } from 'vue';
 
-const prop=defineProps(["objectProp"]);
-console.log(prop.objectProp.value);
+const prop = defineProps(["objectProp"]);
+const emit = defineEmits(["click"]);
 
-// 좋아요 버튼 자바스크립트 시작
 
-// const toggleLike = () => {
-//     prop.objectProp.value.isActive = ! prop.objectProp.value.isActive;
+// console.log(prop.objectProp);
+//좋아요 버튼 자바스크립트 시작
 
-// };
-// 좋아요 버튼 자바스크립트 끝
+console.log("카드 찍힘")
+console.log(prop.objectProp.isActive);
+//좋아요 버튼 자바스크립트 끝
+
 
 </script>
 

@@ -165,6 +165,10 @@ const reviewArray = ref([
 const isReview = ref(false);
 const isReviewArray = ref([]);
 
+//댓글 등록 시간 설정
+const todate = new Date;
+const crdate = new Date()
+
 //별점 체크 디폴트값 설정
 const starClick = ref(0);
 

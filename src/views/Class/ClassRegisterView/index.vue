@@ -27,7 +27,6 @@
         <div class="w-50 mb-5">
             <label class="form-label mb-3">개최 일자</label>
             <VueDatePicker  v-model="c.cdday" :min-date="minDate" :max-date="maxDate"
-
             :start-date="minDate"
             :format="format" :format-locale="ko"
             input-class-name="form-control w-25 "
@@ -79,7 +78,6 @@
         </div>
 
         <div class="d-flex flex-column align-items-center w-50 mb-5">
-
             <div class="w-75 position-relative mb-3" v-show="isPreImg">
                 <div class="position-absolute top-50 start-25 translate-middle" style="z-index: 99;">
                     <img src="/images/assets/ic_left.png" class="left btn" @click='swipePrve'>
@@ -88,15 +86,12 @@
                     <img src="/images/assets/ic_right.png" class="right btn" @click='swipeNext'>
                 </div>
                 <swiper-container class="mySwiper" loop="true" style="height: 300px;">
-
                 </swiper-container>
             </div>
 
             <div class="tInputForm w-100">            
                 <label for="tFile" class="form-label"> 완성품 사진(필수!!!!)</label>
-
                 <input id="tFile" type="file" class="form-control" ref="presetImg" multiple @change="setPreviewImg">
-
             </div>
         </div>
 
@@ -128,7 +123,6 @@
                         </div>    
                         <label class="form-label"> 이미지(필수!!!)</label>
                         <input  type="file" class="form-control" ref="cuImgs" @change="setCuImg($event,index)">
-
                     </div>
 
                     <div class="mb-3">
@@ -198,7 +192,6 @@ const c = ref({
 })
 
 const presetImg = ref(null);
-
 let isPreImg = ref(false);
 
 
@@ -220,15 +213,11 @@ const curiculums = ref([
 ])
 
 const cuImgs = ref([]);
-
-
-
 let isCuImg = ref([
     false,
 ]);
     
 function setPreviewImg(e){
-
     const swiper = document.querySelector("swiper-container");  
     
     while(swiper.hasChildNodes()){
@@ -240,15 +229,12 @@ function setPreviewImg(e){
         reader.readAsDataURL(img);
         reader.onload = function(e){
         swiper.swiper.appendSlide(
-
-
             "<swiper-slide><img src='"+ e.target.result +"' class='rounded-4' style='width:100%; height:100%;'/></swiper-slide>"
         );
         }
     }
 
     if(e.target.files.length > 0){
-
         isPreImg.value = true;
     }else{
         isPreImg.value = false;
@@ -281,13 +267,10 @@ function removeClassItem(index){
 
 function setCuImg(event,index){
     const nowCu = event.target.parentElement.firstChild;
-  
     if(nowCu.firstChild !== null){
         const img = nowCu.querySelector("img");
         img.src = null;
     }
-
-
     if(event.target.files.length !== 0){
         const file  = event.target.files[0]
         const reader = new FileReader();
@@ -300,7 +283,6 @@ function setCuImg(event,index){
         }
     }else{
         isCuImg.value[index] = false;
-
     }
 }
 
@@ -321,7 +303,6 @@ function removeCu(){
     
     if(curiculums.value.length > 1){
         curiculums.value.splice(-1,1);
-
         isCuImg.value.splice(-1,1);
     }
 }

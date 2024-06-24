@@ -33,7 +33,7 @@
                 
                 <div class="main-box ss">
                     <ul class="main-img d-flex ss">
-                        <RecipeCard v-for="(recard, index) in recipeCard" :key="index" :objectProp="recard"/>
+                        <RecipeCard v-for="(recard, index) in recipeCard" :key="index" :objectProp="recard" @click="handleClick(index)"/>
                     </ul>
                 </div>
             </div>
@@ -47,7 +47,14 @@ import SearchBar from '@/components/SearchBar.vue';
 import RecipeCard from '@/components/RecipeCard.vue';
 import { ref } from 'vue';
 
-//
+function handleClick(index){
+    console.log("레시피 리스트 실행");
+    console.log(recipeCard.value[index].isActive);
+    recipeCard.value[index].isActive = !recipeCard.value[index].isActive;
+    console.log(recipeCard.value[index].isActive);
+
+}
+
 const recipeCard = ref([
     {
         mname: '손혜선씨',

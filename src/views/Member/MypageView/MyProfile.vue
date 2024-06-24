@@ -61,6 +61,7 @@
             </div>
             <div class="checkError col m-2" v-if="cacontentNullError">내용을 입력하신 후 추가해주세요</div>
         </div>
+
             <div class="row  mx-2 mb-3 " v-if="pluscareer">
                 <div class="d-flex" v-for="(career, index) in careerArray" :key="index" >
                      <div class="input-group input-group-box w-100 mb-1">
@@ -71,6 +72,7 @@
                 </div>
                 <div class="checkError m-1" v-if="cacontentNullError">내용을 입력하신 후 추가해주세요</div>
             </div>
+
         
 
         <!-- 에디터한테만 보이는 화면 -->
@@ -157,7 +159,6 @@ function mpasswordMatchCheck(){
 
     return mpasswordCheckResult;
 }
-
 
 const cacontentNullError =ref (false);
 

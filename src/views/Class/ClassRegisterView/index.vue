@@ -27,6 +27,7 @@
         <div class="w-50 mb-5">
             <label class="form-label mb-3">개최 일자</label>
             <VueDatePicker  v-model="c.cdday" :min-date="minDate" :max-date="maxDate"
+            :start-date="minDate"
             :format="format" :format-locale="ko"
             input-class-name="form-control w-25 "
             hide-input-icon
@@ -77,20 +78,20 @@
         </div>
 
         <div class="d-flex flex-column align-items-center w-50 mb-5">
-            <div class="swiperDiv w-75 position-relative">
-                <div class="position-absolute top-50 start-25 translate-middle" style="z-index: 99; display: none;">
-                    <img src="/images/assets/ic_left.png" class="left btn">
+            <div class="w-75 position-relative mb-3" v-show="isPreImg">
+                <div class="position-absolute top-50 start-25 translate-middle" style="z-index: 99;">
+                    <img src="/images/assets/ic_left.png" class="left btn" @click='swipePrve'>
                 </div>
-                <div class="position-absolute top-50 start-100 translate-middle" style="z-index: 99; display: none;">
-                    <img src="/images/assets/ic_right.png" class="right btn">
+                <div class="position-absolute top-50 start-100 translate-middle" style="z-index: 99;">
+                    <img src="/images/assets/ic_right.png" class="right btn" @click='swipeNext'>
                 </div>
-                <swiper-container class="mySwiper" loop="true">
+                <swiper-container class="mySwiper" loop="true" style="height: 300px;">
                 </swiper-container>
             </div>
 
             <div class="tInputForm w-100">            
                 <label for="tFile" class="form-label"> 완성품 사진(필수!!!!)</label>
-                <input id="tFile" type="file" class="form-control" ref="presetImg" multiple @change="setPreviewImg($event)">
+                <input id="tFile" type="file" class="form-control" ref="presetImg" multiple @change="setPreviewImg">
             </div>
         </div>
 
@@ -115,10 +116,12 @@
             <div class="d-flex flex-column justify-content-center">
                 <h5 class="mb-3">Step.{{ index+1 }}</h5>
                 <div class="bg-secondary-subtle rounded-4 p-3 w-100">
-                    <div class="cInputForm mb-3">
-                        <div></div>     
+                    <div class="cInputForm">
+                        <div class="my-3" style="text-align: center;" v-show="isCuImg[index]"> 
+                            <img class="rounded-4" style="width: 250px; height: 250px"/>
+                        </div>    
                         <label class="form-label"> 이미지(필수!!!)</label>
-                        <input  type="file" class="form-control" ref="cuImgs" @change="setCuImg">
+                        <input  type="file" class="form-control" ref="cuImgs" @change="setCuImg($event,index)">
                     </div>
 
                     <div class="mb-3">
@@ -188,6 +191,7 @@ const c = ref({
 })
 
 const presetImg = ref(null);
+let isPreImg = ref(false);
 
 const citems = ref([
     {
@@ -207,11 +211,11 @@ const curiculums = ref([
 ])
 
 const cuImgs = ref([]);
-
+let isCuImg = ref([
+    false,
+]);
+    
 function setPreviewImg(e){
-    const swiperDiv = document.querySelector(".swiperDiv");
-    const left = document.querySelector(".left");
-    const right = document.querySelector(".right");
     const swiper = document.querySelector("swiper-container");  
     
     while(swiper.hasChildNodes()){
@@ -223,20 +227,26 @@ function setPreviewImg(e){
         reader.readAsDataURL(img);
         reader.onload = function(e){
         swiper.swiper.appendSlide(
-            "<swiper-slide><img src='"+ e.target.result +"' class='rounded-4' style='width:100%; height:100%'/></swiper-slide>"
+            "<swiper-slide><img src='"+ e.target.result +"' class='rounded-4' style='width:100%; height:100%;'/></swiper-slide>"
         );
         }
     }
 
     if(e.target.files.length > 0){
-        swiperDiv.style.height = '300px';
-        left.style.display = 'block';
-        right.style.display = 'block';   
+        isPreImg.value = true;
     }else{
-        swiperDiv.style.height = '0px';
-        left.style.display = 'none';
-        right.style.display = 'none';   
+        isPreImg.value = false;
     }
+}
+
+function swipeNext(){
+    const swiper = document.querySelector('swiper-container');
+    swiper.swiper.slideNext();
+}
+
+function swipePrve(){
+    const swiper = document.querySelector('swiper-container');
+    swiper.swiper.slidePrev();
 }
 
 function addClassItem(index){
@@ -252,24 +262,26 @@ function removeClassItem(index){
     citems.value.splice(index,1);
 }
 
-function setCuImg(event){
+function setCuImg(event,index){
     const nowCu = event.target.parentElement.firstChild;
+    console.log(nowCu);
+
     if(nowCu.firstChild !== null){
-        nowCu.removeChild(nowCu.firstChild);
+        const img = nowCu.querySelector("img");
+        img.src = null;
     }
 
-    
     if(event.target.files.length !== 0){
         const file  = event.target.files[0]
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = function(e){
-        const img  = document.createElement("img");
+        const img  = nowCu.querySelector("img");
         img.src = e.target.result;
-        img.style.height="30%";
-        img.style.width="30%";
-        nowCu.appendChild(img);
+        isCuImg.value[index] = true;
         }
+    }else{
+        isCuImg.value[index] = false;
     }
 }
 
@@ -283,12 +295,14 @@ function addCu(){
     };
 
     curiculums.value.push(newCuriculum);
+    isCuImg.value.push(false);
 }
 
 function removeCu(){
     
     if(curiculums.value.length > 1){
         curiculums.value.splice(-1,1);
+        isCuImg.value.splice(-1,1);
     }
 }
 

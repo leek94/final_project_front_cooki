@@ -136,13 +136,9 @@
       slides-per-view="4"
       speed="800">
          <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===0? '': 'border-end'"> 
-<<<<<<< HEAD
-            <div class="my m-0 p-0" style="width: 80%; height: 50%;">
-               <img src="/images/photos/main/category1.jpg" class="rounded-4"/>
-=======
+
             <div class="m-0 p-0 rounded-4" style="width: 80%; height: 50%; overflow: hidden;">
                <img src="/images/photos/main/category1.jpg"  style="transition: all 0.2s ease-out;">
->>>>>>> acce0ae (style: categoryrecipe hover image size increase)
             </div>
             <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 40%;">
               <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
@@ -519,7 +515,7 @@
 </template>
    
  <script setup>
- import { computed, onMounted, ref } from 'vue';
+ import { onMounted, ref } from 'vue';
  import { register } from 'swiper/element/bundle';
  
  register();
@@ -640,13 +636,10 @@
        width: 100%;
        height: 100%;
      }
-<<<<<<< HEAD
-=======
 
      .categorySwiper swiper-slide img:hover{
       transform: scale(1.1);
       transition: all 0.2s linear;
      }
      
->>>>>>> acce0ae (style: categoryrecipe hover image size increase)
    </style>

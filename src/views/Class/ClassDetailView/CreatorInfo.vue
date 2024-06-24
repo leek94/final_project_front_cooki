@@ -27,18 +27,17 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
 
-const mnickname=ref("찌니의 빵공장")
+const mnickname="찌니의 빵공장"
 
-const info2=ref({
+const info2=({
     career1:"(현) 얌얌 베이킹 클래스 강사",
     career2:"제과기능 장 자격증 보유",
     career3:"베이커리를 위한 요소 관리사 보유",
     career4:" 베이커리 페어 경연대회 심사위원",
 })
 
-const info3=ref({
+const info3=({
     award1:"(현) 얌얌 베이킹 클래스 강사",
     award2:"제과기능 장 자격증 보유",
     

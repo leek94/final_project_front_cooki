@@ -71,38 +71,47 @@
 
                     <div class="row my-3 px-3" v-if="isEditor">
                         <li class="green-point">수상 내역</li>
-                        <div class="d-flex m-1">
-                            <input class="flex-grow-1 p-2 border" placeholder="수상 이력을 입력해주세요"/>
-                            <button class="p-2 ms-3 border"> - </button>
-                            <button class="p-2 ms-3 border"> + </button>
+                        <div class="d-flex m-1" v-for="(awards, index) in awardsArray" :key="index">
+                            <input class="flex-grow-1 p-2 border" placeholder="수상 이력을 입력해주세요" v-model="awards.acontent">
+                            <!-- 삭제 버튼은 첫행(index=0)일 때만 안보이고 항상 보임-->
+                            <button class="p-2 ms-3 border" v-if="index > 0" @click="awardsRemove(index)"> - </button>
+                            <!-- 추가 버튼은 첫행에서만 보임 -->
+                            <button class="p-2 ms-3 border" v-if="index == 0" @click="awardsAdd(index)"> + </button>
                         </div>
                     </div>
 
                 </div>
 
                 <!-- 약관 동의 -->
+
+                <!-- 
+                    체크박스 속성
+                name="editor": 서버로 전송될 때 체크박스의 이름을 지정합니다. 같은 이름을 가진 체크박스는 그룹으로 취급됩니다.
+                value="yes": 체크박스가 선택되었을 때 서버로 전송될 값입니다.
+                checked: 체크박스가 기본적으로 선택된 상태로 표시되도록 합니다.
+                 -->
                 <div class="text-start bg-light p-5 my-5">
                     <h4 class="p-2 border-bottom border-dark border-3" style="font-weight: bold;">약관 동의</h4>
                     <div class="mx-2 my-3">
-                        <input class="checkbox me-2 rounded" type="checkbox" id="switch" name="editor" value="yes" checked/>
+                        <input class="checkbox me-2 rounded" type="checkbox" name="editor" v-model="checkFirst"/>
                         <label for="switch"> [필수] 만 14세 이상입니다.</label>
                     </div>
                     <div class="mx-2 my-3">
-                        <input class="checkbox me-2" type="checkbox" id="switch" name="editor" value="yes" checked/>
+                        <input class="checkbox me-2" type="checkbox" name="editor" v-model="checkSecond">
                         <label for="switch"> [필수] <a href="https://member.sempio.com/legal/terms-and-condition">이용약관</a> 확인</label>
                     </div>
                     <div class="mx-2 my-3">
-                        <input class="checkbox me-2" type="checkbox" id="switch" name="editor" value="yes" checked/>
+                        <input class="checkbox me-2" type="checkbox" name="editor" v-model="checkThird"/>
                         <label for="switch"> [필수] <a href="https://member.sempio.com/legal/privacy-policy">개인정보처리방침</a> 확인</label>
                     </div>
-
+                    <div class="checkError m-1" v-if="checkboxError">필수 조건에 모두 동의해주세요</div>
                     <div class="mx-2 my-3 p-3" style="background-color: #D9EDBF;">
                         <li>회원 탈퇴 시까지 회원으로서 자격이 유지됩니다.</li>
                     </div>
                 </div>
 
                 <div>
-                    <button class="py-2 border rounded w-100">회원가입</button>
+                    <button class="py-2 border rounded w-100" @click="joinFormSubmit">회원가입</button>
                 </div>
             </div>    
         </div>
@@ -113,6 +122,7 @@
 <script setup>
 import { ref } from 'vue';
 
+// 멤버 객체 선언
 const member = ref( {
     mid: "",
     mname: "",
@@ -122,12 +132,19 @@ const member = ref( {
     mpasswordcheck: ""
 });
 
+// 유효성 검사를 위한 상태 변수 선언
 const midResultError = ref(false);
 const mnameResultError = ref(false);
 const mphonenumResultError = ref(false);
 const mnicknameResultError = ref(false);
 const mpasswordResultError = ref(false);
 const mpasswordMatchError = ref(false);
+const checkboxError = ref(false);
+
+const checkFirst = ref(false);
+const checkSecond = ref(false);
+const checkThird = ref(false);
+
 
 
 // function midCheck() {
@@ -142,7 +159,7 @@ const mpasswordMatchError = ref(false);
 //     return midResult;
 // }
 
-//아이디 정규 표현식 검사
+// 아이디 정규 표현식 검사
 function midCheck() {
   const midPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
   const midResult = midPattern.test(member.value.mid);
@@ -150,7 +167,7 @@ function midCheck() {
   return midResult;
 }
 
-//이름 정규 표현식 검사
+// 이름 정규 표현식 검사
 function mnameCheck() {
   const mnamePattern = /^[가-힣]{2,5}$/;	
   const mnameResult = mnamePattern.test(member.value.mname);
@@ -158,7 +175,7 @@ function mnameCheck() {
   return mnameResult;
 }
 
-//폰번호 정규 표현식 검사
+// 폰번호 정규 표현식 검사
 function mphonenumCheck() {
     const mphonenumPattern = /^(010|011)-\d{3,4}-\d{4}$/;
     const mphonenumResult = mphonenumPattern.test(member.value.mphonenum); //입력 폰번호가 패턴 일치하면 true
@@ -166,7 +183,7 @@ function mphonenumCheck() {
     return mphonenumResult;
 }
 
-//닉네임 정규 표현식 검사
+// 닉네임 정규 표현식 검사
 function mnicknameCheck() {
     const mnicknamePattern = /^[가-힣a-zA-Z0-9-_]{3,10}$/;
     const mnicknameResult = mnicknamePattern.test(member.value.mnickname);
@@ -174,7 +191,7 @@ function mnicknameCheck() {
     return mnicknameResult;
 }
 
-//비밀번호 정규 표현식 검사
+// 비밀번호 정규 표현식 검사
 function mpasswordCheck() {
     const mpasswordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,15}$/;
     const mpasswordResult = mpasswordPattern.test(member.value.mpassword);
@@ -182,7 +199,7 @@ function mpasswordCheck() {
     return mpasswordResult;
 }
 
-//비밀번호 일치 검사
+// 비밀번호 일치 검사
 function mpasswordMatchCheck() {
     const mpasswordCheckResult = false;
     if(member.value.mpassword != member.value.mpasswordcheck) {
@@ -192,6 +209,8 @@ function mpasswordMatchCheck() {
     }
     return mpasswordCheckResult;
 }
+
+
 
 // const career = ref();
 // const careerNo = ref(1);
@@ -207,18 +226,23 @@ function mpasswordMatchCheck() {
 //     console.log(careerArray.value.career);
 // }
 
+
+// 에디터로 가입 선택에 따라 폼을 보여주기 위한 상태변수
 const isEditor = ref(false);
 
+// 에디터로 가입하기 선택시 폼을 열어주는 함수
 function joinEditor() {
     isEditor.value = !isEditor.value;
     console.log(isEditor.value);
 }
 
- const career = ref({
+// 커리어 상태 객체 선언
+const career = ref({
     cano: 1,
     cacontent: ''
  })
 
+ // 커리어 상태 배열 선언
  const careerArray = ref([career.value]);
 //const careerArray = ref([{ cano: '', cacontent: '' }]);
 //let nextCano = 2;
@@ -226,6 +250,7 @@ function joinEditor() {
 const careerAddAfter = ref(false);
 const cacontentNullError = ref(false);
 
+//커리어 입력 태그 추가 함수
 function careerAdd(index) {
         //cacontentNullError.value = !cacontentNullError.value;
         careerArray.value.push({cano: index+2, cacontent: ''});
@@ -233,15 +258,41 @@ function careerAdd(index) {
         //careerArray.value.push({ cano: index+2, cacontent: '' });
         //console.log("다음인덱스번호",nextCano );
         console.log("배열객체",JSON.parse(JSON.stringify(careerArray.value)));
-        //console.log("커리어이름",careerArray.value[index].cacontent);
-        //console.log("인덱스번호",careerArray.value[index].cano);
+        console.log("커리어이름",careerArray.value[index].cacontent);
+        console.log("인덱스번호",careerArray.value[index].cano);
 }
 
+// 수상내역 입력 태그 삭제 함수
 function careerRemove(index) {
     careerArray.value.splice(index,index);
 }
 
-function handleSubmit() {
+// 수상내역 상태 객체 선언
+const awards = ref({
+    ano: 1,
+    acontent: ''
+ })
+
+ // 수상내역 상태 배열 선언
+ const awardsArray = ref([awards.value]);
+
+const awardsAddAfter = ref(false);
+const awardsNullError = ref(false);
+
+// 수상내역 입력 태그 추가 함수
+function awardsAdd(index) {
+        awardsArray.value.push({ano: index+2, acontent: ''});
+        awardsAddAfter.value = !awardsAddAfter.value;
+        console.log("배열객체",JSON.parse(JSON.stringify(awardsArray.value)));
+}
+
+// 수상내역 입력 태그 삭제 함수
+function awardsRemove(index) {
+    awardsArray.value.splice(index,index);
+}
+
+//폼 제출 함수
+function joinFormSubmit() {
 
 }
 

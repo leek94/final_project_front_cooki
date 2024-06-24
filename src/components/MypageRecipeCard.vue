@@ -37,7 +37,7 @@ import { ref } from 'vue';
 
 // 데이터 바인딩을 위한 더미 데이터
 const prop= defineProps(["objectProp"])
-console.log(prop.objectProp);
+
 
 // 좋아요 버튼 자바스크립트 시작
 
@@ -117,6 +117,7 @@ console.log(prop.objectProp);
      box-shadow: 0 2px 20px 0 rgba(0, 0, 3, 0.2);
      margin-top:3.5rem;
      margin:0 1rem;
+     width:245px;
  }
 
 </style>

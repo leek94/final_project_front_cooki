@@ -31,13 +31,14 @@
 import { ref } from 'vue';
 
 const prop = defineProps(["objectProp"]);
+console.log(prop.objectProp);
 
-// 데이터 바인딩을 위한 더미 데이터
 
 // D-Day 구하는 함수
-function checker(){
+function checker(cno){
 const today = new Date();
 // 날짜 형태가 2024-06-20여야만 가능 아니면 형태를 변경해서 넣어줘야함
+
 const cday = new Date(prop.objectProp.cdday);
 const diff = cday - today; // 초 단위로 나와서 밑에서 변경해줘야함
 const diffDays = Math.ceil(diff / (1000 * 60 * 60 * 24));

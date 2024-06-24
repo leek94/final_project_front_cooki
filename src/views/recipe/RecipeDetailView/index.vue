@@ -28,7 +28,7 @@
 
         <div class="recipe-view-content">
             <!-- 재료 -->
-             <Items></Items>
+             <RecipeItems></RecipeItems>
 
             <div class="recipe-step mt-3">
                 <div class="recipe-step-tit text-start">
@@ -68,7 +68,7 @@
 </template>
 
 <script setup>
-import Items from '@/components/Items.vue'
+import RecipeItems from '@/components/RecipeItems.vue'
 import { register } from 'swiper/element/bundle';
 import { ref, onMounted } from "vue";
 

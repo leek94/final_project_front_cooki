@@ -20,10 +20,10 @@
 </template>
 
 <script setup>
-import Items from '@/components/Items.vue'
-import { ref } from 'vue';
+import Items from '@/components/ClassItems.vue'
+import { ref} from 'vue';
 
-const curriculum=ref([
+const curriculum=([
     {
         cuorder:1,
         cutitle:"반죽만들기",

@@ -6,25 +6,35 @@
             <li class="green-point" style="font-size:0.875rem;color:#666;list-style: none; margin-left: 8px">Main ingredient</li>
         </ul>
         <div class="ingredient-content ss">
-            <div class="checker-parent d-flex" style="align-content: center" v-for="(value,index) in RecipeItems" :key="index">
+            <div class="checker-parent d-flex" style="align-content: center" v-for="(recipeItem,index) in recipeItems" :key="index">
                 <img src="/images/photos/li_checker.png" style="width:25px;height:25px;margin-right: 12px"/>
-                <div class="align-middle" style="color:#666">{{value}}</div>
+                <div class="align-middle" style="color:#666">{{recipeItem.classItem1}}</div>
             </div>
         </div>
     </div>
 </template>
 <script setup>
-import { ref } from 'vue';
-
-const RecipeItems= ref(
+const recipeItems = [
     {
-        recipeItem1:"완숙토마토 2개(300g)",
-        recipeItem2:"돼지고기 (잡채용) 150g",
-        recipeItem3:"소고기 우둔살 200g",
-        recipeItem4:"설탕 1스푼(10g)",
-        recipeItem5:"배 1/6개(50g)"
+        classItem1:"완숙토마토 2개(300g)"
+    },
+    {
+        classItem1:"돼지고기 (잡채용) 150g"
+    },
+    {
+        classItem1:"소고기 우둔살 200g,"
+    },
+    {
+        classItem1:"설탕 1스푼(10g)"
+        
+    },
+    {
+        classItem1:"배 1/6개(50g)"
     }
-)
+    
+]
+
+
 </script>
 <style scoped>
 .ingredient-box{

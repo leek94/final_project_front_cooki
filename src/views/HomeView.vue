@@ -136,6 +136,11 @@
       slides-per-view="4"
       speed="800">
          <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===0? '': 'border-end'"> 
+
+            <div class="m-0 p-0 rounded-4" style="width: 80%; height: 50%; overflow: hidden;">
+               <img src="/images/photos/main/category1.jpg"  style="transition: all 0.2s ease-out;">
+
+
             <div class="m-0 p-0 rounded-4" style="width: 80%; height: 50%; overflow: hidden;">
                <img src="/images/photos/main/category1.jpg"  style="transition: all 0.2s ease-out;">
             </div>
@@ -642,4 +647,5 @@
       transition: all 0.2s linear;
      }
      
+
    </style>

@@ -35,10 +35,104 @@
 </template>
 
 <script setup>
-import Total from './Total.vue';
-import RecipeCard from '@/components/RecipeCard.vue';
-import ClassCard from '@/components/ClassCard.vue';
 import SearchBar from '@/components/SearchBar.vue';
+import { ref, provide } from "vue";
+
+const classCardes = ref([
+    {
+        mname: '손혜선씨',
+        ctitle: '쿠킹클래스 쿡쿠키스',
+        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
+        cdday: '2024-06-25', 
+        ctime:'14:00',
+        cpersoncount: 30,
+        cprice:48000,
+    },
+    {
+        mname: '손혜선씨',
+        ctitle: '쿠킹클래스 쿡쿠키스',
+        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
+        cdday: '2024-06-25', 
+        ctime:'14:00',
+        cpersoncount: 30,
+        cprice:48000,
+    },
+    {
+        mname: '손혜선씨',
+        ctitle: '쿠킹클래스 쿡쿠키스',
+        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
+        cdday: '2024-06-25', 
+        ctime:'14:00',
+        cpersoncount: 30,
+        cprice:48000,
+    },
+    {
+        mname: '손혜선씨',
+        ctitle: '쿠킹클래스 쿡쿠키스',
+        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
+        cdday: '2024-06-25', 
+        ctime:'14:00',
+        cpersoncount: 30,
+        cprice:48000,
+    },
+    {
+        mname: '손혜선씨',
+        ctitle: '쿠킹클래스 쿡쿠키스',
+        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
+        cdday: '2024-06-25', 
+        ctime:'14:00',
+        cpersoncount: 30,
+        cprice:48000,
+    },
+]);
+
+const recipeCardes = ref([
+{
+        mname: '손혜선씨',
+        bdate: '2024-06-25 14:00',
+        btitle:'이거 맛있어 보이세요?',
+        blike: 30,
+        bhitcount: 112,
+        isActive: false,
+    },
+    {
+        mname: '손혜선씨',
+        bdate: '2024-06-25 14:00',
+        btitle:'이거 맛있어 보이세요?',
+        blike: 30,
+        bhitcount: 112,
+        isActive: false,
+    },
+    {
+        mname: '손혜선씨',
+        bdate: '2024-06-25 14:00',
+        btitle:'이거 맛있어 보이세요?',
+        blike: 30,
+        bhitcount: 112,
+        isActive: false,
+    },
+    {
+        mname: '손혜선씨',
+        bdate: '2024-06-25 14:00',
+        btitle:'이거 맛있어 보이세요?',
+        blike: 30,
+        bhitcount: 112,
+        isActive: false,
+    },
+    {
+        mname: '손혜선씨',
+        bdate: '2024-06-25 14:00',
+        btitle:'이거 맛있어 보이세요?',
+        blike: 30,
+        bhitcount: 112,
+        isActive: false,
+    },
+
+]);
+
+provide("classCardes", {classCardes});
+provide("recipeCardes", {recipeCardes});
+
 </script>
 
 <style scoped>

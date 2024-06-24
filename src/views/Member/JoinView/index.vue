@@ -258,6 +258,8 @@ function careerAdd(index) {
         //console.log("다음인덱스번호",nextCano );
         console.log("배열객체",JSON.parse(JSON.stringify(careerArray.value)));
         console.log("커리어이름",careerArray.value[index].cacontent);
+        console.log("인덱스번호",careerArray.value[index].cano);
+
 }
 
 // 수상내역 입력 태그 삭제 함수

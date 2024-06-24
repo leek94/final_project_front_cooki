@@ -113,7 +113,7 @@
             </div>
         </div>
 
-        <div id="curiculums" class="w-50 mb-5" v-for="(curiculum, index) in curiculums" :key="index">
+        <div id="curiculums" class="w-50 mb-3" v-for="(curiculum, index) in curiculums" :key="index">
             <div class="d-flex flex-column justify-content-center">
                 <h5 class="mb-3">Step.{{ index+1 }}</h5>
                 <div class="rounded-4 p-3 w-100" style='background-color: #fff9e2;'>
@@ -190,6 +190,7 @@ const c = ref({
 const presetImg = ref(null);
 let isPreImg = ref(false);
 
+
 const citems = ref([
     {
         ciname: "",
@@ -258,19 +259,21 @@ function removeClassItem(index){
     citems.value.splice(index,1);
 }
 
+
 function setCuImg(event,index){
     const nowCu = event.target.parentElement.firstChild;
-  
+    console.log(nowCu);
+
     if(nowCu.firstChild !== null){
         const img = nowCu.querySelector("img");
         img.src = null;
     }
-
     if(event.target.files.length !== 0){
         const file  = event.target.files[0]
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = function(e){
+
         const img  = nowCu.querySelector("img");
         img.src = e.target.result;
         isCuImg.value[index] = true;

@@ -48,18 +48,20 @@
         </div>
 
         <!-- 에디터한테만 보이는 화면 -->
-        <div class="flex-grow-1 row mx-2 mb-3">
+        <div class="flex-grow-1 row mx-2 mb-5">
             <div class="d-flex justify-content-between">
                 <li class="green-point m-1">경력</li>
-                <button class="btn btn-md btn-outline-success" @click="careerAdd(indx)">추가</button>
+                <button class="btn btn-md btn-outline-success" @click="careerAdd()">추가</button>
             </div>
             <!-- db에 저장된 수만큼 for문 -->
             <div class="input-group input-group-box w-100 mb-1" v-for="(ca, index) in careers" :key="index">
-                <input type="text" class="form-control input-box" v-model="ca.careerContent" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <input type="text" class="form-control input-box" placeholder="경력을 입력해주세요" v-model="ca.careerContent" aria-label="Recipient's username" aria-describedby="button-addon2">
                 <button class="btn border" type="button" id="button-addon2">변경</button>
                 <button class="btn border" type="button" id="button-addon2"  @click="careerRemove(index)">삭제</button>
             </div>
+            <div class="checkError col m-2" v-if="cacontentNullError">내용을 입력하신 후 추가해주세요</div>
         </div>
+
             <div class="row  mx-2 mb-3 " v-if="pluscareer">
                 <div class="d-flex" v-for="(career, index) in careerArray" :key="index" >
                      <div class="input-group input-group-box w-100 mb-1">
@@ -70,15 +72,19 @@
                 </div>
                 <div class="checkError m-1" v-if="cacontentNullError">내용을 입력하신 후 추가해주세요</div>
             </div>
+
         
 
         <!-- 에디터한테만 보이는 화면 -->
         <div class="flex-grow-1 row mx-2 mb-3">
-            <li class="green-point m-1">수상내역</li>
+            <div class="d-flex justify-content-between">
+                <li class="green-point m-1">수상내역</li>
+                <button class="btn btn-md btn-outline-success" @click="awardsAdd()">추가</button>
+             </div>
             <div class="input-group input-group-box w-100 mb-1" v-for="(aw, index) in awards" :key="index">
-                <input type="text" class="form-control input-box" v-model="aw.awardsContent" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <input type="text" class="form-control input-box" placeholder="수상 내역을 입력해주세요" v-model="aw.awardsContent" aria-label="Recipient's username" aria-describedby="button-addon2">
                 <button class="btn border" type="button" id="button-addon2">변경</button>
-                <button class="btn border" type="button" id="button-addon2">삭제</button>
+                <button class="btn border" type="button" id="button-addon2" @click="awardsRemove(index)">삭제</button>
             </div>
         </div>
     
@@ -154,31 +160,32 @@ function mpasswordMatchCheck(){
     return mpasswordCheckResult;
 }
 
-const career=ref([
-    {
-        cano:1,
+const cacontentNullError =ref (false);
+
+function careerAdd() {
+    const newcareer=ref({
+        cano:careers.value.length+1,
         cacontent: ''
-    }
-])
-const pluscareer=ref(false);
-const careerArray = ref([career.value]);
-const cacontentNullError = ref(false);
-
-function careerAdd(index) {
-    if(pluscareer.value===false){
-        pluscareer.value= !pluscareer.value
-    }else{
-        pluscareer.value++;
-    }
-    careerArray.value.push({cano: index+2, cacontent: ''});
+    })
+    careers.value.push(newcareer);
 }
 
-function careerRemove(index) {
-    careerArray.value.splice(index,1);
+function careerRemove(index){
+    if(careers.value.length>1){
+        careers.value.splice(index,1);
+    }
 }
 
-function pluscareerRemove(index) {
-    careerArray.value.splice(index,index);
+function awardsAdd() {
+    const newawards=ref({
+        cano:awards.value.length+1,
+        cacontent: ''
+    })
+    awards.value.push(newawards);
+}
+
+function awardsRemove(index){
+    awards.value.splice(index,1)
 }
 </script>
 

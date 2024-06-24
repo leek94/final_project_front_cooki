@@ -33,6 +33,7 @@ import { ref } from 'vue';
 const prop = defineProps(["objectProp"]);
 console.log(prop.objectProp);
 
+// 데이터 바인딩을 위한 더미 데이터
 
 // D-Day 구하는 함수
 function checker(cno){

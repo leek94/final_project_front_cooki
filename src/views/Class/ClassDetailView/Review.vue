@@ -61,8 +61,9 @@
         </div>
     </div>   
 
+    <!-- 리뷰 보기 / 수정 -->
     <div v-for="(review, index) in reviewArray" :key="index">
-        <!-- 등록된 리뷰 -->
+        <!-- 등록된 리뷰 보기 -->
         <div class="d-flex p-1" v-if="!isReviewArray[index]">
             <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;">
             <div class="flex-grow-1 row my-3">
@@ -96,7 +97,7 @@
             </div>
         </div>
 
-        <!-- 댓글 수정 -->
+        <!-- 리뷰 수정 -->
         <!-- 로그인 한 유저만 등록 가능 v-show로 -->
         <div class="d-flex p-2 m-2 border rounded bg-light" v-if="isReviewArray[index]">
             <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;">
@@ -181,7 +182,7 @@ function reviewInsert() {
 
 function reviewUpdate(index) {
     isReviewArray.value[index] = !isReviewArray.value[index];
-    reviewArray.value[index] = {crtitle: review.value.crtitle, crcontent: review.value.crcontent, crratio: review.value.crratio };
+    //reviewArray.value[index] = {crtitle: review.value.crtitle, crcontent: review.value.crcontent, crratio: review.value.crratio };
     reviewArray.value[index].crtitle = review.value.crtitle;
     reviewArray.value[index].crcontent = review.value.crcontent;
     reviewArray.value[index].crratio = review.value.crratio;
@@ -192,7 +193,7 @@ function reviewUpdate(index) {
 }
 
 function reviewDelete(index) {
-    reviewArray.value.splice(index, index);
+    reviewArray.value.splice(index, 1);
 }
 
 function reviewClose(index) {

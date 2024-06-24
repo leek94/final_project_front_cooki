@@ -329,5 +329,20 @@ h6::marker {
     color: red;
 }
 
+a:link {
+    color: #15a775;
+}
+
+a:visited {
+    color: #15a775;
+}
+
+a:hover {
+    color: #D9EDBF;
+}
+
+a:active {
+    color: #D9EDBF;
+} 
 
 </style>

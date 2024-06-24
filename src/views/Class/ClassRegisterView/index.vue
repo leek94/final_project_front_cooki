@@ -113,7 +113,8 @@
         </div>
 
         <div id="curiculums" class="w-50 mb-3" v-for="(curiculum, index) in curiculums" :key="index">
-            <div class="d-flex flex-column justify-content-center">
+
+            <div class="d-flex flex-column justify-content-center"> 
                 <h5 class="mb-3">Step.{{ index+1 }}</h5>
                 <div class="bg-secondary-subtle rounded-4 p-3 w-100">
                     <div class="cInputForm">
@@ -264,8 +265,6 @@ function removeClassItem(index){
 
 function setCuImg(event,index){
     const nowCu = event.target.parentElement.firstChild;
-    console.log(nowCu);
-
     if(nowCu.firstChild !== null){
         const img = nowCu.querySelector("img");
         img.src = null;

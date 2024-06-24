@@ -264,8 +264,7 @@ function removeClassItem(index){
 
 function setCuImg(event,index){
     const nowCu = event.target.parentElement.firstChild;
-    console.log(nowCu);
-
+  
     if(nowCu.firstChild !== null){
         const img = nowCu.querySelector("img");
         img.src = null;

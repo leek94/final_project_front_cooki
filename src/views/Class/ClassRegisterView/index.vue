@@ -1,103 +1,105 @@
 <template>
     <div class="d-flex flex-column justify-content-center align-items-center">
-        <div class="my-5"></div>
 
-        <div class="w-50 my-5">
-            <label class="form-label mb-3">제목</label>
-            <input type="text" class="form-control" v-model="c.ctitle" placeholder="클래스 이름을 입력해주세요.">
-        </div>
-
-        <div class="w-50 mb-5">
-            <label class="form-label mb-3">내용</label>
-            <textarea class="form-control" rows="10" v-model="c.ccontent"
-                placeholder="클래스를 간단히 소개해주세요">
-            </textarea>
-        </div>
-
-        <div class="w-50 mb-5">
-            <label class="form-label mb-3">모집 인원(5~30명 사이의 인원)</label>
-            <input type="number" class="form-control w-25" v-model="c.cpersoncount" min="5" max="30"  @change="isvalidPersonCount">
-        </div>
-
-        <div class="w-50 mb-5">
-            <label class="form-label mb-3">가격</label>
-            <input type="number" class="form-control w-25" v-model="c.cprice">
-        </div>
-
-        <div class="w-50 mb-5">
-            <label class="form-label mb-3">개최 일자</label>
-            <VueDatePicker  v-model="c.cdday" :min-date="minDate" :max-date="maxDate"
-            :start-date="minDate"
-            :format="format" :format-locale="ko"
-            input-class-name="form-control w-25 "
-            hide-input-icon
-            select-text="선택" cancel-text="취소"
-            :enable-time-picker="false"></VueDatePicker>
-        </div>
-
-        <div class="w-50 mb-5">
-            <label for="title" class="form-label mb-3">시작 시간</label>
-                <VueDatePicker
-                    class="w-25" 
-                    v-model="c.cstarttime" 
-                    time-picker
-                    :start-time="{hours:9, minutes:0}"
-                    minutes-increment="30"
-                    no-hours-overlay
-                    no-minutes-overlay
-                    input-class-name="form-control"
-                    hide-input-icon
-                    :max-time="{hours:19, minutes:0}"
-                    @update:model-value="setTime"
-                    select-text="선택" cancel-text="취소"
-                />
-        </div>
-
-        <div class="w-50 mb-5">
-            <label for="title" class="form-label mb-3">끝나는 시간</label>
-                <VueDatePicker 
-                    class="w-25"
-                    v-model="c.cendtime"
-                    time-picker
-                    minutes-increment="30"
-                    no-hours-overlay
-                    no-minutes-overlay
-                    input-class-name="form-control"
-                    hide-input-icon
-                    :min-time="minTime"
-                    :max-time="maxTime"
-                    :disabled = "!isStart"
-                    select-text="선택" cancel-text="취소"
-                />
-        </div>
-
-        <div class="w-50 mb-5">
-            <div><button class="btn btn-outline-secondary  mb-3" @click="execDaumPostcode">주소 찾기</button></div>
-            <div><input type="text" v-model="c.caddress" placeholder="주소" class="w-50 mb-3 form-control"></div>
-            <div><input type="text" v-model="c.cdetailaddress" placeholder="상세주소" class="w-50 mb-3 form-control"></div>
-        </div>
-
-        <div class="d-flex flex-column align-items-center w-50 mb-5">
-            <div class="w-75 position-relative mb-3" v-show="isPreImg">
-                <div class="position-absolute top-50 start-25 translate-middle" style="z-index: 99;">
-                    <img src="/images/assets/ic_left.png" class="left btn" @click='swipePrve'>
-                </div>
-                <div class="position-absolute top-50 start-100 translate-middle" style="z-index: 99;">
-                    <img src="/images/assets/ic_right.png" class="right btn" @click='swipeNext'>
-                </div>
-                <swiper-container class="mySwiper" loop="true" style="height: 300px;">
-                </swiper-container>
+        <div class="d-flex flex-column justify-content-center align-items-center w-50 my-5 p-3 rounded-4" style='background-color: #fff9e2;'>
+            <div class="w-100 my-3">
+                <label class="form-label mb-3">제목</label>
+                <input type="text" class="form-control" v-model="c.ctitle" placeholder="클래스 이름을 입력해주세요.">
             </div>
 
-            <div class="tInputForm w-100">            
-                <label for="tFile" class="form-label"> 완성품 사진(필수!!!!)</label>
-                <input id="tFile" type="file" class="form-control" ref="presetImg" multiple @change="setPreviewImg">
+            <div class="w-100 mb-3">
+                <label class="form-label mb-3">내용</label>
+                <textarea class="form-control" rows="10" v-model="c.ccontent"
+                    placeholder="클래스를 간단히 소개해주세요">
+                </textarea>
+            </div>
+
+            <div class="d-flex flex-column align-items-center w-100 mb-3">
+                <div class="w-75 position-relative mb-3" v-show="isPreImg">
+                    <div class="position-absolute top-50 start-25 translate-middle" style="z-index: 99;">
+                        <img src="/images/assets/ic_left.png" class="left btn" @click='swipePrve'>
+                    </div>
+                    <div class="position-absolute top-50 start-100 translate-middle" style="z-index: 99;">
+                        <img src="/images/assets/ic_right.png" class="right btn" @click='swipeNext'>
+                    </div>
+                    <swiper-container class="mySwiper mt-3" loop="true" style="height: 300px;">
+                    </swiper-container>
+                </div>
+
+                <div class="tInputForm w-100">            
+                    <label for="tFile" class="form-label my-3"> 완성품 사진(필수!!!!)</label>
+                    <input id="tFile" type="file" class="form-control" ref="presetImg" multiple @change="setPreviewImg">
+                </div>
             </div>
         </div>
 
+        <div class="d-flex flex-column justify-content-center align-items-center w-50 mb-5 p-3 rounded-4" style='background-color: #fff9e2;'>
+            <div class="w-100 my-3">
+                <label class="form-label mb-3">모집 인원(5~30명 사이의 인원)</label>
+                <input type="number" class="form-control w-25" v-model="c.cpersoncount" min="5" max="30"  @change="isvalidPersonCount">
+            </div>
 
-        <div id="classItems" class="w-50 bg-secondary-subtle rounded-4 mb-5 p-3">
-            <h5>주재료</h5>
+            <div class="w-100 mb-3">
+                <label class="form-label mb-3">가격</label>
+                <input type="number" class="form-control w-25" v-model="c.cprice">
+            </div>
+
+            <div class="w-100 mb-3">
+                <label class="form-label mb-3">개최 일자</label>
+                <VueDatePicker  v-model="c.cdday" :min-date="minDate" :max-date="maxDate"
+                :start-date="minDate"
+                :format="format" :format-locale="ko"
+                input-class-name="form-control w-25 "
+                hide-input-icon
+                select-text="선택" cancel-text="취소"
+                :enable-time-picker="false"></VueDatePicker>
+            </div>
+
+            <div class="w-100 mb-3">
+                <label for="title" class="form-label mb-3">시작 시간</label>
+                    <VueDatePicker
+                        class="w-25" 
+                        v-model="c.cstarttime" 
+                        time-picker
+                        :start-time="{hours:9, minutes:0}"
+                        minutes-increment="30"
+                        no-hours-overlay
+                        no-minutes-overlay
+                        input-class-name="form-control"
+                        hide-input-icon
+                        :max-time="{hours:18, minutes:0}"
+                        @update:model-value="setTime"
+                        select-text="선택" cancel-text="취소"
+                    />
+            </div>
+
+            <div class="w-100 mb-3">
+                <label for="title" class="form-label mb-3">끝나는 시간</label>
+                    <VueDatePicker 
+                        class="w-25"
+                        v-model="c.cendtime"
+                        time-picker
+                        minutes-increment="30"
+                        no-hours-overlay
+                        no-minutes-overlay
+                        input-class-name="form-control"
+                        hide-input-icon
+                        :min-time="minTime"
+                        :max-time="maxTime"
+                        :disabled = "!isStart"
+                        select-text="선택" cancel-text="취소"
+                    />
+            </div>
+
+            <div class="w-100 mb-3">
+                <div><button class="btn btn-outline-secondary  mb-3" @click="execDaumPostcode">주소 찾기</button></div>
+                <div><input type="text" v-model="c.caddress" placeholder="주소" class="w-50 mb-3 form-control"></div>
+                <div><input type="text" v-model="c.cdetailaddress" placeholder="상세주소" class="w-50 mb-3 form-control"></div>
+            </div>
+        </div>
+
+        <div id="classItems" class="w-50 rounded-4 mb-5 p-3" style='background-color: #fff9e2;'>
+            <h5 class="my-3">주재료</h5>
             <div class="d-flex flex-column align-items-center mb-3">
                 <div class="d-flex justify-content-center align-items-center row w-100 mt-2" v-for="(citem, index) in citems" :key="index"  >
                     <div class="col-11 d-flex justify-content-center align-items-center m-0 p-0">
@@ -109,29 +111,27 @@
                     </div>
                 </div>
             </div>
-            <p class="text-danger">{{itemErrorMessage}}</p>
         </div>
 
         <div id="curiculums" class="w-50 mb-3" v-for="(curiculum, index) in curiculums" :key="index">
-
-            <div class="d-flex flex-column justify-content-center"> 
+            <div class="d-flex flex-column justify-content-center">
                 <h5 class="mb-3">Step.{{ index+1 }}</h5>
-                <div class="bg-secondary-subtle rounded-4 p-3 w-100">
-                    <div class="cInputForm">
-                        <div class="my-3" style="text-align: center;" v-show="isCuImg[index]"> 
+                <div class="rounded-4 p-3 w-100" style='background-color: #fff9e2;'>
+                    <div class="cInputForm my-3">
+                        <div class="mt-3" style="text-align: center;" v-show="isCuImg[index]"> 
                             <img class="rounded-4" style="width: 250px; height: 250px"/>
                         </div>    
-                        <label class="form-label"> 이미지(필수!!!)</label>
+                        <label class="form-label my-3"> 이미지(필수!!!)</label>
                         <input  type="file" class="form-control" ref="cuImgs" @change="setCuImg($event,index)">
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">제목</label>
+                        <label class="form-label mb-3">제목</label>
                         <input type="text" class="form-control" v-model="curiculum.cutitle" placeholder="제목을 입력해주세요.">
                     </div>
 
-                    <div>
-                        <label class="form-label">내용</label>
+                    <div class="mb-3">
+                        <label class="form-label mb-3">내용</label>
                         <textarea class="form-control" v-model="curiculum.cucontent" rows="5" 
                         placeholder="커리큘럼을 소개해주세요">
                         </textarea>
@@ -141,9 +141,8 @@
         </div>
 
         <div>
-            <button class="btn" @click="removeCu">단계 삭제하기</button>
-            <button class="btn" @click="addCu">단계 추가하기</button>
-            <p class="text-danger">{{ cuErrorMessage }}</p>
+            <button class="btn btn-outline-warning" @click="removeCu">단계 삭제하기</button>
+            <button class="btn btn-outline-warning" @click="addCu">단계 추가하기</button>
         </div>
 
         <button class="btn" @click="submitClass">저장 </button>
@@ -151,7 +150,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
 import {ko} from "date-fns/locale";
@@ -175,9 +174,6 @@ maxDate.setDate(maxDate.getDate() + 28);
 const minTime = ref(null);
 const maxTime = ref(null);
 let isStart = false;
-
-const itemErrorMessage = ref(null);
-const cuErrorMessage = ref(null); 
 
 const c = ref({
     ctitle:null,
@@ -257,7 +253,6 @@ function addClassItem(index){
         cno: 1,
     }
     citems.value.push(newItem);
-    itemErrorMessage.value = null;
 }
 
 function removeClassItem(index){
@@ -267,6 +262,8 @@ function removeClassItem(index){
 
 function setCuImg(event,index){
     const nowCu = event.target.parentElement.firstChild;
+    console.log(nowCu);
+
     if(nowCu.firstChild !== null){
         const img = nowCu.querySelector("img");
         img.src = null;
@@ -316,7 +313,7 @@ function setTime(){
         }
         
         maxTime.value = {
-            hours: c.value.cstarttime.hours + 5,
+            hours: c.value.cstarttime.hours + 4,
             minutes: c.value.cstarttime.minutes
         }
 

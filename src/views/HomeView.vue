@@ -137,7 +137,6 @@
       speed="800">
          <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===0? '': 'border-end'"> 
 
-
             <div class="m-0 p-0 rounded-4" style="width: 80%; height: 50%; overflow: hidden;">
                <img src="/images/photos/main/category1.jpg"  style="transition: all 0.2s ease-out;">
 
@@ -146,7 +145,7 @@
               <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
                 <p class="fs-5 m-0 m-0 p-0">한식</p>
               </span>
-              <p class="fs-4 m-0 mt-3 p-0">집에서 좀 먹고 싶은</p>
+              <p class="fs-5 m-0 mt-3 p-0">집에서 좀 먹고 싶은</p>
               <p class="fs-6 m-0 mt-3 p-0">
                 <span class="badge rounded-pill text-bg-light">#비빔밥</span>
                 <span class="badge rounded-pill text-bg-light ms-1">#불고기</span>
@@ -162,7 +161,7 @@
               <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
                 <p class="fs-5 m-0 m-0 p-0">양식</p>
               </span>
-              <p class="fs-4 m-0 mt-3 p-0">송파에서는 먹기 힘든</p>
+              <p class="fs-5 m-0 mt-3 p-0">송파에서는 먹기 힘든</p>
               <p class="fs-6 m-0 mt-3 p-0">
                 <span class="badge rounded-pill text-bg-light">#파스타</span>
                 <span class="badge rounded-pill text-bg-light ms-1">#스테이크</span>
@@ -178,7 +177,7 @@
               <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
                 <p class="fs-5 m-0 m-0 p-0">디저트</p>
               </span>
-              <p class="fs-4 m-0 mt-3 p-0">빵이 없다면???</p>
+              <p class="fs-5 m-0 mt-3 p-0">빵이 없다면???</p>
               <p class="fs-6 m-0 mt-3 p-0">
                 <span class="badge rounded-pill text-bg-light">#쿠키</span>
                 <span class="badge rounded-pill text-bg-light ms-1">#도넛</span>
@@ -194,7 +193,7 @@
               <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
                 <p class="fs-5 m-0 m-0 p-0">간식</p>
               </span>
-              <p class="fs-4 m-0 mt-3 p-0">뽀로로가 필요없는 비법</p>
+              <p class="fs-5 m-0 mt-3 p-0">뽀로로가 필요없는 비법</p>
               <p class="fs-6 m-0 mt-3 p-0">
                 <span class="badge rounded-pill text-bg-light">#떡볶이</span>
                 <span class="badge rounded-pill text-bg-light ms-1">#핫도그</span>
@@ -210,7 +209,7 @@
               <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10;">
                 <p class="fs-5 m-0 m-0 p-0">퓨전</p>
               </span>
-              <p class="fs-4 m-0 mt-3 p-0">없는 건 이유가 있다</p>
+              <p class="fs-5 m-0 mt-3 p-0">없는 건 이유가 있다</p>
               <p class="fs-6 m-0 mt-3 p-0">
                 <span class="badge rounded-pill text-bg-light">#북극곰 폴라베어</span>
                 <span class="badge rounded-pill text-bg-light ms-1">#고추장 파스타</span>
@@ -223,7 +222,7 @@
    
    <div id="rDiv" class="d-flex flex-column align-items-center m-0 my-5 p-0" style="width:100%; height: 700px;">
       <div class="d-flex justify-content-start align align-items-center m-0 p-0" style="width:80%; height: 10%" >
-         <h1>이달의 추천 레시피!!!</h1>
+         <h1>이달의 추천 레시피</h1>
       </div>
 
       <div class="d-flex m-0 p-0" style="width: 80%; height: 80%">
@@ -517,7 +516,7 @@
 </template>
    
  <script setup>
- import { computed, onMounted, ref } from 'vue';
+ import { onMounted, ref } from 'vue';
  import { register } from 'swiper/element/bundle';
  
  register();
@@ -644,5 +643,5 @@
       transform: scale(1.1);
       transition: all 0.2s linear;
      }
-     
+
    </style>

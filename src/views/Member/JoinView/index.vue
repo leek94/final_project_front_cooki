@@ -55,7 +55,7 @@
                         <label for="switch">에디터로 가입하기</label>
                     </div>
 
-                    <!-- 버튼 온클릭 -> inner html -> 계속 반복되게 그 안에 또 inner html -->
+                    <!-- 경력 추가 -->
                     <div class="row my-3 px-3" v-if="isEditor">
                         <li class="green-point">경력</li>
                         <div class="d-flex m-1" v-for="(career, index) in careerArray" :key="index">
@@ -65,21 +65,21 @@
                             <!-- 추가 버튼은 마지막행일 때만 보임 -->
                             <button class="p-2 ms-3 border" v-if="index+1===careerArray.length" @click="careerAdd(index)"> + </button>
                         </div>
-                        <div class="checkError m-1" v-if="cacontentNullError">내용을 입력하신 후 추가해주세요</div>
-                        
+                        <div class="checkError m-1" v-if="cacontentNullError">빈칸을 채워주세요</div>
                     </div>
 
+                    <!-- 수상내역 추가 -->
                     <div class="row my-3 px-3" v-if="isEditor">
                         <li class="green-point">수상 내역</li>
                         <div class="d-flex m-1" v-for="(awards, index) in awardsArray" :key="index">
-                            <input class="flex-grow-1 p-2 border" placeholder="수상 이력을 입력해주세요" v-model="awards.acontent">
-                            <!-- 삭제 버튼은 첫행(index=0)일 때만 안보이고 항상 보임-->
+                            <input class="flex-grow-1 p-2 border" placeholder="수상 이력을 입력해주세요" v-model="awards.acontent"/>
+                            <!-- 삭제 버튼은 index=0(첫행)일 때만 안보이고 항상 보임-->
                             <button class="p-2 ms-3 border" v-if="index > 0" @click="awardsRemove(index)"> - </button>
-                            <!-- 추가 버튼은 첫행에서만 보임 -->
-                            <button class="p-2 ms-3 border" v-if="index == 0" @click="awardsAdd(index)"> + </button>
+                            <!-- 추가 버튼은 마지막행일 때만 보임 -->
+                            <button class="p-2 ms-3 border" v-if="index+1===awardsArray.length" @click="awardsAdd(index)"> + </button>
                         </div>
+                        <div class="checkError m-1" v-if="cacontentNullError">빈칸을 채워주세요</div>
                     </div>
-
                 </div>
 
                 <!-- 약관 동의 -->

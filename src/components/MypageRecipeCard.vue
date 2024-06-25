@@ -6,7 +6,7 @@
                 <li class="img-li ss" >
                     <div class="router-div">
                         <div class="image" style="width:210px;height:210px">
-                            <i class="icon-heart fa-solid fa-heart like-heart" ></i>
+                            <i class="icon-heart fa-solid fa-heart like-heart" :class="{active: prop.objectProp.isActive}" @click="$emit('click')"></i>
                             <img src="/images/photos/140114575djmw.jpg">
                         </div>
 
@@ -36,8 +36,8 @@
 import { ref } from 'vue';
 
 // 데이터 바인딩을 위한 더미 데이터
-const prop= defineProps(["objectProp"])
-
+const prop = defineProps(["objectProp"]);
+const emit = defineEmits(["click"]);
 
 // 좋아요 버튼 자바스크립트 시작
 
@@ -112,12 +112,12 @@ const prop= defineProps(["objectProp"])
 /* 레시피 카드 끝 */
 
  .qnaCard{
-     border:solid 1px #e5e5e5;
-     border-radius: 0.7rem;
-     box-shadow: 0 2px 20px 0 rgba(0, 0, 3, 0.2);
-     margin-top:3.5rem;
-     margin:0 1rem;
-     width:245px;
+    border:solid 1px #e5e5e5;
+    border-radius: 0.7rem;
+    box-shadow: 0 2px 20px 0 rgba(0, 0, 3, 0.2);
+    margin-top:3.5rem;
+    margin:0 1rem;
+    width:245px;
  }
 
 </style>

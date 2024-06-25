@@ -1,8 +1,8 @@
 <template>
 
 <ModalTemplate>
-    <template v-slot:header>
-        신청 취소 확인
+    <template v-slot:header >
+        신청 취소
     </template>
 
     <template v-slot:body >

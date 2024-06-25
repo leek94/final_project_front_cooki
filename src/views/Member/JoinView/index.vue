@@ -55,7 +55,7 @@
                         <label for="switch">에디터로 가입하기</label>
                     </div>
 
-                    <!-- 버튼 온클릭 -> inner html -> 계속 반복되게 그 안에 또 inner html -->
+                    <!-- 경력 추가 -->
                     <div class="row my-3 px-3" v-if="isEditor">
                         <li class="green-point">경력</li>
                         <div class="d-flex m-1" v-for="(career, index) in careerArray" :key="index">
@@ -65,21 +65,21 @@
                             <!-- 추가 버튼은 마지막행일 때만 보임 -->
                             <button class="p-2 ms-3 border" v-if="index+1===careerArray.length" @click="careerAdd(index)"> + </button>
                         </div>
-                        <div class="checkError m-1" v-if="cacontentNullError">내용을 입력하신 후 추가해주세요</div>
-                        
+                        <div class="checkError m-1" v-if="cacontentNullError">빈칸을 채워주세요</div>
                     </div>
 
+                    <!-- 수상내역 추가 -->
                     <div class="row my-3 px-3" v-if="isEditor">
                         <li class="green-point">수상 내역</li>
                         <div class="d-flex m-1" v-for="(awards, index) in awardsArray" :key="index">
-                            <input class="flex-grow-1 p-2 border" placeholder="수상 이력을 입력해주세요" v-model="awards.acontent">
-                            <!-- 삭제 버튼은 첫행(index=0)일 때만 안보이고 항상 보임-->
+                            <input class="flex-grow-1 p-2 border" placeholder="수상 이력을 입력해주세요" v-model="awards.acontent"/>
+                            <!-- 삭제 버튼은 index=0(첫행)일 때만 안보이고 항상 보임-->
                             <button class="p-2 ms-3 border" v-if="index > 0" @click="awardsRemove(index)"> - </button>
-                            <!-- 추가 버튼은 첫행에서만 보임 -->
-                            <button class="p-2 ms-3 border" v-if="index == 0" @click="awardsAdd(index)"> + </button>
+                            <!-- 추가 버튼은 마지막행일 때만 보임 -->
+                            <button class="p-2 ms-3 border" v-if="index+1===awardsArray.length" @click="awardsAdd(index)"> + </button>
                         </div>
+                        <div class="checkError m-1" v-if="cacontentNullError">빈칸을 채워주세요</div>
                     </div>
-
                 </div>
 
                 <!-- 약관 동의 -->
@@ -238,7 +238,6 @@ function joinEditor() {
 
 // 커리어 상태 객체 선언
 const career = ref({
-    cano: 1,
     cacontent: ''
  })
 
@@ -253,13 +252,14 @@ const cacontentNullError = ref(false);
 //커리어 입력 태그 추가 함수
 function careerAdd(index) {
         //cacontentNullError.value = !cacontentNullError.value;
-        careerArray.value.push({cano: index+2, cacontent: ''});
+        careerArray.value.push({cacontent: ''});
         careerAddAfter.value = !careerAddAfter.value;
         //careerArray.value.push({ cano: index+2, cacontent: '' });
         //console.log("다음인덱스번호",nextCano );
         console.log("배열객체",JSON.parse(JSON.stringify(careerArray.value)));
         console.log("커리어이름",careerArray.value[index].cacontent);
         console.log("인덱스번호",careerArray.value[index].cano);
+
 }
 
 // 수상내역 입력 태그 삭제 함수
@@ -331,5 +331,20 @@ h6::marker {
     color: red;
 }
 
+a:link {
+    color: #15a775;
+}
+
+a:visited {
+    color: #15a775;
+}
+
+a:hover {
+    color: #D9EDBF;
+}
+
+a:active {
+    color: #D9EDBF;
+} 
 
 </style>

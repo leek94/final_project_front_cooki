@@ -20,9 +20,6 @@
                     <div class="dday-box">D-{{ checker() }}</div>
                 </div>
             </div>
-            <div class="d-flex justify-content-end">
-                <div class="class-label btn text-end">참여하기</div>
-            </div>
         </div>
     </li>
     <!-- 클래스 카드 끝 -->
@@ -31,6 +28,7 @@
 import { ref } from 'vue';
 
 const prop = defineProps(["objectProp"]);
+
 
 // D-Day 구하는 함수
 function checker(cno){

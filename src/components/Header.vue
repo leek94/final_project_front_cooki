@@ -49,14 +49,14 @@ li{
     text-align: center;
     list-style-type: none;
     background: url(/public/images/assets/star.png) no-repeat 0px 0px;
-    padding: 10px 20px 0px 27px;
+    padding: 10px 10px 0px 27px;
     text-decoration: none;
     color: black
 
 
 }
 li::before{
-    margin-right: 25px;
+    margin-right: 20px;
     background-image:url(/public/images/assets/star.png);
     background-size:30px 30px;
 }

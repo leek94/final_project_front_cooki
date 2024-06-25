@@ -51,7 +51,7 @@
                 <div class="text-start bg-light p-5 my-5">
                     <h4 class=" p-2 border-bottom border-dark border-3" style="font-weight: bold;">추가 정보</h4>
                     <div class="mx-2 my-3">
-                        <input class="checkbox me-2" type="checkbox" id="switch" name="editor" value="yes" @click="joinEditor"/>
+                        <input class="checkbox me-2" type="checkbox" id="switch" name="editor"  @click="joinEditor"/>
                         <label for="switch">에디터로 가입하기</label>
                     </div>
 

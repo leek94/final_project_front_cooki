@@ -37,25 +37,23 @@
             <div class="checkError m-2" v-if="mnicknameResultError">올바른 형식의 닉네임을 입력해주세요</div>
         </div>
 
-        <div class="flex-grow-1 row mx-2 mb-5" >
+        <div class="flex-grow-1 row mx-2 mb-4" >
             <li class="green-point m-1">비밀번호
             <span style="margin-left:10px; font-size: 12px; color:green"> * 알파벳 대소문자, 숫자를 혼용해서 8자 이상 15자 이하</span>
             </li>
             <div class="input-group input-group-box w-100">
                 <input type="text" placeholder="비밀번호" v-model="member.mpassword" aria-label="password" class="form-control input-box" @keyup="mpasswordCheck">
+            </div>
+            <div class="checkError" v-if="mpasswordResultError">올바른 형식의 비밀번호를 입력해주세요</div>
+            <div class="input-group input-group-box w-100">
                 <input type="text" placeholder="비밀번호 확인" v-model="member.mpasswordcheck" aria-label="passwordCheck" class="form-control" @keyup="mpasswordMatchCheck">
                 <button class="btn border" type="button" id="button-addon2">변경</button>
             </div>
-            <div class="container" style="width:97%">
-                <div class="row w-100"> 
-                    <div class="checkError col m-2 w-50" v-if="mpasswordResultError">올바른 형식의 비밀번호를 입력해주세요</div>
-                    <div class="checkError col  m-2 w-50" v-if="mpasswordMatchError">입력한 비밀번호와 일치하지않습니다</div>
-                </div>
-             </div>
+            <div class="checkError col  m-2 w-50" v-if="mpasswordMatchError">입력한 비밀번호와 일치하지않습니다</div>
         </div>
 
         <!-- 에디터한테만 보이는 화면 -->
-        <div class="flex-grow-1 row mx-2 mb-5">
+        <div class="flex-grow-1 row mx-2 mb-3">
             <div class="d-flex justify-content-between">
                 <li class="green-point m-1">경력</li>
                 <button class="btn btn-md btn-outline-success" v-if="!editingCareers" @click="changeCareers()">변경</button>
@@ -84,7 +82,7 @@
         </div>
         </div>
 
-            <div class="row  mx-2 mb-3 " v-if="pluscareer">
+            <div class="row  mx-2 mb-5 " v-if="pluscareer">
                 <div class="d-flex" v-for="(career, index) in careerArray" :key="index" >
                      <div class="input-group input-group-box w-100 mb-1">
                         <input type="text" class="form-control input-box" placeholder="경력을 입력해주세요" v-model="career.cacontent" aria-label="Recipient's username" aria-describedby="button-addon2">
@@ -92,13 +90,12 @@
                         <button class="btn border" type="button" id="button-addon2" @click="pluscareerRemove(index)">삭제</button>
                     </div>
                 </div>
-                <div class="checkError m-1" v-if="cacontentNullError">내용을 입력하신 후 추가해주세요</div>
             </div>
 
         
 
         <!-- 에디터한테만 보이는 화면 -->
-        <div class="flex-grow-1 row mx-2 mb-5">
+        <div class="flex-grow-1 row mx-2 mb-3">
             <div class="d-flex justify-content-between">
                 <li class="green-point m-1">수상내역</li>
                 <button class="btn btn-md btn-outline-success" v-if="!editingAwards" @click="changeAwards()">변경</button>
@@ -197,9 +194,33 @@ function mpasswordMatchCheck(){
 
     return mpasswordCheckResult;
 }
+const editingMnickname=ref(false);
+const editingCareers=ref(false);
+const editingAwards=ref(false);
 
 
-const cacontentNullError =ref (false);
+function changeMnickname(){
+    editingMnickname.value= !editingMnickname.value;
+}
+function changeCareers(){
+    editingCareers.value= !editingCareers.value;
+}
+function changeAwards(){
+    editingAwards.value= !editingAwards.value;
+}
+
+function savenickname(){
+    editingMnickname.value= !editingMnickname.value;
+
+}
+function saveCareers(){
+    editingCareers.value= !editingCareers.value;
+}
+function saveAwards(){
+    editingAwards.value= !editingAwards.value;
+}
+
+
 
 function careerAdd() {
     const newcareer=ref({

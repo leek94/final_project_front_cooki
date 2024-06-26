@@ -27,14 +27,12 @@ const member = ref({
     mid:"",
     mpassword:""
 });
+
 const router = useRouter()
 
 async function handleLogin(){
     try{
-        console.log(member.value.mid);
-        console.log(member.value.mpassword)
         const data = JSON.parse(JSON.stringify(member.value));
-        console.log(data);
         const response = await memberAPI.login(data);
 
 
@@ -43,9 +41,7 @@ async function handleLogin(){
                 userId:response.data.userId,
                 accessToken:response.data.accessToken
             };
-            console.log("로그인중");
             store.dispatch("saveAuth",payload);
-            console.log("로그인 성공")
             router.push("/")
         }
     }catch(error){

@@ -34,12 +34,14 @@ function setAwards(awards){
    
 }
 function login(member){
+    
     /*
     member = {
         mid:"",
         mpassword:""
     }
     */
+
    return axios.post("/member/login",member);
 
 }

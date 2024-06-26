@@ -122,6 +122,7 @@
 <script setup>
 import { ref } from 'vue';
 import memberAPI from '@/apis/memberAPI'
+import { useRouter } from 'vue-router';
 // 멤버 객체 선언
 let member = ref( {
     mid: "",
@@ -275,7 +276,7 @@ function awardsAdd(index) {
 function awardsRemove(index) {
     awardsArray.value.splice(index,index);
 }
-
+const router = useRouter();
 //폼 제출 함수
 async function handleSubmit() {
     try{
@@ -291,18 +292,18 @@ async function handleSubmit() {
 
             for(let i=0; i<careerArray.value.length; i++){
                 careerArray.value[i].cano=i+1;
-                careerArray.value[i].mid=data.mid;
+                careerArray.value[i].mid=response.data.mid;
 
                 memberAPI.setCareer(JSON.parse(JSON.stringify(careerArray.value[i])));
             }
 
             for(let i=0; i<awardsArray.value.length; i++){
                 awardsArray.value[i].cano=i+1;
-                awardsArray.value[i].mid=data.mid;
+                awardsArray.value[i].mid=response.data.mid;
                 memberAPI.setAwards(JSON.parse(JSON.stringify(awardsArray.value[i])));
             }
         }   
-    
+    router.push("/Member/LoginView")
 
     }catch(error){
         console.log("에러남: " + error);

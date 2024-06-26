@@ -33,11 +33,20 @@ function classUpdate() {
     return axios.put("/class/classUpdate/");
 }
 
+<<<<<<< HEAD
 =======
 function getThumbimgCount(cno){
     return axios.get(`/class/getThumbimgCount/${cno}`)
 }
 >>>>>>> 42bb447 (feat:add class thumbnail img #9)
+=======
+//클래스 썸네일 이미지 갯수 세기
+function getThumbimgCount(cno){
+    return axios.get(`/class/getThumbimgCount/${cno}`)
+}
+
+
+>>>>>>> 5322040 (feat:add curriculum img download #10)
 export default {
     classRegister,
     itemRegister,

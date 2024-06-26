@@ -4,7 +4,7 @@
     <div class="curriculum mt-5 ">
         <div class="d-flex mb-5" v-for="(cs,index) in curriculum" :key="index">
             <div class="cimg">
-                <img style= "width:140p; height:140px; border-radius: 20px" src="https://d1x9f5mf11b8gz.cloudfront.net/class%2F20230604%2Fd432deb8-5ab6-42af-8a90-8fde121ae88c.jpg">
+                <img style= "width:140p; height:140px; border-radius: 20px" :src="`${axios.defaults.baseURL}/class/curriculumattach/64/${cs.cuorder}?accessToken=${store.state.accessToken}`">
             </div>
             <div class="cinfo" style=" text-align: left; margin-left: 50px; align-content: center">
                 <div>
@@ -20,10 +20,13 @@
 </template>
 
 <script setup>
+import classAPI from '@/apis/classAPI';
 import Items from '@/components/ClassItems.vue'
+import store from '@/store';
+import axios from 'axios';
 import { ref} from 'vue';
 
-const curriculum=([
+const curriculum=ref([
     {
         cuorder:1,
         cutitle:"반죽만들기",
@@ -40,6 +43,13 @@ const curriculum=([
         cucontent:"구워진 쿠키를 식힌 후 예쁘게 포장합니다."
     },
 ])
+curri(64);
+async function curri(cno){
+    const response = await classAPI.curriculumAndItemRead(cno);
+    console.log(response.data);
+    curriculum.value = response.data.curriculums;
+}
+
 </script>
 
 <style scoped>

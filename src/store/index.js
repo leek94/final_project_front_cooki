@@ -32,7 +32,28 @@ export default createStore({
   },
 
   actions: {
-    
+   loadAuth(context,payload){
+    context.commit("setUserId",localStorage.getItem("userId") || "");
+    const accessToken = localStorage.getItem("accessToken") || "";
+    context.commit("setAccessToken",accessToken);
+    if(accessToken !==""){
+      axiosConfig.addAuthHeader(accessToken);
+    }
+   },
+   saveAuth(context, payload){
+    context.commit("setUserId",payload.userId);
+    context.commit("setAccessToken", payload.accessToken);
+    localStorage.setItem("userId", payload.userId);
+    localStorage.setItem("accessToken", payload.accessToken);
+    axiosConfig.addAuthHeader(payload.accessToken);
+   },
+   deleteAuth(context, payload){
+    context.commit("setUserId","");
+    context.commit("setAccessToken","");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("accessToken");
+    axiosConfig.removeAuthHeader();
+   }
   },
   modules: {
   }

@@ -51,12 +51,12 @@
                 <div class="text-start bg-light p-5 my-5">
                     <h4 class=" p-2 border-bottom border-dark border-3" style="font-weight: bold;">추가 정보</h4>
                     <div class="mx-2 my-3">
-                        <input class="checkbox me-2" type="checkbox" id="switch" name="editor" value="yes" @click="joinEditor"/>
+                        <input class="checkbox me-2" type="checkbox" id="switch" name="editor" @click="joinEditor"/>
                         <label for="switch">에디터로 가입하기</label>
                     </div>
 
                     <!-- 경력 추가 -->
-                    <div class="row my-3 px-3" v-if="isEditor">
+                    <div class="row my-3 px-3" v-if="member.isEditor">
                         <li class="green-point">경력</li>
                         <div class="d-flex m-1" v-for="(career, index) in careerArray" :key="index">
                             <input class="flex-grow-1 p-2 border" placeholder="경력을 입력해주세요" v-model="career.cacontent"/>
@@ -69,7 +69,7 @@
                     </div>
 
                     <!-- 수상내역 추가 -->
-                    <div class="row my-3 px-3" v-if="isEditor">
+                    <div class="row my-3 px-3" v-if="member.isEditor">
                         <li class="green-point">수상 내역</li>
                         <div class="d-flex m-1" v-for="(awards, index) in awardsArray" :key="index">
                             <input class="flex-grow-1 p-2 border" placeholder="수상 이력을 입력해주세요" v-model="awards.acontent"/>
@@ -121,16 +121,18 @@
 
 <script setup>
 import { ref } from 'vue';
-
+import memberAPI from '@/apis/memberAPI'
 // 멤버 객체 선언
-const member = ref( {
+let member = ref( {
     mid: "",
     mname: "",
     mphonenum: "",
     mnickname: "",
     mpassword: "",
-    mpasswordcheck: ""
+    mpasswordcheck: "",
+    isEditor:false
 });
+
 
 // 유효성 검사를 위한 상태 변수 선언
 const midResultError = ref(false);
@@ -140,6 +142,7 @@ const mnicknameResultError = ref(false);
 const mpasswordResultError = ref(false);
 const mpasswordMatchError = ref(false);
 const checkboxError = ref(false);
+
 
 const checkFirst = ref(false);
 const checkSecond = ref(false);
@@ -159,7 +162,8 @@ const checkThird = ref(false);
 //     return midResult;
 // }
 
-// 아이디 정규 표현식 검사
+//아이디 정규 표현식 검사
+
 function midCheck() {
   const midPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
   const midResult = midPattern.test(member.value.mid);
@@ -211,33 +215,17 @@ function mpasswordMatchCheck() {
 }
 
 
-
-// const career = ref();
-// const careerNo = ref(1);
-// const careerArray = ref([
-//     {careerNo, career}
-// ]);
-
-// function careerAdd() {
-//     // careerArray.value.careerNo = +1;
-//     careerArray.value.careerNo = +1;
-//     careerArray.value.push({careerNo, career});
-//     console.log(careerArray.value.careerNo);
-//     console.log(careerArray.value.career);
-// }
-
-
 // 에디터로 가입 선택에 따라 폼을 보여주기 위한 상태변수
-const isEditor = ref(false);
+
 
 // 에디터로 가입하기 선택시 폼을 열어주는 함수
 function joinEditor() {
-    isEditor.value = !isEditor.value;
-    console.log(isEditor.value);
+    member.value.isEditor = !member.value.isEditor;
+    console.log(member.value.isEditor);
 }
 
 // 커리어 상태 객체 선언
-const career = ref({
+let career = ref({
     cacontent: ''
  })
 
@@ -246,14 +234,12 @@ const career = ref({
 //const careerArray = ref([{ cano: '', cacontent: '' }]);
 //let nextCano = 2;
 
-const careerAddAfter = ref(false);
-const cacontentNullError = ref(false);
 
+const cacontentNullError = ref(false);
 //커리어 입력 태그 추가 함수
 function careerAdd(index) {
         //cacontentNullError.value = !cacontentNullError.value;
         careerArray.value.push({cacontent: ''});
-        careerAddAfter.value = !careerAddAfter.value;
         //careerArray.value.push({ cano: index+2, cacontent: '' });
         //console.log("다음인덱스번호",nextCano );
         console.log("배열객체",JSON.parse(JSON.stringify(careerArray.value)));
@@ -268,7 +254,7 @@ function careerRemove(index) {
 }
 
 // 수상내역 상태 객체 선언
-const awards = ref({
+let awards = ref({
     ano: 1,
     acontent: ''
  })
@@ -276,13 +262,12 @@ const awards = ref({
  // 수상내역 상태 배열 선언
 const awardsArray = ref([awards.value]);
 
-const awardsAddAfter = ref(false);
+
 const awardsNullError = ref(false);
 
 // 수상내역 입력 태그 추가 함수
 function awardsAdd(index) {
         awardsArray.value.push({ano: index+2, acontent: ''});
-        awardsAddAfter.value = !awardsAddAfter.value;
         console.log("배열객체",JSON.parse(JSON.stringify(awardsArray.value)));
 }
 
@@ -292,9 +277,38 @@ function awardsRemove(index) {
 }
 
 //폼 제출 함수
-function joinFormSubmit() {
+async function handleSubmit() {
+    try{
+        if (member.value.isEditor){
+            member.value.mrole="ROLE_EDITOR"
+        } else{
+            member.value.mrole="ROLE_USER"
+        }
+        const data = JSON.parse(JSON.stringify(member.value));
+        const response = await memberAPI.join(data);
 
+        if(response.data.result==="success" && data.mrole==="ROLE_EDITOR"){
+
+            for(let i=0; i<careerArray.value.length; i++){
+                careerArray.value[i].cano=i+1;
+                careerArray.value[i].mid=data.mid;
+
+                memberAPI.setCareer(JSON.parse(JSON.stringify(careerArray.value[i])));
+            }
+
+            for(let i=0; i<awardsArray.value.length; i++){
+                awardsArray.value[i].cano=i+1;
+                awardsArray.value[i].mid=data.mid;
+                memberAPI.setAwards(JSON.parse(JSON.stringify(awardsArray.value[i])));
+            }
+        }   
+    
+
+    }catch(error){
+        console.log("에러남: " + error);
+    }
 }
+        
 
 </script>
 

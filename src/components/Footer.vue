@@ -53,7 +53,7 @@
     background-color: #f2f2f2;
     width:100%;
     margin:0 auto;
-    padding:2.75rem 5rem;
+    padding:2.75rem 12rem;
     min-width: 1300px;
 }
 .footer_link{

@@ -1,22 +1,60 @@
 <template>
-    <form>
-
-        <div class="d-flex" style="justify-content: center;">
+    <div class="d-grid">
+        <form @submit.prevent="handleLogin">
+            <div class="d-flex" style="justify-content: center;">
                 <div class="row mx-5 p-5 " style="width: 500px; justify-content: center;">
                     <h3 class="mb-5" style="font-weight: bold; text-align: center">로그인</h3>
-                    <input class="p-2 mb-3 border" placeholder="이메일 형식의 아이디"/>
-                    <input class="p-2 mb-4 border" placeholder="비밀번호"/>
-                    <button class="btn p-2 w-100 rounded">로그인</button>
-                </div>        
+                    <input class="p-2 mb-3 border" v-model="member.mid" placeholder="이메일 형식의 아이디"/>
+                    <input class="p-2 mb-4 border" v-model="member.mpassword" placeholder="비밀번호"/>
+                    <button type="submit" class="btn p-2 w-100 rounded">로그인</button>
+                </div>
+            </div>
+        </form>
+         <div class="d-flex row mb-5" style="justify-content: center;">
+            <RouterLink class="linkJoin" to="/Member/JoinView" style="text-align: center; text-decoration: none;font-size: 17px">회원가입</RouterLink>
         </div>
-    </form>
-
-    <div class="d-flex row mb-5" style="justify-content: center;">
-        <RouterLink class="linkJoin" to="/Member/JoinView" style="text-align: center;">회원가입 하기</RouterLink>
     </div>
 </template>
 
 <script setup>
+import memberAPI from '@/apis/memberAPI';
+import store from '@/store';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+
+
+const member = ref({
+    mid:"",
+    mpassword:""
+});
+const router = useRouter()
+
+async function handleLogin(){
+    try{
+        console.log(member.value.mid);
+        console.log(member.value.mpassword)
+        const data = JSON.parse(JSON.stringify(member.value));
+        console.log(data);
+        const response = await memberAPI.login(data);
+
+
+        if(response.data.result==="success"){
+            const payload={
+                userId:response.data.userId,
+                accessToken:response.data.accessToken
+            };
+            console.log("로그인중");
+            store.dispatch("saveAuth",payload);
+            console.log("로그인 성공")
+            router.push("/")
+        }
+    }catch(error){
+        console.log(error);
+    }
+
+   
+    
+}
 </script>
 
 <style scoped>

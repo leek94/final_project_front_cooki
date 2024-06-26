@@ -4,8 +4,9 @@
             <div class="col-6 position-relative">
             <!-- Additional required wrapper -->
                 <swiper-container loop="true" class="swiper-container" >
-                    <swiper-slide><img src="/images/photos/thumb1.jpg"></swiper-slide>
-                    <swiper-slide><img src="/images/photos/thumb2.jpg"></swiper-slide>
+                    <swiper-slide v-for="n in cd" :key="n">
+                        <img :src="`${axios.defaults.baseURL}/class/thumbattach/64/${n}?accessToken=${store.state.accessToken}`">
+                    </swiper-slide>
                 </swiper-container>
 
                 <button class="prevBtn btn btn-lg position-absolute top-50 start-0 translate-middle-y">
@@ -120,14 +121,18 @@
 </template>
 
 <script setup>
-import { onMounted, provide } from 'vue';
+import { onMounted, provide, ref } from 'vue';
 // import function to register Swiper custom elements
 import { register } from 'swiper/element/bundle';
 import CRegisterModal from'./CRegisterModal.vue'
 import CCancelModal from'./CCancelModal.vue'
 import { Modal } from 'bootstrap';
+import classAPI from '@/apis/classAPI';
+import axios from 'axios';
+import store from '@/store';
 // register Swiper custom elements
 register();
+
 
 const Class1=([{
     cno:1,
@@ -162,7 +167,6 @@ const classItems = [
 ]
 provide("cItems",{classItems});
 
-console.log(Class1.value);
 
 let registerModal=null;
 let CancelModal=null;
@@ -185,7 +189,15 @@ let CancelModal=null;
 
 
     });
-
+const cd=ref(null);
+abc();
+//리스트에서 가져온 cno를 전달
+async function abc(){
+    const response = await classAPI.getThumbimgCount(64);
+    cd.value=response.data;
+    console.log("cd"+cd.value)
+}
+console.log("eeee"+cd.value)
 
 function showDialogRegister(){
     registerModal.show();

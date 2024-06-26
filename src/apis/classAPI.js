@@ -15,6 +15,7 @@ function itemRegister(itemData) {
 function curriculumRegister(curriculumData) {
     return axios.post("/class/curriculumRegister", curriculumData);
 }
+<<<<<<< HEAD
 
 //클래스 기본 정보 읽기
 function classRead(cno) {
@@ -32,11 +33,20 @@ function classUpdate() {
     return axios.put("/class/classUpdate/");
 }
 
+=======
+function getThumbimgCount(cno){
+    return axios.get(`/class/getThumbimgCount/${cno}`)
+}
+>>>>>>> 42bb447 (feat:add class thumbnail img #9)
 export default {
     classRegister,
     itemRegister,
     curriculumRegister,
+<<<<<<< HEAD
     classRead,
     curriculumAndItemRead,
     classUpdate
+=======
+    getThumbimgCount
+>>>>>>> 42bb447 (feat:add class thumbnail img #9)
 }

@@ -173,7 +173,6 @@ const qnaArray = ref([
 
 function qnaInsert() {
     qnaArray.value.push({qtitle: qna.value.qtitle, qcontent: qna.value.qcontent});
-   
 }
 
 function qnaUpdate(index) {

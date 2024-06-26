@@ -155,6 +155,7 @@ import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
 import {ko} from "date-fns/locale";
 import { register } from 'swiper/element/bundle';
+import classAPI from '@/apis/classAPI';
 
 register();
 
@@ -182,9 +183,9 @@ const c = ref({
     cdday: null,
     cstarttime: null,
     cendtime: null,
-    ccaddress: null,
+    caddress: null,
     cdetailaddress: null,
-    cpirce:null
+    cprice:null
 })
 
 const presetImg = ref(null);
@@ -356,6 +357,83 @@ function isvalidPersonCount(){
         c.value.cpersoncount = 30;
     }
 }
+
+async function submitClass() {
+    // 사진파일은 JSON 객체로 넘겨줄 수 없기 때문에 formData로 넘겨줌
+    const formData = new FormData();
+    //----- v-model data 받기 -----
+    formData.append("ctitle", c.value.ctitle);
+    formData.append("ccontent", c.value.ccontent);
+    formData.append("cpersoncount", c.value.cpersoncount);
+    formData.append("cprice", c.value.cprice);
+    formData.append("cdday", c.value.cdday);
+    formData.append("cstarttime", c.value.cstarttime);
+    formData.append("cendtime", c.value.cendtime);
+    //주소+상세주소
+    formData.append("caddress", c.value.caddress + " " +c.value.cdetailaddress);
+    //모집 시작일 -> 등록날짜
+    const cstartdate = new Date();
+    formData.append("cstartdate", cstartdate);
+    //모집 마감일 -> 강의 시작일 -1일 (강의 시작일이 달의 첫날일 경우 조건식 필요)
+    const cenddate = new Date();
+    cenddate.setDate(c.value.cdday.getDate()-1);
+    cenddate.setMonth(c.value.cdday.getMonth());    
+    formData.append("cenddate", cenddate);
+
+    let cno;
+    //----- 사진 data 받기 -----
+    //i개의 사진을 배열로 받기
+    for(let i=0; i<presetImg.value.files.length; i++) {
+        formData.append("cthumbnailimgs",presetImg.value.files[i]);
+    }
+    try{
+        //axios를 통해서 저장한 formData 전달하기
+        const response = await classAPI.classRegister(formData);
+        //backend에서 받은 map("cno",cno) value를 사용하기 위해 변수에 값을 넣어줌
+        cno = response.data.cno; 
+        //response.data 사용위해서는 async await 구조 사용해줘야 함
+        console.log(cno);
+        console.log("formdata 전달");
+    } catch(error) {
+        console.log("데이터 전달 안됨");
+    }
+    
+
+    //----- 재료 받기 -----
+    for(let i=0; i<citems.value.length; i++) {
+        const ciFormData = new FormData();
+        ciFormData.append("ciname", citems.value[i].ciname);
+        ciFormData.append("cno", cno);
+
+        ciFormData.append("cino", i+1);
+        const response = await classAPI.itemRegister(ciFormData);
+    }
+    console.log("ciFormData 전달 완료");
+
+//     const citems = ref([
+//     {
+//         ciname: "",
+//         cno: 1,
+//     }
+// ])
+// <input type="text" class="form-control w-100 me-1" v-model="citem.ciname" placeholder="예) 다진 돼지고기 600g">
+
+    //----- 커리큘럼 받기 -----
+    //여러 단계의 커리큘럼을 받기 위해 커리큘럼 배열의 길이만큼 for문 실행
+//    for(let i=0; i<curiculums.value.length; i++) {
+//         const cuFormData = new FormData();
+//         //커리큘럼 사진 파일은 배열로 저장되기 때문에 (커리큘럼 추가될 때마다 input 태그도 추가)
+//         //각 커리큘럼 순번에 맞는 사진을 가져오기 위해서는 인덱스를 매치시켜주고(첫번째 인풋태그, 두번째 인풋태그, ...)
+//         //input 태그 안에서 files로 이미지를 가져오는 경우 files(배열)의 0번 인덱스 값을 가져오면 됨
+//         cuFormData.append("cuimg", cuImgs.value[i].files[0]);
+//         cuFormData.append("cuorder", curiculums.value[i].cuorder);
+//         cuFormData.append("cutitle", curiculums.value[i].cutitle);
+//         cuFormData.append("cucontent",curiculums.value[i].cucontent);
+//         cuFormData.append("cno",cno)
+//         const response = await classAPI.curriculumResister(cuFormData);
+//     }
+}
+
 
 </script>
 

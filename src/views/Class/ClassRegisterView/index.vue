@@ -4,12 +4,12 @@
         <div class="d-flex flex-column justify-content-center align-items-center w-50 my-5 p-3 rounded-4" style='background-color: #fff9e2;'>
             <div class="w-100 my-3">
                 <label class="form-label mb-3">제목</label>
-                <input type="text" class="form-control" v-model="c.ctitle" placeholder="클래스 이름을 입력해주세요.">
+                <input type="text" class="form-control" v-model="classes.ctitle" placeholder="클래스 이름을 입력해주세요.">
             </div>
 
             <div class="w-100 mb-3">
                 <label class="form-label mb-3">내용</label>
-                <textarea class="form-control" rows="10" v-model="c.ccontent"
+                <textarea class="form-control" rows="10" v-model="classes.ccontent"
                     placeholder="클래스를 간단히 소개해주세요">
                 </textarea>
             </div>
@@ -36,17 +36,17 @@
         <div class="d-flex flex-column justify-content-center align-items-center w-50 mb-5 p-3 rounded-4" style='background-color: #fff9e2;'>
             <div class="w-100 my-3">
                 <label class="form-label mb-3">모집 인원(5~30명 사이의 인원)</label>
-                <input type="number" class="form-control w-25" v-model="c.cpersoncount" min="5" max="30"  @change="isvalidPersonCount">
+                <input type="number" class="form-control w-25" v-model="classes.cpersoncount" min="5" max="30"  @change="isvalidPersonCount">
             </div>
 
             <div class="w-100 mb-3">
                 <label class="form-label mb-3">가격</label>
-                <input type="number" class="form-control w-25" v-model="c.cprice">
+                <input type="number" class="form-control w-25" v-model="classes.cprice">
             </div>
 
             <div class="w-100 mb-3">
                 <label class="form-label mb-3">개최 일자</label>
-                <VueDatePicker  v-model="c.cdday" :min-date="minDate" :max-date="maxDate"
+                <VueDatePicker  v-model="classes.cdday" :min-date="minDate" :max-date="maxDate"
                 :start-date="minDate"
                 :format="format" :format-locale="ko"
                 input-class-name="form-control w-25 "
@@ -59,7 +59,7 @@
                 <label for="title" class="form-label mb-3">시작 시간</label>
                     <VueDatePicker
                         class="w-25" 
-                        v-model="c.cstarttime" 
+                        v-model="classes.cstarttime" 
                         time-picker
                         :start-time="{hours:9, minutes:0}"
                         minutes-increment="30"
@@ -77,7 +77,7 @@
                 <label for="title" class="form-label mb-3">끝나는 시간</label>
                     <VueDatePicker 
                         class="w-25"
-                        v-model="c.cendtime"
+                        v-model="classes.cendtime"
                         time-picker
                         minutes-increment="30"
                         no-hours-overlay
@@ -93,21 +93,21 @@
 
             <div class="w-100 mb-3">
                 <div><button class="btn btn-outline-secondary  mb-3" @click="execDaumPostcode">주소 찾기</button></div>
-                <div><input type="text" v-model="c.caddress" placeholder="주소" class="w-50 mb-3 form-control"></div>
-                <div><input type="text" v-model="c.cdetailaddress" placeholder="상세주소" class="w-50 mb-3 form-control"></div>
+                <div><input type="text" v-model="classes.caddress" placeholder="주소" class="w-50 mb-3 form-control"></div>
+                <div><input type="text" v-model="classes.cdetailaddress" placeholder="상세주소" class="w-50 mb-3 form-control"></div>
             </div>
         </div>
 
         <div id="classItems" class="w-50 rounded-4 mb-5 p-3" style='background-color: #fff9e2;'>
             <h5 class="my-3">주재료</h5>
             <div class="d-flex flex-column align-items-center mb-3">
-                <div class="d-flex justify-content-center align-items-center row w-100 mt-2" v-for="(citem, index) in citems" :key="index"  >
+                <div class="d-flex justify-content-center align-items-center row w-100 mt-2" v-for="(classitem, index) in classitems" :key="index"  >
                     <div class="col-11 d-flex justify-content-center align-items-center m-0 p-0">
-                        <input type="text" class="form-control w-100 me-1" v-model="citem.ciname" placeholder="예) 다진 돼지고기 600g">
+                        <input type="text" class="form-control w-100 me-1" v-model="classitem.ciname" placeholder="예) 다진 돼지고기 600g">
                     </div>
                     <div class="col-1 d-flex justify-content-start align-items-center m-0  p-0">
                         <button class="btn bg-white me-1 w-50 d-flex justify-content-center align-items-center" v-if="index !== 0" @click="removeClassItem(index)">&#10134;</button>
-                        <button class="btn bg-white w-50 d-flex justify-content-center align-items-center" v-if="index + 1 === citems.length" @click="addClassItem(index)">&#10133;</button>
+                        <button class="btn bg-white w-50 d-flex justify-content-center align-items-center" v-if="index + 1 === classitems.length" @click="addClassItem(index)">&#10133;</button>
                     </div>
                 </div>
             </div>
@@ -176,7 +176,7 @@ const minTime = ref(null);
 const maxTime = ref(null);
 let isStart = false;
 
-const c = ref({
+const classes = ref({
     ctitle:null,
     ccontent:null,
     cpersoncount:null,
@@ -192,7 +192,7 @@ const presetImg = ref(null);
 let isPreImg = ref(false);
 
 
-const citems = ref([
+const classitems = ref([
     {
         ciname: "",
         cno: 1,
@@ -253,11 +253,11 @@ function addClassItem(index){
         ciname: "",
         cno: 1,
     }
-    citems.value.push(newItem);
+    classitems.value.push(newItem);
 }
 
 function removeClassItem(index){
-    citems.value.splice(index,1);
+    classitems.value.splice(index,1);
 }
 
 
@@ -306,19 +306,19 @@ function removeCu(){
 }
 
 function setTime(){
-    if(c.value.cstarttime !== null){
+    if(classes.value.cstarttime !== null){
         
         minTime.value = {
-            hours: c.value.cstarttime.hours + 1,
-            minutes: c.value.cstarttime.minutes
+            hours: classes.value.cstarttime.hours + 1,
+            minutes: classes.value.cstarttime.minutes
         }
         
         maxTime.value = {
-            hours: c.value.cstarttime.hours + 4,
-            minutes: c.value.cstarttime.minutes
+            hours: classes.value.cstarttime.hours + 4,
+            minutes: classes.value.cstarttime.minutes
         }
 
-        c.value.cendtime = minTime.value;
+        classes.value.cendtime = minTime.value;
 
         isStart = true;
 
@@ -326,7 +326,7 @@ function setTime(){
 
         minTime.value = null;
         maxTime.value = null;
-        c.value.cendtime = null;
+        classes.value.cendtime = null;
         isStart= false;
     }
 }
@@ -341,9 +341,9 @@ function execDaumPostcode() {
 
                 //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
                 if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                    c.value.caddress = data.roadAddress;
+                    classes.value.caddress = data.roadAddress;
                 } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                    c.value.caddress = data.jibunAddress;
+                    classes.value.caddress = data.jibunAddress;
                 }
 
             }
@@ -351,44 +351,71 @@ function execDaumPostcode() {
     }
 
 function isvalidPersonCount(){
-    if(c.value.cpersoncount < 5){
-        c.value.cpersoncount =5;
-    }else if(c.value.cpersoncount > 30 ){
-        c.value.cpersoncount = 30;
+    if(classes.value.cpersoncount < 5){
+        classes.value.cpersoncount =5;
+    }else if(classes.value.cpersoncount > 30 ){
+        classes.value.cpersoncount = 30;
     }
 }
 
-async function submitClass() {
+function registerClass(){
     // 사진파일은 JSON 객체로 넘겨줄 수 없기 때문에 formData로 넘겨줌
-    const formData = new FormData();
+    const classFormData = new FormData();
     //----- v-model data 받기 -----
-    formData.append("ctitle", c.value.ctitle);
-    formData.append("ccontent", c.value.ccontent);
-    formData.append("cpersoncount", c.value.cpersoncount);
-    formData.append("cprice", c.value.cprice);
-    formData.append("cdday", c.value.cdday);
-    formData.append("cstarttime", c.value.cstarttime);
-    formData.append("cendtime", c.value.cendtime);
+    classFormData.append("ctitle", classes.value.ctitle);
+    classFormData.append("ccontent", classes.value.ccontent);
+    classFormData.append("cpersoncount", classes.value.cpersoncount);
+    classFormData.append("cprice", classes.value.cprice);
+    classFormData.append("cdday", classes.value.cdday);
+    classFormData.append("cstarttime", classes.value.cstarttime.hours +":"+(classes.value.cstarttime.minutes===0? "00" : "30"));
+    classFormData.append("cendtime", classes.value.cendtime.hours +":"+(classes.value.cendtime.minutes===0? "00" : "30"));
     //주소+상세주소
-    formData.append("caddress", c.value.caddress + " " +c.value.cdetailaddress);
+    classFormData.append("caddress", classes.value.caddress + " " +classes.value.cdetailaddress);
     //모집 시작일 -> 등록날짜
     const cstartdate = new Date();
-    formData.append("cstartdate", cstartdate);
+    classFormData.append("cstartdate", cstartdate);
     //모집 마감일 -> 강의 시작일 -1일 (강의 시작일이 달의 첫날일 경우 조건식 필요)
     const cenddate = new Date();
-    cenddate.setDate(c.value.cdday.getDate()-1);
-    cenddate.setMonth(c.value.cdday.getMonth());    
-    formData.append("cenddate", cenddate);
+    cenddate.setDate(classes.value.cdday.getDate()-1);
+    cenddate.setMonth(classes.value.cdday.getMonth());    
+    classFormData.append("cenddate", cenddate);
 
-    let cno;
     //----- 사진 data 받기 -----
     //i개의 사진을 배열로 받기
     for(let i=0; i<presetImg.value.files.length; i++) {
-        formData.append("cthumbnailimgs",presetImg.value.files[i]);
+        classFormData.append("cthumbnailimgs",presetImg.value.files[i]);
     }
+
+    return classAPI.classRegister(classFormData);
+}
+
+function registerClassItem(index, cno){
+    const ciFormData = new FormData();
+    ciFormData.append("ciname", classitems.value[index].ciname);
+    ciFormData.append("cno", cno);
+    ciFormData.append("cino", index+1);
+    const response = classAPI.itemRegister(ciFormData);
+}
+
+function registerCuriculums(index,cno){
+    const cuFormData = new FormData();
+    //커리큘럼 사진 파일은 배열로 저장되기 때문에 (커리큘럼 추가될 때마다 input 태그도 추가)
+    //각 커리큘럼 순번에 맞는 사진을 가져오기 위해서는 인덱스를 매치시켜주고(첫번째 인풋태그, 두번째 인풋태그, ...)
+    //input 태그 안에서 files로 이미지를 가져오는 경우 files(배열)의 0번 인덱스 값을 가져오면 됨
+    cuFormData.append("cuimg", cuImgs.value[index].files[0]);
+    cuFormData.append("cuorder", curiculums.value[index].cuorder);
+    cuFormData.append("cutitle", curiculums.value[index].cutitle);
+    cuFormData.append("cucontent",curiculums.value[index].cucontent);
+    cuFormData.append("cno",cno)
+    const response = classAPI.curriculumRegister(cuFormData);
+}
+
+async function submitClass() {
+    let cno;    
+
     try{
         //axios를 통해서 저장한 formData 전달하기
-        const response = await classAPI.classRegister(formData);
+        const response = await registerClass();
         //backend에서 받은 map("cno",cno) value를 사용하기 위해 변수에 값을 넣어줌
         cno = response.data.cno; 
         //response.data 사용위해서는 async await 구조 사용해줘야 함
@@ -397,32 +424,21 @@ async function submitClass() {
     } catch(error) {
         console.log("데이터 전달 안됨");
     }
-    
 
     //----- 재료 받기 -----
-    for(let i=0; i<citems.value.length; i++) {
-        const ciFormData = new FormData();
-        ciFormData.append("ciname", citems.value[i].ciname);
-        ciFormData.append("cno", cno);
-        ciFormData.append("cino", i+1);
-        const response = await classAPI.itemRegister(ciFormData);
+    for(let i=0; i<classitems.value.length; i++) {
+        registerClassItem(i, cno);
     }
     console.log("ciFormData 전달 완료");
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> b6d8eb6 (style: change submitClass)
     //----- 커리큘럼 받기 -----
     //여러 단계의 커리큘럼을 받기 위해 커리큘럼 배열의 길이만큼 for문 실행
     for(let i=0; i<curiculums.value.length; i++) {
-         const cuFormData = new FormData();
-         //커리큘럼 사진 파일은 배열로 저장되기 때문에 (커리큘럼 추가될 때마다 input 태그도 추가)
-         //각 커리큘럼 순번에 맞는 사진을 가져오기 위해서는 인덱스를 매치시켜주고(첫번째 인풋태그, 두번째 인풋태그, ...)
-         //input 태그 안에서 files로 이미지를 가져오는 경우 files(배열)의 0번 인덱스 값을 가져오면 됨
-         cuFormData.append("cuimg", cuImgs.value[i].files[0]);
-         cuFormData.append("cuorder", curiculums.value[i].cuorder);
-         cuFormData.append("cutitle", curiculums.value[i].cutitle);
-         cuFormData.append("cucontent",curiculums.value[i].cucontent);
-         cuFormData.append("cno",cno)
-         const response = await classAPI.curriculumRegister(cuFormData);
+        registerCuriculums(i,cno);
      }
 }
 

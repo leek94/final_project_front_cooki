@@ -14,21 +14,31 @@
 
        
 
-        <div class="d-flex" style="margin-right: 9rem" >
+        <div class="d-flex" style="margin-right: 9rem" v-if="store.state.userId===''">
             <div style="font-size: 17px;" >
                 <RouterLink  class="me-4" to="/Member/LoginView" >로그인</RouterLink>
                 <RouterLink  to="/TotalSearchView"><i class="fa-solid fa-magnifying-glass me-4" ></i></RouterLink>   
+            </div>
+        </div> 
+
+        <div class="d-flex" style="margin-right: 9rem" v-if="store.state.userId!=='' ">
+            <div style="font-size: 17px;" >
+                <button class="logoutbtn me-4" @click="handleLogout">로그아웃</button>
+                <RouterLink  to="/TotalSearchView"><i class="fa-solid fa-magnifying-glass me-4" ></i></RouterLink>   
                 <RouterLink to="/Member/MypageView"><i class="fa-solid fa-user me-4" ></i></RouterLink>
             </div>
-      
         </div> 
 
     </nav>
 </template>
 
 <script setup>
+import store from '@/store';
 import { RouterLink } from 'vue-router';
 
+function handleLogout(){
+    store.dispatch("deleteAuth");
+}
 
 </script>
 
@@ -69,6 +79,12 @@ i{
 
 a{
     text-decoration: none;
-    color: black
+    color: black;
+}
+.logoutbtn{
+    border:none;
+    background-color: white;
+    font-weight: bold;
+
 }
 </style>

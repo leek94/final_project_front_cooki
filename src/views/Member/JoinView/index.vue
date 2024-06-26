@@ -274,7 +274,7 @@ const awards = ref({
  })
 
  // 수상내역 상태 배열 선언
- const awardsArray = ref([awards.value]);
+const awardsArray = ref([awards.value]);
 
 const awardsAddAfter = ref(false);
 const awardsNullError = ref(false);

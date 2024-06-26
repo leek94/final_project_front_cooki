@@ -46,7 +46,7 @@ const routes = [
     },
     {         
         path: '/Class/ParticipantCheckView',
-        name: 'ClassUpdateView',
+        name: 'ClassParticipantCheckView',
         component: () =>  import(/* webpackChunkName: "Class" */ '@/views/Class/ParticipantCheckView')
     },
 ]

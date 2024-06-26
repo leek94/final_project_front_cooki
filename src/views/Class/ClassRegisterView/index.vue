@@ -359,6 +359,8 @@ function isvalidPersonCount(){
 }
 
 function registerClass(){
+
+    // 클래스 data를 넘겨주기 위해 formdata에 저장해서 axios로 전달
     // 사진파일은 JSON 객체로 넘겨줄 수 없기 때문에 formData로 넘겨줌
     const classFormData = new FormData();
     //----- v-model data 받기 -----
@@ -381,7 +383,9 @@ function registerClass(){
     classFormData.append("cenddate", cenddate);
 
     //----- 사진 data 받기 -----
-    //i개의 사진을 배열로 받기
+    //여러(i)개의 사진을 배열로 받기 
+    //<back>에 전달시 사진 여러개를 하나로 모아서 전달해주는 문법 -> <back>에서 분리해서 사용해야함
+    //사진을 하나씩 여러번 보내주는 function submitClass() 에서의 for문과 차이점이 있음
     for(let i=0; i<presetImg.value.files.length; i++) {
         classFormData.append("cthumbnailimgs",presetImg.value.files[i]);
     }
@@ -389,6 +393,7 @@ function registerClass(){
     return classAPI.classRegister(classFormData);
 }
 
+// 클래스 재료 data를 넘겨주기 위해 formdata에 저장해서 axios로 전달
 function registerClassItem(index, cno){
     const ciFormData = new FormData();
     ciFormData.append("ciname", classitems.value[index].ciname);
@@ -397,6 +402,7 @@ function registerClassItem(index, cno){
     return classAPI.itemRegister(ciFormData);
 }
 
+// 클래스 커리큘럼 data를 넘겨주기 위해 formdata에 저장해서 axios로 전달
 function registerCuriculums(index,cno){
     const cuFormData = new FormData();
     //커리큘럼 사진 파일은 배열로 저장되기 때문에 (커리큘럼 추가될 때마다 input 태그도 추가)
@@ -437,6 +443,7 @@ async function submitClass() {
 >>>>>>> b6d8eb6 (style: change submitClass)
     //----- 커리큘럼 받기 -----
     //여러 단계의 커리큘럼을 받기 위해 커리큘럼 배열의 길이만큼 for문 실행
+    //<back>에 전달시 사진 하나하나를 여러번 전달해주는 문법 
     for(let i=0; i<curiculums.value.length; i++) {
         const response = await registerCuriculums(i,cno);
      }

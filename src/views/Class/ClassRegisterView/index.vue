@@ -394,7 +394,7 @@ function registerClassItem(index, cno){
     ciFormData.append("ciname", classitems.value[index].ciname);
     ciFormData.append("cno", cno);
     ciFormData.append("cino", index+1);
-    const response = classAPI.itemRegister(ciFormData);
+    return classAPI.itemRegister(ciFormData);
 }
 
 function registerCuriculums(index,cno){
@@ -407,7 +407,7 @@ function registerCuriculums(index,cno){
     cuFormData.append("cutitle", curiculums.value[index].cutitle);
     cuFormData.append("cucontent",curiculums.value[index].cucontent);
     cuFormData.append("cno",cno)
-    const response = classAPI.curriculumRegister(cuFormData);
+    return classAPI.curriculumRegister(cuFormData);
 }
 
 async function submitClass() {
@@ -427,7 +427,7 @@ async function submitClass() {
 
     //----- 재료 받기 -----
     for(let i=0; i<classitems.value.length; i++) {
-        registerClassItem(i, cno);
+        const response = await registerClassItem(i, cno);
     }
     console.log("ciFormData 전달 완료");
 
@@ -438,7 +438,7 @@ async function submitClass() {
     //----- 커리큘럼 받기 -----
     //여러 단계의 커리큘럼을 받기 위해 커리큘럼 배열의 길이만큼 for문 실행
     for(let i=0; i<curiculums.value.length; i++) {
-        registerCuriculums(i,cno);
+        const response = await registerCuriculums(i,cno);
      }
 }
 

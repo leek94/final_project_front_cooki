@@ -404,34 +404,27 @@ async function submitClass() {
         const ciFormData = new FormData();
         ciFormData.append("ciname", citems.value[i].ciname);
         ciFormData.append("cno", cno);
-
         ciFormData.append("cino", i+1);
         const response = await classAPI.itemRegister(ciFormData);
     }
     console.log("ciFormData 전달 완료");
 
-//     const citems = ref([
-//     {
-//         ciname: "",
-//         cno: 1,
-//     }
-// ])
-// <input type="text" class="form-control w-100 me-1" v-model="citem.ciname" placeholder="예) 다진 돼지고기 600g">
+
 
     //----- 커리큘럼 받기 -----
     //여러 단계의 커리큘럼을 받기 위해 커리큘럼 배열의 길이만큼 for문 실행
-//    for(let i=0; i<curiculums.value.length; i++) {
-//         const cuFormData = new FormData();
-//         //커리큘럼 사진 파일은 배열로 저장되기 때문에 (커리큘럼 추가될 때마다 input 태그도 추가)
-//         //각 커리큘럼 순번에 맞는 사진을 가져오기 위해서는 인덱스를 매치시켜주고(첫번째 인풋태그, 두번째 인풋태그, ...)
-//         //input 태그 안에서 files로 이미지를 가져오는 경우 files(배열)의 0번 인덱스 값을 가져오면 됨
-//         cuFormData.append("cuimg", cuImgs.value[i].files[0]);
-//         cuFormData.append("cuorder", curiculums.value[i].cuorder);
-//         cuFormData.append("cutitle", curiculums.value[i].cutitle);
-//         cuFormData.append("cucontent",curiculums.value[i].cucontent);
-//         cuFormData.append("cno",cno)
-//         const response = await classAPI.curriculumResister(cuFormData);
-//     }
+    for(let i=0; i<curiculums.value.length; i++) {
+         const cuFormData = new FormData();
+         //커리큘럼 사진 파일은 배열로 저장되기 때문에 (커리큘럼 추가될 때마다 input 태그도 추가)
+         //각 커리큘럼 순번에 맞는 사진을 가져오기 위해서는 인덱스를 매치시켜주고(첫번째 인풋태그, 두번째 인풋태그, ...)
+         //input 태그 안에서 files로 이미지를 가져오는 경우 files(배열)의 0번 인덱스 값을 가져오면 됨
+         cuFormData.append("cuimg", cuImgs.value[i].files[0]);
+         cuFormData.append("cuorder", curiculums.value[i].cuorder);
+         cuFormData.append("cutitle", curiculums.value[i].cutitle);
+         cuFormData.append("cucontent",curiculums.value[i].cucontent);
+         cuFormData.append("cno",cno)
+         const response = await classAPI.curriculumRegister(cuFormData);
+     }
 }
 
 

@@ -16,11 +16,11 @@ function curriculumRegister(curriculumData) {
     return axios.post("/class/curriculumRegister", curriculumData);
 }
 
-
 //클래스 기본 정보 읽기
 function classRead(cno) {
     return axios.get("/class/classDetail/" + cno);
 }
+
 
 //클래스 커리큘럼, 재료 읽기
 function curriculumAndItemRead(cno) {
@@ -29,11 +29,13 @@ function curriculumAndItemRead(cno) {
 }
 
 //클래스 정보 업데이트
-function classUpdate() {
-    return axios.put("/class/classUpdate/");
+function classUpdate(classItems) {
+    return axios.put("/class/classUpdate", classItems);
 }
 
-
+function itemUpdate(itemData, cno) {
+    return axios.put("/class/itemUpdate/" + cno, itemData);
+}
 
 //클래스 썸네일 이미지 갯수 세기
 function getThumbimgCount(cno){
@@ -48,5 +50,6 @@ export default {
     classRead,
     curriculumAndItemRead,
     classUpdate,
-    getThumbimgCount
+    getThumbimgCount,
+    itemUpdate,
 }

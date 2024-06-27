@@ -359,7 +359,7 @@ function isvalidPersonCount(){
 }
 
 function updateClass(){
-
+    // registClass와 비슷하지만 id나 hitcount 등 수정할 필요가 없는 속성들은 append 해주지 않음
     // 클래스 data를 넘겨주기 위해 formdata에 저장해서 axios로 전달
     // 사진파일은 JSON 객체로 넘겨줄 수 없기 때문에 formData로 넘겨줌
     const classFormData = new FormData();
@@ -373,15 +373,16 @@ function updateClass(){
     classFormData.append("cendtime", classes.value.cendtime.hours +":"+(classes.value.cendtime.minutes===0? "00" : "30"));
     //주소+상세주소
     classFormData.append("caddress", classes.value.caddress + " " +classes.value.cdetailaddress);
-    //모집 시작일 -> 등록날짜
-    const cstartdate = new Date();
-    classFormData.append("cstartdate", cstartdate);
     //모집 마감일 -> 강의 시작일 -1일 (강의 시작일이 달의 첫날일 경우 조건식 필요)
     const cenddate = new Date();
     cenddate.setDate(classes.value.cdday.getDate()-1);
     cenddate.setMonth(classes.value.cdday.getMonth());    
     classFormData.append("cenddate", cenddate);
+    classFormData.append("cno", 64);
+    classFormData.append("ctno", 1);
+    console.log(classes.value);
 
+    
     //----- 사진 data 받기 -----
     //여러(i)개의 사진을 배열로 받기 
     //<back>에 전달시 사진 여러개를 하나로 모아서 전달해주는 문법 -> <back>에서 분리해서 사용해야함
@@ -394,16 +395,15 @@ function updateClass(){
 }
 
 // 클래스 재료 data를 넘겨주기 위해 formdata에 저장해서 axios로 전달
-function registerClassItem(index, cno){
-    const ciFormData = new FormData();
-    ciFormData.append("ciname", classitems.value[index].ciname);
-    ciFormData.append("cno", cno);
-    ciFormData.append("cino", index+1);
-    return classAPI.itemRegister(ciFormData);
+function updateClassItem(index, cno){
+    // ciFormData.append() + for문 대신 list 형태로 <backend>에 바로 전달
+    // <backend>에서는 수정 전 data 모두 delete 후 -> 새로 들어온 list의 index로 접근해서 insert하는 방식으로 update
+    const ciFormData = JSON.parse(JSON.stringify(classitems.value));
+    return classAPI.itemUpdate(ciFormData, 64);
 }
 
 // 클래스 커리큘럼 data를 넘겨주기 위해 formdata에 저장해서 axios로 전달
-function registerCuriculums(index,cno){
+function updateCuriculums(index,cno){
     const cuFormData = new FormData();
     //커리큘럼 사진 파일은 배열로 저장되기 때문에 (커리큘럼 추가될 때마다 input 태그도 추가)
     //각 커리큘럼 순번에 맞는 사진을 가져오기 위해서는 인덱스를 매치시켜주고(첫번째 인풋태그, 두번째 인풋태그, ...)
@@ -423,27 +423,26 @@ async function submitClass() {
         //axios를 통해서 저장한 formData 전달하기
         const response = await updateClass();
         //backend에서 받은 map("cno",cno) value를 사용하기 위해 변수에 값을 넣어줌
-        cno = response.data.cno; 
         //response.data 사용위해서는 async await 구조 사용해줘야 함
-        console.log(cno);
-        console.log("formdata 전달");
     } catch(error) {
         console.log("데이터 전달 안됨");
     }
 
+    updateClassItem();
     //----- 재료 받기 -----
-    for(let i=0; i<classitems.value.length; i++) {
-        const response = await registerClassItem(i, cno);
+   /* for(let i=0; i<classitems.value.length; i++) {
+        const response = await updateClassItem(i, cno);
     }
     console.log("ciFormData 전달 완료");
-
+    
 
     //----- 커리큘럼 받기 -----
     //여러 단계의 커리큘럼을 받기 위해 커리큘럼 배열의 길이만큼 for문 실행
     //<back>에 전달시 사진 하나하나를 여러번 전달해주는 문법 
     for(let i=0; i<curiculums.value.length; i++) {
-        const response = await registerCuriculums(i,cno);
+        const response = await updateCuriculums(i,cno);
      }
+     */
 }
 
 // --------------------------------------------------------------------------

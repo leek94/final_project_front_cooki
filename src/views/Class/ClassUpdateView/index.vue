@@ -399,11 +399,12 @@ function updateClassItem(index, cno){
     // ciFormData.append() + for문 대신 list 형태로 <backend>에 바로 전달
     // <backend>에서는 수정 전 data 모두 delete 후 -> 새로 들어온 list의 index로 접근해서 insert하는 방식으로 update
     const ciFormData = JSON.parse(JSON.stringify(classitems.value));
+    console.log(classitems.value);
     return classAPI.itemUpdate(ciFormData, 64);
 }
 
 // 클래스 커리큘럼 data를 넘겨주기 위해 formdata에 저장해서 axios로 전달
-function updateCuriculums(index,cno){
+function updateCuriculum(index,cno){
     const cuFormData = new FormData();
     //커리큘럼 사진 파일은 배열로 저장되기 때문에 (커리큘럼 추가될 때마다 input 태그도 추가)
     //각 커리큘럼 순번에 맞는 사진을 가져오기 위해서는 인덱스를 매치시켜주고(첫번째 인풋태그, 두번째 인풋태그, ...)
@@ -412,7 +413,7 @@ function updateCuriculums(index,cno){
     cuFormData.append("cuorder", curiculums.value[index].cuorder);
     cuFormData.append("cutitle", curiculums.value[index].cutitle);
     cuFormData.append("cucontent",curiculums.value[index].cucontent);
-    cuFormData.append("cno",cno)
+    cuFormData.append("cno", cno);
     return classAPI.curriculumRegister(cuFormData);
 }
 
@@ -429,20 +430,16 @@ async function submitClass() {
     }
 
     updateClassItem();
-    //----- 재료 받기 -----
-   /* for(let i=0; i<classitems.value.length; i++) {
-        const response = await updateClassItem(i, cno);
-    }
-    console.log("ciFormData 전달 완료");
-    
 
     //----- 커리큘럼 받기 -----
     //여러 단계의 커리큘럼을 받기 위해 커리큘럼 배열의 길이만큼 for문 실행
     //<back>에 전달시 사진 하나하나를 여러번 전달해주는 문법 
+
     for(let i=0; i<curiculums.value.length; i++) {
-        const response = await updateCuriculums(i,cno);
+        const response = await updateCuriculum(i,cno);
      }
-     */
+     
+    updateCuriculum();
 }
 
 // --------------------------------------------------------------------------

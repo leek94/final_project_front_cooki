@@ -39,8 +39,14 @@ function classUpdate() {
 function getThumbimgCount(cno){
     return axios.get(`/class/getThumbimgCount/${cno}`)
 }
+//querystring 방식으로 값을 전달할 경우 두번째 인자에는 객체가 오고 세번째 인자에 파라미터 값을 전달 
+function SetClassApply(cno){
+    return axios.post("/class/classApply",null,{params:{cno}});
+}
 
-
+function deleteClassApply(cno){
+    return axios.delete("/class/deleteClassApply/"+cno)
+}
 export default {
     classRegister,
     itemRegister,
@@ -48,5 +54,7 @@ export default {
     classRead,
     curriculumAndItemRead,
     classUpdate,
-    getThumbimgCount
+    getThumbimgCount,
+    SetClassApply,
+    deleteClassApply
 }

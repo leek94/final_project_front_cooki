@@ -1,5 +1,7 @@
 <template>
-            <Items />
+       
+            <Items :objectProp="citems"/>
+     
     <h4 class="fw-bold" style="margin-top:80px">커리큘럼</h4>
     <div class="curriculum mt-5 ">
         <div class="d-flex mb-5" v-for="(cs,index) in curriculum" :key="index">
@@ -34,7 +36,7 @@ const curriculum=ref([
     }
 ])
 
-const citems = ref([{
+let citems = ref([{
     classItem:""
 }])
 
@@ -43,6 +45,8 @@ async function curri(cno){
     const response = await classAPI.curriculumAndItemRead(cno);
     console.log(response.data);
     curriculum.value = response.data.curriculums;
+    citems.value = response.data.classItems;
+    console.log(response.data.classItems);
 }
 
 </script>

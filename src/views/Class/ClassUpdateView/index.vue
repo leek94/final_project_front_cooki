@@ -358,6 +358,7 @@ function isvalidPersonCount(){
     }
 }
 
+//------------------------------------------------------------------------------------------------------------------------
 function updateClass(){
     // registClass와 비슷하지만 id나 hitcount 등 수정할 필요가 없는 속성들은 append 해주지 않음
     // 클래스 data를 넘겨주기 위해 formdata에 저장해서 axios로 전달
@@ -399,21 +400,25 @@ function updateClassItem(index, cno){
     // ciFormData.append() + for문 대신 list 형태로 <backend>에 바로 전달
     // <backend>에서는 수정 전 data 모두 delete 후 -> 새로 들어온 list의 index로 접근해서 insert하는 방식으로 update
     const ciFormData = JSON.parse(JSON.stringify(classitems.value));
+    console.log(classitems.value);
     return classAPI.itemUpdate(ciFormData, 64);
 }
 
 // 클래스 커리큘럼 data를 넘겨주기 위해 formdata에 저장해서 axios로 전달
-function updateCuriculums(index,cno){
+function updateCuriculum(index,cno){
     const cuFormData = new FormData();
     //커리큘럼 사진 파일은 배열로 저장되기 때문에 (커리큘럼 추가될 때마다 input 태그도 추가)
     //각 커리큘럼 순번에 맞는 사진을 가져오기 위해서는 인덱스를 매치시켜주고(첫번째 인풋태그, 두번째 인풋태그, ...)
     //input 태그 안에서 files로 이미지를 가져오는 경우 files(배열)의 0번 인덱스 값을 가져오면 됨
-    cuFormData.append("cuimg", cuImgs.value[index].files[0]);
+    // cuFormData.append("cuimg", cuImgs.value[index].files[0] ? cuImgs.value[index].files[0] : null);
     cuFormData.append("cuorder", curiculums.value[index].cuorder);
     cuFormData.append("cutitle", curiculums.value[index].cutitle);
     cuFormData.append("cucontent",curiculums.value[index].cucontent);
-    cuFormData.append("cno",cno)
-    return classAPI.curriculumRegister(cuFormData);
+    cuFormData.append("cno", 64);
+    if(cuImgs.value[index].files.length !== 0){
+        cuFormData.append("cuimg", cuImgs.value[index].files[0]);
+    }
+    return classAPI.curriculumUpdate(cuFormData, 64);
 }
 
 async function submitClass() {
@@ -429,20 +434,15 @@ async function submitClass() {
     }
 
     updateClassItem();
-    //----- 재료 받기 -----
-   /* for(let i=0; i<classitems.value.length; i++) {
-        const response = await updateClassItem(i, cno);
-    }
-    console.log("ciFormData 전달 완료");
-    
 
     //----- 커리큘럼 받기 -----
     //여러 단계의 커리큘럼을 받기 위해 커리큘럼 배열의 길이만큼 for문 실행
     //<back>에 전달시 사진 하나하나를 여러번 전달해주는 문법 
+
     for(let i=0; i<curiculums.value.length; i++) {
-        const response = await updateCuriculums(i,cno);
+        const response = await updateCuriculum(i,cno);
      }
-     */
+     
 }
 
 // --------------------------------------------------------------------------
@@ -452,7 +452,9 @@ const cno = 64;
 async function getClass(cno) {
     try{
         const response = await classAPI.classRead(cno);
-        classes.value = response.data;
+        // <backend>에서 map 으로 전달 받기 때문에 response.data가 아닌 response.data.classes로 get 해야함
+        classes.value = response.data.classes;
+        console.log("클래스정보 겟", classes.value)
     } catch(error) {
         console.log(error);
     }
@@ -462,7 +464,6 @@ getClass(cno);
 async function getCurriclumAndItem(cno) {
     try{
         //<back>에서 map<String, Object>로 보내주는 커리큘럼과 재료 data 가져오기
-        
         const response = await classAPI.curriculumAndItemRead(cno);
         console.log(response.data);
         // response.data -> map의 object로 접근하기

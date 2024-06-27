@@ -28,13 +28,19 @@ function curriculumAndItemRead(cno) {
     return axios.get("/class/getCurriculumAndItem/" + cno);
 }
 
-//클래스 정보 업데이트
+//클래스 기본 정보 업데이트
 function classUpdate(classItems) {
     return axios.put("/class/classUpdate", classItems);
 }
 
+//클래스 재료 정보 업데이트
 function itemUpdate(itemData, cno) {
     return axios.put("/class/itemUpdate/" + cno, itemData);
+}
+
+//클래스 커리큘럼 정보 업데이트
+function curriculumUpdate(curriculumData, cno) {
+    return axios.put("/class/curriculumUpdate/" + cno, curriculumData);
 }
 
 //클래스 썸네일 이미지 갯수 세기
@@ -60,4 +66,5 @@ export default {
     SetClassApply,
     deleteClassApply,
     itemUpdate,
+    curriculumUpdate,
 }

@@ -1,5 +1,5 @@
 <template>
-            <Items></Items>
+            <Items />
     <h4 class="fw-bold" style="margin-top:80px">커리큘럼</h4>
     <div class="curriculum mt-5 ">
         <div class="d-flex mb-5" v-for="(cs,index) in curriculum" :key="index">
@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-</template>
+</template> 
 
 <script setup>
 import classAPI from '@/apis/classAPI';
@@ -28,21 +28,16 @@ import { ref} from 'vue';
 
 const curriculum=ref([
     {
-        cuorder:1,
-        cutitle:"반죽만들기",
-        cucontent:"쿠키 반죽을 만들고 구운 후 마시멜로우에 데코해줍니다"
-    },
-    {
-        cuorder:2,
-        cutitle:"반죽만들기",
-        cucontent:"쿠키 반죽을 만들고 구운 후 마시멜로우에 데코해줍니다"
-    },
-    {
-        cuorder:3,
-        cutitle:"예쁘게 포장하기",
-        cucontent:"구워진 쿠키를 식힌 후 예쁘게 포장합니다."
-    },
+        cuorder:null,
+        cutitle:"",
+        cucontent:""
+    }
 ])
+
+const citems = ref([{
+    classItem:""
+}])
+
 curri(64);
 async function curri(cno){
     const response = await classAPI.curriculumAndItemRead(cno);

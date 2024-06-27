@@ -16,26 +16,27 @@
                     <i class="fa-solid fa-chevron-right" style="font-size: 40px" ></i>
                 </button> 
             </div>
-            <div class="col-6" v-for="(Class,index) in Class1" :key="index">
-                <span class="ClassTitle"> {{Class.ctitle}}</span>
+            <div class="col-6">
+                <span class="ClassTitle"> {{ info.ctitle }}</span>
                 <div class="Classinfo">
                     <ul style="text-align:start; padding-top:20px">
                         <li class="border-top pt-3 pb-3"><span>장소 &ensp;</span>
-                        <span>{{Class.caddress}} </span></li>
+                        <span>{{info.caddress}} </span></li>
                         <li class="border-top pt-3 pb-3"><span>날짜 &ensp;</span>
-                        <span>{{Class.cdday}} </span>
-                        <span class="fw-bold ps-3" style="font-size: large; color:crimson">모집 마감 D - 5</span></li>
+                        <span>{{info.cdday}} </span>
+                        <span class="fw-bold ps-3" style="font-size: large; color:crimson">모집 마감 D-{{checker()}}</span></li>
                         <li class="border-top pt-3 pb-3  ">
                             <div style="display:inline-block;text-align: center ;width:100%;padding:0px 5% 0px 5%;">
-                                <div style="display:inline-block;width:30%; border-right: 1px solid #dee2e6 ; margin-right: 50px;padding-right:50px">
-                                    <span style="display:inline-block;">소요시간</span>
-                                    <span class="fw-bold" style="display:inline-block;">{{Class.ctime}}</span>
+                                <div style="display:inline-block;width:34%; border-right: 1px solid #dee2e6 ; margin-right: 50px;padding-right:50px">
+                                    <span style="display:inline-block;">강의 시간</span>
+                                    <span class="fw-bold" style="display:inline-block;">{{info.cstarttime}}&nbsp;</span>
+                                    <span class="fw-bold" style="display:inline-block;">- {{info.cendtime}}</span>
                                 </div>
                                 <div style="display:inline-block;width:30%; padding:0px 20px;">
                                     <span style="display:inline-block;">모집인원</span>
                                     <div class="d-flex" style="justify-content: center;">
                                         <span class="fw-bold" style="display:inline-block;">24</span>
-                                        <span class="fw-bold" style="display:inline-block;"> / {{Class.cpersonCount}}</span>
+                                        <span class="fw-bold" style="display:inline-block;"> /{{info.cpersoncount}}</span>
                                     </div>
                                 </div>
                 
@@ -48,7 +49,7 @@
                                 <img class="rounded-circle" style=" width:50px; height:50px; margin-right: 30px;" 
                                 src="https://cdn.class101.net/images/7ee5dd7f-be19-4e0c-89b1-d250ef0a2e2f/1920xauto.webp">
                             </div>
-                          <span style="align-content: center;">{{Class.mnickname}}</span>
+                          <span style="align-content: center;">{{info.mnickname}}</span>
                         </div>
                     </li>
                     </ul>
@@ -64,33 +65,7 @@
     </div>
         </div>
         <hr class="mt-5"/>
-        <h5 class="mt-5 fw-bold" style="text-align: left;">#스모어쿠키 만들기!</h5>
-                <pre class="ClassContent mt-5" style="overflow: hidden; white-space: pre-wrap" >
-안녕하세요!
-포뇨솜작가와 함께 석촌역에서 3호점으로 찾아뵙게 된 투데이오브베이킹입니다:)
-수업 후에 석촌호수를 돌거나 송리단길 데이트하기에 너무 좋은 공간으로 찾아왔답니다!
-이번 수업은 쫀득한 마시멜로우를 넣고 이것저것 꾸미는 재미가 있는 스모어쿠키 입니다.
-쭉 늘어나는 재미가 있는 스모어쿠키:) 개별포장 후 박스에 넣어드려 선물로도 좋답니다!
-저희 공방은 최소2명부터 가능한 공방이며 단체의 경우 15인이상도 가능하니 따로 문의주세요!.
-넓고 쾌적한 공방에서 다정하고 재미있게, 좋은 추억만드실 수 있도록 도와드릴게요:)
-- 초등 고학년 이상부터 참여 가능합니다.
-(이 외의 나이는 꼭 미리 문의주세요!!)
-- 스모어쿠키 6pcs를 가져가실 수 있습니다.
-- 맛은 단호박/말차/초코 3종 중 1가지 맛 선택이 가능하며 일행분들과 나누어 다양한 맛으로 나누어가실 수 있어요:)
-- 재료비는 무료입니다.
-준비물은 설레이는 마음과 열정만 가져오셔도 충분합니다.
-- 레시피는 제공되지 않습니다(납품하여 판매하는 레시피라 제공이 어려운점 양해 부탁드려요ㅜ.ㅜ)
-- 쿠키가 구워지는 동안 케이스에 마스킹테이프, 크레용을 이용해 꾸미실 수 있어요:)
-- 주차불가한 매장입니다.<br/>
-역에서 도보2분거리로 대중교통이나
-송파여성문화회관 공영주차장 이용을 추천드려요:)
-
-* 본 수업은 정시에 시작으로 10분 전 입실을 필수로 하고 있습니다!
-* 수업 시간 10분 이상 지각시 어떤 사유에서든 클래스 참여가 불가하며 이에 따른 환불은 진행되지 않습니다. 
-(정시 수업 시작 후 다른 수강생님을 방치하고 다시 수업을 할 수 없기에 불가합니다.즐거운 수업을 위해 시간은 꼭 지켜주세요)<br/>
-* 매장에 주차가 불가합니다. 대중교통을 추천드립니다.(역에서 도보3분)
-* 예약제임으로 수업일 기준 4일 전부터 날짜변경 불가합니다.
-* 즐거운 수업이 되도록 항상 최선을 다하겠습니다. 찾아주셔서 감사합니다:)
+                <pre class="ClassContent mt-5" style="overflow: hidden; white-space: pre-wrap" >{{ info.ccontent }}
               </pre>
                 <hr style="border-width:5px; margin:10px 0px"/>
         <nav class="navbar navbar-expand-sm navbar-light" style="text-align: center">
@@ -134,40 +109,6 @@ import store from '@/store';
 register();
 
 
-const Class1=([{
-    cno:1,
-    ctitle:"쫀득쫀득 스모어쿠키 만들기!",
-    caddress:"장소 서울시 송파구 중대로 135 아이티 벤처타워 16층",
-    cdday:"2024년 7월 26일",
-    ctime:"1시간 30분",
-    cpersonCount:30,
-    mnickname:"찌니의 빵공장",
-    cprice:"46,000원",
-    },
-])
-
-const classItems = [
-    {
-        classItem1:"완숙토마토 2개(300g)"
-    },
-    {
-        classItem1:"돼지고기 (잡채용) 150g"
-    },
-    {
-        classItem1:"소고기 우둔살 200g,"
-    },
-    {
-        classItem1:"설탕 1스푼(10g)"
-        
-    },
-    {
-        classItem1:"배 1/6개(50g)"
-    }
-    
-]
-provide("cItems",{classItems});
-
-
 let registerModal=null;
 let CancelModal=null;
     
@@ -190,14 +131,43 @@ let CancelModal=null;
 
     });
 const cd=ref(null);
-abc();
+console.log(cd);
+thumbimgcount();
+
+let info = ref({
+    cno:null,
+    ctitle:"",
+    ccontent:"",
+    caddress:"",
+    cdday:"",
+    cstarttime:"",
+    cendtime:"",
+    cpersoncount:null,
+    mnickname:"",
+    cprice:"",
+});
+detailInfo();
+//클래스 디테일 정보 받기 
+async function detailInfo(){
+    const response = await classAPI.classRead(64)
+    info.value = response.data;
+}
+function checker(cno){
+const today = new Date();
+// 날짜 형태가 2024-06-20여야만 가능 아니면 형태를 변경해서 넣어줘야함
+
+const cday = new Date(info.value.cdday);
+const diff = cday - today; // 초 단위로 나와서 밑에서 변경해줘야함
+const diffDays = Math.ceil(diff / (1000 * 60 * 60 * 24));
+return diffDays
+}
+
 //리스트에서 가져온 cno를 전달
-async function abc(){
+async function thumbimgcount(){
     const response = await classAPI.getThumbimgCount(64);
     cd.value=response.data;
-    console.log("cd"+cd.value)
 }
-console.log("eeee"+cd.value)
+
 
 function showDialogRegister(){
     registerModal.show();

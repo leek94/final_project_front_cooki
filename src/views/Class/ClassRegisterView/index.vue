@@ -437,10 +437,6 @@ async function submitClass() {
     }
     console.log("ciFormData 전달 완료");
 
-<<<<<<< HEAD
-
-=======
->>>>>>> b6d8eb6 (style: change submitClass)
     //----- 커리큘럼 받기 -----
     //여러 단계의 커리큘럼을 받기 위해 커리큘럼 배열의 길이만큼 for문 실행
     //<back>에 전달시 사진 하나하나를 여러번 전달해주는 문법 

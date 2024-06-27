@@ -39,8 +39,8 @@ function itemUpdate(itemData, cno) {
 }
 
 //클래스 커리큘럼 정보 업데이트
-function updateCuriculum(curriculumData, cno) {
-    return axios.put("class/curriculumUpdate/" + cno, curriculumData);
+function curriculumUpdate(curriculumData, cno) {
+    return axios.put("/class/curriculumUpdate/" + cno, curriculumData);
 }
 
 //클래스 썸네일 이미지 갯수 세기
@@ -66,5 +66,5 @@ export default {
     SetClassApply,
     deleteClassApply,
     itemUpdate,
-    updateCuriculum,
+    curriculumUpdate,
 }

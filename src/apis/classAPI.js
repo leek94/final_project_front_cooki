@@ -42,8 +42,8 @@ function getThumbimgCount(cno){
     return axios.get(`/class/getThumbimgCount/${cno}`)
 }
 //querystring 방식으로 값을 전달할 경우 두번째 인자에는 객체가 오고 세번째 인자에 파라미터 값을 전달 
-function SetClassApply(cno){
-    return axios.post("/class/classApply",null,{params:{cno}});
+function SetClassApply(cno, cpersoncount){
+    return axios.post("/class/classApply",null,{params:{cno,cpersoncount}});
 }
 
 function deleteClassApply(cno){

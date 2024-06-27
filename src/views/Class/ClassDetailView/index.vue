@@ -57,8 +57,10 @@
     <hr/>
     <div class="d-flex" style="justify-content: end; align-items: center">
         <div style="font-size: 26px;font-weight: bold; margin-right: 60px;">48,000원</div>
-        <button class="btn btn-success btn-lg" v-if="ip===false" @click="isParticipant(64)">신청하기</button>
-        <button class="btn btn-success btn-lg" v-if="ip===true" @click="showDialogCancel">취소하기</button>
+            <button class="btn btn-success btn-lg" v-if="applyresult===0" @click="isParticipant(64)">신청하기</button>
+            <button class="btn btn-success btn-lg" v-if="applyresult===1" @click="showDialogCancel">취소하기</button>
+        <ClassOverPersonModal/>
+        <button class="btn btn-success btn-lg" v-if="applyresult===-1" @click="showDialogCancel">모집마감</button>
         <CRegisterModal id="registerModal" @close="hideDialogR"/>
         <CCancelModal id="cancelModal" @cancel="realCancelDialog(64)"/>
     </div>
@@ -101,6 +103,7 @@ import { onMounted, provide, ref } from 'vue';
 import { register } from 'swiper/element/bundle';
 import CRegisterModal from'./CRegisterModal.vue'
 import CCancelModal from'./CCancelModal.vue'
+import ClassOverPersonModal from './ClassOverPersonModal.vue'
 import { Modal } from 'bootstrap';
 import classAPI from '@/apis/classAPI';
 import axios from 'axios';
@@ -145,14 +148,31 @@ let info = ref({
     cprice:"",
 });
 
-detailInfo();
+detailInfo(64);
+
+const applyresult= ref(0);
+console.log()
 //클래스 디테일 정보 받기 
-async function detailInfo(){
-    const response = await classAPI.classRead(64)
+async function detailInfo(cno){
+    const response = await classAPI.classRead(cno)
     info.value = response.data.classes;
-    if(response.data.isParticipant!== null){
-        ip.value=true;
+    if(response.data.result==="fail"){
+        //시간 마감 혹은 인원 마감시 -1 리턴
+        console.log("1");
+        applyresult.value=-1;
+    } else{
+        if(response.data.isParticipant!== null){
+            //신청했을 때
+            console.log("2");
+            applyresult.value=1;
+        } else{
+            console.log("3");
+            //신청하지 않았을 때
+            applyresult.value=0;
+        }
     }
+    
+    
 }
 function checker(cno){
 const today = new Date();
@@ -175,13 +195,17 @@ async function thumbimgcount(){
     imgcount.value=response.data;
 }
 const ip = ref(false);
+
 async function isParticipant(cno){
-    const response= await classAPI.SetClassApply(cno);
+    const response= await classAPI.SetClassApply(cno, info.value.cpersoncount);
+    console.log("personcount"+info.value.cpersoncount)
     console.log("is"+response.data.isParticipant);
     if(response.data.isParticipant!==null){
-        ip.value=!ip.value;
+        applyresult.value=1;
     }
+    console.log(response.data.length)
     registerModal.show();
+    
 
 }
 
@@ -194,7 +218,7 @@ function showDialogCancel(){
 }
 function realCancelDialog(cno){
     classAPI.deleteClassApply(cno);
-    ip.value=!ip.value;
+    applyresult.value=0;
     CancelModal.hide();
 }
 </script>

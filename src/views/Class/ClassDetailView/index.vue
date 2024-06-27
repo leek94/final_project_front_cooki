@@ -4,7 +4,7 @@
             <div class="col-6 position-relative">
             <!-- Additional required wrapper -->
                 <swiper-container loop="true" class="swiper-container" >
-                    <swiper-slide v-for="n in cd" :key="n">
+                    <swiper-slide v-for="n in imgcount" :key="n">
                         <img :src="`${axios.defaults.baseURL}/class/thumbattach/64/${n}?accessToken=${store.state.accessToken}`">
                     </swiper-slide>
                 </swiper-container>
@@ -27,7 +27,7 @@
                         <span class="fw-bold ps-3" style="font-size: large; color:crimson">모집 마감 D-{{checker()}}</span></li>
                         <li class="border-top pt-3 pb-3  ">
                             <div style="display:inline-block;text-align: center ;width:100%;padding:0px 5% 0px 5%;">
-                                <div style="display:inline-block;width:34%; border-right: 1px solid #dee2e6 ; margin-right: 50px;padding-right:50px">
+                                <div style="display:inline-block;width:35%; border-right: 1px solid #dee2e6 ; margin-right: 50px;padding-right:50px">
                                     <span style="display:inline-block;">강의 시간</span>
                                     <span class="fw-bold" style="display:inline-block;">{{info.cstarttime}}&nbsp;</span>
                                     <span class="fw-bold" style="display:inline-block;">- {{info.cendtime}}</span>
@@ -57,10 +57,10 @@
     <hr/>
     <div class="d-flex" style="justify-content: end; align-items: center">
         <div style="font-size: 26px;font-weight: bold; margin-right: 60px;">48,000원</div>
-        <button class="btn btn-success btn-lg" @click="showDialogRegister">신청하기</button>
-        <button class="btn btn-success btn-lg" @click="showDialogCancel">취소하기</button>
+        <button class="btn btn-success btn-lg" v-if="ip===false" @click="isParticipant(64)">신청하기</button>
+        <button class="btn btn-success btn-lg" v-if="ip===true" @click="showDialogCancel">취소하기</button>
         <CRegisterModal id="registerModal" @close="hideDialogR"/>
-        <CCancelModal id="cancelModal" @close="hideDialogC"/>
+        <CCancelModal id="cancelModal" @cancel="realCancelDialog(64)"/>
     </div>
     </div>
         </div>
@@ -130,10 +130,8 @@ let CancelModal=null;
 
 
     });
-const cd=ref(null);
-console.log(cd);
-thumbimgcount();
 
+//클래스 디테일 정보에 대한 상태 정의 
 let info = ref({
     cno:null,
     ctitle:"",
@@ -146,11 +144,15 @@ let info = ref({
     mnickname:"",
     cprice:"",
 });
+
 detailInfo();
 //클래스 디테일 정보 받기 
 async function detailInfo(){
     const response = await classAPI.classRead(64)
-    info.value = response.data;
+    info.value = response.data.classes;
+    if(response.data.isParticipant!== null){
+        ip.value=true;
+    }
 }
 function checker(cno){
 const today = new Date();
@@ -162,15 +164,25 @@ const diffDays = Math.ceil(diff / (1000 * 60 * 60 * 24));
 return diffDays
 }
 
+//썸네일 이미지 갯수를 받기 위한 상태 정의 
+const imgcount=ref(null);
+
+thumbimgcount();
+
 //리스트에서 가져온 cno를 전달
 async function thumbimgcount(){
     const response = await classAPI.getThumbimgCount(64);
-    cd.value=response.data;
+    imgcount.value=response.data;
 }
-
-
-function showDialogRegister(){
+const ip = ref(false);
+async function isParticipant(cno){
+    const response= await classAPI.SetClassApply(cno);
+    console.log("is"+response.data.isParticipant);
+    if(response.data.isParticipant!==null){
+        ip.value=!ip.value;
+    }
     registerModal.show();
+
 }
 
 function hideDialogR(){
@@ -180,7 +192,9 @@ function hideDialogR(){
 function showDialogCancel(){
     CancelModal.show();
 }
-function hideDialogC(){
+function realCancelDialog(cno){
+    classAPI.deleteClassApply(cno);
+    ip.value=!ip.value;
     CancelModal.hide();
 }
 </script>

@@ -11,8 +11,8 @@
         </p>
     </template>
     <template v-slot:footer>
-        <button class="btn btn-md " style="background-color:rgb(243, 243, 243); color:black" @click="emit('close')">확인</button>
-        <button class="btn btn-md btn-success"  @click="emit('close')">취소</button>
+        <button class="btn btn-md " style="background-color:rgb(243, 243, 243); color:black" @click="emit('cancel')">확인</button>
+        <button class="btn btn-md btn-success" data-bs-dismiss="modal">취소</button>
     </template>
 </ModalTemplate>
 
@@ -20,7 +20,7 @@
 
 <script setup>
 import ModalTemplate from "../../../components/ModalTemplate.vue";
-const emit=defineEmits(['close']);
+const emit=defineEmits(['cancel']);
 
 </script>
 

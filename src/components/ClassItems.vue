@@ -5,6 +5,7 @@
             <li class="green-point" style="font-size:1.125rem; font-weight: bold">주재료</li>
             <li class="green-point" style="font-size:0.875rem;color:#666;list-style: none; margin-left: 8px">Main ingredient</li>
         </ul>
+
         <div class="ingredient-content ss" >
             <div class="checker-parent d-flex" style="align-content: center" v-for="(value, index) in props.objectProp" :key="index">
                 <img src="/images/photos/li_checker.png" style="width:25px;height:25px;margin-right: 12px "/>
@@ -14,9 +15,9 @@
     </div>
 </template>
 <script setup>
- 
+
 const props = defineProps(['objectProp'])
-console.log("아아아 : "+ props.objectProp)
+
 </script>
 <style scoped>
 .ingredient-box{

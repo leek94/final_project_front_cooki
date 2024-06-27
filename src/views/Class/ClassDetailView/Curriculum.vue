@@ -40,7 +40,7 @@ let citems = ref([{
     classItem:""
 }])
 
-curri(64);
+curri(81);
 async function curri(cno){
     const response = await classAPI.curriculumAndItemRead(cno);
     console.log(response.data);

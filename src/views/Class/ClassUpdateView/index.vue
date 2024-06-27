@@ -358,7 +358,8 @@ function isvalidPersonCount(){
     }
 }
 
-//------------------------------------------------------------------------------------------------------------------------
+// ------- 수정 function ------------------------------------------------------------------------------------------------------------------------
+
 function updateClass(){
     // registClass와 비슷하지만 id나 hitcount 등 수정할 필요가 없는 속성들은 append 해주지 않음
     // 클래스 data를 넘겨주기 위해 formdata에 저장해서 axios로 전달
@@ -379,7 +380,7 @@ function updateClass(){
     cenddate.setDate(classes.value.cdday.getDate()-1);
     cenddate.setMonth(classes.value.cdday.getMonth());    
     classFormData.append("cenddate", cenddate);
-    classFormData.append("cno", 64);
+    classFormData.append("cno", 81);
     classFormData.append("ctno", 1);
     console.log(classes.value);
 
@@ -401,7 +402,7 @@ function updateClassItem(index, cno){
     // <backend>에서는 수정 전 data 모두 delete 후 -> 새로 들어온 list의 index로 접근해서 insert하는 방식으로 update
     const ciFormData = JSON.parse(JSON.stringify(classitems.value));
     console.log(classitems.value);
-    return classAPI.itemUpdate(ciFormData, 64);
+    return classAPI.itemUpdate(ciFormData, 81);
 }
 
 // 클래스 커리큘럼 data를 넘겨주기 위해 formdata에 저장해서 axios로 전달
@@ -414,11 +415,11 @@ function updateCuriculum(index,cno){
     cuFormData.append("cuorder", curiculums.value[index].cuorder);
     cuFormData.append("cutitle", curiculums.value[index].cutitle);
     cuFormData.append("cucontent",curiculums.value[index].cucontent);
-    cuFormData.append("cno", 64);
+    cuFormData.append("cno", 81);
     if(cuImgs.value[index].files.length !== 0){
         cuFormData.append("cuimg", cuImgs.value[index].files[0]);
     }
-    return classAPI.curriculumUpdate(cuFormData, 64);
+    return classAPI.curriculumUpdate(cuFormData, 81);
 }
 
 async function submitClass() {
@@ -441,13 +442,16 @@ async function submitClass() {
 
     for(let i=0; i<curiculums.value.length; i++) {
         const response = await updateCuriculum(i,cno);
-     }
-     
+    }
+    
+    // 늘어났을 때 수정
+
+
 }
 
 // --------------------------------------------------------------------------
 
-const cno = 64;
+const cno = 81;
 
 async function getClass(cno) {
     try{

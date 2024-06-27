@@ -148,7 +148,7 @@ let info = ref({
 detailInfo();
 //클래스 디테일 정보 받기 
 async function detailInfo(){
-    const response = await classAPI.classRead(64)
+    const response = await classAPI.classRead(81)
     info.value = response.data.classes;
     if(response.data.isParticipant!== null){
         ip.value=true;
@@ -171,7 +171,7 @@ thumbimgcount();
 
 //리스트에서 가져온 cno를 전달
 async function thumbimgcount(){
-    const response = await classAPI.getThumbimgCount(64);
+    const response = await classAPI.getThumbimgCount(81);
     imgcount.value=response.data;
 }
 const ip = ref(false);

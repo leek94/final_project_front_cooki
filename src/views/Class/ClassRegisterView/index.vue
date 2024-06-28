@@ -33,32 +33,31 @@
             </div>
         </div>
 
-        <div class="d-flex flex-column justify-content-center align-items-center w-50 mb-5 p-3 rounded-4" style='background-color: #fff9e2;'>
-            <div class="w-100 my-3">
+        <div class="d-flex flex-column justify-content-center align-items-start w-50 mb-5 p-3 rounded-4" style='background-color: #fff9e2;'>
+            <div class="w-25 my-3">
                 <label class="form-label mb-3">모집 인원(5~30명 사이의 인원)</label>
-                <input type="number" class="form-control w-25" v-model="classes.cpersoncount" min="5" max="30"  @change="isvalidPersonCount">
+                <input type="number" class="form-control" v-model="classes.cpersoncount" min="5" max="30"  @change="isvalidPersonCount">
             </div>
 
-            <div class="w-100 mb-3">
+            <div class="w-25 mb-3">
                 <label class="form-label mb-3">가격</label>
-                <input type="number" class="form-control w-25" v-model="classes.cprice">
+                <input type="number" class="form-control" v-model="classes.cprice" @change="isValidPrice">
             </div>
 
-            <div class="w-100 mb-3">
+            <div class="w-25 mb-3">
                 <label class="form-label mb-3">개최 일자</label>
                 <VueDatePicker  v-model="classes.cdday" :min-date="minDate" :max-date="maxDate"
                 :start-date="minDate"
                 :format="format" :format-locale="ko"
-                input-class-name="form-control w-25 "
+                input-class-name="form-control"
                 hide-input-icon
                 select-text="선택" cancel-text="취소"
                 :enable-time-picker="false"></VueDatePicker>
             </div>
 
-            <div class="w-100 mb-3">
+            <div class="w-25 mb-3">
                 <label for="title" class="form-label mb-3">시작 시간</label>
                     <VueDatePicker
-                        class="w-25" 
                         v-model="classes.cstarttime" 
                         time-picker
                         :start-time="{hours:9, minutes:0}"
@@ -73,10 +72,9 @@
                     />
             </div>
 
-            <div class="w-100 mb-3">
+            <div class="w-25 mb-3">
                 <label for="title" class="form-label mb-3">끝나는 시간</label>
                     <VueDatePicker 
-                        class="w-25"
                         v-model="classes.cendtime"
                         time-picker
                         minutes-increment="30"
@@ -156,8 +154,11 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import {ko} from "date-fns/locale";
 import { register } from 'swiper/element/bundle';
 import classAPI from '@/apis/classAPI';
+import { useStore } from 'vuex';
 
 register();
+
+const store = useStore();
 
 const format = (date) => {
   const day = date.getDate();
@@ -195,7 +196,6 @@ let isPreImg = ref(false);
 const classitems = ref([
     {
         ciname: "",
-        cno: 1,
     }
 ])
 
@@ -204,8 +204,6 @@ const curiculums = ref([
         cuorder:1,
         cutitle:"",
         cucontent:"",
-        cuImg:null,
-        cno:1
     }
 ])
 
@@ -248,10 +246,9 @@ function swipePrve(){
     swiper.swiper.slidePrev();
 }
 
-function addClassItem(index){
+function addClassItem(){
     const newItem = {
         ciname: "",
-        cno: 1,
     }
     classitems.value.push(newItem);
 }
@@ -289,8 +286,6 @@ function addCu(){
         cuorder: curiculums.value.length+1,
         cutitle:"",
         cucontent:"",
-        cuImg:null,
-        cno:1
     };
 
     curiculums.value.push(newCuriculum);
@@ -359,6 +354,14 @@ function isvalidPersonCount(){
 }
 
 
+function isValidPrice(){
+    if(classes.value.cprice < 0){
+        classes.value.cprice =0;
+    }else if(classes.value.cprice > 999999){
+        classes.value.cprice = 999999;
+    }
+}
+
 //------- class data insert function ---------------------------------------------------------------------------------------------- 
 
 function registerClass(){
@@ -375,15 +378,16 @@ function registerClass(){
     classFormData.append("cstarttime", classes.value.cstarttime.hours +":"+(classes.value.cstarttime.minutes===0? "00" : "30"));
     classFormData.append("cendtime", classes.value.cendtime.hours +":"+(classes.value.cendtime.minutes===0? "00" : "30"));
     //주소+상세주소
-    classFormData.append("caddress", classes.value.caddress + " " +classes.value.cdetailaddress);
+    classFormData.append("caddress", classes.value.caddress + ", " +classes.value.cdetailaddress);
     //모집 시작일 -> 등록날짜
     const cstartdate = new Date();
     classFormData.append("cstartdate", cstartdate);
     //모집 마감일 -> 강의 시작일 -1일 (강의 시작일이 달의 첫날일 경우 조건식 필요)
-    const cenddate = new Date();
-    cenddate.setDate(classes.value.cdday.getDate()-1);
-    cenddate.setMonth(classes.value.cdday.getMonth());    
+    const cenddate = new Date(classes.value.cdday);
+    cenddate.setDate(cenddate.getDate()-1);  
     classFormData.append("cenddate", cenddate);
+    classFormData.append("ctno", 1);
+    classFormData.append("mid", store.state.userId);
 
     //----- 사진 data 받기 -----
     //여러(i)개의 사진을 배열로 받기 

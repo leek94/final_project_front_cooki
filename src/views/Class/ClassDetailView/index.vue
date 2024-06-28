@@ -24,7 +24,7 @@
                         <span>{{info.caddress}} </span></li>
                         <li class="border-top pt-3 pb-3"><span>날짜 &ensp;</span>
                         <span>{{info.cdday}} </span>
-                        <span class="fw-bold ps-3" style="font-size: large; color:crimson">모집 마감 D-{{checker()}}</span></li>
+                        <span class="fw-bold ps-3" v-if="checker()-1>0" style="font-size: large; color:crimson">모집 마감 D-{{checker()}}</span></li>
                         <li class="border-top pt-3 pb-3  ">
                             <div style="display:inline-block;text-align: center ;width:100%;padding:0px 5% 0px 5%;">
                                 <div style="display:inline-block;width:35%; border-right: 1px solid #dee2e6 ; margin-right: 50px;padding-right:50px">
@@ -35,7 +35,7 @@
                                 <div style="display:inline-block;width:30%; padding:0px 20px;">
                                     <span style="display:inline-block;">모집인원</span>
                                     <div class="d-flex" style="justify-content: center;">
-                                        <span class="fw-bold" style="display:inline-block;">24</span>
+                                        <span class="fw-bold" style="display:inline-block;">{{ countPerson }}</span>
                                         <span class="fw-bold" style="display:inline-block;"> /{{info.cpersoncount}}</span>
                                     </div>
                                 </div>
@@ -58,9 +58,9 @@
     <div class="d-flex" style="justify-content: end; align-items: center">
         <div style="font-size: 26px;font-weight: bold; margin-right: 60px;">48,000원</div>
             <button class="btn btn-success btn-lg" v-if="applyresult===0" @click="isParticipant(64)">신청하기</button>
-            <button class="btn btn-success btn-lg" v-if="applyresult===1" @click="showDialogCancel">취소하기</button>
-        <ClassOverPersonModal/>
-        <button class="btn btn-success btn-lg" v-if="applyresult===-1" @click="showDialogCancel">모집마감</button>
+            <button class="btn btn-danger btn-lg" v-if="applyresult===1" @click="showDialogCancel">취소하기</button>
+        <ClassOverPersonModal id="overPersonModal"/>
+        <button class="btn btn-secondary btn-lg disabled" v-if="applyresult===-1" @click="showDialogCancel">모집마감</button>
         <CRegisterModal id="registerModal" @close="hideDialogR"/>
         <CCancelModal id="cancelModal" @cancel="realCancelDialog(64)"/>
     </div>
@@ -98,7 +98,7 @@
 </template>
 
 <script setup>
-import { onMounted, provide, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 // import function to register Swiper custom elements
 import { register } from 'swiper/element/bundle';
 import CRegisterModal from'./CRegisterModal.vue'
@@ -114,11 +114,11 @@ register();
 
 let registerModal=null;
 let CancelModal=null;
-    
+let overPersonModal=null;
      onMounted(()=>{ 
         registerModal=new Modal(document.querySelector("#registerModal"))
         CancelModal = new Modal(document.querySelector("#cancelModal"))
-       
+        overPersonModal = new Modal(document.querySelector("#overPersonModal"))
         const swiperEl = document.querySelector('.swiper-container');
         const nextBtn = document.querySelector('.nextBtn');
         const prevBtn = document.querySelector('.prevBtn');
@@ -147,43 +147,67 @@ let info = ref({
     mnickname:"",
     cprice:"",
 });
+let countPerson= ref(0)
 
 detailInfo(81);
 
-const applyresult= ref(0);
-console.log()
+const applyresult= ref();
+
+console.log("deadline"+info.value);
+console.log("title"+info.value.ctitle)
+
+//dateFormating (2024-06-28)
+function dateFormat(date) {
+    let dateFormat = date.getFullYear() +
+    '-' + ((date.getMonth() +1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) +
+    '-' + (date.getDate() < 10 ? "0" + date .getDate() : date.getDate());
+    return dateFormat;
+}
+
+
 //클래스 디테일 정보 받기 
 
 async function detailInfo(cno){
-    const response = await classAPI.classRead(81)
+    const response = await classAPI.classRead(64)
 
     info.value = response.data.classes;
-    if(response.data.result==="fail"){
-        //시간 마감 혹은 인원 마감시 -1 리턴
-        console.log("1");
+
+    let today = new Date();
+    let deadline = new Date(info.value.cdday);
+    deadline.setDate(deadline.getDate() -1);
+    countPerson.value= response.data.participants;
+    let todaydf = dateFormat(today);
+    let deadlinedf = dateFormat(deadline);
+    console.log(todaydf>deadlinedf)
+    if(todaydf>=deadlinedf ){
+        //시간 마감 시  -1 리턴
+        console.log("마감1");
         applyresult.value=-1;
-    } else{
+        //인원이 마감되었을 때
+    } else if(response.data.result==="fail") {
         if(response.data.isParticipant!== null){
             //신청했을 때
-            console.log("2");
+            console.log("취소2");
             applyresult.value=1;
         } else{
-            console.log("3");
+            console.log("신청3");
             //신청하지 않았을 때
-            applyresult.value=0;
+            applyresult.value=-1;
         }
+    }else{
+        applyresult.value=0;
     }
     
     
 }
 function checker(cno){
-const today = new Date();
-// 날짜 형태가 2024-06-20여야만 가능 아니면 형태를 변경해서 넣어줘야함
+    const today = new Date();
+    // 날짜 형태가 2024-06-20여야만 가능 아니면 형태를 변경해서 넣어줘야함
 
-const cday = new Date(info.value.cdday);
-const diff = cday - today; // 초 단위로 나와서 밑에서 변경해줘야함
-const diffDays = Math.ceil(diff / (1000 * 60 * 60 * 24));
-return diffDays
+    const cday = new Date(info.value.cdday);
+    const diff = cday - today; // 초 단위로 나와서 밑에서 변경해줘야함
+    let diffDays = Math.floor(diff / (1000 * 60 * 60 * 24));
+    return diffDays
 }
 
 //썸네일 이미지 갯수를 받기 위한 상태 정의 
@@ -202,12 +226,36 @@ async function isParticipant(cno){
     const response= await classAPI.SetClassApply(cno, info.value.cpersoncount);
     console.log("personcount"+info.value.cpersoncount)
     console.log("is"+response.data.isParticipant);
-    if(response.data.isParticipant!==null){
-        applyresult.value=1;
+    let today = new Date();
+    let deadline = new Date(info.value.cdday);
+    deadline.setDate(deadline.getDate() -1);
+    countPerson.value= response.data.participants;
+    let todaydf = dateFormat(today);
+    let deadlinedf = dateFormat(deadline);
+    if(todaydf>=deadlinedf ){
+        //시간 마감 시  -1 리턴
+        console.log("마감1");
+        applyresult.value=-1;
+        //인원이 마감되었을 때
+    } else if(response.data.result==="fail") {
+        if(response.data.isParticipant!== null){
+            //신청했을 때
+            console.log("취소2");
+            applyresult.value=1;
+        } else{
+            console.log("신청3");
+            //신청하지 않았을 때
+            applyresult.value=-1;
+        }
+    }else{
+        if(response.data.result==="fail"){
+            overPersonModal.show();
+        }else{
+            registerModal.show();
+            applyresult.value=0;
+
+        }
     }
-    console.log(response.data.length)
-    registerModal.show();
-    
 
 }
 
@@ -223,6 +271,7 @@ function realCancelDialog(cno){
     applyresult.value=0;
     CancelModal.hide();
 }
+
 </script>
 
 <style scoped>

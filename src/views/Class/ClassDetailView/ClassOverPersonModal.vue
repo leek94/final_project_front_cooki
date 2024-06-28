@@ -6,7 +6,7 @@
 
     <template v-slot:body >
         <p class="text-center" style="font-size: 20px; font-weight: bold">
-            신청 인원 초과되었습니다. 
+            신청 인원 초과되었습니다. <br/>
             다른 클래스를 신청해주세요
         </p>
     </template>

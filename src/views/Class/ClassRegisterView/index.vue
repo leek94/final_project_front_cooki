@@ -358,6 +358,9 @@ function isvalidPersonCount(){
     }
 }
 
+
+//------- class data insert function ---------------------------------------------------------------------------------------------- 
+
 function registerClass(){
 
     // 클래스 data를 넘겨주기 위해 formdata에 저장해서 axios로 전달
@@ -419,6 +422,7 @@ function registerCuriculums(index,cno){
 async function submitClass() {
     let cno;    
 
+    //----- 기본 정보 받기 -----
     try{
         //axios를 통해서 저장한 formData 전달하기
         const response = await registerClass();

@@ -358,7 +358,41 @@ function isvalidPersonCount(){
     }
 }
 
-// ------- 수정 function ------------------------------------------------------------------------------------------------------------------------
+// ----------------------------------------------- read function -----------------------------------------------
+
+const cno = 81;
+
+//----- 클래스 받아오기 -----
+async function getClass(cno) {
+    try{
+        const response = await classAPI.classRead(cno);
+        // <backend>에서 map 으로 전달 받기 때문에 response.data가 아닌 response.data.classes로 get 해야함
+        classes.value = response.data.classes;
+        console.log("클래스정보 겟", classes.value)
+    } catch(error) {
+        console.log(error);
+    }
+}
+getClass(cno);
+
+//----- 커리큘럼&재료 받아오기 -----
+async function getCurriclumAndItem(cno) {
+    try{
+        //<back>에서 map<String, Object>로 보내주는 커리큘럼과 재료 data 가져오기
+        const response = await classAPI.curriculumAndItemRead(cno);
+        console.log(response.data);
+        // response.data -> map의 object로 접근하기
+        // response.data.curriculum -> 각 속성의 값을 가져오기
+        curiculums.value = response.data.curriculums;
+        console.log(response.data.curriculums);
+        classitems.value = response.data.classItems;
+    } catch(error) {
+        console.log(error);
+    }
+}
+getCurriclumAndItem(cno);
+
+// ----------------------------------------------- update function -----------------------------------------------
 
 function updateClass(){
     // registClass와 비슷하지만 id나 hitcount 등 수정할 필요가 없는 속성들은 append 해주지 않음
@@ -425,6 +459,8 @@ function updateCuriculum(index,cno){
 
 async function submitClass() {
     let cno;    
+
+    //----- 클래스 업데이트 -----
     try{
         //axios를 통해서 저장한 formData 전달하기
         const response = await updateClass();
@@ -434,50 +470,16 @@ async function submitClass() {
         console.log("데이터 전달 안됨");
     }
 
+    //----- 재료 업데이트 -----
     updateClassItem();
 
-    //----- 커리큘럼 받기 -----
+    //----- 커리큘럼 업데이트 -----
     //여러 단계의 커리큘럼을 받기 위해 커리큘럼 배열의 길이만큼 for문 실행
     //<back>에 전달시 사진 하나하나를 여러번 전달해주는 문법 
-
     for(let i=0; i<curiculums.value.length; i++) {
         const response = await updateCuriculum(i,cno);
     }
 }
-
-// --------------------------------------------------------------------------
-
-const cno = 81;
-
-async function getClass(cno) {
-    try{
-        const response = await classAPI.classRead(cno);
-        // <backend>에서 map 으로 전달 받기 때문에 response.data가 아닌 response.data.classes로 get 해야함
-        classes.value = response.data.classes;
-        console.log("클래스정보 겟", classes.value)
-    } catch(error) {
-        console.log(error);
-    }
-}
-getClass(cno);
-
-async function getCurriclumAndItem(cno) {
-    try{
-        //<back>에서 map<String, Object>로 보내주는 커리큘럼과 재료 data 가져오기
-        const response = await classAPI.curriculumAndItemRead(cno);
-        console.log(response.data);
-        // response.data -> map의 object로 접근하기
-        // response.data.curriculum -> 각 속성의 값을 가져오기
-        curiculums.value = response.data.curriculums;
-        console.log(response.data.curriculums);
-        classitems.value = response.data.classItems;
-
-    } catch(error) {
-        console.log(error);
-    }
-}
-getCurriclumAndItem(cno);
-
 
 </script>
 

@@ -147,7 +147,7 @@ let info = ref({
     mnickname:"",
     cprice:"",
 });
-let countPerson= ref()
+let countPerson= ref(0)
 
 detailInfo(81);
 
@@ -168,7 +168,7 @@ function dateFormat(date) {
 //클래스 디테일 정보 받기 
 
 async function detailInfo(cno){
-    const response = await classAPI.classRead(81)
+    const response = await classAPI.classRead(64)
 
     info.value = response.data.classes;
 
@@ -226,13 +226,35 @@ async function isParticipant(cno){
     const response= await classAPI.SetClassApply(cno, info.value.cpersoncount);
     console.log("personcount"+info.value.cpersoncount)
     console.log("is"+response.data.isParticipant);
-    if(response.data.result==="fail"){
-        overPersonModal.show();
-    }else {
-        if(response.data.isParticipant!==null){
+    let today = new Date();
+    let deadline = new Date(info.value.cdday);
+    deadline.setDate(deadline.getDate() -1);
+    countPerson.value= response.data.participants;
+    let todaydf = dateFormat(today);
+    let deadlinedf = dateFormat(deadline);
+    if(todaydf>=deadlinedf ){
+        //시간 마감 시  -1 리턴
+        console.log("마감1");
+        applyresult.value=-1;
+        //인원이 마감되었을 때
+    } else if(response.data.result==="fail") {
+        if(response.data.isParticipant!== null){
+            //신청했을 때
+            console.log("취소2");
             applyresult.value=1;
-             registerModal.show();
-    }
+        } else{
+            console.log("신청3");
+            //신청하지 않았을 때
+            applyresult.value=-1;
+        }
+    }else{
+        if(response.data.result==="fail"){
+            overPersonModal.show();
+        }else{
+            registerModal.show();
+            applyresult.value=0;
+
+        }
     }
 
 }

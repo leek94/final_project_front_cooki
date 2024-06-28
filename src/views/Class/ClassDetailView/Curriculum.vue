@@ -6,7 +6,7 @@
     <div class="curriculum mt-5 ">
         <div class="d-flex mb-5" v-for="(cs,index) in curriculum" :key="index">
             <div class="cimg">
-                <img style= "width:140p; height:140px; border-radius: 20px" :src="`${axios.defaults.baseURL}/class/curriculumattach/64/${cs.cuorder}?accessToken=${store.state.accessToken}`">
+                <img style= "width:140p; height:140px; border-radius: 20px" :src="`${axios.defaults.baseURL}/class/curriculumattach/81/${cs.cuorder}?accessToken=${store.state.accessToken}`">
             </div>
             <div class="cinfo" style=" text-align: left; margin-left: 50px; align-content: center">
                 <div>
@@ -40,7 +40,7 @@ let citems = ref([{
     classItem:""
 }])
 
-curri(64);
+curri(81);
 async function curri(cno){
     const response = await classAPI.curriculumAndItemRead(cno);
     console.log(response.data);

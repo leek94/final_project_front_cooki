@@ -5,7 +5,7 @@
             <!-- Additional required wrapper -->
                 <swiper-container loop="true" class="swiper-container" >
                     <swiper-slide v-for="n in imgcount" :key="n">
-                        <img :src="`${axios.defaults.baseURL}/class/thumbattach/64/${n}?accessToken=${store.state.accessToken}`">
+                        <img :src="`${axios.defaults.baseURL}/class/thumbattach/81/${n}?accessToken=${store.state.accessToken}`">
                     </swiper-slide>
                 </swiper-container>
 
@@ -149,7 +149,7 @@ let info = ref({
 });
 let countPerson= ref()
 
-detailInfo(64);
+detailInfo(81);
 
 const applyresult= ref();
 
@@ -166,8 +166,10 @@ function dateFormat(date) {
 
 
 //클래스 디테일 정보 받기 
+
 async function detailInfo(cno){
-    const response = await classAPI.classRead(cno)
+    const response = await classAPI.classRead(81)
+
     info.value = response.data.classes;
 
     let today = new Date();
@@ -211,11 +213,11 @@ function checker(cno){
 //썸네일 이미지 갯수를 받기 위한 상태 정의 
 const imgcount=ref(null);
 
-thumbimgcount();
+thumbimgcount(81);
 
 //리스트에서 가져온 cno를 전달
 async function thumbimgcount(){
-    const response = await classAPI.getThumbimgCount(64);
+    const response = await classAPI.getThumbimgCount(81);
     imgcount.value=response.data;
 }
 const ip = ref(false);

@@ -5,7 +5,7 @@
             <!-- Additional required wrapper -->
                 <swiper-container loop="true" class="swiper-container" >
                     <swiper-slide v-for="n in imgcount" :key="n">
-                        <img :src="`${axios.defaults.baseURL}/class/thumbattach/64/${n}?accessToken=${store.state.accessToken}`">
+                        <img :src="`${axios.defaults.baseURL}/class/thumbattach/81/${n}?accessToken=${store.state.accessToken}`">
                     </swiper-slide>
                 </swiper-container>
 
@@ -148,7 +148,7 @@ let info = ref({
     cprice:"",
 });
 
-detailInfo(64);
+detailInfo(81);
 
 const applyresult= ref(0);
 console.log()
@@ -189,7 +189,7 @@ return diffDays
 //썸네일 이미지 갯수를 받기 위한 상태 정의 
 const imgcount=ref(null);
 
-thumbimgcount();
+thumbimgcount(81);
 
 //리스트에서 가져온 cno를 전달
 async function thumbimgcount(){

@@ -419,12 +419,12 @@ function updateCuriculum(index,cno){
     if(cuImgs.value[index].files.length !== 0){
         cuFormData.append("cuimg", cuImgs.value[index].files[0]);
     }
+    cuFormData.append("culength", curiculums.value.length);
     return classAPI.curriculumUpdate(cuFormData, 81);
 }
 
 async function submitClass() {
     let cno;    
-
     try{
         //axios를 통해서 저장한 formData 전달하기
         const response = await updateClass();
@@ -443,10 +443,6 @@ async function submitClass() {
     for(let i=0; i<curiculums.value.length; i++) {
         const response = await updateCuriculum(i,cno);
     }
-    
-    // 늘어났을 때 수정
-
-
 }
 
 // --------------------------------------------------------------------------

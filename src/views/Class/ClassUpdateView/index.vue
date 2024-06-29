@@ -193,7 +193,6 @@ let isPreImg = ref(false);
 const classitems = ref([
     {
         ciname: "",
-        cno: 1,
     }
 ])
 
@@ -202,8 +201,6 @@ const curiculums = ref([
         cuorder:1,
         cutitle:"",
         cucontent:"",
-        cuImg:null,
-        cno:1
     }
 ])
 
@@ -249,7 +246,6 @@ function swipePrve(){
 function addClassItem(index){
     const newItem = {
         ciname: "",
-        cno: 1,
     }
     classitems.value.push(newItem);
 }
@@ -260,12 +256,7 @@ function removeClassItem(index){
 
 function setCuImg(event,index){
     const nowCu = event.target.parentElement.firstChild;
-    console.log(nowCu);
 
-    if(nowCu.firstChild !== null){
-        const img = nowCu.querySelector("img");
-        img.src = null;
-    }
     if(event.target.files.length !== 0){
         const file  = event.target.files[0]
         const reader = new FileReader();
@@ -286,8 +277,6 @@ function addCu(){
         cuorder: curiculums.value.length+1,
         cutitle:"",
         cucontent:"",
-        cuImg:null,
-        cno:1
     };
 
     curiculums.value.push(newCuriculum);
@@ -401,11 +390,14 @@ function updateClass(){
 
 // 클래스 재료 data를 넘겨주기 위해 formdata에 저장해서 axios로 전달
 function updateClassItem(){
+    for(let i=0; i<classitems.value.length; i++){
+        classitems.value[i].cno = cno;
+        classitems.value[i].cino = i+1;
+    }
     // ciFormData.append() + for문 대신 list 형태로 <backend>에 바로 전달
     // <backend>에서는 수정 전 data 모두 delete 후 -> 새로 들어온 list의 index로 접근해서 insert하는 방식으로 update
     const ciFormData = JSON.parse(JSON.stringify(classitems.value));
-    console.log(classitems.value);
-    return classAPI.itemUpdate(ciFormData, cno);
+    return classAPI.itemUpdate(ciFormData);
 }
 
 // 클래스 커리큘럼 data를 넘겨주기 위해 formdata에 저장해서 axios로 전달
@@ -418,12 +410,12 @@ function updateCuriculum(index){
     cuFormData.append("cuorder", curiculums.value[index].cuorder);
     cuFormData.append("cutitle", curiculums.value[index].cutitle);
     cuFormData.append("cucontent",curiculums.value[index].cucontent);
-    cuFormData.append("cno", 81);
+    cuFormData.append("cno", cno);
     if(cuImgs.value[index].files.length !== 0){
         cuFormData.append("cuimg", cuImgs.value[index].files[0]);
     }
     cuFormData.append("culength", curiculums.value.length);
-    return classAPI.curriculumUpdate(cuFormData, 81);
+    return classAPI.curriculumUpdate(cuFormData);
 }
 
 async function submitClass() {

@@ -33,21 +33,22 @@ const router = useRouter()
 async function handleLogin(){
     try{
         const data = JSON.parse(JSON.stringify(member.value));
+        //아이디와 토큰을 return받음
         const response = await memberAPI.login(data);
-
-
+        console.log(response.data.mid)
         if(response.data.result==="success"){
+            //store에서 saveAuth action을 실행시키기 위한 payload값 세팅
             const payload={
-                userId:response.data.userId,
+                userId:response.data.mid,
                 accessToken:response.data.accessToken
             };
+
             store.dispatch("saveAuth",payload);
             router.push("/")
         }
     }catch(error){
         console.log(error);
     }
-
    
     
 }

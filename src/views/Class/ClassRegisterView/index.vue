@@ -260,12 +260,7 @@ function removeClassItem(index){
 
 function setCuImg(event,index){
     const nowCu = event.target.parentElement.firstChild;
-    console.log(nowCu);
 
-    if(nowCu.firstChild !== null){
-        const img = nowCu.querySelector("img");
-        img.src = null;
-    }
     if(event.target.files.length !== 0){
         const file  = event.target.files[0]
         const reader = new FileReader();
@@ -400,11 +395,13 @@ function registerClass(){
 }
 
 // 클래스 재료 data를 넘겨주기 위해 formdata에 저장해서 axios로 전달
-function registerClassItem(index, cno){
-    const ciFormData = new FormData();
-    ciFormData.append("ciname", classitems.value[index].ciname);
-    ciFormData.append("cno", cno);
-    ciFormData.append("cino", index+1);
+function registerClassItem(cno){
+    for(let i=0; i<classitems.value.length; i++){
+        classitems.value[i].cno = cno;
+        classitems.value[i].cino = i+1;
+    }
+
+    const ciFormData = JSON.parse(JSON.stringify(classitems.value));
     return classAPI.itemRegister(ciFormData);
 }
 
@@ -438,9 +435,8 @@ async function submitClass() {
     }
 
     //----- 재료 받기 -----
-    for(let i=0; i<classitems.value.length; i++) {
-        const response = await registerClassItem(i, cno);
-    }
+    
+    const response = await registerClassItem(cno);
     console.log("ciFormData 전달 완료");
 
     //----- 커리큘럼 받기 -----

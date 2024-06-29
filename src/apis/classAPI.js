@@ -34,13 +34,13 @@ function classUpdate(classItems) {
 }
 
 //클래스 재료 정보 업데이트
-function itemUpdate(itemData, cno) {
-    return axios.put("/class/itemUpdate/" + cno, itemData);
+function itemUpdate(itemData) {
+    return axios.put("/class/itemUpdate" , itemData);
 }
 
 //클래스 커리큘럼 정보 업데이트
 function curriculumUpdate(curriculumData, cno) {
-    return axios.put("/class/curriculumUpdate/" + cno, curriculumData);
+    return axios.put("/class/curriculumUpdate", curriculumData);
 }
 
 //클래스 썸네일 이미지 갯수 세기

@@ -236,7 +236,7 @@ const ip = ref(false);
 async function isParticipant(cno){
 
     // cno와 마감인원을  back 단으로 전달
-    const response= await classAPI.SetClassApply(cno, info.value.cpersoncount);
+    const response= await classAPI.SetClassApply(64, info.value.cpersoncount);
 
     console.log("personcount"+info.value.cpersoncount)
     console.log("is"+response.data.isParticipant);

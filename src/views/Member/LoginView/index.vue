@@ -38,7 +38,7 @@ async function handleLogin(){
 
         if(response.data.result==="success"){
             const payload={
-                userId:response.data.userId,
+                userId:response.data.mid,
                 accessToken:response.data.accessToken
             };
             store.dispatch("saveAuth",payload);

@@ -108,6 +108,8 @@ import { Modal } from 'bootstrap';
 import classAPI from '@/apis/classAPI';
 import axios from 'axios';
 import store from '@/store';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 // register Swiper custom elements
 register();
 
@@ -171,7 +173,7 @@ function dateFormat(date) {
 // class 기본 정보, 신청자 수, 마감이 되었는 지, 내가 신청을 했는지 여부 
 async function detailInfo(cno){
     // 서버에서 값 받아옴 - 클래스 정보
-    const response = await classAPI.classRead(64)
+    const response = await classAPI.classRead(cno)
     // 클래스 정보를 상태 값인 info에 넣어줌
     info.value = response.data.classes;
 
@@ -254,7 +256,11 @@ async function isParticipant(cno){
     if(todaydf>=deadlinedf ){ // 이미 시간이 지났으므로 모달 뛰운 후 버튼 변경 -1
         console.log("마감 시간 이후로 - 마감 모집");
         applyresult.value=-1; // 마감 모집으로 변경
-
+        router.push('/login');
+    } else if(response.data.result === "backToLogin") {
+        console.log("로그인 페이지로 이동 실행됨");
+        console.log("" + response.data.result);
+        router.push('/Member/LoginView'); // 로그인 페이지로 이동 시키기
     } else if(response.data.result==="fail") { //인원이 마감되었을 때 - 마감 모집
         console.log("인원 초과로 - 마감 모집");
         console.log("applyresult 확인" + applyresult.value);

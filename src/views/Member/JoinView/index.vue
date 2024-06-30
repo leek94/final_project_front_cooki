@@ -123,6 +123,7 @@
 import { ref } from 'vue';
 import memberAPI from '@/apis/memberAPI'
 import { useRouter } from 'vue-router';
+
 // 멤버 객체 선언
 let member = ref( {
     mid: "",
@@ -279,6 +280,7 @@ function awardsRemove(index) {
 const router = useRouter();
 //폼 제출 함수
 async function handleSubmit() {
+    //에디터로 가입하기 버튼 클릭 시 member 변수에서 isEditor의 값으로 mrole 설정
     try{
         if (member.value.isEditor){
             member.value.mrole="ROLE_EDITOR"
@@ -286,19 +288,21 @@ async function handleSubmit() {
             member.value.mrole="ROLE_USER"
         }
         const data = JSON.parse(JSON.stringify(member.value));
+        //member 데이터 값을 axios로 back로 전달 -> map 형태로 mid와 result값을 전달 받음
         const response = await memberAPI.join(data);
 
         if(response.data.result==="success" && data.mrole==="ROLE_EDITOR"){
-
-            for(let i=0; i<careerArray.value.length; i++){
+            //배열로 형성된 경력을 객체로 하나씩 전달 
+            //커리어(수상경력) 테이블의 pk값이 cano(ano)와 mid 복합키로 설정되어 있으므로 두 값을 같이 전달 
+            for(let i=0; i<careerArray.value.length; i++){ 
                 careerArray.value[i].cano=i+1;
                 careerArray.value[i].mid=response.data.mid;
-
+                //axios로 value 값 전달 
                 memberAPI.setCareer(JSON.parse(JSON.stringify(careerArray.value[i])));
             }
 
             for(let i=0; i<awardsArray.value.length; i++){
-                awardsArray.value[i].cano=i+1;
+                awardsArray.value[i].ano=i+1;
                 awardsArray.value[i].mid=response.data.mid;
                 memberAPI.setAwards(JSON.parse(JSON.stringify(awardsArray.value[i])));
             }

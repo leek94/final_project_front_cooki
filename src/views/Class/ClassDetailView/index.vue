@@ -5,7 +5,7 @@
             <!-- Additional required wrapper -->
                 <swiper-container loop="true" class="swiper-container" >
                     <swiper-slide v-for="n in imgcount" :key="n">
-                        <img :src="`${axios.defaults.baseURL}/class/thumbattach/81/${n}?accessToken=${store.state.accessToken}`">
+                        <img :src="`${axios.defaults.baseURL}/class/thumbattach/${info.cno}/${n}`">
                     </swiper-slide>
                 </swiper-container>
 
@@ -57,12 +57,12 @@
     <hr/>
     <div class="d-flex" style="justify-content: end; align-items: center">
         <div style="font-size: 26px;font-weight: bold; margin-right: 60px;">48,000원</div>
-            <button class="btn btn-success btn-lg" v-if="applyresult===0" @click="isParticipant(64)">신청하기</button>
+            <button class="btn btn-success btn-lg" v-if="applyresult===0" @click="isParticipant(cno)">신청하기</button>
             <button class="btn btn-danger btn-lg" v-if="applyresult===1" @click="showDialogCancel">취소하기</button>
         <ClassOverPersonModal id="overPersonModal"/>
         <button class="btn btn-secondary btn-lg disabled" v-if="applyresult===-1" @click="showDialogCancel">모집마감</button>
         <CRegisterModal id="registerModal" @close="hideDialogR"/>
-        <CCancelModal id="cancelModal" @cancel="realCancelDialog(64)"/>
+        <CCancelModal id="cancelModal" @cancel="realCancelDialog(cno)"/>
     </div>
     </div>
         </div>
@@ -111,10 +111,13 @@ import store from '@/store';
 // register Swiper custom elements
 register();
 
-
+//클래스 신청 성공 시 모달
 let registerModal=null;
+//클래스 취소 시 모달
 let CancelModal=null;
+//클래스 인원 초과 시 모달
 let overPersonModal=null;
+
      onMounted(()=>{ 
         registerModal=new Modal(document.querySelector("#registerModal"))
         CancelModal = new Modal(document.querySelector("#cancelModal"))
@@ -129,9 +132,6 @@ let overPersonModal=null;
          prevBtn.addEventListener('click', () => {
             swiperEl.swiper.slidePrev();
          });
-
-
-
     });
 
 //클래스 디테일 정보에 대한 상태 정의 
@@ -147,14 +147,15 @@ let info = ref({
     mnickname:"",
     cprice:"",
 });
+
+//클래스 디테일 
+detailInfo(64);
+//신청 인원 상태 정의 
 let countPerson= ref(0)
 
-detailInfo(81);
+//신청 결과를 보여주기 위한 상태 정의 
+const applyresult= ref();
 
-const applyresult= ref(2);
-console.log("결과 확인"+applyresult.value)
-console.log("deadline"+info.value);
-console.log("title"+info.value.ctitle)
 
 //dateFormating (2024-06-28)
 function dateFormat(date) {
@@ -163,6 +164,7 @@ function dateFormat(date) {
     '-' + (date.getDate() < 10 ? "0" + date .getDate() : date.getDate());
     return dateFormat;
 }
+
 
 
 // 클래스 디테일 정보 받기 
@@ -176,7 +178,9 @@ async function detailInfo(cno){
     // 날짜 포맷
     let today = new Date();
     let deadline = new Date(info.value.cdday);
+    //클래스 dday 하루 전에 신청 마감 
     deadline.setDate(deadline.getDate() -1);
+    //클래스 참여자 수 
     countPerson.value= response.data.participants;
     let todaydf = dateFormat(today);
     let deadlinedf = dateFormat(deadline);
@@ -203,35 +207,37 @@ async function detailInfo(cno){
         }
     }else{ // 인원, 날짜 마감이 되지 않았고, 신청하지 않았을 경우
         applyresult.value=0;
+
     }
-    
-    
 }
-function checker(cno){
+
+function checker(){
     const today = new Date();
     // 날짜 형태가 2024-06-20여야만 가능 아니면 형태를 변경해서 넣어줘야함
-
     const cday = new Date(info.value.cdday);
     const diff = cday - today; // 초 단위로 나와서 밑에서 변경해줘야함
     let diffDays = Math.floor(diff / (1000 * 60 * 60 * 24));
     return diffDays
 }
 
-//썸네일 이미지 갯수를 받기 위한 상태 정의 
+//for문으로 몇개의 이미지를 출력해야 하는 지를 알기 위한 상태값 
 const imgcount=ref(null);
 
 thumbimgcount(64);
 
-//리스트에서 가져온 cno를 전달
+//axios로 썸네일 이미지 갯수 받아오기
 async function thumbimgcount(){
     const response = await classAPI.getThumbimgCount(64);
     imgcount.value=response.data;
 }
+//v-if로 어떤 버튼이 보일지에 대한 상태값 
 const ip = ref(false);
-
+//
 async function isParticipant(cno){
+
     // cno와 마감인원을  back 단으로 전달
     const response= await classAPI.SetClassApply(cno, info.value.cpersoncount);
+
     console.log("personcount"+info.value.cpersoncount)
     console.log("is"+response.data.isParticipant);
     console.log("결과 확인: " + response.data.result);
@@ -272,7 +278,7 @@ function showDialogCancel(){
     CancelModal.show();
 }
 function realCancelDialog(cno){
-    classAPI.deleteClassApply(cno);
+    classAPI.deleteClassApply(64);
     applyresult.value=0;
     CancelModal.hide();
 }

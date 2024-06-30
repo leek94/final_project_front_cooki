@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex flex-column justify-content-center align-items-center">
 
-        <div class="d-flex flex-column justify-content-center align-items-center w-50 my-5 p-3 rounded-4" style='background-color: #fff9e2;'>
+        <div class="d-flex flex-column justify-content-center align-items-start w-50 my-5 p-3 rounded-4" style='background-color: #fff9e2;'>
             <div class="w-100 my-3">
                 <label class="form-label mb-3">제목</label>
                 <input type="text" class="form-control" v-model="classes.ctitle" placeholder="클래스 이름을 입력해주세요.">
@@ -33,32 +33,31 @@
             </div>
         </div>
 
-        <div class="d-flex flex-column justify-content-center align-items-center w-50 mb-5 p-3 rounded-4" style='background-color: #fff9e2;'>
-            <div class="w-100 my-3">
+        <div class="d-flex flex-column justify-content-center align-items-start w-50 mb-5 p-3 rounded-4" style='background-color: #fff9e2;'>
+            <div class="w-25 my-3">
                 <label class="form-label mb-3">모집 인원(5~30명 사이의 인원)</label>
-                <input type="number" class="form-control w-25" v-model="classes.cpersoncount" min="5" max="30"  @change="isvalidPersonCount">
+                <input type="number" class="form-control" v-model="classes.cpersoncount" min="5" max="30"  @change="isValidPersonCount">
             </div>
 
-            <div class="w-100 mb-3">
+            <div class="w-25 mb-3">
                 <label class="form-label mb-3">가격</label>
-                <input type="number" class="form-control w-25" v-model="classes.cprice">
+                <input type="number" class="form-control" v-model="classes.cprice" min="0" max="999999" @change="isValidPrice">
             </div>
 
-            <div class="w-100 mb-3">
+            <div class="w-25 mb-3">
                 <label class="form-label mb-3">개최 일자</label>
-                <VueDatePicker  v-model="classes.cdday" :min-date="minDate" :max-date="maxDate"
-                :start-date="minDate"
-                :format="format" :format-locale="ko"
-                input-class-name="form-control w-25 "
-                hide-input-icon
-                select-text="선택" cancel-text="취소"
-                :enable-time-picker="false"></VueDatePicker>
+                    <VueDatePicker  v-model="classes.cdday" :min-date="minDate" :max-date="maxDate"
+                    :start-date="minDate"
+                    :format="format" :format-locale="ko"
+                    input-class-name="form-control"
+                    hide-input-icon
+                    select-text="선택" cancel-text="취소"
+                    :enable-time-picker="false"></VueDatePicker>
             </div>
 
-            <div class="w-100 mb-3">
+            <div class="w-25 mb-3">
                 <label for="title" class="form-label mb-3">시작 시간</label>
                     <VueDatePicker
-                        class="w-25" 
                         v-model="classes.cstarttime" 
                         time-picker
                         :start-time="{hours:9, minutes:0}"
@@ -73,10 +72,9 @@
                     />
             </div>
 
-            <div class="w-100 mb-3">
+            <div class="w-25 mb-3">
                 <label for="title" class="form-label mb-3">끝나는 시간</label>
                     <VueDatePicker 
-                        class="w-25"
                         v-model="classes.cendtime"
                         time-picker
                         minutes-increment="30"
@@ -158,6 +156,7 @@ import { register } from 'swiper/element/bundle';
 import classAPI from '@/apis/classAPI';
 
 register();
+const cno = 81;
 
 const format = (date) => {
   const day = date.getDate();
@@ -174,7 +173,7 @@ maxDate.setDate(maxDate.getDate() + 28);
 
 const minTime = ref(null);
 const maxTime = ref(null);
-let isStart = false;
+let isStart = true;
 
 const classes = ref({
     ctitle:null,
@@ -183,19 +182,17 @@ const classes = ref({
     cdday: null,
     cstarttime: null,
     cendtime: null,
-    caddress: null,
-    cdetailaddress: null,
+    caddress: "",
+    cdetailaddress: "",
     cprice:null
 })
 
 const presetImg = ref(null);
 let isPreImg = ref(false);
 
-
 const classitems = ref([
     {
         ciname: "",
-        cno: 1,
     }
 ])
 
@@ -204,8 +201,6 @@ const curiculums = ref([
         cuorder:1,
         cutitle:"",
         cucontent:"",
-        cuImg:null,
-        cno:1
     }
 ])
 
@@ -251,7 +246,6 @@ function swipePrve(){
 function addClassItem(index){
     const newItem = {
         ciname: "",
-        cno: 1,
     }
     classitems.value.push(newItem);
 }
@@ -260,15 +254,9 @@ function removeClassItem(index){
     classitems.value.splice(index,1);
 }
 
-
 function setCuImg(event,index){
     const nowCu = event.target.parentElement.firstChild;
-    console.log(nowCu);
 
-    if(nowCu.firstChild !== null){
-        const img = nowCu.querySelector("img");
-        img.src = null;
-    }
     if(event.target.files.length !== 0){
         const file  = event.target.files[0]
         const reader = new FileReader();
@@ -289,8 +277,6 @@ function addCu(){
         cuorder: curiculums.value.length+1,
         cutitle:"",
         cucontent:"",
-        cuImg:null,
-        cno:1
     };
 
     curiculums.value.push(newCuriculum);
@@ -350,11 +336,19 @@ function execDaumPostcode() {
         }).open();
     }
 
-function isvalidPersonCount(){
+function isValidPersonCount(){
     if(classes.value.cpersoncount < 5){
         classes.value.cpersoncount =5;
     }else if(classes.value.cpersoncount > 30 ){
         classes.value.cpersoncount = 30;
+    }
+}
+
+function isValidPrice(){
+    if(classes.value.cprice < 0){
+        classes.value.cprice =0;
+    }else if(classes.value.cprice > 999999){
+        classes.value.cprice = 999999;
     }
 }
 
@@ -374,15 +368,13 @@ function updateClass(){
     classFormData.append("cstarttime", classes.value.cstarttime.hours +":"+(classes.value.cstarttime.minutes===0? "00" : "30"));
     classFormData.append("cendtime", classes.value.cendtime.hours +":"+(classes.value.cendtime.minutes===0? "00" : "30"));
     //주소+상세주소
-    classFormData.append("caddress", classes.value.caddress + " " +classes.value.cdetailaddress);
+    classFormData.append("caddress", classes.value.caddress + ", " +classes.value.cdetailaddress);
     //모집 마감일 -> 강의 시작일 -1일 (강의 시작일이 달의 첫날일 경우 조건식 필요)
-    const cenddate = new Date();
-    cenddate.setDate(classes.value.cdday.getDate()-1);
-    cenddate.setMonth(classes.value.cdday.getMonth());    
+    const cenddate = new Date(classes.value.cdday);
+    cenddate.setDate(cenddate.getDate()-1);  
     classFormData.append("cenddate", cenddate);
-    classFormData.append("cno", 81);
+    classFormData.append("cno", cno);
     classFormData.append("ctno", 1);
-    console.log(classes.value);
 
     
     //----- 사진 data 받기 -----
@@ -397,16 +389,19 @@ function updateClass(){
 }
 
 // 클래스 재료 data를 넘겨주기 위해 formdata에 저장해서 axios로 전달
-function updateClassItem(index, cno){
+function updateClassItem(){
+    for(let i=0; i<classitems.value.length; i++){
+        classitems.value[i].cno = cno;
+        classitems.value[i].cino = i+1;
+    }
     // ciFormData.append() + for문 대신 list 형태로 <backend>에 바로 전달
     // <backend>에서는 수정 전 data 모두 delete 후 -> 새로 들어온 list의 index로 접근해서 insert하는 방식으로 update
     const ciFormData = JSON.parse(JSON.stringify(classitems.value));
-    console.log(classitems.value);
-    return classAPI.itemUpdate(ciFormData, 81);
+    return classAPI.itemUpdate(ciFormData);
 }
 
 // 클래스 커리큘럼 data를 넘겨주기 위해 formdata에 저장해서 axios로 전달
-function updateCuriculum(index,cno){
+function updateCuriculum(index){
     const cuFormData = new FormData();
     //커리큘럼 사진 파일은 배열로 저장되기 때문에 (커리큘럼 추가될 때마다 input 태그도 추가)
     //각 커리큘럼 순번에 맞는 사진을 가져오기 위해서는 인덱스를 매치시켜주고(첫번째 인풋태그, 두번째 인풋태그, ...)
@@ -415,12 +410,12 @@ function updateCuriculum(index,cno){
     cuFormData.append("cuorder", curiculums.value[index].cuorder);
     cuFormData.append("cutitle", curiculums.value[index].cutitle);
     cuFormData.append("cucontent",curiculums.value[index].cucontent);
-    cuFormData.append("cno", 81);
+    cuFormData.append("cno", cno);
     if(cuImgs.value[index].files.length !== 0){
         cuFormData.append("cuimg", cuImgs.value[index].files[0]);
     }
     cuFormData.append("culength", curiculums.value.length);
-    return classAPI.curriculumUpdate(cuFormData, 81);
+    return classAPI.curriculumUpdate(cuFormData);
 }
 
 async function submitClass() {
@@ -441,24 +436,30 @@ async function submitClass() {
     //<back>에 전달시 사진 하나하나를 여러번 전달해주는 문법 
 
     for(let i=0; i<curiculums.value.length; i++) {
-        const response = await updateCuriculum(i,cno);
+        const response = await updateCuriculum(i);
     }
 }
 
 // --------------------------------------------------------------------------
-
-const cno = 81;
 
 async function getClass(cno) {
     try{
         const response = await classAPI.classRead(cno);
         // <backend>에서 map 으로 전달 받기 때문에 response.data가 아닌 response.data.classes로 get 해야함
         classes.value = response.data.classes;
-        console.log("클래스정보 겟", classes.value)
+        classes.value.cdday = new Date(classes.value.cdday);
+        const stime = classes.value.cstarttime.split(":");
+        classes.value.cstarttime =  { hours:stime[0], minutes:stime[1]};
+        const etime = classes.value.cendtime.split(":");
+        classes.value.cendtime =  { hours:etime[0], minutes:etime[1]};
+        const addresses = classes.value.caddress.split(",");
+        classes.value.caddress = addresses[0];
+        classes.value.cdetailaddress = addresses[1];
     } catch(error) {
         console.log(error);
     }
 }
+
 getClass(cno);
 
 async function getCurriclumAndItem(cno) {
@@ -476,6 +477,7 @@ async function getCurriclumAndItem(cno) {
         console.log(error);
     }
 }
+
 getCurriclumAndItem(cno);
 
 

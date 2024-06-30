@@ -15,14 +15,19 @@
             </div>
 
             <div class="d-flex flex-column align-items-center w-100 mb-3">
-                <div class="w-75 position-relative mb-3" v-show="isPreImg">
+                <div class="w-75 position-relative mb-3">
                     <div class="position-absolute top-50 start-25 translate-middle" style="z-index: 99;">
                         <img src="/images/assets/ic_left.png" class="left btn" @click='swipePrve'>
                     </div>
                     <div class="position-absolute top-50 start-100 translate-middle" style="z-index: 99;">
                         <img src="/images/assets/ic_right.png" class="right btn" @click='swipeNext'>
                     </div>
-                    <swiper-container class="mySwiper mt-3" loop="true" style="height: 300px;">
+                    <swiper-container class="mySwiper1 mt-3" loop="true" style="height: 300px;" v-show="nowPreImg">
+                        <swiper-slide v-for="n in imgCount" :key="n">
+                            <img :src="`${axios.defaults.baseURL}/class/thumbattach/${cno}/${n}`">
+                        </swiper-slide>
+                    </swiper-container>
+                    <swiper-container class="mySwiper2 mt-3" loop="true" style="height: 300px;" v-show="isPreImg">
                     </swiper-container>
                 </div>
 
@@ -119,6 +124,9 @@
                         <div class="mt-3" style="text-align: center;" v-show="isCuImg[index]"> 
                             <img class="rounded-4" style="width: 250px; height: 250px"/>
                         </div>    
+                        <div class="mt-3" style="text-align: center;" v-show="nowCuImgs[index]"> 
+                            <img :src="`${axios.defaults.baseURL}/class/curriculumattach/${cno}/${index+1}`" class="rounded-4" style="width: 250px; height: 250px"/>
+                        </div> 
                         <label class="form-label my-3"> 이미지(필수!!!)</label>
                         <input  type="file" class="form-control" ref="cuImgs" @change="setCuImg($event,index)">
                     </div>
@@ -154,9 +162,12 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import {ko} from "date-fns/locale";
 import { register } from 'swiper/element/bundle';
 import classAPI from '@/apis/classAPI';
+import axios from 'axios';
 
 register();
 const cno = 81;
+const imgCount = ref();
+let cuRow;
 
 const format = (date) => {
   const day = date.getDate();
@@ -188,7 +199,8 @@ const classes = ref({
 })
 
 const presetImg = ref(null);
-let isPreImg = ref(false);
+const nowPreImg = ref(true);
+const isPreImg = ref(false);
 
 const classitems = ref([
     {
@@ -205,41 +217,54 @@ const curiculums = ref([
 ])
 
 const cuImgs = ref([]);
-let isCuImg = ref([
-    false,
-]);
+const nowCuImgs = ref([]);
+const isCuImg = ref([]);
     
 function setPreviewImg(e){
-    const swiper = document.querySelector("swiper-container");  
-    
-    while(swiper.hasChildNodes()){
-        swiper.removeChild(swiper.firstChild);
-    }
-
-    for(let img of e.target.files){
-        const reader = new FileReader(); 
-        reader.readAsDataURL(img);
-        reader.onload = function(e){
-        swiper.swiper.appendSlide(
-            "<swiper-slide><img src='"+ e.target.result +"' class='rounded-4' style='width:100%; height:100%;'/></swiper-slide>"
-        );
-        }
-    }
-
     if(e.target.files.length > 0){
         isPreImg.value = true;
+        nowPreImg.value = false;
+
+        const swiper = document.querySelector(".mySwiper2");  
+
+        while(swiper.hasChildNodes()){
+            swiper.removeChild(swiper.firstChild);
+        }
+
+        for(let img of e.target.files){
+            const reader = new FileReader(); 
+            reader.readAsDataURL(img);
+            reader.onload = function(e){
+                console.log(swiper);
+                swiper.swiper.appendSlide(
+                    "<swiper-slide><img src='"+ e.target.result +"' class='rounded-4' style='width:100%; height:100%;'/></swiper-slide>"
+                );
+            }
+        }
     }else{
         isPreImg.value = false;
+        nowPreImg.value = true;
     }
+
 }
 
 function swipeNext(){
-    const swiper = document.querySelector('swiper-container');
+    let swiper;
+    if(nowPreImg.value){
+        swiper = document.querySelector('.mySwiper1');
+    }else{
+        swiper = document.querySelector('.mySwiper2');
+    }
     swiper.swiper.slideNext();
 }
 
 function swipePrve(){
-    const swiper = document.querySelector('swiper-container');
+    let swiper;
+    if(nowPreImg.value){
+        swiper = document.querySelector('.mySwiper1');
+    }else{
+        swiper = document.querySelector('.mySwiper2');
+    }
     swiper.swiper.slidePrev();
 }
 
@@ -265,9 +290,15 @@ function setCuImg(event,index){
 
         const img  = nowCu.querySelector("img");
         img.src = e.target.result;
+        if(index +1  <= nowCuImgs.value.length){
+            nowCuImgs.value[index] = false;
+        }
         isCuImg.value[index] = true;
         }
     }else{
+        if(index +1  <= nowCuImgs.value.length){
+            nowCuImgs.value[index] = true;
+        }
         isCuImg.value[index] = false;
     }
 }
@@ -287,6 +318,9 @@ function removeCu(){
     
     if(curiculums.value.length > 1){
         curiculums.value.splice(-1,1);
+        if(nowCuImgs.value.length === isCuImg.value.length){
+            nowCuImgs.value.splice(-1,1);
+        }
         isCuImg.value.splice(-1,1);
     }
 }
@@ -458,6 +492,8 @@ async function getClass(cno) {
     } catch(error) {
         console.log(error);
     }
+    const response = await classAPI.getThumbimgCount(cno);
+    imgCount.value=response.data;
 }
 
 getClass(cno);
@@ -470,7 +506,11 @@ async function getCurriclumAndItem(cno) {
         // response.data -> map의 object로 접근하기
         // response.data.curriculum -> 각 속성의 값을 가져오기
         curiculums.value = response.data.curriculums;
-        console.log(response.data.curriculums);
+        for(let i=0; i<curiculums.value.length; i++){
+            nowCuImgs.value.push(true);
+            isCuImg.value.push(false);
+        }
+        cuRow = curiculums.value.length;
         classitems.value = response.data.classItems;
 
     } catch(error) {

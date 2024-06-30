@@ -195,21 +195,22 @@ async function submitClass(){
     try{
         //레시피 데이터만 전달
         const response1 = await recipeAPI.recipeRegister(recipeFormdata);
+
         rno.value=response1.data.rno;
-        //입력받은 recipeItems(배열)의 값들에 rno와 rino를 같이 전달 
+        //입력받은 recipeItems(배열)의 값들에 rno와 rino를 같이 전달
         recipeItems.value.rno=rno.value;
         for(let i=0; i<recipeItems.value.length;i++){
             recipeItems.value[i].rino=i+1;
             recipeItems.value[i].rno=rno.value;
         }
-       
     }catch(error){
         console.log(error);
     }
-    //레시피 아이템만 전달 
+    //레시피 아이템을 리스트 형태로 전달
     const recipeItem= JSON.parse(JSON.stringify(recipeItems.value));
     const response2 = await recipeAPI.recipeItemRegister(recipeItem)
     
+    //레시피 프로세스를 폼데이터 형태로 객체 하나씩 전달 
     for(let i=0;i<recipeProcesses.value.length;i++){
         const rpFormdata= new FormData();
         rpFormdata.append("rno",rno.value);
@@ -219,12 +220,12 @@ async function submitClass(){
         const rpAttach = rpImgs.value[i];
         if(rpAttach.files.length!==0){
             rpFormdata.append("rpAttach",rpAttach.files[0]);
+
         }
         const response3= await recipeAPI.recipeProcessRegister(rpFormdata);
     }
 
 }
-
 
 </script>
 

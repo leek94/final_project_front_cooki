@@ -151,8 +151,8 @@ let countPerson= ref(0)
 
 detailInfo(81);
 
-const applyresult= ref();
-
+const applyresult= ref(2);
+console.log("결과 확인"+applyresult.value)
 console.log("deadline"+info.value);
 console.log("title"+info.value.ctitle)
 
@@ -165,13 +165,15 @@ function dateFormat(date) {
 }
 
 
-//클래스 디테일 정보 받기 
-
+// 클래스 디테일 정보 받기 
+// class 기본 정보, 신청자 수, 마감이 되었는 지, 내가 신청을 했는지 여부 
 async function detailInfo(cno){
+    // 서버에서 값 받아옴 - 클래스 정보
     const response = await classAPI.classRead(64)
-
+    // 클래스 정보를 상태 값인 info에 넣어줌
     info.value = response.data.classes;
 
+    // 날짜 포맷
     let today = new Date();
     let deadline = new Date(info.value.cdday);
     deadline.setDate(deadline.getDate() -1);
@@ -179,22 +181,27 @@ async function detailInfo(cno){
     let todaydf = dateFormat(today);
     let deadlinedf = dateFormat(deadline);
     console.log(todaydf>deadlinedf)
-    if(todaydf>=deadlinedf ){
-        //시간 마감 시  -1 리턴
+
+    // 날짜가 클래스 오픈 1일 전이면 시간 마감
+    if(todaydf>=deadlinedf){
+
         console.log("마감1");
-        applyresult.value=-1;
-        //인원이 마감되었을 때
-    } else if(response.data.result==="fail") {
+        applyresult.value=-1; // 모집 마감으로 변경
+        
+    } else if(response.data.result==="fail") { //인원이 마감되었을 때
+            
+            console.log("인원 실패");
         if(response.data.isParticipant!== null){
             //신청했을 때
             console.log("취소2");
-            applyresult.value=1;
-        } else{
-            console.log("신청3");
+            applyresult.value=1; // 신청이 되어 있으면 취소로 변경
+        } else {
+            // 인원이 마감되었다는 모달 띄우고
+            console.log("모집 마감");
             //신청하지 않았을 때
-            applyresult.value=-1;
+            applyresult.value=-1; // 모집 마감으로 변경
         }
-    }else{
+    }else{ // 인원, 날짜 마감이 되지 않았고, 신청하지 않았을 경우
         applyresult.value=0;
     }
     
@@ -213,48 +220,46 @@ function checker(cno){
 //썸네일 이미지 갯수를 받기 위한 상태 정의 
 const imgcount=ref(null);
 
-thumbimgcount(81);
+thumbimgcount(64);
 
 //리스트에서 가져온 cno를 전달
 async function thumbimgcount(){
-    const response = await classAPI.getThumbimgCount(81);
+    const response = await classAPI.getThumbimgCount(64);
     imgcount.value=response.data;
 }
 const ip = ref(false);
 
 async function isParticipant(cno){
+    // cno와 마감인원을  back 단으로 전달
     const response= await classAPI.SetClassApply(cno, info.value.cpersoncount);
     console.log("personcount"+info.value.cpersoncount)
     console.log("is"+response.data.isParticipant);
+    console.log("결과 확인: " + response.data.result);
+    // 날짜 계산을 위한 포맷 변경
     let today = new Date();
     let deadline = new Date(info.value.cdday);
     deadline.setDate(deadline.getDate() -1);
     countPerson.value= response.data.participants;
     let todaydf = dateFormat(today);
     let deadlinedf = dateFormat(deadline);
-    if(todaydf>=deadlinedf ){
-        //시간 마감 시  -1 리턴
-        console.log("마감1");
-        applyresult.value=-1;
-        //인원이 마감되었을 때
-    } else if(response.data.result==="fail") {
-        if(response.data.isParticipant!== null){
-            //신청했을 때
-            console.log("취소2");
-            applyresult.value=1;
-        } else{
-            console.log("신청3");
-            //신청하지 않았을 때
-            applyresult.value=-1;
-        }
-    }else{
-        if(response.data.result==="fail"){
-            overPersonModal.show();
-        }else{
-            registerModal.show();
-            applyresult.value=0;
 
-        }
+    // 신청하기 버튼이 눌렸을 때
+    if(todaydf>=deadlinedf ){ // 이미 시간이 지났으므로 모달 뛰운 후 버튼 변경 -1
+        console.log("마감 시간 이후로 - 마감 모집");
+        applyresult.value=-1; // 마감 모집으로 변경
+
+    } else if(response.data.result==="fail") { //인원이 마감되었을 때 - 마감 모집
+        console.log("인원 초과로 - 마감 모집");
+        console.log("applyresult 확인" + applyresult.value);
+        overPersonModal.show();
+        applyresult.value=-1; // 마감 모집으로 변경
+        console.log("applyresult 확인" + applyresult.value);
+
+    }else{ // 마감 시간 && 마감 인원 전에 성공
+        console.log("마감 시간 전 - 성공");
+        registerModal.show();
+        applyresult.value=1; // 취소하기로 변경
+        console.log("applyresult 확인 성공" + applyresult.value);
     }
 
 }

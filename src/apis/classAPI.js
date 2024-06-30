@@ -21,6 +21,11 @@ function classRead(cno) {
     return axios.get("/class/classDetail/" + cno);
 }
 
+//클래스 현재 인원 정보 읽기
+function classNowPerson(cno) {
+    return axios.get("/class/classNowPerson/" + cno);
+}
+
 
 //클래스 커리큘럼, 재료 읽기
 function curriculumAndItemRead(cno) {
@@ -67,4 +72,5 @@ export default {
     deleteClassApply,
     itemUpdate,
     curriculumUpdate,
+    classNowPerson,
 }

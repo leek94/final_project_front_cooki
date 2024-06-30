@@ -238,9 +238,10 @@ async function isParticipant(cno){
     // cno와 마감인원을  back 단으로 전달
     const response= await classAPI.SetClassApply(64, info.value.cpersoncount);
 
-    console.log("personcount"+info.value.cpersoncount)
+    console.log("personcount"+info.value.cpersoncount);
     console.log("is"+response.data.isParticipant);
     console.log("결과 확인: " + response.data.result);
+
     // 날짜 계산을 위한 포맷 변경
     let today = new Date();
     let deadline = new Date(info.value.cdday);
@@ -262,10 +263,14 @@ async function isParticipant(cno){
         console.log("applyresult 확인" + applyresult.value);
 
     }else{ // 마감 시간 && 마감 인원 전에 성공
+        const response1 = await classAPI.classNowPerson(64);
+        console.log("몇명인지 확인: " + response1.data.nowPerson);
         console.log("마감 시간 전 - 성공");
+        countPerson.value = response1.data.nowPerson;
         registerModal.show();
         applyresult.value=1; // 취소하기로 변경
         console.log("applyresult 확인 성공" + applyresult.value);
+        // 모집인원 확인 해야함
     }
 
 }
@@ -277,10 +282,15 @@ function hideDialogR(){
 function showDialogCancel(){
     CancelModal.show();
 }
-function realCancelDialog(cno){
-    classAPI.deleteClassApply(64);
+async function realCancelDialog(cno){
+    // await를 붙여야 비동기 프로세스에서 동기적으로 일이 처리됨
+    await classAPI.deleteClassApply(64);
+    const response1 = await classAPI.classNowPerson(64);
+    console.log("취소후 확인 인원: " + response1.data.nowPerson);
+    countPerson.value = response1.data.nowPerson;
     applyresult.value=0;
     CancelModal.hide();
+    // 모집인원 조회해야함
 }
 
 </script>

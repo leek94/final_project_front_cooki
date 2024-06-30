@@ -171,13 +171,12 @@ function addPr(){
 }
 
 function removePr(){
-    
-    if(recipe.value.length > 1){
-        recipe.value.splice(-1,1);
+    if(recipeProcesses.value.length > 1){
+        recipeProcesses.value.splice(-1,1);
         isRpImg.value.splice(-1,1);
     }
 }
-const prLength=ref();
+const initialLength=ref();
 // recipe Read ----------------------------------------------------------
 async function getRecipe(rno){
     try{
@@ -191,11 +190,13 @@ async function getRecipe(rno){
     //map형태로 item과 process를 리턴 받음
     recipeItems.value=response2.data.recipeItems;
     recipeProcesses.value= response2.data.recipeProcess;
-    prLength.value=response2.data.recipeProcess.length;
+    initialLength.value=response2.data.recipeProcess.length;
 }
 getRecipe(rno);
 
+
 //recipe Update------------------------------------------------------------
+
 async function submitClass(){
     const recipeFormdata= new FormData();
     recipeFormdata.append("rno", rno);
@@ -215,15 +216,24 @@ async function submitClass(){
     }
     const response4= await recipeAPI.itemUpdate(JSON.parse(JSON.stringify(recipeItems.value)));
     
+    const processFormdata= new FormData();
+    //Form data list 형태로 보내기
+    //(recipeProcess와 수정된 값의 길이와 수정 전의 길이을 비교하기 위해)
     for(let i=0; i<recipeProcesses.value.length;i++){
-        const processFormdata= new FormData();
         processFormdata.append("rno",rno);
-        processFormdata.append("prLength",prLength.value);
-        processFormdata.append("rporder",recipeProcesses.value[i].rporder);
-        processFormdata.append("rptitle",recipeProcesses.value[i].rptitle);
-        processFormdata.append("rpcontent",recipeProcesses.value[i].rpcontent)
-        const response5= recipeAPI.processUpdate(processFormdata);
+        processFormdata.append("initialLength",initialLength.value);
+        processFormdata.append("changeLength",recipeProcesses.value.length);
+        processFormdata.append("processes["+i+"].rporder",recipeProcesses.value[i].rporder);
+        processFormdata.append("processes["+i+"].rptitle",recipeProcesses.value[i].rptitle);
+        processFormdata.append("processes["+i+"].rpcontent",recipeProcesses.value[i].rpcontent);
+        const rpAttach = rpImgs.value[i];
+
+        if(rpAttach.files.length!==0){
+            console.log(rpAttach);
+            processFormdata.append("processes["+i+"].rpAttach",rpAttach.files[0])
+        }
     }
+    const response5= recipeAPI.processUpdate(processFormdata);
 }
 
 </script>

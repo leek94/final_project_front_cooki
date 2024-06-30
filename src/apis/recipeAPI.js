@@ -9,8 +9,28 @@ function recipeItemRegister(recipeItem){
 function recipeProcessRegister(rpFormdata){
     return axios.post("/recipe/recipeProcessRegister",rpFormdata)
 }
+function recipeRead(rno){
+    return axios.get("/recipe/recipeDetail/"+rno)
+}
+function processandItemRead(rno){
+    return axios.get("/recipe/getRecipeItemAndProcess/"+rno)
+}
+function recipeUpdate(recipeFormdata){
+    return axios.put("/recipe/recipeUpdate",recipeFormdata)
+}
+function processUpdate(processFormdata){
+    return axios.put("/recipe/recipeProcessUpdate",processFormdata)
+}
+function itemUpdate(recipeItems){
+    return axios.put("/recipe/recipeItemUpdate", recipeItems)
+}
 export default{
     recipeRegister,
     recipeItemRegister,
-    recipeProcessRegister
+    recipeProcessRegister,
+    recipeRead,
+    processandItemRead,
+    recipeUpdate,
+    processUpdate,
+    itemUpdate
 }

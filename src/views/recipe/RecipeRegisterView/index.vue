@@ -189,9 +189,8 @@ async function submitClass(){
     recipeFormdata.append("ctno",1);
     const preAttach = presetImg.value;
     //이미지를 배열로 전달
-    if(preAttach.files.length!= 0){
-        recipeFormdata.append("rAttach",preAttach.files[0]);
-    }
+    recipeFormdata.append("rAttach",preAttach.files[0]);
+    
     try{
         //레시피 데이터만 전달
         const response1 = await recipeAPI.recipeRegister(recipeFormdata);

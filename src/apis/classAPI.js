@@ -21,6 +21,11 @@ function classRead(cno) {
     return axios.get("/class/classDetail/" + cno);
 }
 
+//클래스 현재 인원 정보 읽기
+function classNowPerson(cno) {
+    return axios.get("/class/classNowPerson/" + cno);
+}
+
 
 //클래스 커리큘럼, 재료 읽기
 function curriculumAndItemRead(cno) {
@@ -34,13 +39,13 @@ function classUpdate(classItems) {
 }
 
 //클래스 재료 정보 업데이트
-function itemUpdate(itemData, cno) {
-    return axios.put("/class/itemUpdate/" + cno, itemData);
+function itemUpdate(itemData) {
+    return axios.put("/class/itemUpdate" , itemData);
 }
 
 //클래스 커리큘럼 정보 업데이트
 function curriculumUpdate(curriculumData, cno) {
-    return axios.put("/class/curriculumUpdate/" + cno, curriculumData);
+    return axios.put("/class/curriculumUpdate", curriculumData);
 }
 
 //클래스 썸네일 이미지 갯수 세기
@@ -67,4 +72,5 @@ export default {
     deleteClassApply,
     itemUpdate,
     curriculumUpdate,
+    classNowPerson,
 }

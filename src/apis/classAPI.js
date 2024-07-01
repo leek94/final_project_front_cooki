@@ -60,6 +60,14 @@ function SetClassApply(cno, cpersoncount){
 function deleteClassApply(cno){
     return axios.delete("/class/deleteClassApply/"+cno)
 }
+
+function qnaRegister(qnaData){
+    return axios.post("/class/qnaRegister", qnaData);
+}
+
+function qnaRead(cno){
+    return axios.get("/class/qnaList/" + cno);
+}
 export default {
     classRegister,
     itemRegister,
@@ -73,4 +81,6 @@ export default {
     itemUpdate,
     curriculumUpdate,
     classNowPerson,
+    qnaRegister,
+    qnaRead,
 }

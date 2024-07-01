@@ -1,7 +1,7 @@
 <template>
        
             <Items :objectProp="citems"/>
-     
+
     <h4 class="fw-bold" style="margin-top:80px">커리큘럼</h4>
     <div class="curriculum mt-5 ">
         <div class="d-flex mb-5" v-for="(cs,index) in curriculum" :key="index">
@@ -23,7 +23,7 @@
 
 <script setup>
 import classAPI from '@/apis/classAPI';
-import Items from '@/components/ClassItems.vue'
+import Items from '@/components/ClassItems.vue';
 import store from '@/store';
 import axios from 'axios';
 import { ref} from 'vue';

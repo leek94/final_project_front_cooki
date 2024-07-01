@@ -348,6 +348,7 @@ function isvalidPersonCount(){
     }
 }
 
+
 function isValidPrice(){
     if(classes.value.cprice < 0){
         classes.value.cprice =0;
@@ -356,7 +357,7 @@ function isValidPrice(){
     }
 }
 
-//// ------- 등록 function ------------------------------------------------------------------------------------------------------------------------
+//------- class data insert function ---------------------------------------------------------------------------------------------- 
 
 function registerClass(){
 
@@ -425,6 +426,7 @@ function registerCuriculums(cno){
 async function submitClass() {
     let cno;    
 
+    //----- 기본 정보 받기 -----
     try{
         //axios를 통해서 저장한 formData 전달하기
         const response = await registerClass();

@@ -9,7 +9,7 @@
              <div class="d-flex mb-1">
                   <div class="me-3" style="font-weight: bold;">닉네임</div>
              </div>
-            <form @submit.prevent="">
+            <form>
                 <div class="w-100 row pe-5">
                     <div class="me-3" style="font-weight: bold;">제목 : </div>
                     <input class="p-3 ms-3 me-3 border rounded" style="color: grey;" placeholder="문의 제목을 입력해주세요." v-model="qna.qtitle">
@@ -220,10 +220,12 @@ function qnaClose(index) {
 
 //------- qna data delete function ---------------------------------------------------------------------------------------------- 
 
-
 function qnaDelete(index) {
-    qnaArray.value.splice(index, 1);
     console.log("큐앤에이 삭제 함수 클릭")
+    let qno = qnaArray.value[index].qno;
+    console.log("큐앤에이 번호: ", qno);
+    qnaArray.value.splice(index, 1);
+    return classAPI.qnaDelete(qno);
 }
 
 function qreplyResist(index) {

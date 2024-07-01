@@ -61,7 +61,7 @@
             <button class="btn btn-danger btn-lg" v-if="applyresult===1" @click="showDialogCancel">취소하기</button>
         <ClassOverPersonModal id="overPersonModal"/>
         <button class="btn btn-secondary btn-lg disabled" v-if="applyresult===-1" @click="showDialogCancel">모집마감</button>
-        <CRegisterModal id="registerModal" @close="hideDialogR"/>
+        <CRegisterModal id="registerModal" @close="hideDialogR(cno)"/>
         <CCancelModal id="cancelModal" @cancel="realCancelDialog(cno)"/>
     </div>
     </div>
@@ -176,6 +176,7 @@ async function detailInfo(cno){
     const response = await classAPI.classRead(cno)
     // 클래스 정보를 상태 값인 info에 넣어줌
     info.value = response.data.classes;
+   
 
     // 날짜 포맷
     let today = new Date();
@@ -184,6 +185,7 @@ async function detailInfo(cno){
     deadline.setDate(deadline.getDate() -1);
     //클래스 참여자 수 
     countPerson.value= response.data.participants;
+    console.log("몇명인지 확인 : " + countPerson.value);
     let todaydf = dateFormat(today);
     let deadlinedf = dateFormat(deadline);
     console.log(todaydf>deadlinedf)
@@ -202,7 +204,7 @@ async function detailInfo(cno){
             console.log("취소2");
             applyresult.value=1; // 신청이 되어 있으면 취소로 변경
         } else {
-            // 인원이 마감되었다는 모달 띄우고
+        // 인원이 마감되었다는 모달 띄우고@!
             console.log("모집 마감");
             //신청하지 않았을 때
             applyresult.value=-1; // 모집 마감으로 변경
@@ -269,25 +271,26 @@ async function isParticipant(cno){
         console.log("applyresult 확인" + applyresult.value);
 
     }else{ // 마감 시간 && 마감 인원 전에 성공
-        const response1 = await classAPI.classNowPerson(64);
-        console.log("몇명인지 확인: " + response1.data.nowPerson);
-        console.log("마감 시간 전 - 성공");
-        countPerson.value = response1.data.nowPerson;
+        console.log("마지막 콘솔 찍힘")
         registerModal.show();
-        applyresult.value=1; // 취소하기로 변경
-        console.log("applyresult 확인 성공" + applyresult.value);
+        
         // 모집인원 확인 해야함
     }
 
 }
 
-function hideDialogR(){
+async function hideDialogR(cno){
+    const response1 = await classAPI.classNowPerson(64);
+    countPerson.value = response1.data.nowPerson;
+    // 저장 밑 인원 파악
     registerModal.hide();
+    applyresult.value=1; // 취소하기로 변경
 }
 
 function showDialogCancel(){
     CancelModal.show();
 }
+
 async function realCancelDialog(cno){
     // await를 붙여야 비동기 프로세스에서 동기적으로 일이 처리됨
     await classAPI.deleteClassApply(64);

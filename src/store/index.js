@@ -1,8 +1,9 @@
 import { createStore } from 'vuex';
+import classes from "./classes";
 import axiosConfig from '@/apis/axiosConfig';
 
 // store 객체를 생성
-export default createStore({
+const store= createStore({
   // 루트 상태를 정의
   state: {
     userId: "",
@@ -56,5 +57,7 @@ export default createStore({
    }
   },
   modules: {
+    classes:classes
   }
-})
+});
+export default store;

@@ -68,6 +68,11 @@ function qnaRegister(qnaData){
 function qnaRead(cno){
     return axios.get("/class/qnaList/" + cno);
 }
+
+function qnaUpdate(qnaData){
+    return axios.put("/class/qnaUpdate", qnaData)
+}
+
 export default {
     classRegister,
     itemRegister,
@@ -83,4 +88,5 @@ export default {
     classNowPerson,
     qnaRegister,
     qnaRead,
+    qnaUpdate,
 }

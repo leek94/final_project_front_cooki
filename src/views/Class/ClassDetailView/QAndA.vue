@@ -61,7 +61,7 @@
                 <div class="flex-grow-1 row justify-content-end">
                     <!-- 작성자에게만 보여야 하는 버튼 -->
                     <div class="text-end">
-                        <button class="px-2 mx-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold; " @click="qnaUpdate(index)">수정</button>
+                        <button class="px-2 mx-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold; " @click="qnaUpdateOpen(index)">수정</button>
                         <button class="px-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="qnaDelete(index)">삭제</button>
                     </div>
                 </div>
@@ -196,15 +196,30 @@ function dateFormat(date) {
 
 //------- qna data update function ---------------------------------------------------------------------------------------------- 
 
-function qnaUpdate(index) {
-    console.log("큐앤에이수정시작")
+function qnaUpdateOpen(index) {
     isQnaArray.value[index] = !isQnaArray.value[index];
-    console.log(isQnaArray.value[0], isQnaArray.value[1])
+    console.log("큐앤에이 수정창 열기")
+}
+
+function qnaUpdate(index) {
+    console.log("큐앤에이 수정 시작")
+    //console.log(isQnaArray.value[0], isQnaArray.value[1])
+    //qnaArray.value[index]= {qtitle: qna.value.qtitle, qcontent: qna.value.qcontent};
+    qna.value.qtitle = qnaArray.value[index].qtitle;
+    qna.value.qcontent = qnaArray.value[index].qcontent;
+    qna.value.qno = qnaArray.value[index].qno;
+    console.log("큐엔에이 수정 정보", JSON.parse(JSON.stringify(qna.value)));
+    isQnaArray.value[index] = !isQnaArray.value[index];
+    return classAPI.qnaUpdate(JSON.parse(JSON.stringify(qna.value)));
+
 }
 
 function qnaClose(index) {
     isQnaArray.value[index] = !isQnaArray.value[index];
 }
+
+//------- qna data delete function ---------------------------------------------------------------------------------------------- 
+
 
 function qnaDelete(index) {
     qnaArray.value.splice(index, 1);

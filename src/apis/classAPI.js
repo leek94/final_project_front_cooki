@@ -16,17 +16,6 @@ function curriculumRegister(curriculumData) {
     return axios.post("/class/curriculumRegister", curriculumData);
 }
 
-//클래스 기본 정보 읽기
-function classRead(cno) {
-    return axios.get("/class/classDetail/" + cno);
-}
-
-//클래스 현재 인원 정보 읽기
-function classNowPerson(cno) {
-    return axios.get("/class/classNowPerson/" + cno);
-}
-
-
 //클래스 커리큘럼, 재료 읽기
 function curriculumAndItemRead(cno) {
     //pathVariable 로 데이터 전송 (경로상에 데이터를 실어줌)
@@ -50,11 +39,33 @@ function curriculumUpdate(curriculumData, cno) {
 
 //클래스 썸네일 이미지 갯수 세기
 function getThumbimgCount(cno){
-    return axios.get(`/class/getThumbimgCount/${cno}`)
+    return axios.get(`/class/getThumbimgCount/${cno}`);
 }
+
+//클래스 기본 정보 읽기
+function classRead(cno) {
+    return axios.get("/class/classDetail/" + cno);
+}
+
+//클래스 현재 인원 정보 읽기
+function classNowPerson(cno) {
+    return axios.get("/class/classNowPerson/" + cno);
+}
+
+// 현재 인원 수가 넘었는 지 체크
+function classOverPerson(cno){
+    return axios.get("/class/classOverPerson"+cno);
+}
+
+// 신청을 했었는 지 확인
+function isParticipant(cno){
+    return axios.get("/class/isParticipant/"+cno);
+}
+
+// 클래스 신청하기
 //querystring 방식으로 값을 전달할 경우 두번째 인자에는 객체가 오고 세번째 인자에 파라미터 값을 전달 
-function SetClassApply(cno, cpersoncount){
-    return axios.post("/class/classApply",null,{params:{cno,cpersoncount}});
+function SetClassApply(cno){
+    return axios.post("/class/classApply",null,{params:cno});
 }
 
 function deleteClassApply(cno){
@@ -90,6 +101,8 @@ export default {
     itemUpdate,
     curriculumUpdate,
     classNowPerson,
+    isParticipant,
+    classOverPerson,
     qnaRegister,
     qnaRead,
     qnaUpdate,

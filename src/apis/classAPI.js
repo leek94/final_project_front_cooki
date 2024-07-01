@@ -53,8 +53,8 @@ function classNowPerson(cno) {
 }
 
 // 현재 인원 수가 넘었는 지 체크
-function classOverPerson(cno){
-    return axios.get("/class/classOverPerson"+cno);
+function classOverPerson(cno, cpersoncount){
+    return axios.get(`/class/classOverPerson/${cno}/${cpersoncount}`);
 }
 
 // 신청을 했었는 지 확인
@@ -65,7 +65,7 @@ function isParticipant(cno){
 // 클래스 신청하기
 //querystring 방식으로 값을 전달할 경우 두번째 인자에는 객체가 오고 세번째 인자에 파라미터 값을 전달 
 function SetClassApply(cno){
-    return axios.post("/class/classApply",null,{params:cno});
+    return axios.post("/class/classApply",null,{params:{cno}});
 }
 
 function deleteClassApply(cno){

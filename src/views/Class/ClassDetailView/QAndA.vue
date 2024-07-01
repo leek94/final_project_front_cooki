@@ -40,8 +40,8 @@
             <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;">
             <div class="flex-grow-1 row my-3">
                 <div class="d-flex mb-1">
-                    <div class="me-3" style="font-weight: bold;">닉네임</div>
-                    <div style="color: grey; font-size: small">년-월-일 시:분</div>
+                    <div class="me-3" style="font-weight: bold;">{{ qna.mnickname}}</div>
+                    <div style="color: grey; font-size: small">{{ qna.qdate }}</div>
                 </div>
                 <div style="color: grey; font-weight: bold;">
                     {{ qna.qtitle }}
@@ -61,7 +61,7 @@
                 <div class="flex-grow-1 row justify-content-end">
                     <!-- 작성자에게만 보여야 하는 버튼 -->
                     <div class="text-end">
-                        <button class="px-2 mx-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold; " @click="qnaUpdate(index)">수정</button>
+                        <button class="px-2 mx-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold; " @click="qnaUpdateOpen(index)">수정</button>
                         <button class="px-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="qnaDelete(index)">삭제</button>
                     </div>
                 </div>
@@ -139,51 +139,87 @@
 
 <script setup>
 import { ref } from 'vue';
+import classAPI from '@/apis/classAPI';
+
+// 추후 변경 예정
+const cno = 81;
 
 const isQna = ref(false);
-const isQnaArray = ref([
-
-]);
+const isQnaArray = ref([]);
 const isWrite = ref(false);
 const isWriteArray = ref([]);
 
 const qna = ref({});
 const qnaArray = ref([
-    {
-    qtitle:'문의제목1',
-    qcontent:'문의내용111입니다.',
-    qreply: '댓글 1111입니다'
-    },
-    {
-    qtitle:'문의제목2',
-    qcontent:'문의내용2222입니다.',
-    qreply: '댓글 22222입니다'
-    },
-    {
-    qtitle:'문의제목3333333',
-    qcontent:'문의내용33333입니다.',
-    qreply: ''
-    },
-    {
-    qtitle:'문의제목44444',
-    qcontent:'문의내용444444입니다.',
-    qreply: ''
-    },
 ])
 
+
+//------- qna data insert function ---------------------------------------------------------------------------------------------- 
+
 function qnaInsert() {
-    qnaArray.value.push({qtitle: qna.value.qtitle, qcontent: qna.value.qcontent});
+    qna.value = {qtitle: qna.value.qtitle, qcontent: qna.value.qcontent, cno: cno};
+    console.log("큐엔에이 제목", JSON.parse(JSON.stringify(qna.value)));
+    return classAPI.qnaRegister(JSON.parse(JSON.stringify(qna.value)));
+}
+
+//------- qna data read function ---------------------------------------------------------------------------------------------- 
+
+async function getQna(cno){
+    try{
+        const response = await classAPI.qnaRead(cno);
+        qnaArray.value = response.data.qnaList;
+        //console.log(typeof qnaArray.value[0].qdate);
+        //qnaArray 안에 있는 qna들을 반복문을 통해 하나씩 꺼내기
+        for(let i=0; qnaArray.value.length; i++){
+            //꺼낸 qna 날짜 값을 dateFormat함수를 호출 하여 2024-06-28와 같은 형태로 바꾸기
+            //이 때 new Date(qnaArray.value[i].qdate)를 해주는 이유는 dateFormat 함수가 제대로 작동하기 위해서는 매개변수가 Date타입이어야 하기 때문
+            //그 전의 무슨 타입이 었는지 궁금하다면 console.log(typeof qnaArray.value[i].qdate); 
+            //new Date()이후에는 Date타입
+            //추가로 할일 xml에서 order by를 통해 최신 댓글이 맨 위로 갈 수 있도록 설정
+            qnaArray.value[i].qdate = dateFormat(new Date(qnaArray.value[i].qdate));
+        }
+    } catch(error) {
+        console.log(error);
+    }
+    console.log("큐앤에이 목록:", qnaArray.value);
+}
+
+getQna(cno);
+
+//dateFormating (2024-06-28)
+function dateFormat(date) {
+    let dateFormat = date.getFullYear() +
+    '-' + ((date.getMonth() +1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) +
+    '-' + (date.getDate() < 10 ? "0" + date .getDate() : date.getDate());
+    return dateFormat;
+}
+
+//------- qna data update function ---------------------------------------------------------------------------------------------- 
+
+function qnaUpdateOpen(index) {
+    isQnaArray.value[index] = !isQnaArray.value[index];
+    console.log("큐앤에이 수정창 열기")
 }
 
 function qnaUpdate(index) {
-    console.log("큐앤에이수정시작")
+    console.log("큐앤에이 수정 시작")
+    //console.log(isQnaArray.value[0], isQnaArray.value[1])
+    //qnaArray.value[index]= {qtitle: qna.value.qtitle, qcontent: qna.value.qcontent};
+    qna.value.qtitle = qnaArray.value[index].qtitle;
+    qna.value.qcontent = qnaArray.value[index].qcontent;
+    qna.value.qno = qnaArray.value[index].qno;
+    console.log("큐엔에이 수정 정보", JSON.parse(JSON.stringify(qna.value)));
     isQnaArray.value[index] = !isQnaArray.value[index];
-    console.log(isQnaArray.value[0], isQnaArray.value[1])
+    return classAPI.qnaUpdate(JSON.parse(JSON.stringify(qna.value)));
+
 }
 
 function qnaClose(index) {
     isQnaArray.value[index] = !isQnaArray.value[index];
 }
+
+//------- qna data delete function ---------------------------------------------------------------------------------------------- 
+
 
 function qnaDelete(index) {
     qnaArray.value.splice(index, 1);

@@ -70,7 +70,11 @@ function qnaRead(cno){
 }
 
 function qnaUpdate(qnaData){
-    return axios.put("/class/qnaUpdate", qnaData)
+    return axios.put("/class/qnaUpdate", qnaData);
+}
+
+function qnaDelete(qno){
+    return axios.delete("/class/qnaDelete/" + qno);
 }
 
 export default {
@@ -89,4 +93,5 @@ export default {
     qnaRegister,
     qnaRead,
     qnaUpdate,
+    qnaDelete,
 }

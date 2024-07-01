@@ -220,10 +220,12 @@ function qnaClose(index) {
 
 //------- qna data delete function ---------------------------------------------------------------------------------------------- 
 
-
 function qnaDelete(index) {
-    qnaArray.value.splice(index, 1);
     console.log("큐앤에이 삭제 함수 클릭")
+    let qno = qnaArray.value[index].qno;
+    console.log("큐앤에이 번호: ", qno);
+    qnaArray.value.splice(index, 1);
+    return classAPI.qnaDelete(qno);
 }
 
 function qreplyResist(index) {

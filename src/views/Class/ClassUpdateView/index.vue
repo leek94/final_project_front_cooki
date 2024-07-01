@@ -386,7 +386,54 @@ function isValidPrice(){
     }
 }
 
-// ------- 수정 function ------------------------------------------------------------------------------------------------------------------------
+// ----------------------------------------------- read function -----------------------------------------------
+
+async function getClass(cno) {
+    try{
+        const response = await classAPI.classRead(cno);
+        // <backend>에서 map 으로 전달 받기 때문에 response.data가 아닌 response.data.classes로 get 해야함
+        classes.value = response.data.classes;
+        classes.value.cdday = new Date(classes.value.cdday);
+        const stime = classes.value.cstarttime.split(":");
+        classes.value.cstarttime =  { hours:stime[0], minutes:stime[1]};
+        const etime = classes.value.cendtime.split(":");
+        classes.value.cendtime =  { hours:etime[0], minutes:etime[1]};
+        const addresses = classes.value.caddress.split(",");
+        classes.value.caddress = addresses[0];
+        classes.value.cdetailaddress = addresses[1];
+    } catch(error) {
+        console.log(error);
+    }
+    const response = await classAPI.getThumbimgCount(cno);
+    imgCount.value=response.data;
+}
+
+getClass(cno);
+
+async function getCurriclumAndItem(cno) {
+    try{
+        //<back>에서 map<String, Object>로 보내주는 커리큘럼과 재료 data 가져오기
+        const response = await classAPI.curriculumAndItemRead(cno);
+        console.log(response.data);
+        // response.data -> map의 object로 접근하기
+        // response.data.curriculum -> 각 속성의 값을 가져오기
+        curiculums.value = response.data.curriculums;
+        for(let i=0; i<curiculums.value.length; i++){
+            nowCuImgs.value.push(true);
+            isCuImg.value.push(false);
+        }
+        cuRow = curiculums.value.length;
+        classitems.value = response.data.classItems;
+
+    } catch(error) {
+        console.log(error);
+    }
+}
+
+getCurriclumAndItem(cno);
+
+// ----------------------------------------------- update function -----------------------------------------------
+
 
 function updateClass(){
     // registClass와 비슷하지만 id나 hitcount 등 수정할 필요가 없는 속성들은 append 해주지 않음
@@ -454,6 +501,8 @@ function updateCuriculum(index){
 
 async function submitClass() {
     let cno;    
+
+    //----- 클래스 업데이트 -----
     try{
         //axios를 통해서 저장한 formData 전달하기
         const response = await updateClass();
@@ -463,63 +512,16 @@ async function submitClass() {
         console.log("데이터 전달 안됨");
     }
 
+    //----- 재료 업데이트 -----
     updateClassItem();
 
-    //----- 커리큘럼 받기 -----
+    //----- 커리큘럼 업데이트 -----
     //여러 단계의 커리큘럼을 받기 위해 커리큘럼 배열의 길이만큼 for문 실행
     //<back>에 전달시 사진 하나하나를 여러번 전달해주는 문법 
-
     for(let i=0; i<curiculums.value.length; i++) {
         const response = await updateCuriculum(i);
     }
 }
-
-// --------------------------------------------------------------------------
-
-async function getClass(cno) {
-    try{
-        const response = await classAPI.classRead(cno);
-        // <backend>에서 map 으로 전달 받기 때문에 response.data가 아닌 response.data.classes로 get 해야함
-        classes.value = response.data.classes;
-        classes.value.cdday = new Date(classes.value.cdday);
-        const stime = classes.value.cstarttime.split(":");
-        classes.value.cstarttime =  { hours:stime[0], minutes:stime[1]};
-        const etime = classes.value.cendtime.split(":");
-        classes.value.cendtime =  { hours:etime[0], minutes:etime[1]};
-        const addresses = classes.value.caddress.split(",");
-        classes.value.caddress = addresses[0];
-        classes.value.cdetailaddress = addresses[1];
-    } catch(error) {
-        console.log(error);
-    }
-    const response = await classAPI.getThumbimgCount(cno);
-    imgCount.value=response.data;
-}
-
-getClass(cno);
-
-async function getCurriclumAndItem(cno) {
-    try{
-        //<back>에서 map<String, Object>로 보내주는 커리큘럼과 재료 data 가져오기
-        const response = await classAPI.curriculumAndItemRead(cno);
-        console.log(response.data);
-        // response.data -> map의 object로 접근하기
-        // response.data.curriculum -> 각 속성의 값을 가져오기
-        curiculums.value = response.data.curriculums;
-        for(let i=0; i<curiculums.value.length; i++){
-            nowCuImgs.value.push(true);
-            isCuImg.value.push(false);
-        }
-        cuRow = curiculums.value.length;
-        classitems.value = response.data.classItems;
-
-    } catch(error) {
-        console.log(error);
-    }
-}
-
-getCurriclumAndItem(cno);
-
 
 </script>
 

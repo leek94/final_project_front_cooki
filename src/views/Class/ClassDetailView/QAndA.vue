@@ -9,7 +9,7 @@
              <div class="d-flex mb-1">
                   <div class="me-3" style="font-weight: bold;">닉네임</div>
              </div>
-            <form @submit.prevent="">
+            <form>
                 <div class="w-100 row pe-5">
                     <div class="me-3" style="font-weight: bold;">제목 : </div>
                     <input class="p-3 ms-3 me-3 border rounded" style="color: grey;" placeholder="문의 제목을 입력해주세요." v-model="qna.qtitle">

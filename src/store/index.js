@@ -7,7 +7,8 @@ const store= createStore({
   // 루트 상태를 정의
   state: {
     userId: "",
-    accessToken: ""
+    accessToken: "",
+    mrole:""
   },
 
   // 루트 상태를 읽는 메소드 정의
@@ -18,6 +19,9 @@ const store= createStore({
 
     getAccesstoken(state, getters, rootState, rootGetters){
       return state.accessToken;
+    },
+    getMrole(state, getters, rootState, rootGetters){
+      return state.mrole;
     }
   },
 
@@ -29,6 +33,9 @@ const store= createStore({
 
     setAccessToken(state, payload) {
       state.accessToken = payload;
+    },
+    setMrole(state, payload) {
+      state.mrole = payload;
     }
   },
 
@@ -37,6 +44,7 @@ const store= createStore({
     context.commit("setUserId",localStorage.getItem("userId") || "");
     const accessToken = localStorage.getItem("accessToken") || "";
     context.commit("setAccessToken",accessToken);
+    context.commit(localStorage.getItem("mrole") || "");
     if(accessToken !==""){
       axiosConfig.addAuthHeader(accessToken);
     }
@@ -44,15 +52,19 @@ const store= createStore({
    saveAuth(context, payload){
     context.commit("setUserId",payload.userId);
     context.commit("setAccessToken", payload.accessToken);
+    context.commit("setMrole",payload.getMrole);
     localStorage.setItem("userId", payload.userId);
     localStorage.setItem("accessToken", payload.accessToken);
+    localStorage.setItem("mrole",payload.mrole);
     axiosConfig.addAuthHeader(payload.accessToken);
    },
    deleteAuth(context, payload){
     context.commit("setUserId","");
     context.commit("setAccessToken","");
+    context.commit("setMrole","")
     localStorage.removeItem("userId");
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("mrole");
     axiosConfig.removeAuthHeader();
    }
   },

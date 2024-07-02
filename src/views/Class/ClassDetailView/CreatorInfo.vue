@@ -10,14 +10,14 @@
         </div>
         <div class="ms-5" style="width:30%"> 
             <h5 class="fw-bold">경력</h5>
-           <p v-for="(value,index) in info2" :key="index">
-            {{ value }}
+           <p v-for="(value,index) in careerinfo" :key="index">
+            {{ value.cacontent}}
            </p>
         </div>
         <div class="ms-5" style="width:30%"> 
             <h5 class="fw-bold">수상</h5>
-            <p v-for="(value,index) in info3" :key="index">
-            {{ value }}
+            <p v-for="(value,index) in awardinfo" :key="index">
+            {{ value.acontent }}
             </p>
         </div>
     </div>
@@ -27,21 +27,35 @@
 </template>
 
 <script setup>
+import classAPI from '@/apis/classAPI';
+import memberAPI from '@/apis/memberAPI';
+import store from '@/store';
+import { onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
 
-const mnickname="찌니의 빵공장"
+const route= useRoute();
 
-const info2=({
-    career1:"(현) 얌얌 베이킹 클래스 강사",
-    career2:"제과기능 장 자격증 보유",
-    career3:"베이커리를 위한 요소 관리사 보유",
-    career4:" 베이커리 페어 경연대회 심사위원",
+let cno =  route.query.cno;
+
+const mnickname=ref();
+
+const careerinfo=ref({
+    career:""
 })
 
-const info3=({
-    award1:"(현) 얌얌 베이킹 클래스 강사",
-    award2:"제과기능 장 자격증 보유",
+const awardinfo=ref({
+    award:""
     
-})
+});
+info(cno);
+async function info(cno){
+    const response=await memberAPI.getCreatorInfo(cno);
+    careerinfo.value=response.data.career;
+    console.log("sef"+response.data.career)
+    awardinfo.value=response.data.awards;
+    mnickname.value= response.data.mnickname;
+}
+
 </script>
 
 <style scoped>

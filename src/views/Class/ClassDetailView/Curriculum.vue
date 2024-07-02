@@ -6,7 +6,7 @@
     <div class="curriculum mt-5 ">
         <div class="d-flex mb-5" v-for="(cs,index) in curriculum" :key="index">
             <div class="cimg">
-                <img style= "width:140p; height:140px; border-radius: 20px" :src="`${axios.defaults.baseURL}/class/curriculumattach/81/${cs.cuorder}?accessToken=${store.state.accessToken}`">
+                <img :src="`${axios.defaults.baseURL}/class/curriculumattach/${cno}/${cs.cuorder}?accessToken=${store.state.accessToken}`">
             </div>
             <div class="cinfo" style=" text-align: left; margin-left: 50px; align-content: center">
                 <div>
@@ -27,6 +27,11 @@ import Items from '@/components/ClassItems.vue';
 import store from '@/store';
 import axios from 'axios';
 import { ref} from 'vue';
+import { useRoute } from 'vue-router';
+
+const route= useRoute();
+const cno=route.query.cno;
+console.log("cno"+cno)
 
 const curriculum=ref([
     {
@@ -40,7 +45,7 @@ let citems = ref([{
     classItem:""
 }])
 
-curri(81);
+curri(cno);
 async function curri(cno){
     const response = await classAPI.curriculumAndItemRead(cno);
     console.log(response.data);
@@ -53,7 +58,9 @@ async function curri(cno){
 
 <style scoped>
 img{
-    max-width: 140px;
-    max-height: 140px;
+    width: 140px;
+    height: 140px;
+    border-radius: 20px;
+    object-fit: cover;
 }
 </style>

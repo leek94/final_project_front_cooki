@@ -1,12 +1,14 @@
 import { createStore } from 'vuex';
+import classes from "./classes";
 import axiosConfig from '@/apis/axiosConfig';
 
 // store 객체를 생성
-export default createStore({
+const store= createStore({
   // 루트 상태를 정의
   state: {
     userId: "",
-    accessToken: ""
+    accessToken: "",
+    mrole:""
   },
 
   // 루트 상태를 읽는 메소드 정의
@@ -17,6 +19,9 @@ export default createStore({
 
     getAccesstoken(state, getters, rootState, rootGetters){
       return state.accessToken;
+    },
+    getMrole(state, getters, rootState, rootGetters){
+      return state.mrole;
     }
   },
 
@@ -28,6 +33,9 @@ export default createStore({
 
     setAccessToken(state, payload) {
       state.accessToken = payload;
+    },
+    setMrole(state, payload) {
+      state.mrole = payload;
     }
   },
 
@@ -36,6 +44,7 @@ export default createStore({
     context.commit("setUserId",localStorage.getItem("userId") || "");
     const accessToken = localStorage.getItem("accessToken") || "";
     context.commit("setAccessToken",accessToken);
+    context.commit(localStorage.getItem("mrole") || "");
     if(accessToken !==""){
       axiosConfig.addAuthHeader(accessToken);
     }
@@ -43,18 +52,24 @@ export default createStore({
    saveAuth(context, payload){
     context.commit("setUserId",payload.userId);
     context.commit("setAccessToken", payload.accessToken);
+    context.commit("setMrole",payload.getMrole);
     localStorage.setItem("userId", payload.userId);
     localStorage.setItem("accessToken", payload.accessToken);
+    localStorage.setItem("mrole",payload.mrole);
     axiosConfig.addAuthHeader(payload.accessToken);
    },
    deleteAuth(context, payload){
     context.commit("setUserId","");
     context.commit("setAccessToken","");
+    context.commit("setMrole","")
     localStorage.removeItem("userId");
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("mrole");
     axiosConfig.removeAuthHeader();
    }
   },
   modules: {
+    classes:classes
   }
-})
+});
+export default store;

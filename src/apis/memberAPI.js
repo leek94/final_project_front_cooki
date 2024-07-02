@@ -31,7 +31,10 @@ function setCareer(careers){
 
 function setAwards(awards){
     return axios.post( "/member/setAwards" ,awards);
-   
+}
+
+function getCreatorInfo(cno){
+    return axios.get("/member/getCreatroInfo/"+cno);
 }
 function login(member){
     
@@ -49,5 +52,6 @@ export default{
     join,
     setCareer,
     setAwards,
+    getCreatorInfo,
     login,
 }

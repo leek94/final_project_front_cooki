@@ -74,10 +74,10 @@
             <div class="container-fluid">
                 <ul class="navbar-nav d-flex w-100">
                     <li class="nav-item w-25" style="display: inline-block; ">
-                        <RouterLink class="menu" id="curriculum" to="/Class/ClassDetailView/Curriculum">커리큘럼</RouterLink>
+                        <RouterLink class="menu" id="curriculum" :to="`/Class/ClassDetailView/Curriculum?cno=${cno}`">커리큘럼</RouterLink>
                     </li>
                     <li class="nav-item w-25" style="display: inline-block; ">
-                        <RouterLink class="menu" id="creatorInfo" to="/Class/ClassDetailView/CreatorInfo">에디터경력</RouterLink> 
+                        <RouterLink class="menu" id="creatorInfo" :to="`/Class/ClassDetailView/CreatorInfo?cno=${cno}`">에디터경력</RouterLink> 
                     </li>
                     <li class="nav-item w-25" style="display: inline-block; ">
                         <RouterLink class="menu" id="qAnda" to="/Class/ClassDetailView/QAndA">QAndA</RouterLink> 
@@ -108,10 +108,14 @@ import { Modal } from 'bootstrap';
 import classAPI from '@/apis/classAPI';
 import axios from 'axios';
 import store from '@/store';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 const router = useRouter();
+const route= useRoute();
+
 // register Swiper custom elements
 register();
+console.log("cno"+route.query.cno)
+let cno=route.query.cno;
 
 //클래스 신청 성공 시 모달
 let registerModal=null;
@@ -148,16 +152,17 @@ let info = ref({
     cpersoncount:null,
     mnickname:"",
     cprice:"",
+    mid:""
 });
 
 //클래스 디테일 
-detailInfo(64);
+detailInfo(cno);
+console.log(cno);
 //신청 인원 상태 정의 
 let countPerson= ref(0)
 
 //신청 결과를 보여주기 위한 상태 정의 
 const applyresult= ref();
-
 
 //dateFormating (2024-06-28)
 function dateFormat(date) {
@@ -167,17 +172,15 @@ function dateFormat(date) {
     return dateFormat;
 }
 
-
-
 // 클래스 디테일 정보 받기 
 // class 기본 정보, 신청자 수, 마감이 되었는 지, 내가 신청을 했는지 여부 
+
 async function detailInfo(cno){
+
     // 서버에서 값 받아옴 - 클래스 정보
-    const response = await classAPI.classRead(cno)
+    const response = await classAPI.classRead(cno);
     // 클래스 정보를 상태 값인 info에 넣어줌
     info.value = response.data.classes;
-   
-
     // 날짜 포맷
     let today = new Date();
     let deadline = new Date(info.value.cdday);
@@ -190,28 +193,42 @@ async function detailInfo(cno){
     let deadlinedf = dateFormat(deadline);
     console.log(todaydf>deadlinedf)
 
+    // 인원 마감되었는지 확인하는 로직
+    const response1 = await classAPI.classOverPerson(cno, info.value.cpersoncount);
+
+    // 내가 신청했는 지 확인하는 로직
+    const response2 = await classAPI.isParticipant(cno);
+
+    // 현재 신청 인원이 몇명인지 확인하는 로직
+    const response3 = await classAPI.classNowPerson(cno);
+
+    countPerson.value = response3.data.nowPerson;
+
     // 날짜가 클래스 오픈 1일 전이면 시간 마감
     if(todaydf>=deadlinedf){
 
         console.log("마감1");
         applyresult.value=-1; // 모집 마감으로 변경
         
-    } else if(response.data.result==="fail") { //인원이 마감되었을 때
-            
-            console.log("인원 실패");
-        if(response.data.isParticipant!== null){
+    } else if(response1.data.result==="false") { //인원이 마감되었을 
+        // 인원 마감시
+        if(response2.data.result === "false"){
             //신청했을 때 -> 여기서 서버 확인해야함
             console.log("취소2");
             applyresult.value=1; // 신청이 되어 있으면 취소로 변경
         } else {
-        // 인원이 마감되었다는 모달 띄우고@!
             console.log("모집 마감");
             //신청하지 않았을 때
             applyresult.value=-1; // 모집 마감으로 변경
         }
     }else{ // 인원, 날짜 마감이 되지 않았고, 신청하지 않았을 경우
-        applyresult.value=0;
-
+        if(response2.data.result === "false"){
+            console.log("취소 확인")
+            applyresult.value=1;
+        } else {
+            console.log("신청 확인")
+            applyresult.value=0;
+        }
     }
 }
 
@@ -227,20 +244,20 @@ function checker(){
 //for문으로 몇개의 이미지를 출력해야 하는 지를 알기 위한 상태값 
 const imgcount=ref(null);
 
-thumbimgcount(64);
+thumbimgcount(cno);
 
 //axios로 썸네일 이미지 갯수 받아오기
 async function thumbimgcount(){
-    const response = await classAPI.getThumbimgCount(64);
+    const response = await classAPI.getThumbimgCount(cno);
     imgcount.value=response.data;
 }
 //v-if로 어떤 버튼이 보일지에 대한 상태값 
 const ip = ref(false);
-//
-async function isParticipant(cno){
 
-    // 신천 인원 확인을 위해 서버에서 값을 받아옴
-    const response = await classAPI.classNowPerson(64);
+
+async function isParticipant(cno){
+    // 신청 인원 확인을 위해 서버에서 값을 받아옴
+    const response = await classAPI.classNowPerson(cno);
     // cno와 마감인원을 back 단으로 전달
     // const response= await classAPI.SetClassApply(64, info.value.cpersoncount);
 
@@ -256,17 +273,21 @@ async function isParticipant(cno){
     let todaydf = dateFormat(today);
     let deadlinedf = dateFormat(deadline);
 
+    const response1 = await classAPI.isParticipant(cno); // 신청했는지
+    const response2 = await classAPI.classOverPerson(cno,info.value.cpersoncount); // 인원 넘었는지
+    
     // 신청하기 버튼이 눌렸을 때
     if(todaydf>=deadlinedf ){ // 이미 시간이 지났으므로 모달 뛰운 후 버튼 변경 -1
         console.log("마감 시간 이후로 - 마감 모집");
         applyresult.value=-1; // 마감 모집으로 변경
-        router.push('/login');
-    } else if(response.data.result === "backToLogin") {
+        // router.push('/login');
+        overPersonModal.show(); // 모달 띄움
+    } else if(response1.data.result === "backToLogin") {
         console.log("로그인 페이지로 이동 실행됨");
         console.log("" + response.data.result);
         router.push('/Member/LoginView'); // 로그인 페이지로 이동 시키기
-    } else if(response.data.result==="fail") { //인원이 마감되었을 때 - 마감 모집
-        if(response.data.isParticipant!== null){
+    } else if(response2.data.result ==="false") { //인원이 마감되었을 때 - 마감 모집
+        if(response1.data.result === "false"){ // 삭제 해도 되는 부분인거 같음
             // 인원 마감되었으나 신청했으므로 취소 버튼
             applyresult.value=1;
         } else{
@@ -279,17 +300,24 @@ async function isParticipant(cno){
         
     }else{ // 마감 시간 && 마감 인원 전에 성공
         console.log("마지막 콘솔 찍힘");
+        countPerson.value = response.data.nowPerson;
+        // 여기서 한번 흔들림
         registerModal.show();
         
         // 모집인원 확인 해야함
     }
-
 }
 
 async function hideDialogR(cno){
-    const response1 = await classAPI.classNowPerson(64);
-    countPerson.value = response1.data.nowPerson;
+    console.log("모달 닫음1");
+    
+    console.log("모달 닫음2");
     applyresult.value=1; // 취소하기로 변경
+    console.log("모달 닫음3");
+    const response = await classAPI.SetClassApply(cno);
+    const response1 = await classAPI.classNowPerson(cno);
+    countPerson.value = response1.data.nowPerson;
+    console.log("모달 닫음4");
     
     // 저장 밑 인원 파악
     registerModal.hide();
@@ -302,8 +330,8 @@ function showDialogCancel(){
 
 async function realCancelDialog(cno){
     // await를 붙여야 비동기 프로세스에서 동기적으로 일이 처리됨
-    await classAPI.deleteClassApply(64);
-    const response1 = await classAPI.classNowPerson(64);
+    await classAPI.deleteClassApply(cno);
+    const response1 = await classAPI.classNowPerson(cno);
     console.log("취소후 확인 인원: " + response1.data.nowPerson);
     countPerson.value = response1.data.nowPerson;
     applyresult.value=0;

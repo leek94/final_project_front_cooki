@@ -161,7 +161,6 @@ let countPerson= ref(0)
 //신청 결과를 보여주기 위한 상태 정의 
 const applyresult= ref();
 
-
 //dateFormating (2024-06-28)
 function dateFormat(date) {
     let dateFormat = date.getFullYear() +
@@ -170,19 +169,19 @@ function dateFormat(date) {
     return dateFormat;
 }
 
-
-
 // 클래스 디테일 정보 받기 
 // class 기본 정보, 신청자 수, 마감이 되었는 지, 내가 신청을 했는지 여부 
 
 async function detailInfo(cno){
 
     // 서버에서 값 받아옴 - 클래스 정보
-    const response = await classAPI.classRead(cno)
+    const response = await classAPI.classRead(64);
     // 클래스 정보를 상태 값인 info에 넣어줌
     info.value = response.data.classes;
+
     store.commit("classes/setUserId", info.value.mid);
     store.commit("classes/setCno", info.value.cno);
+
     // 날짜 포맷
     let today = new Date();
     let deadline = new Date(info.value.cdday);
@@ -195,28 +194,37 @@ async function detailInfo(cno){
     let deadlinedf = dateFormat(deadline);
     console.log(todaydf>deadlinedf)
 
+    // 인원 마감되었는지 확인하는 로직
+    const response1 = await classAPI.classOverPerson(64, info.value.cpersoncount);
+
+    // 내가 신청했는 지 확인하는 로직
+    const response2 = await classAPI.isParticipant(64);
+
     // 날짜가 클래스 오픈 1일 전이면 시간 마감
     if(todaydf>=deadlinedf){
 
         console.log("마감1");
         applyresult.value=-1; // 모집 마감으로 변경
         
-    } else if(response.data.result==="fail") { //인원이 마감되었을 때
-            
-            console.log("인원 실패");
-        if(response.data.isParticipant!== null){
-            //신청했을 때
+    } else if(response1.data.result==="fail") { //인원이 마감되었을 
+        // 인원 마감시
+        if(response2.data.result !== null){
+            //신청했을 때 -> 여기서 서버 확인해야함
             console.log("취소2");
             applyresult.value=1; // 신청이 되어 있으면 취소로 변경
         } else {
-        // 인원이 마감되었다는 모달 띄우고@!
             console.log("모집 마감");
             //신청하지 않았을 때
             applyresult.value=-1; // 모집 마감으로 변경
         }
     }else{ // 인원, 날짜 마감이 되지 않았고, 신청하지 않았을 경우
-        applyresult.value=0;
-
+        if(response2.data.result === "fail"){
+            console.log("취소 확인")
+            applyresult.value=1;
+        } else {
+            console.log("신청 확인")
+            applyresult.value=0;
+        }
     }
 }
 
@@ -241,11 +249,13 @@ async function thumbimgcount(){
 }
 //v-if로 어떤 버튼이 보일지에 대한 상태값 
 const ip = ref(false);
-//
-async function isParticipant(cno){
 
-    // cno와 마감인원을  back 단으로 전달
-    const response= await classAPI.SetClassApply(cno, info.value.cpersoncount);
+
+async function isParticipant(cno){
+    // 신청 인원 확인을 위해 서버에서 값을 받아옴
+    const response = await classAPI.classNowPerson(64);
+    // cno와 마감인원을 back 단으로 전달
+    // const response= await classAPI.SetClassApply(64, info.value.cpersoncount);
 
     console.log("personcount"+info.value.cpersoncount);
     console.log("is"+response.data.isParticipant);
@@ -259,29 +269,31 @@ async function isParticipant(cno){
     let todaydf = dateFormat(today);
     let deadlinedf = dateFormat(deadline);
 
+    const response1 = await classAPI.isParticipant(64); // 신청했는지
+    const response2 = await classAPI.classOverPerson(64,info.value.cpersoncount); // 인원 넘었는지
     // 신청하기 버튼이 눌렸을 때
     if(todaydf>=deadlinedf ){ // 이미 시간이 지났으므로 모달 뛰운 후 버튼 변경 -1
         console.log("마감 시간 이후로 - 마감 모집");
         applyresult.value=-1; // 마감 모집으로 변경
-        router.push('/login');
-    } else if(response.data.result === "backToLogin") {
+        // router.push('/login');
+        overPersonModal.show(); // 모달 띄움
+    } else if(response1.data.result === "backToLogin") {
         console.log("로그인 페이지로 이동 실행됨");
         console.log("" + response.data.result);
         router.push('/Member/LoginView'); // 로그인 페이지로 이동 시키기
-    } else if(response.data.result==="fail") { //인원이 마감되었을 때 - 마감 모집
-        console.log("인원 초과로 - 마감 모집");
-        console.log("applyresult 확인" + applyresult.value);
-        overPersonModal.show();
-        applyresult.value=-1; // 마감 모집으로 변경
-        console.log("applyresult 확인" + applyresult.value);
-
+    } else if(response2.data.result==="fail") { //인원이 마감되었을 때 - 마감 모집
+        if(response1.data.isParticipant!== null){ // 삭제 해도 되는 부분인거 같음
+            // 인원 마감되었으나 신청했으므로 취소 버튼
+            applyresult.value=1;
+        } else{
+            console.log("인원 초과로 - 마감 모집");
+            console.log("applyresult 확인" + applyresult.value);
+            overPersonModal.show();
+            applyresult.value=-1; // 마감 모집으로 변경
+            console.log("applyresult 확인" + applyresult.value);
+        }
+        
     }else{ // 마감 시간 && 마감 인원 전에 성공
-
-        const response1 = await classAPI.classNowPerson(cno);
-        console.log("몇명인지 확인: " + response1.data.nowPerson);
-        console.log("마감 시간 전 - 성공");
-        countPerson.value = response1.data.nowPerson;
-        console.log("마지막 콘솔 찍힘")
         registerModal.show();
         
         // 모집인원 확인 해야함
@@ -289,11 +301,18 @@ async function isParticipant(cno){
 }
 
 async function hideDialogR(cno){
+    console.log("모달 닫음1");
     const response1 = await classAPI.classNowPerson(64);
+    console.log("모달 닫음2");
     countPerson.value = response1.data.nowPerson;
+    applyresult.value=1; // 취소하기로 변경
+    console.log("모달 닫음3");
+    const response = await classAPI.SetClassApply(64);
+    console.log("모달 닫음4");
+    
     // 저장 밑 인원 파악
     registerModal.hide();
-    applyresult.value=1; // 취소하기로 변경
+    
 }
 
 function showDialogCancel(){

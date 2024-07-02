@@ -90,6 +90,9 @@ function qnaDelete(qno){
 function getClassList(){
     return axios.get("/class/getClassList")
 }
+function getSearchClass(searchTitle,searchText){
+    return axios.get("/ClassSearch/"+searchTitle+"/"+searchText)
+}
 
 export default {
     classRegister,
@@ -111,4 +114,5 @@ export default {
     qnaRead,
     qnaUpdate,
     qnaDelete,
+    getSearchClass
 }

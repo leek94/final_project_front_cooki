@@ -87,11 +87,15 @@ function qnaUpdate(qnaData){
 function qnaDelete(qno){
     return axios.delete("/class/qnaDelete/" + qno);
 }
+function getClassList(){
+    return axios.get("/class/getClassList")
+}
 
 export default {
     classRegister,
     itemRegister,
     curriculumRegister,
+    getClassList,
     classRead,
     curriculumAndItemRead,
     classUpdate,

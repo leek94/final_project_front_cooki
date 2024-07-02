@@ -3,7 +3,7 @@
     <li class="class-img-li ss">
         <div class="router-div" >
             <div class="class-image">
-                <img src="/images/photos/semi2.jpg">
+                <img :src="`${axios.defaults.baseURL}/class/thumbattach/${prop.objectProp.cno}/1`">
             </div>
             <div class="text-start" >
                 <div class="class-text text-start">
@@ -25,10 +25,10 @@
     <!-- 클래스 카드 끝 -->
 </template>
 <script setup>
+import axios from 'axios';
 import { ref } from 'vue';
 
 const prop = defineProps(["objectProp"]);
-
 
 // D-Day 구하는 함수
 function checker(cno){

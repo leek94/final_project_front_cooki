@@ -194,13 +194,13 @@ async function detailInfo(cno){
     console.log(todaydf>deadlinedf)
 
     // 인원 마감되었는지 확인하는 로직
-    const response1 = await classAPI.classOverPerson(64, info.value.cpersoncount);
+    const response1 = await classAPI.classOverPerson(cno, info.value.cpersoncount);
 
     // 내가 신청했는 지 확인하는 로직
-    const response2 = await classAPI.isParticipant(64);
+    const response2 = await classAPI.isParticipant(cno);
 
     // 현재 신청 인원이 몇명인지 확인하는 로직
-    const response3 = await classAPI.classNowPerson(64);
+    const response3 = await classAPI.classNowPerson(cno);
 
     countPerson.value = response3.data.nowPerson;
 
@@ -257,7 +257,7 @@ const ip = ref(false);
 
 async function isParticipant(cno){
     // 신청 인원 확인을 위해 서버에서 값을 받아옴
-    const response = await classAPI.classNowPerson(64);
+    const response = await classAPI.classNowPerson(cno);
     // cno와 마감인원을 back 단으로 전달
     // const response= await classAPI.SetClassApply(64, info.value.cpersoncount);
 
@@ -273,8 +273,8 @@ async function isParticipant(cno){
     let todaydf = dateFormat(today);
     let deadlinedf = dateFormat(deadline);
 
-    const response1 = await classAPI.isParticipant(64); // 신청했는지
-    const response2 = await classAPI.classOverPerson(64,info.value.cpersoncount); // 인원 넘었는지
+    const response1 = await classAPI.isParticipant(cno); // 신청했는지
+    const response2 = await classAPI.classOverPerson(cno,info.value.cpersoncount); // 인원 넘었는지
     
     // 신청하기 버튼이 눌렸을 때
     if(todaydf>=deadlinedf ){ // 이미 시간이 지났으므로 모달 뛰운 후 버튼 변경 -1
@@ -314,8 +314,8 @@ async function hideDialogR(cno){
     console.log("모달 닫음2");
     applyresult.value=1; // 취소하기로 변경
     console.log("모달 닫음3");
-    const response = await classAPI.SetClassApply(64);
-    const response1 = await classAPI.classNowPerson(64);
+    const response = await classAPI.SetClassApply(cno);
+    const response1 = await classAPI.classNowPerson(cno);
     countPerson.value = response1.data.nowPerson;
     console.log("모달 닫음4");
     

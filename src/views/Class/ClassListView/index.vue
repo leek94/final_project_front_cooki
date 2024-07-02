@@ -5,7 +5,6 @@
             <div class="recipe-title mb-5"><h3>클래스</h3></div>
             <SearchBar></SearchBar>
             <!-- 작성바 & 작성 버튼 -->
-            <RouterLink :to="`./ClassDetailView?cno=${cno}`" class="me-3">클래스 디테일</RouterLink>
             <RouterLink to="./ClassRegisterView">클래스 등록</RouterLink>
             
             <!-- main 시작 -->
@@ -18,12 +17,12 @@
                         <li class="clicked-li me-4" :class="{ active: activeIndex === 2 }" @click="setActive(2)">좋아요순</li>
                     </ul>
                 </div>
-                <!-- 클래스 리스트 -->
+                <!-- 클래스 리스트 -->u
                 <div class="main-box ss">
                     <ul class="main-img d-flex ss">
 
                     <!-- 클래스 카드 -->
-                    <ClassCard v-for="(clcard, index) in classCard" :key="index" :objectProp="clcard"/>
+                    <ClassCard v-for="(clcard, index) in classCard" :key="index" :objectProp="clcard" @click="routerLinkto(index)"></ClassCard>
                     </ul>
                 </div>
             </div>
@@ -33,121 +32,47 @@
 </template>
 
 <script setup>
+import classAPI from '@/apis/classAPI';
 import ClassCard from '@/components/ClassCard.vue';
 import SearchBar from '@/components/SearchBar.vue';
 import { ref } from 'vue';
-let cno=64;
+import { useRouter } from 'vue-router';
+
 const classCard = ref([
     {
-        mname: '손혜선씨',
+        cno:null,
+        mname: '',
         ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
-    },
-    {
-        mname: '손혜삼씨',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
-    },
-    {
-        mname: '손혜사씨',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
-    },
-    {
-        mname: '손혜선씨',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
-    },
-    {
-        mname: '손혜삼씨',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
-    },
-    {
-        mname: '손혜사씨',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
-    },
-    {
-        mname: '손혜선씨',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
-    },
-    {
-        mname: '손혜삼씨',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
-    },
-    {
-        mname: '손혜사씨',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
-    },
-    {
-        mname: '손혜선씨',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
-    },
-    {
-        mname: '손혜삼씨',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
-    },
-    {
-        mname: '손혜사씨',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
+        ccontent:"",
+        cdday: '', 
+        ctime:'',
+        cpersoncount: null,
+        cprice:null,
     },
 ])
+function dateFormat(date) {
+    let dateFormat = date.getFullYear() +
+    '-' + ((date.getMonth() +1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) +
+    '-' + (date.getDate() < 10 ? "0" + date .getDate() : date.getDate());
+    return dateFormat;
+}
+getClssList();
 
+async function getClssList(){
+    const response = await classAPI.getClassList();
+    classCard.value= await response.data.classes;
+    for(let i=0; i<classCard.value.length;i++){
+        let date = new Date(classCard.value[i].cdday);
+        classCard.value[i].cdday=await dateFormat(date);
+    }
+}
+const router= useRouter();
+
+function routerLinkto(index){
+  
+        router.push(`./ClassDetailView?cno=${classCard.value[index].cno}`);
+    
+}
 // 정렬을 위한 자바스크립트 시작
 const activeIndex = ref(0);
 

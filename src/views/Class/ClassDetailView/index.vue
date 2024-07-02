@@ -113,6 +113,8 @@ const router = useRouter();
 // register Swiper custom elements
 register();
 
+let cno=64;
+
 //클래스 신청 성공 시 모달
 let registerModal=null;
 //클래스 취소 시 모달
@@ -148,10 +150,11 @@ let info = ref({
     cpersoncount:null,
     mnickname:"",
     cprice:"",
+    mid:""
 });
-
+console.log("mid"+info.value.mid);
 //클래스 디테일 
-detailInfo(64);
+detailInfo(cno);
 //신청 인원 상태 정의 
 let countPerson= ref(0)
 
@@ -168,12 +171,16 @@ function dateFormat(date) {
 
 // 클래스 디테일 정보 받기 
 // class 기본 정보, 신청자 수, 마감이 되었는 지, 내가 신청을 했는지 여부 
+
 async function detailInfo(cno){
 
     // 서버에서 값 받아옴 - 클래스 정보
     const response = await classAPI.classRead(64);
     // 클래스 정보를 상태 값인 info에 넣어줌
     info.value = response.data.classes;
+
+    store.commit("classes/setUserId", info.value.mid);
+    store.commit("classes/setCno", info.value.cno);
 
     // 날짜 포맷
     let today = new Date();
@@ -238,11 +245,11 @@ function checker(){
 //for문으로 몇개의 이미지를 출력해야 하는 지를 알기 위한 상태값 
 const imgcount=ref(null);
 
-thumbimgcount(64);
+thumbimgcount(cno);
 
 //axios로 썸네일 이미지 갯수 받아오기
 async function thumbimgcount(){
-    const response = await classAPI.getThumbimgCount(64);
+    const response = await classAPI.getThumbimgCount(cno);
     imgcount.value=response.data;
 }
 //v-if로 어떤 버튼이 보일지에 대한 상태값 
@@ -250,7 +257,6 @@ const ip = ref(false);
 
 
 async function isParticipant(cno){
-
     // 신청 인원 확인을 위해 서버에서 값을 받아옴
     const response = await classAPI.classNowPerson(64);
     // cno와 마감인원을 back 단으로 전달
@@ -301,7 +307,6 @@ async function isParticipant(cno){
         
         // 모집인원 확인 해야함
     }
-
 }
 
 async function hideDialogR(cno){
@@ -326,8 +331,8 @@ function showDialogCancel(){
 
 async function realCancelDialog(cno){
     // await를 붙여야 비동기 프로세스에서 동기적으로 일이 처리됨
-    await classAPI.deleteClassApply(64);
-    const response1 = await classAPI.classNowPerson(64);
+    await classAPI.deleteClassApply(cno);
+    const response1 = await classAPI.classNowPerson(cno);
     console.log("취소후 확인 인원: " + response1.data.nowPerson);
     countPerson.value = response1.data.nowPerson;
     applyresult.value=0;

@@ -27,21 +27,32 @@
 </template>
 
 <script setup>
+import classAPI from '@/apis/classAPI';
+import memberAPI from '@/apis/memberAPI';
+import store from '@/store';
+import { onMounted, ref } from 'vue';
 
-const mnickname="찌니의 빵공장"
 
-const info2=({
-    career1:"(현) 얌얌 베이킹 클래스 강사",
-    career2:"제과기능 장 자격증 보유",
-    career3:"베이커리를 위한 요소 관리사 보유",
-    career4:" 베이커리 페어 경연대회 심사위원",
+let mid= store.state.classes.userId;
+let cno =  store.state.classes.cno;
+
+const mnickname=ref();
+
+const careerinfo=({
+    career:""
 })
 
-const info3=({
-    award1:"(현) 얌얌 베이킹 클래스 강사",
-    award2:"제과기능 장 자격증 보유",
+const awardinfo=({
+    award:""
     
-})
+});
+
+async function info(mid){
+    const response=await memberAPI.getCreatorInfo(mid);
+    careerinfo.value=response.data.career;
+    awardinfo.value=response.data.awards;
+}
+
 </script>
 
 <style scoped>

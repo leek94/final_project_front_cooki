@@ -199,15 +199,20 @@ async function detailInfo(cno){
     // 내가 신청했는 지 확인하는 로직
     const response2 = await classAPI.isParticipant(64);
 
+    // 현재 신청 인원이 몇명인지 확인하는 로직
+    const response3 = await classAPI.classNowPerson(64);
+
+    countPerson.value = response3.data.nowPerson;
+
     // 날짜가 클래스 오픈 1일 전이면 시간 마감
     if(todaydf>=deadlinedf){
 
         console.log("마감1");
         applyresult.value=-1; // 모집 마감으로 변경
         
-    } else if(response1.data.result==="fail") { //인원이 마감되었을 
+    } else if(response1.data.result==="false") { //인원이 마감되었을 
         // 인원 마감시
-        if(response2.data.result !== null){
+        if(response2.data.result === "false"){
             //신청했을 때 -> 여기서 서버 확인해야함
             console.log("취소2");
             applyresult.value=1; // 신청이 되어 있으면 취소로 변경
@@ -217,7 +222,7 @@ async function detailInfo(cno){
             applyresult.value=-1; // 모집 마감으로 변경
         }
     }else{ // 인원, 날짜 마감이 되지 않았고, 신청하지 않았을 경우
-        if(response2.data.result === "fail"){
+        if(response2.data.result === "false"){
             console.log("취소 확인")
             applyresult.value=1;
         } else {
@@ -270,6 +275,7 @@ async function isParticipant(cno){
 
     const response1 = await classAPI.isParticipant(64); // 신청했는지
     const response2 = await classAPI.classOverPerson(64,info.value.cpersoncount); // 인원 넘었는지
+    
     // 신청하기 버튼이 눌렸을 때
     if(todaydf>=deadlinedf ){ // 이미 시간이 지났으므로 모달 뛰운 후 버튼 변경 -1
         console.log("마감 시간 이후로 - 마감 모집");
@@ -280,8 +286,8 @@ async function isParticipant(cno){
         console.log("로그인 페이지로 이동 실행됨");
         console.log("" + response.data.result);
         router.push('/Member/LoginView'); // 로그인 페이지로 이동 시키기
-    } else if(response2.data.result==="fail") { //인원이 마감되었을 때 - 마감 모집
-        if(response1.data.isParticipant!== null){ // 삭제 해도 되는 부분인거 같음
+    } else if(response2.data.result ==="false") { //인원이 마감되었을 때 - 마감 모집
+        if(response1.data.result === "false"){ // 삭제 해도 되는 부분인거 같음
             // 인원 마감되었으나 신청했으므로 취소 버튼
             applyresult.value=1;
         } else{
@@ -293,6 +299,9 @@ async function isParticipant(cno){
         }
         
     }else{ // 마감 시간 && 마감 인원 전에 성공
+        console.log("마지막 콘솔 찍힘");
+        countPerson.value = response.data.nowPerson;
+        // 여기서 한번 흔들림
         registerModal.show();
         
         // 모집인원 확인 해야함
@@ -301,12 +310,13 @@ async function isParticipant(cno){
 
 async function hideDialogR(cno){
     console.log("모달 닫음1");
-    const response1 = await classAPI.classNowPerson(64);
+    
     console.log("모달 닫음2");
-    countPerson.value = response1.data.nowPerson;
     applyresult.value=1; // 취소하기로 변경
     console.log("모달 닫음3");
     const response = await classAPI.SetClassApply(64);
+    const response1 = await classAPI.classNowPerson(64);
+    countPerson.value = response1.data.nowPerson;
     console.log("모달 닫음4");
     
     // 저장 밑 인원 파악

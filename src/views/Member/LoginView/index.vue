@@ -40,7 +40,8 @@ async function handleLogin(){
             //store에서 saveAuth action을 실행시키기 위한 payload값 세팅
             const payload={
                 userId:response.data.mid,
-                accessToken:response.data.accessToken
+                accessToken:response.data.accessToken,
+                mrole:response.data.mrole
             };
 
             store.dispatch("saveAuth",payload);

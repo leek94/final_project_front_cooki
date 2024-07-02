@@ -123,6 +123,7 @@
 import { ref } from 'vue';
 import memberAPI from '@/apis/memberAPI'
 import { useRouter } from 'vue-router';
+import store from '@/store';
 
 // 멤버 객체 선언
 let member = ref( {
@@ -284,6 +285,7 @@ async function handleSubmit() {
     try{
         if (member.value.isEditor){
             member.value.mrole="ROLE_EDITOR"
+            
         } else{
             member.value.mrole="ROLE_USER"
         }

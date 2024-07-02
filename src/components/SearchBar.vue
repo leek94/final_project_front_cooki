@@ -7,7 +7,7 @@
                     <!-- 선택하는 셀렉터 -->
                     <select class="select-button" v-model="search.searchTitle">
                         <option value="all">전체</option>
-                        <option value="TitleContent">제목&내용만</option>
+                        <option value="titlecontent">제목&내용만</option>
                         <option value="ingredient">재료만</option>
                         <option value="category">카테고리만</option>
                     </select>

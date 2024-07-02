@@ -76,7 +76,7 @@
              <div class="d-flex mb-1">
                   <div class="me-3" style="font-weight: bold;">닉네임</div>
              </div>
-            <form @submit.prevent="quaFormSubmit">
+            <form>
                 <div class="w-100 row pe-5">
                     <div class="me-3" style="font-weight: bold;">제목 : </div>
                     <input class="p-3 ms-3 me-3 border rounded" style="color: grey;" placeholder="수정할 문의 제목을 입력해주세요." v-model="qna.qtitle">
@@ -85,7 +85,7 @@
                 </div>
                 <div class=" text-end mt-3 pe-5">
                     <button class="px-2 mx-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="qnaUpdate(index)">등록</button>
-                    <button class="px-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="qnaClose(index)">닫기</button>
+                    <button type="button" class="px-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="qnaClose(index)">닫기</button>
                 </div>
             </form>
         </div>
@@ -99,7 +99,7 @@
              <div class="d-flex mb-1">
                   <div class="me-3" style="font-weight: bold;">닉네임</div>
              </div>
-            <form @submit.prevent="handleForm">
+            <form>
                 <div class="w-100 row pe-5">
                     <textarea class="p-3 ms-3 me-3 border rounded" style="color: grey;" placeholder="문의에 대한 답글을 입력해주세요." v-model="qna.qreply"></textarea>
                 </div>
@@ -118,7 +118,7 @@
             <div class="flex-grow-1 row my-3">
                 <div class="d-flex mb-1">
                     <div class="me-3" style="font-weight: bold;">닉네임</div>
-                    <div style="color: grey; font-size: small">년-월-일 시:분</div>
+                    <div style="color: grey; font-size: small">{{ qna.qreplydate }}</div>
                 </div>
                 <div style="color: grey;">
                     {{ qna.qreply }}
@@ -150,9 +150,10 @@ const isWrite = ref(false);
 const isWriteArray = ref([]);
 
 const qna = ref({});
-const qnaArray = ref([
-])
+const qnaArray = ref([]);
 
+//취소 버튼 구현을 위한 qna 초기값 저장 배열 선언
+//const originalQnaArray = [{qtitle:'', qcontent:'', qreply:''}];
 
 //------- qna data insert function ---------------------------------------------------------------------------------------------- 
 
@@ -168,6 +169,7 @@ async function getQna(cno){
     try{
         const response = await classAPI.qnaRead(cno);
         qnaArray.value = response.data.qnaList;
+        console.log("큐앤에이어레이 길이111:" ,qnaArray.value.length);
         //console.log(typeof qnaArray.value[0].qdate);
         //qnaArray 안에 있는 qna들을 반복문을 통해 하나씩 꺼내기
         for(let i=0; qnaArray.value.length; i++){
@@ -177,11 +179,18 @@ async function getQna(cno){
             //new Date()이후에는 Date타입
             //추가로 할일 xml에서 order by를 통해 최신 댓글이 맨 위로 갈 수 있도록 설정
             qnaArray.value[i].qdate = dateFormat(new Date(qnaArray.value[i].qdate));
+            qnaArray.value[i].qreplydate = dateFormat(new Date(qnaArray.value[i].qreplydate));
+            // qna 정보 수정 취소 버튼 클릭시 초기값으로 돌려주기 위한 설정
+            qnaArray.value[i].originalQtitle = qnaArray.value[i].qtitle;
+            qnaArray.value[i].originalQcontent = qnaArray.value[i].qcontent;
+            qnaArray.value[i].originalQreply = qnaArray.value[i].qreply;
         }
     } catch(error) {
         console.log(error);
     }
-    console.log("큐앤에이 목록:", qnaArray.value);
+
+    console.log("큐앤에이어레이 길이:" , qnaArray.value.length);
+    console.log("큐앤에이 목록:", JSON.parse(JSON.stringify(qnaArray.value)));
 }
 
 getQna(cno);
@@ -203,19 +212,24 @@ function qnaUpdateOpen(index) {
 
 function qnaUpdate(index) {
     console.log("큐앤에이 수정 시작")
-    //console.log(isQnaArray.value[0], isQnaArray.value[1])
-    //qnaArray.value[index]= {qtitle: qna.value.qtitle, qcontent: qna.value.qcontent};
     qna.value.qtitle = qnaArray.value[index].qtitle;
     qna.value.qcontent = qnaArray.value[index].qcontent;
     qna.value.qno = qnaArray.value[index].qno;
-    console.log("큐엔에이 수정 정보", JSON.parse(JSON.stringify(qna.value)));
+    //qna 정보 수정 취소 버튼 클릭시 초기값으로 돌려주기 위한 설정
+    qnaArray.value[index].originalQtitle = qna.value.qtitle;
+    qnaArray.value[index].originalQcontent = qna.value.qcontent;
+    //console.log("큐엔에이 수정 정보", JSON.parse(JSON.stringify(qna.value)));
     isQnaArray.value[index] = !isQnaArray.value[index];
     return classAPI.qnaUpdate(JSON.parse(JSON.stringify(qna.value)));
-
 }
 
 function qnaClose(index) {
+    console.log("큐엔에이 닫기 정보", JSON.parse(JSON.stringify(qnaArray.value[index])));
+    //qna 정보 수정 취소 버튼 클릭시 초기값으로 돌려주기 위한 설정
+    qnaArray.value[index].qtitle = qnaArray.value[index].originalQtitle;
+    qnaArray.value[index].qcontent = qnaArray.value[index].originalQcontent;
     isQnaArray.value[index] = !isQnaArray.value[index];
+    
 }
 
 //------- qna data delete function ---------------------------------------------------------------------------------------------- 
@@ -228,27 +242,46 @@ function qnaDelete(index) {
     return classAPI.qnaDelete(qno);
 }
 
+//------- qna qreply data insert function ---------------------------------------------------------------------------------------------- 
+
 function qreplyResist(index) {
     isWriteArray.value[index] = !isWriteArray.value[index];
 }
 
 function qreplyInsert(index) {
+    qna.value.qreply = qnaArray.value[index].qreply;
+    qna.value.qno = qnaArray.value[index].qno;
+    qnaArray.value[index].originalQreply = qna.value.qreply
+    console.log("대댓글 수정 정보", JSON.parse(JSON.stringify(qna.value.qreply)));
+    console.log("큐엔에이 수정 정보", JSON.parse(JSON.stringify(qna.value)));
     isWriteArray.value[index] = !isWriteArray.value[index];
-    qnaArray.value.push({qtitle: qna.value.qreply});
-    console.log(isWrite.value);
+    return classAPI.qreplyUpdate(JSON.parse(JSON.stringify(qna.value)));
+    //qnaArray.value.push({qtitle: qna.value.qreply});
+    //console.log(isWrite.value);
 }
 
 function qreplyClose(index) {
+    qnaArray.value[index].qreply = qnaArray.value[index].originalQreply;
     isWriteArray.value[index] = !isWriteArray.value[index];
 }
+
+//------- qna qreply data update function ---------------------------------------------------------------------------------------------- 
 
 function qreplyUpdate(index) {
+    qna.value.qreply = qnaArray.value[index].qreply;
+    qna.value.qno = qnaArray.value[index].qno;
     isWriteArray.value[index] = !isWriteArray.value[index];
+    return classAPI.qreplyUpdate(JSON.parse(JSON.stringify(qna.value)));
 }
 
+//------- qna qreply data delete function ---------------------------------------------------------------------------------------------- 
+
 function qreplyDelete(index) {
-    // splice 메서드는 (삭제 시작 인덱스, 삭제할 요소의 개수) 형태로 인자를 받습니다.
     qnaArray.value[index].qreply = '';
+    qna.value.qreply = null;
+    qna.value.qno = qnaArray.value[index].qno;
+    console.log("큐엔에이 삭제 정보", JSON.parse(JSON.stringify(qna.value)));
+    return classAPI.qreplyUpdate(JSON.parse(JSON.stringify(qna.value)));
 }
 
 </script>

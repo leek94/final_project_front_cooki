@@ -94,6 +94,10 @@ function getSearchClass(searchTitle,searchText){
     return axios.get("/ClassSearch/"+searchTitle+"/"+searchText)
 }
 
+function qreplyUpdate(qreplyData){
+    return axios.put("/class/qreplyUpdate", qreplyData)
+}
+
 export default {
     classRegister,
     itemRegister,

@@ -74,10 +74,10 @@
             <div class="container-fluid">
                 <ul class="navbar-nav d-flex w-100">
                     <li class="nav-item w-25" style="display: inline-block; ">
-                        <RouterLink class="menu" id="curriculum" to="/Class/ClassDetailView/Curriculum">커리큘럼</RouterLink>
+                        <RouterLink class="menu" id="curriculum" :to="`/Class/ClassDetailView/Curriculum?cno=${cno}`">커리큘럼</RouterLink>
                     </li>
                     <li class="nav-item w-25" style="display: inline-block; ">
-                        <RouterLink class="menu" id="creatorInfo" to="/Class/ClassDetailView/CreatorInfo">에디터경력</RouterLink> 
+                        <RouterLink class="menu" id="creatorInfo" :to="`/Class/ClassDetailView/CreatorInfo?cno=${cno}`">에디터경력</RouterLink> 
                     </li>
                     <li class="nav-item w-25" style="display: inline-block; ">
                         <RouterLink class="menu" id="qAnda" to="/Class/ClassDetailView/QAndA">QAndA</RouterLink> 
@@ -108,12 +108,14 @@ import { Modal } from 'bootstrap';
 import classAPI from '@/apis/classAPI';
 import axios from 'axios';
 import store from '@/store';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 const router = useRouter();
+const route= useRoute();
+
 // register Swiper custom elements
 register();
-
-let cno=64;
+console.log("cno"+route.query.cno)
+let cno=route.query.cno;
 
 //클래스 신청 성공 시 모달
 let registerModal=null;
@@ -152,9 +154,10 @@ let info = ref({
     cprice:"",
     mid:""
 });
-console.log("mid"+info.value.mid);
+
 //클래스 디테일 
 detailInfo(cno);
+console.log(cno);
 //신청 인원 상태 정의 
 let countPerson= ref(0)
 
@@ -175,13 +178,9 @@ function dateFormat(date) {
 async function detailInfo(cno){
 
     // 서버에서 값 받아옴 - 클래스 정보
-    const response = await classAPI.classRead(64);
+    const response = await classAPI.classRead(cno);
     // 클래스 정보를 상태 값인 info에 넣어줌
     info.value = response.data.classes;
-
-    store.commit("classes/setUserId", info.value.mid);
-    store.commit("classes/setCno", info.value.cno);
-
     // 날짜 포맷
     let today = new Date();
     let deadline = new Date(info.value.cdday);

@@ -5,7 +5,7 @@
             <div class="recipe-title mb-5"><h3>클래스</h3></div>
             <SearchBar></SearchBar>
             <!-- 작성바 & 작성 버튼 -->
-            <RouterLink to="./ClassDetailView" class="me-3">클래스 디테일</RouterLink>
+            <RouterLink :to="`./ClassDetailView?cno=${cno}`" class="me-3">클래스 디테일</RouterLink>
             <RouterLink to="./ClassRegisterView">클래스 등록</RouterLink>
             
             <!-- main 시작 -->
@@ -36,7 +36,7 @@
 import ClassCard from '@/components/ClassCard.vue';
 import SearchBar from '@/components/SearchBar.vue';
 import { ref } from 'vue';
-
+let cno=64;
 const classCard = ref([
     {
         mname: '손혜선씨',

@@ -33,9 +33,8 @@ function setAwards(awards){
     return axios.post( "/member/setAwards" ,awards);
 }
 
-function getCreatorInfo(mid){
-    console.log("EFsfe"+mid);
-    return axios.get("/member/getCreatroInfo/"+mid);
+function getCreatorInfo(cno){
+    return axios.get("/member/getCreatroInfo/"+cno);
 }
 function login(member){
     

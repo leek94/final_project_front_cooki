@@ -10,14 +10,14 @@
         </div>
         <div class="ms-5" style="width:30%"> 
             <h5 class="fw-bold">경력</h5>
-           <p v-for="(value,index) in info2" :key="index">
-            {{ value }}
+           <p v-for="(value,index) in careerinfo" :key="index">
+            {{ value.cacontent}}
            </p>
         </div>
         <div class="ms-5" style="width:30%"> 
             <h5 class="fw-bold">수상</h5>
-            <p v-for="(value,index) in info3" :key="index">
-            {{ value }}
+            <p v-for="(value,index) in awardinfo" :key="index">
+            {{ value.acontent }}
             </p>
         </div>
     </div>
@@ -31,26 +31,29 @@ import classAPI from '@/apis/classAPI';
 import memberAPI from '@/apis/memberAPI';
 import store from '@/store';
 import { onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
 
+const route= useRoute();
 
-let mid= store.state.classes.userId;
-let cno =  store.state.classes.cno;
+let cno =  route.query.cno;
 
 const mnickname=ref();
 
-const careerinfo=({
+const careerinfo=ref({
     career:""
 })
 
-const awardinfo=({
+const awardinfo=ref({
     award:""
     
 });
-
-async function info(mid){
-    const response=await memberAPI.getCreatorInfo(mid);
+info(cno);
+async function info(cno){
+    const response=await memberAPI.getCreatorInfo(cno);
     careerinfo.value=response.data.career;
+    console.log("sef"+response.data.career)
     awardinfo.value=response.data.awards;
+    mnickname.value= response.data.mnickname;
 }
 
 </script>

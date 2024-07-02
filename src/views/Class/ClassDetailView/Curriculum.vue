@@ -27,8 +27,12 @@ import Items from '@/components/ClassItems.vue';
 import store from '@/store';
 import axios from 'axios';
 import { ref} from 'vue';
+import { useRoute } from 'vue-router';
 
-let cno =  store.state.classes.cno;
+const route= useRoute();
+const cno=route.query.cno;
+console.log("cno"+cno)
+
 const curriculum=ref([
     {
         cuorder:null,

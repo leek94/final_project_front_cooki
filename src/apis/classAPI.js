@@ -88,6 +88,10 @@ function qnaDelete(qno){
     return axios.delete("/class/qnaDelete/" + qno);
 }
 
+function qreplyUpdate(qreplyData){
+    return axios.put("/class/qreplyUpdate", qreplyData)
+}
+
 export default {
     classRegister,
     itemRegister,
@@ -107,4 +111,5 @@ export default {
     qnaRead,
     qnaUpdate,
     qnaDelete,
+    qreplyUpdate,
 }

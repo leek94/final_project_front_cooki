@@ -190,6 +190,9 @@ async function detailInfo(cno){
     // 인원 마감되었는지 확인하는 로직
     const response1 = await classAPI.classOverPerson(64, info.value.cpersoncount);
 
+    // 내가 신청했는 지 확인하는 로직
+    const response2 = await classAPI.isParticipant(64);
+
     // 날짜가 클래스 오픈 1일 전이면 시간 마감
     if(todaydf>=deadlinedf){
 
@@ -197,12 +200,8 @@ async function detailInfo(cno){
         applyresult.value=-1; // 모집 마감으로 변경
         
     } else if(response1.data.result==="fail") { //인원이 마감되었을 
-
-            // 내가 신청했는 지 확인하는 로직
-            const response2 = await classAPI.isParticipant(64);
-            console.log("인원 실패");
-
-        if(response2.data.isParticipant!== null){
+        // 인원 마감시
+        if(response2.data.result !== null){
             //신청했을 때 -> 여기서 서버 확인해야함
             console.log("취소2");
             applyresult.value=1; // 신청이 되어 있으면 취소로 변경
@@ -212,8 +211,13 @@ async function detailInfo(cno){
             applyresult.value=-1; // 모집 마감으로 변경
         }
     }else{ // 인원, 날짜 마감이 되지 않았고, 신청하지 않았을 경우
-        applyresult.value=0;
-
+        if(response2.data.result === "fail"){
+            console.log("취소 확인")
+            applyresult.value=1;
+        } else {
+            console.log("신청 확인")
+            applyresult.value=0;
+        }
     }
 }
 

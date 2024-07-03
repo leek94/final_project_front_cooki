@@ -18,7 +18,7 @@
              <div class="d-flex mb-1">
                   <div class="me-3" style="font-weight: bold;">닉네임</div>
              </div>
-            <form @submit.prevent="handleSubmit">
+            <form>
 
                 <!-- 별점 체크 -->
                 <!-- onclick 이벤트로 클릭스 하얀별에서 노란별로 바뀌고 폼 저장할 때 별점도 입력되게 하기 -->
@@ -68,7 +68,7 @@
             <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;">
             <div class="flex-grow-1 row my-3">
                 <div class="d-flex mb-1">
-                    <div class="me-3" style="font-weight: bold;">{{ review.memberMid }}</div>
+                    <div class="me-3" style="font-weight: bold;">{{ review.mid }}</div>
                     <div class="star-group me-3" v-for=" n in review.crratio" :key="n">
                         <img src="/images/photos/ic_star.png">
                     </div>
@@ -135,6 +135,7 @@
 </template>
 
 <script setup>
+import classAPI from '@/apis/classAPI';
 import { ref } from 'vue';
 
 const review = ref({});
@@ -178,10 +179,13 @@ function starCheck(index) {
     review.value.crratio = starClick.value - 1;
 }
 
+const cno = 81;
+
 function reviewInsert() {
-    reviewArray.value.push({crtitle: review.value.crtitle, crcontent: review.value.crcontent, crratio: review.value.crratio })
-    console.log(reviewArray.value);
-    console.log(review.value);
+    //reviewArray.value.push({crtitle: review.value.crtitle, crcontent: review.value.crcontent, crratio: review.value.crratio })
+    review.value = {crtitle: review.value.crtitle, crcontent: review.value.crcontent, crratio: review.value.crratio, cno: cno};
+    console.log("리뷰데이터: ", JSON.parse(JSON.stringify(review.value)));
+    return classAPI.reviewRegister(JSON.parse(JSON.stringify(review.value)));
 }
 
 function reviewUpdate(index) {

@@ -140,6 +140,7 @@
 <script setup>
 import { ref } from 'vue';
 import classAPI from '@/apis/classAPI';
+import { useStore } from 'vuex';
 
 // 추후 변경 예정
 const cno = 81;
@@ -151,6 +152,16 @@ const isWriteArray = ref([]);
 
 const qna = ref({});
 const qnaArray = ref([]);
+
+const store = useStore();
+
+
+// function getUserRole() {
+//     console.log("editor: ", store.state.userId);
+//     console.log("editor: ", JSON.parse(JSON.stringify(store.state)));
+//     return store.state.mrole;
+// }
+//getUserRole();
 
 //취소 버튼 구현을 위한 qna 초기값 저장 배열 선언
 //const originalQnaArray = [{qtitle:'', qcontent:'', qreply:''}];
@@ -184,6 +195,9 @@ async function getQna(cno){
             qnaArray.value[i].originalQtitle = qnaArray.value[i].qtitle;
             qnaArray.value[i].originalQcontent = qnaArray.value[i].qcontent;
             qnaArray.value[i].originalQreply = qnaArray.value[i].qreply;
+            
+            //console.log("유저롤: ", store.state.userId);
+            //console.log("유저롤: ", store.state.mrole);
         }
     } catch(error) {
         console.log(error);

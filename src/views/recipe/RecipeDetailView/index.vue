@@ -21,14 +21,14 @@
                     <div class="content-top">
                         <h4>{{ cookRecipes.rcontent }}</h4>
                     </div>
-                    <img src="/images/photos/recipeimg1.jpg" width="100%">
+                    <img :src="`${axios.defaults.baseURL}/recipe/thumbattach/${rno}`" width="100%">
                 </div>
             </div>
         </div>
 
         <div class="recipe-view-content">
             <!-- 재료 -->
-             <RecipeItems></RecipeItems>
+             <RecipeItems :objectProp="recipeItems" />
 
             <div class="recipe-step mt-3">
                 <div class="recipe-step-tit text-start">
@@ -47,15 +47,15 @@
                 <swiper-container class="swiper-container border-bottom">
                     <swiper-slide v-for="(recipe, index) in recipeCurriculumes" :key="index">
                         <!-- 이미지 주소 매핑하는 법 -->
-                        <img :src="recipe.rcimg" class="swiper-img">
+                        <img :src="`${axios.defaults.baseURL}/recipe/recipeprocessattach/${rno}/${recipe.rporder}`" class="swiper-img">
 
                         <div class="recipe-step-cont">
                             <p class="step-h mt-3 text-start">
-                                <span>Step {{ recipe.rcorderNum }}.</span>
-                                <span>{{ recipe.rctitle }}</span>
+                                <span>Step {{ recipe.rporder}}.</span>
+                                <span>{{ recipe.rptitle }}</span>
                             </p>
                             <p class="step-desc mt-2 text-start">
-                                {{ recipe.rccontent }}
+                                {{ recipe.rpcontent }}
                             </p>
                             
                         </div>
@@ -68,30 +68,27 @@
 </template>
 
 <script setup>
-import RecipeItems from '@/components/RecipeItems.vue'
 import { register } from 'swiper/element/bundle';
-import { ref, onMounted } from "vue";
+import { ref, onMounted, TrackOpTypes } from "vue";
+import recipeAPI from '@/apis/recipeAPI';
+import axios from 'axios';
+import RecipeItems from '@/components/Items.vue';
+
+const rno = 55;
 
 const cookRecipes = ref({
     rtitle:'자작자작 서울식 소불고기',rdate:'2024.06.11 08:00' , rcontent:'촉촉하게, 감칠맛 가득 불고기 만드는 법! 좋아하는 채소와 떡, 당면 등 재료를 마음껏 추가해 완성',
 });
 
 const recipeCurriculumes = ref([
-    {rcimg:'/images/photos/semi2.jpg',rcorderNum:1, rctitle:'양념 만들기', 
-    rccontent:'생강과 대파는 곱게 다져주세요. 모든 양념 재료를 넣고 잘 섞어 양념을 만들어 주세요. (간장6, 연두진3, 물 1.5컵, 설탕3, 물엿2, 참기름2, 다진 마늘4, 다진 생강1, 다진 대파1컵, 후추)' },
-    {rcimg:'/images/photos/recipeimg1.jpg',rcorderNum:2, rctitle:'양념 만들기', 
-    rccontent:'생강과 대파는 곱게 다져주세요. 모든 양념 재료를 넣고 잘 섞어 양념을 만들어 주세요. (간장6, 연두진3, 물 1.5컵, 설탕3, 물엿2, 참기름2, 다진 마늘4, 다진 생강1, 다진 대파1컵, 후추)' },
-    {rcimg:'/images/photos/thumb1.jpg',rcorderNum:3, rctitle:'양념 만들기', 
-    rccontent:'생강과 대파는 곱게 다져주세요. 모든 양념 재료를 넣고 잘 섞어 양념을 만들어 주세요. (간장6, 연두진3, 물 1.5컵, 설탕3, 물엿2, 참기름2, 다진 마늘4, 다진 생강1, 다진 대파1컵, 후추)' },
-    {rcimg:'/images/photos/thumb2.jpg',rcorderNum:4, rctitle:'양념 만들기', 
-    rccontent:'생강과 대파는 곱게 다져주세요. 모든 양념 재료를 넣고 잘 섞어 양념을 만들어 주세요. (간장6, 연두진3, 물 1.5컵, 설탕3, 물엿2, 참기름2, 다진 마늘4, 다진 생강1, 다진 대파1컵, 후추)' },
-    {rcimg:'/images/photos/thumb2.jpg',rcorderNum:5, rctitle:'양념 만들기', 
-    rccontent:'생강과 대파는 곱게 다져주세요. 모든 양념 재료를 넣고 잘 섞어 양념을 만들어 주세요. (간장6, 연두진3, 물 1.5컵, 설탕3, 물엿2, 참기름2, 다진 마늘4, 다진 생강1, 다진 대파1컵, 후추)' },
-    {rcimg:'/images/photos/thumb2.jpg',rcorderNum:6, rctitle:'양념 만들기', 
-    rccontent:'생강과 대파는 곱게 다져주세요. 모든 양념 재료를 넣고 잘 섞어 양념을 만들어 주세요. (간장6, 연두진3, 물 1.5컵, 설탕3, 물엿2, 참기름2, 다진 마늘4, 다진 생강1, 다진 대파1컵, 후추)' },
-
+    {
+        rporder: null, 
+        rptitle:null, 
+        rpcontent:null 
+    },
 ])
 
+let recipeItems = ref([]);
 register();
 
 onMounted(()=>{
@@ -145,8 +142,36 @@ onMounted(()=>{
     
 });
 
+//------ 데이터 얻어오기
+async function getRecipeData(rno){
+    try{
+        const response = await recipeAPI.recipeRead(rno);
+        cookRecipes.value = response.data
+        console.log("성공1");
+    } catch{
+        console.log("실패1");
+    }
 
+    try{
+        const response = await recipeAPI.processandItemRead(rno);
+        const itemsData = response.data.recipeItems;
+        for(let i=0; i<itemsData.length; i++){
+            Object.keys(itemsData[i]).forEach((keys)=>{
+                const content = itemsData[i][keys]
+                if(typeof content === "string"){
+                    recipeItems.value.push(content);
+                }
+            }
+            )
+        }
+        recipeCurriculumes.value = response.data.recipeProcess;
+        console.log("성공2");
+    } catch{
+        console.log("실패2");
+    }
+}
 
+getRecipeData(rno);
 </script>
 
 <style scoped>

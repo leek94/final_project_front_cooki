@@ -83,7 +83,6 @@ const handlecategory = (index) => {
 .search-box{
     width: 100%;
     margin-bottom: 4rem;
-  
 }
 
 .select-button{

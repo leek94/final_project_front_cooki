@@ -97,9 +97,16 @@ function getSearchClass(search){
 function qreplyUpdate(qreplyData){
     return axios.put("/class/qreplyUpdate", qreplyData)
 }
+
 function getReviewCount(cno){
     return axios.get("/class/reviewCount/"+cno)
 }
+
+
+function reviewRegister(reviewData) {
+    return axios.post("/class/reviewRegister", reviewData)
+}
+
 export default {
     classRegister,
     itemRegister,
@@ -121,5 +128,7 @@ export default {
     qnaUpdate,
     qnaDelete,
     getSearchClass,
-    getReviewCount
+    getReviewCount,
+    qreplyUpdate,
+    reviewRegister,
 }

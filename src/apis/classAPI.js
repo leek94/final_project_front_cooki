@@ -87,8 +87,8 @@ function qnaUpdate(qnaData){
 function qnaDelete(qno){
     return axios.delete("/class/qnaDelete/" + qno);
 }
-function getClassList(){
-    return axios.get("/class/getClassList")
+function getClassList(pageNo=1){
+    return axios.get("/class/getClassList", {params:{pageNo}})
 }
 function getSearchClass(search){
     return axios.post("/ClassSearch",search)

@@ -1,7 +1,6 @@
 <template>
     <div class="container_box ss">
-        
-        <form>
+    
             <div class="recipe-title mb-5"></div>
             <!--검색바-->
             <SearchBar @searchword="searchresult"></SearchBar>
@@ -29,8 +28,13 @@
                     </ul>
                 </div>
             </div>
-
-        </form>
+            <div class="text-center" style="border: none none solid none">
+                <button class="initial btn btn-sm" @click="changePageNo(1)"> 처음 </button>
+                <button class="prev btn btn-sm" v-if="pager.groupNo>1" @click="changePageNo(pager.startPageNo-1)">이전</button>
+                <button class="btn btn-sm" v-for="pageNo in pager.pageArray" :key="pageNo" @click="changePageNo(pageNo)">{{pageNo}}</button>
+                <button  class="btn btn-sm" v-if="pager.groupNo<pager.totalGroupNo" @click="changePageNo(pager.endPageNo+1)">다음</button>
+                <button class="last btn btn-sm" @click="changePageNo(pager.totalPageNo)">마지막</button>
+            </div>
     </div>
 </template>
 
@@ -39,7 +43,7 @@ import classAPI from '@/apis/classAPI';
 import ClassCard from '@/components/ClassCard.vue';
 import SearchBar from '@/components/SearchBar.vue';
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const classCard = ref([
     {
@@ -59,6 +63,10 @@ const classCard = ref([
     },
 ])
 
+const pager=ref({})
+const route= useRoute();
+const pageNo = ref(route.query.pageNo || 1)
+;
 function dateFormat(date) {
     let dateFormat = date.getFullYear() +
     '-' + ((date.getMonth() +1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) +
@@ -66,25 +74,29 @@ function dateFormat(date) {
     return dateFormat;
 }
 
-getClssList();
-async function getClssList(){
-    const response1 = await classAPI.getClassList();
-    console.log("sdf" + response1.data.classes);
-    classCard.value= response1.data.classes;
-    for(let i=0;i<classCard.value.length;i++){
-        const resoponse2= await classAPI.classNowPerson(classCard.value[i].cno);
-        classCard.value[i].cnowPerson = resoponse2.data.nowPerson;
-        const response3=await classAPI.getReviewCount(classCard.value[i].cno);
-        classCard.value[i].reviewCount= response3.data;
-        console.log("count"+classCard.value[i].reviewCount)
-        let date = new Date(classCard.value[i].cdday);
-        classCard.value[i].cdday= dateFormat(date);
+getClssList(pageNo.value);
+async function getClssList(pageNo){
+    try{
+        const response1 = await classAPI.getClassList(pageNo);
+        classCard.value= response1.data.classes;
+        pager.value=response1.data.pager;
+        for(let i=0;i<classCard.value.length;i++){
+            const resoponse2= await classAPI.classNowPerson(classCard.value[i].cno);
+            classCard.value[i].cnowPerson = resoponse2.data.nowPerson;
+            const response3=await classAPI.getReviewCount(classCard.value[i].cno);
+            classCard.value[i].reviewCount= response3.data;
+            console.log("count"+classCard.value[i].reviewCount)
+            let date = new Date(classCard.value[i].cdday);
+            classCard.value[i].cdday= dateFormat(date);
+        }
+    }catch(error){
+        console.log(error);
     }
 }
 const router= useRouter();
 
-function routerLinkto(index){
-        router.push(`./ClassDetailView?cno=${classCard.value[index].cno}`);
+function routerLinkto(index,pageNo){
+        router.push(`./ClassDetailView?cno=${classCard.value[index].cno}&pageNo=${pageNo}`);
     
 }
 const activeIndex = ref(0);
@@ -117,7 +129,10 @@ const setActive = (index) => {
     searchresult(data);
 };
 
-// 정렬을 위한 자바스크립트 끝
+//pager
+function changePageNo(clpageNo){
+    router.push(`/class/classListView?pageNo=${clpageNo}`);
+}
 
 </script>
 

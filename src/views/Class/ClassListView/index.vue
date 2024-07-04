@@ -17,7 +17,7 @@
                         <li class="clicked-li me-4" :class="{ active: activeIndex === 2 }" @click="setActive(2)">좋아요순</li>
                     </ul>
                 </div>
-                <!-- 클래스 리스트 -->u
+                <!-- 클래스 리스트 -->
                 <div class="main-box ss">
                     <ul class="main-img d-flex ss">
 

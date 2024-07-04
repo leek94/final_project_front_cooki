@@ -1,7 +1,7 @@
 <template>
     <div class="container-box">
         <!-- 좋아요 -->
-        <button id="like" class="like-button align-item-center" style="align-content: center;">
+        <button id="like" class="like-button align-item-center" :class="{active:cookRecipes.islike}" style="align-content: center;" @click="changeLike">
             <i class="fa-solid fa-heart like-heart"></i>
             <div class="like-text">좋아요</div>
         </button>
@@ -73,11 +73,14 @@ import { ref, onMounted, TrackOpTypes } from "vue";
 import recipeAPI from '@/apis/recipeAPI';
 import axios from 'axios';
 import RecipeItems from '@/components/Items.vue';
+import { useStore } from 'vuex';
 
+const store = useStore();
 const rno = 55;
 
 const cookRecipes = ref({
     rtitle:'자작자작 서울식 소불고기',rdate:'2024.06.11 08:00' , rcontent:'촉촉하게, 감칠맛 가득 불고기 만드는 법! 좋아하는 채소와 떡, 당면 등 재료를 마음껏 추가해 완성',
+    islike: false,
 });
 
 const recipeCurriculumes = ref([
@@ -90,6 +93,32 @@ const recipeCurriculumes = ref([
 
 let recipeItems = ref([]);
 register();
+
+async function changeLike() {
+    let btn = document.getElementById("like");
+    const islike = cookRecipes.value.islike;
+    let data = {rno:rno,mid:store.state.userId};
+    data = JSON.parse(JSON.stringify(data));
+    console.log(data);
+    if(islike){
+        try{
+            const response = await recipeAPI.recipeDislike(data);
+            console.log("dislike success")
+        }catch{
+            console.log("dislike fail")
+        }
+    }else{
+        try{
+            const response = await recipeAPI.recipeLike(data);
+            console.log("like success")
+        }catch{
+            console.log("like fail")
+        }
+    }
+
+    cookRecipes.value.islike = !cookRecipes.value.islike;
+    btn.classList.toggle('active');
+}
 
 onMounted(()=>{
     const swiperEl = document.querySelector('.swiper-container');
@@ -111,14 +140,6 @@ onMounted(()=>{
     prevBtn.addEventListener('click', () => {
       swiperEl.swiper.slidePrev();
       
-    });
-
-    // DOM에 있어야 Id 값을 찾을 수가 있음
-    var btn = document.getElementById("like")
-    btn.addEventListener('click', function(){
-    console.log("좋아요 클릭");
-    // 클래스에 active를 넣었다가 뺄 수 있게 함
-    btn.classList.toggle('active');
     });
 
     // var nextSlide;

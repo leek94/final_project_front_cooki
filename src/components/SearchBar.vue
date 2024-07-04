@@ -9,13 +9,14 @@
                         <option value="all">전체</option>
                         <option value="titlecontent">제목&내용만</option>
                         <option value="ingredient">재료만</option>
-                        <option value="category">카테고리만</option>
+                        <option value="category" v-if="activeIndex!==null">카테고리만</option>
                     </select>
 
                     <!-- 검색바 & 검색 버튼 & 카테고리 박스-->
                     <div class="d-flex search-input-box">
-                        <input class="search-input me-1" type="text" placeholder="어떤 레시피가 궁금하신가요?" v-model="search.searchText">
-                        <button type="submit" class="search-button align-items-center justify-content-center" @click="$emit('searchword',search.searchText, search.searchTitle)" >검색 &ensp;<i class="fa-solid fa-magnifying-glass"></i></button>
+                        <input v-if="search.searchTitle!=='category'" class="search-input me-1" type="text" placeholder="어떤 레시피가 궁금하신가요?" v-model="search.searchText">
+                        <input v-if="search.searchTitle==='category'" class="search-input me-1" type="text" placeholder="어떤 레시피가 궁금하신가요?" v-model="search.searchText" readonly>
+                        <button type="submit" class="search-button align-items-center justify-content-center" @click="$emit('searchword',search)" >검색 &ensp;<i class="fa-solid fa-magnifying-glass"></i></button>
                     </div>
                 </div>
             </form>
@@ -37,28 +38,25 @@
 <script setup>
 import { ref } from 'vue';
 const emit= defineEmits(['searchword'])
+
 let search = ref({
     searchText : "",
     searchTitle : "all"
 })
 
-function handleSubmit() {
-    // 검색에 대한 axios
-    console.log("검색어: " + search.value.searchText);
-    console.log("검색타이틀: " + search.value.searchTitle);
-}
+
 
 // 정렬을 위한 자바스크립트 시작
 const activeIndex = ref(null);
 
 const handlecategory = (index) => {
 
-    console.log("0번 실행");
-    console.log(index);
     activeIndex.value = index;
     search.value.searchText = index;
     search.value.searchTitle = 'category';
-    handleSubmit();
+    // 카테고리 버튼 선택시 자동으로 실행될 수 있게 
+    emit('searchword',search.value);
+    
 };
 
 </script>
@@ -83,7 +81,6 @@ const handlecategory = (index) => {
 .search-box{
     width: 100%;
     margin-bottom: 4rem;
-  
 }
 
 .select-button{

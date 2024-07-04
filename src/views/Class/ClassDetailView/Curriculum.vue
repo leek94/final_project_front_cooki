@@ -23,7 +23,7 @@
 
 <script setup>
 import classAPI from '@/apis/classAPI';
-import Items from '@/components/ClassItems.vue';
+import Items from '@/components/Items.vue';
 import store from '@/store';
 import axios from 'axios';
 import { ref} from 'vue';
@@ -41,16 +41,23 @@ const curriculum=ref([
     }
 ])
 
-let citems = ref([{
-    classItem:""
-}])
+let citems = ref([]);
 
 curri(cno);
 async function curri(cno){
     const response = await classAPI.curriculumAndItemRead(cno);
     console.log(response.data);
     curriculum.value = response.data.curriculums;
-    citems.value = response.data.classItems;
+    const itemsData = response.data.classItems;
+    for(let i=0; i<itemsData.length; i++){
+        Object.keys(itemsData[i]).forEach((keys)=>{
+            const content = itemsData[i][keys]
+            if(typeof content === "string"){
+                citems.value.push(content);
+            }
+        }
+        )
+    }
     console.log(response.data.classItems);
 }
 

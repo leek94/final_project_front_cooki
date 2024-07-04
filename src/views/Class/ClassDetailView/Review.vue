@@ -2,12 +2,11 @@
     <h4 class="fw-bold m-5">리뷰</h4>
     <!-- 평점 -->
     <div class="d-flex py-1 px-4" style="align-items: center;">
-        <h5 class="m-2 d-flex align-content-center" style="font-weight: bold;"> 클래스 평점</h5>
-        <div class="star">
-            <img src="/images/photos/ic_star.png">
-            <img src="/images/photos/ic_star.png">
+        <h5 class="m-2" style="font-weight: bold;"> 클래스 평점</h5>
+        <div class="star m-2">
             <img src="/images/photos/ic_star.png">
         </div>
+        <div class="m-2"  style="font-weight: bold;">{{ avgCrratio }}</div>
     </div>
 
     <!-- 댓글 등록 -->
@@ -25,8 +24,8 @@
                 <div class="d-flex pb-2" style="align-items: center;">
                     <div class="star" v-for="index in 5" :key="index" @click="starCheck(index)">
                         <!-- 클릭된 별의 인덱스보다 작은 숫자의 별들은 star로 표시/ 크거나 같은 숫자의 별들은 star_white로 표시 -->
-                        <div v-show="index<starClick"><img src="/images/photos/ic_star.png"> </div>
-                        <div v-show="index>=starClick"><img src="/images/photos/ic_star_white.png"></div>                
+                        <div v-show="index<=starClick"><img src="/images/photos/ic_star.png"> </div>
+                        <div v-show="index>starClick"><img src="/images/photos/ic_star_white.png"></div>                
                     </div>
                     <h6 class="m-2">평점을 입력해주세요</h6>
                 </div>
@@ -34,9 +33,9 @@
                 <!-- 리뷰 내용 입력 -->
                 <div class="w-100 row pe-5">
                     <div class="me-3" style="font-weight: bold;">제목 : </div>
-                    <input class="p-3 ms-3 me-3 border rounded" style="color: grey;" placeholder="리뷰 제목을 입력해주세요." v-model="review.crtitle">
+                    <input class="p-3 ms-3 me-3 border rounded" style="color: grey;" placeholder="리뷰 제목을 입력해주세요." v-model="reviewInit.crtitle">
                     <div class="me-3" style="font-weight: bold;">내용 : </div>
-                    <textarea class="p-3 ms-3 me-3 border rounded" style="color: grey;" placeholder="리뷰 내용을 입력해주세요." v-model="review.crcontent"></textarea>
+                    <textarea class="p-3 ms-3 me-3 border rounded" style="color: grey;" placeholder="리뷰 내용을 입력해주세요." v-model="reviewInit.crcontent"></textarea>
                 </div>
                 <div class=" text-end mt-3 pe-5">
                     <button class="px-2 mx-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="reviewInsert">등록</button>
@@ -61,14 +60,16 @@
         </div>
     </div>   
 
-    <!-- 리뷰 보기 / 수정 -->
+
+
+    <!------------------------------------------------ 리뷰 보기 / 수정 ------------------------------------------------>
     <div v-for="(review, index) in reviewArray" :key="index">
         <!-- 등록된 리뷰 보기 -->
         <div class="d-flex p-1" v-if="!isReviewArray[index]">
             <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;">
             <div class="flex-grow-1 row my-3">
                 <div class="d-flex mb-1">
-                    <div class="me-3" style="font-weight: bold;">{{ review.mid }}</div>
+                    <div class="me-3" style="font-weight: bold;">{{ review.mnickname }}</div>
                     <div class="star-group me-3" v-for=" n in review.crratio" :key="n">
                         <img src="/images/photos/ic_star.png">
                     </div>
@@ -82,7 +83,7 @@
                 </div>
                 <!-- 작성자에게만 보여야 하는 버튼 -->
                 <div class=" text-end mt-3 pe-5">
-                    <button class="px-2 mx-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="reviewUpdate(index)">수정</button>
+                    <button class="px-2 mx-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="reviewUpdateOpen(index)">수정</button>
                     <button class="px-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="reviewDelete(index)">삭제</button>
                 </div>
                 
@@ -105,14 +106,13 @@
                 <div class="d-flex mb-1">
                     <div class="me-3" style="font-weight: bold;">{{ review.memberMid }}</div>
                 </div>
-                <form @submit.prevent="handleSubmit">
-
+                <form>
                     <!-- 별점 체크 수정 -->
                     <div class="d-flex pb-2" style="align-items: center;">
-                        <div class="star" v-for="index in 5" :key="index" @click="starCheck(index)">
+                        <div class="star" v-for="starIndex in 5" :key="starIndex" @click="starCheckUpdate(index,starIndex)">
                             <!-- 클릭된 별의 인덱스보다 작은 숫자의 별들은 star로 표시/ 크거나 같은 숫자의 별들은 star_white로 표시 -->
-                            <div v-show="index<starClick"><img src="/images/photos/ic_star.png"> </div>
-                            <div v-show="index>=starClick"><img src="/images/photos/ic_star_white.png"></div>                
+                            <div v-show="starIndex<=review.crratio"><img src="/images/photos/ic_star.png"> </div>
+                            <div v-show="starIndex>review.crratio"><img src="/images/photos/ic_star_white.png"></div>                
                         </div>
                         <h6 class="m-2">평점을 입력해주세요</h6>
                     </div>
@@ -138,75 +138,116 @@
 import classAPI from '@/apis/classAPI';
 import { ref } from 'vue';
 
+const reviewInit = ref({});
 const review = ref({});
-const reviewArray = ref([
-    {
-        memberMid: '유저1',
-        crtitle:'리뷰제목111',
-        crcontent:'리뷰내용111',
-        crratio: 5,
-        crdate: '몇시몇분'
-    },
-    {
-        memberMid: '유저2',
-        crtitle:'리뷰제목222',
-        crcontent:'리뷰내용2222',
-        crratio: 3,
-        crdate: '몇시몇분'
-    },
-    {
-        memberMid: '유저3',
-        crtitle:'리뷰제목333',
-        crcontent:'리뷰내용333',
-        crratio: 4,
-        crdate: '몇시몇분'
-    },
-]);
+const reviewArray = ref([]);
 
 const isReview = ref(false);
 const isReviewArray = ref([]);
-
-//댓글 등록 시간 설정
-const todate = new Date;
-const crdate = new Date()
 
 //별점 체크 디폴트값 설정
 const starClick = ref(0);
 
 //별점 체크 함수
 function starCheck(index) {
-    starClick.value = index + 1;
-    review.value.crratio = starClick.value - 1;
+    starClick.value = index;
+    console.log("별점체크후에 저장되는 값:",index)
+    reviewInit.value.crratio = index;
+}
+
+//별점 수정 함수
+function starCheckUpdate(index, starIndex) {
+    console.log("어레이인덱스",index)  
+    console.log("별인덱스",starIndex)
+    reviewArray.value[index].crratio = starIndex;
+    //return classAPI.reviewUpdate(JSON.parse(JSON.stringify(reviewArray.value[index])));
 }
 
 const cno = 81;
 
+let avgCrratio = 0;
+
+//dateFormating (2024-06-28)
+function dateFormat(date) {
+    let dateFormat = date.getFullYear() +
+    '-' + ((date.getMonth() +1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) +
+    '-' + (date.getDate() < 10 ? "0" + date .getDate() : date.getDate());
+    return dateFormat;
+}
+
+//------- review data insert function ---------------------------------------------------------------------------------------------- 
+
 function reviewInsert() {
     //reviewArray.value.push({crtitle: review.value.crtitle, crcontent: review.value.crcontent, crratio: review.value.crratio })
-    review.value = {crtitle: review.value.crtitle, crcontent: review.value.crcontent, crratio: review.value.crratio, cno: cno};
-    console.log("리뷰데이터: ", JSON.parse(JSON.stringify(review.value)));
-    return classAPI.reviewRegister(JSON.parse(JSON.stringify(review.value)));
+    reviewInit.value = {crtitle: reviewInit.value.crtitle, crcontent: reviewInit.value.crcontent, crratio: reviewInit.value.crratio, cno: cno};
+    console.log("리뷰데이터: ", JSON.parse(JSON.stringify(reviewInit.value)));
+    return classAPI.reviewRegister(JSON.parse(JSON.stringify(reviewInit.value)));
+}
+
+//------- review data read function ---------------------------------------------------------------------------------------------- 
+
+async function getReview(cno) {
+    try{
+        const response = await classAPI.reviewRead(cno);
+        reviewArray.value = response.data.classReviewList;
+        avgCrratio = response.data.avgCrratio;
+        for(let i=0; i<reviewArray.value.length; i++){
+            reviewArray.value[i].crdate = dateFormat(new Date(reviewArray.value[i].crdate));
+            // review 정보 수정 취소 버튼 클릭시 초기값으로 돌려주기 위한 설정
+            reviewArray.value[i].originalCrtitle = reviewArray.value[i].crtitle;
+            reviewArray.value[i].originalCrcontent = reviewArray.value[i].crcontent;
+            reviewArray.value[i].originalCrratio = reviewArray.value[i].crratio;
+        }
+    } catch(error) {
+        console.log(error);
+    }
+    console.log("별점 평균:" , avgCrratio);
+    console.log("리뷰어레이 길이:" , reviewArray.value.length);
+    console.log("리뷰 목록:", JSON.parse(JSON.stringify(reviewArray.value)));
+}
+
+getReview(cno);
+
+//------- review data update function ---------------------------------------------------------------------------------------------- 
+
+function reviewUpdateOpen(index) {
+    isReviewArray.value[index] = !isReviewArray.value[index];
+    console.log("리뷰 수정창 열기")
 }
 
 function reviewUpdate(index) {
-    isReviewArray.value[index] = !isReviewArray.value[index];
     //reviewArray.value[index] = {crtitle: review.value.crtitle, crcontent: review.value.crcontent, crratio: review.value.crratio };
-    reviewArray.value[index].crtitle = review.value.crtitle;
-    reviewArray.value[index].crcontent = review.value.crcontent;
-    reviewArray.value[index].crratio = review.value.crratio;
-    console.log(starClick.value);
-    console.log(review.value.crratio);
-    console.log({crtitle: review.value.crtitle, crcontent: review.value.crcontent, crratio: review.value.crratio });
+    review.value.crtitle = reviewArray.value[index].crtitle
+    review.value.crcontent = reviewArray.value[index].crcontent;
+    //reviewArray.value[index].crratio = starClick.value;
+    review.value.crratio = reviewArray.value[index].crratio;
+    console.log(JSON.parse(JSON.stringify(review.value)))
 
-}
+    //review 정보 수정 취소 버튼 클릭시 초기값으로 돌려주기 위한 설정
+    reviewArray.value[index].originalCrtitle = review.value.crtitle;
+    reviewArray.value[index].originalCrcontent = review.value.crcontent;
+    reviewArray.value[index].originalCrratio = review.value.crratio;
+    isReviewArray.value[index] = !isReviewArray.value[index];
 
-function reviewDelete(index) {
-    reviewArray.value.splice(index, 1);
+    return classAPI.reviewUpdate(JSON.parse(JSON.stringify(reviewArray.value[index])));
 }
 
 function reviewClose(index) {
+    reviewArray.value[index].crtitle = reviewArray.value[index].originalCrtitle;
+    reviewArray.value[index].crcontent = reviewArray.value[index].originalCrcontent;
+    reviewArray.value[index].crratio = reviewArray.value[index].originalCrratio;
     isReviewArray.value[index] = !isReviewArray.value[index];
 }
+
+//------- review data delete function ---------------------------------------------------------------------------------------------- 
+
+function reviewDelete(index) {
+    let crno = reviewArray.value[index].crno;
+    reviewArray.value.splice(index, 1);
+    return classAPI.reviewDelete(crno);
+    
+}
+
 
 </script>
 

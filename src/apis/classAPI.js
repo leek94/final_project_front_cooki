@@ -102,7 +102,6 @@ function getReviewCount(cno){
     return axios.get("/class/reviewCount/"+cno)
 }
 
-
 function reviewRegister(reviewData) {
     return axios.post("/class/reviewRegister", reviewData)
 }
@@ -113,6 +112,10 @@ function reviewRead(cno){
 
 function reviewUpdate(reviewData){
     return axios.put("/class/reviewUpdate", reviewData)
+}
+
+function reviewDelete(crno){
+    return axios.delete("/class/reviewDelete/" + crno)
 }
 
 export default {
@@ -141,5 +144,6 @@ export default {
     reviewRegister,
     reviewRead,
     reviewUpdate,
+    reviewDelete,
 
 }

@@ -25,6 +25,14 @@ function itemUpdate(recipeItems){
     return axios.put("/recipe/recipeItemUpdate", recipeItems)
 }
 
+function recipeLike(likes){
+    return axios.post("/recipe/addLike", likes);
+}
+
+function recipeDislike(likes){
+    return axios.post("/recipe/deleteLike", likes);
+}
+
 export default{
     recipeRegister,
     recipeItemRegister,
@@ -33,5 +41,7 @@ export default{
     processandItemRead,
     recipeUpdate,
     processUpdate,
-    itemUpdate
+    itemUpdate,
+    recipeLike,
+    recipeDislike
 }

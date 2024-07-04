@@ -3,7 +3,9 @@
         
         <form>
             <div class="recipe-title mb-5"><h3>클래스</h3></div>
-            <SearchBar></SearchBar>
+            <!--검색바-->
+            <SearchBar @searchword="searchresult"></SearchBar>
+
             <!-- 작성바 & 작성 버튼 -->
             <RouterLink to="./ClassRegisterView">클래스 등록</RouterLink>
             
@@ -72,6 +74,10 @@ function routerLinkto(index){
   
         router.push(`./ClassDetailView?cno=${classCard.value[index].cno}`);
     
+}
+async function searchresult(searchText,searchTitle){
+    console.log("re"+searchText);
+   const response = classAPI.getSearchClass(searchTitle,searchText);
 }
 // 정렬을 위한 자바스크립트 시작
 const activeIndex = ref(0);

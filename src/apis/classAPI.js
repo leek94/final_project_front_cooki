@@ -90,9 +90,16 @@ function qnaDelete(qno){
 function getClassList(){
     return axios.get("/class/getClassList")
 }
+function getSearchClass(searchTitle,searchText){
+    return axios.get("/ClassSearch/"+searchTitle+"/"+searchText)
+}
 
 function qreplyUpdate(qreplyData){
     return axios.put("/class/qreplyUpdate", qreplyData)
+}
+
+function reviewRegister(reviewData) {
+    return axios.post("/class/reviewRegister", reviewData)
 }
 
 export default {
@@ -116,4 +123,6 @@ export default {
     qnaUpdate,
     qnaDelete,
     qreplyUpdate,
+    reviewRegister,
+    getSearchClass
 }

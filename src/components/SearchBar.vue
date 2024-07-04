@@ -15,7 +15,7 @@
                     <!-- 검색바 & 검색 버튼 & 카테고리 박스-->
                     <div class="d-flex search-input-box">
                         <input class="search-input me-1" type="text" placeholder="어떤 레시피가 궁금하신가요?" v-model="search.searchText">
-                        <button type="submit" class="search-button align-items-center justify-content-center" >검색 &ensp;<i class="fa-solid fa-magnifying-glass"></i></button>
+                        <button type="submit" class="search-button align-items-center justify-content-center" @click="$emit('searchword',search.searchText, search.searchTitle)" >검색 &ensp;<i class="fa-solid fa-magnifying-glass"></i></button>
                     </div>
                 </div>
             </form>
@@ -36,7 +36,7 @@
 
 <script setup>
 import { ref } from 'vue';
-
+const emit= defineEmits(['searchword'])
 let search = ref({
     searchText : "",
     searchTitle : "all"

@@ -98,8 +98,16 @@ function qreplyUpdate(qreplyData){
     return axios.put("/class/qreplyUpdate", qreplyData)
 }
 
-function reviewRegister(reviewData) {
+function reviewRegister(reviewData){
     return axios.post("/class/reviewRegister", reviewData)
+}
+
+function reviewRead(cno){
+    return axios.get("/class/reviewList/" + cno)
+}
+
+function reviewUpdate(reviewData){
+    return axios.put("/class/reviewUpdate", reviewData)
 }
 
 export default {
@@ -124,5 +132,7 @@ export default {
     qnaDelete,
     qreplyUpdate,
     reviewRegister,
-    getSearchClass
+    getSearchClass,
+    reviewRead,
+    reviewUpdate,
 }

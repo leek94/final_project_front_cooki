@@ -13,11 +13,15 @@
                     <h6>모집강사 : {{ prop.objectProp.mname }}</h6>
                 </div>
                 <div>
-                    <h6>모집인원 : 17/{{ prop.objectProp.cpersoncount }}</h6>
+                    <h6>모집인원 : {{prop.objectProp.cnowPerson}}/{{ prop.objectProp.cpersoncount }}</h6>
                 </div>
-                <div class="info d-flex mb-3">
+                <div class="info d-flex">
                     <div class="class-date border-left-solid me-3">강의날짜 : {{ prop.objectProp.cdday }}</div>
                     <div class="dday-box">D-{{ checker() }}</div>
+                </div>
+                <div class="d-flex">
+                    <div>리뷰수 : {{ prop.objectProp.reviewCount }}</div>
+                    <div>리뷰수 : {{ prop.objectProp.classRatio }}</div>
                 </div>
             </div>
         </div>
@@ -25,13 +29,15 @@
     <!-- 클래스 카드 끝 -->
 </template>
 <script setup>
+import classAPI from '@/apis/classAPI';
 import axios from 'axios';
 import { ref } from 'vue';
 
 const prop = defineProps(["objectProp"]);
 
+
 // D-Day 구하는 함수
-function checker(cno){
+function checker(){
 const today = new Date();
 // 날짜 형태가 2024-06-20여야만 가능 아니면 형태를 변경해서 넣어줘야함
 

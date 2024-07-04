@@ -2,7 +2,7 @@
     <div class="container_box ss">
         
         <form>
-            <div class="recipe-title mb-5"><h3>클래스</h3></div>
+            <div class="recipe-title mb-5"></div>
             <!--검색바-->
             <SearchBar @searchword="searchresult"></SearchBar>
 
@@ -14,9 +14,10 @@
                 <!-- 정렬 버튼 -->
                 <div class="sorted-box d-flex ">
                     <ul class="sorted-part d-flex">
-                        <li class="clicked-li me-4" :class="{ active: activeIndex === 0 }" @click="setActive(0)">최신순</li>
+                        <li class="clicked-li me-4" :class="{ active: activeIndex === 0 }" @click="setActive(0)">마감순</li>
                         <li class="clicked-li me-4" :class="{ active: activeIndex === 1 }" @click="setActive(1)">조회순</li>
-                        <li class="clicked-li me-4" :class="{ active: activeIndex === 2 }" @click="setActive(2)">좋아요순</li>
+                        <li class="clicked-li me-4" :class="{ active: activeIndex === 2 }" @click="setActive(2)">리뷰순</li>
+                        <li class="clicked-li me-4" :class="{ active: activeIndex === 3 }" @click="setActive(3)">평점순</li>
                     </ul>
                 </div>
                 <!-- 클래스 리스트 -->
@@ -48,51 +49,72 @@ const classCard = ref([
         ccontent:"",
         cdday: '', 
         ctime:'',
+        chitcount:null,
         cpersoncount: null,
         cprice:null,
+        cnowPerson:null,
+        reviewCount:null,
+        classRatio:null
+
     },
 ])
+
 function dateFormat(date) {
     let dateFormat = date.getFullYear() +
     '-' + ((date.getMonth() +1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) +
     '-' + (date.getDate() < 10 ? "0" + date .getDate() : date.getDate());
     return dateFormat;
 }
-getClssList();
 
+getClssList();
 async function getClssList(){
-    const response = await classAPI.getClassList();
-    classCard.value= await response.data.classes;
-    for(let i=0; i<classCard.value.length;i++){
+    const response1 = await classAPI.getClassList();
+    console.log("sdf" + response1.data.classes);
+    classCard.value= response1.data.classes;
+    for(let i=0;i<classCard.value.length;i++){
+        const resoponse2= await classAPI.classNowPerson(classCard.value[i].cno);
+        classCard.value[i].cnowPerson = resoponse2.data.nowPerson;
+        const response3=await classAPI.getReviewCount(classCard.value[i].cno);
+        classCard.value[i].reviewCount= response3.data;
+        console.log("count"+classCard.value[i].reviewCount)
         let date = new Date(classCard.value[i].cdday);
-        classCard.value[i].cdday=await dateFormat(date);
+        classCard.value[i].cdday= dateFormat(date);
     }
 }
 const router= useRouter();
 
 function routerLinkto(index){
-  
         router.push(`./ClassDetailView?cno=${classCard.value[index].cno}`);
     
 }
-async function searchresult(searchText,searchTitle){
-    console.log("re"+searchText);
-   const response = classAPI.getSearchClass(searchTitle,searchText);
+const activeIndex = ref(0);
+const data={
+    searchText:'', 
+    searchTitle:'all',
+    searchSort:0
+}
+async function searchresult(search){
+   data.searchText=search.searchText
+   data.searchTitle=search.searchTitle
+    console.log(data);
+    // 검색어와 검색 타이틀로 DB에서 확인해서 찾아옴
+    const response = await classAPI.getSearchClass(JSON.parse(JSON.stringify(data)));
+    classCard.value=response.data.searchClass;
+    for(let i=0; i<classCard.value.length;i++){
+        let date = new Date(classCard.value[i].cdday);
+        classCard.value[i].cdday=await dateFormat(date);
+        const resoponse2= await classAPI.classNowPerson(classCard.value[i].cno);
+        classCard.value[i].cnowPerson = resoponse2.data.nowPerson;
+        const response3=await classAPI.getReviewCount(classCard.value[i].cno);
+        classCard.value[i].reviewCount= response3.data; 
+    }
 }
 // 정렬을 위한 자바스크립트 시작
-const activeIndex = ref(0);
 
 const setActive = (index) => {
-  activeIndex.value = index;
-  
-  // 로직 axios
-  if(index == 0){
-    // 최신순 axios
-  } else if(index == 1) {
-    // 조회순 axios
-  } else {
-    // 좋아요순 axios
-  }
+    activeIndex.value = index;
+    data.searchSort= index;
+    searchresult(data);
 };
 
 // 정렬을 위한 자바스크립트 끝

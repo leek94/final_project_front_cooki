@@ -12,9 +12,9 @@
             <form>
                 <div class="w-100 row pe-5">
                     <div class="me-3" style="font-weight: bold;">제목 : </div>
-                    <input class="p-3 ms-3 me-3 border rounded" style="color: grey;" placeholder="문의 제목을 입력해주세요." v-model="qna.qtitle">
+                    <input class="p-3 ms-3 me-3 border rounded" style="color: grey;" placeholder="문의 제목을 입력해주세요." v-model="qnaInit.qtitle">
                     <div class="me-3" style="font-weight: bold;">내용 : </div>
-                    <textarea class="p-3 ms-3 me-3 border rounded" style="color: grey;" placeholder="문의 내용을 입력해주세요." v-model="qna.qcontent"></textarea>
+                    <textarea class="p-3 ms-3 me-3 border rounded" style="color: grey;" placeholder="문의 내용을 입력해주세요." v-model="qnaInit.qcontent"></textarea>
                 </div>
                 <div class=" text-end mt-3 pe-5">
                     <button class="px-2 mx-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="qnaInsert">등록</button>
@@ -150,6 +150,7 @@ const isQnaArray = ref([]);
 const isWrite = ref(false);
 const isWriteArray = ref([]);
 
+const qnaInit  = ref({});
 const qna = ref({});
 const qnaArray = ref([]);
 
@@ -169,9 +170,9 @@ const store = useStore();
 //------- qna data insert function ---------------------------------------------------------------------------------------------- 
 
 function qnaInsert() {
-    qna.value = {qtitle: qna.value.qtitle, qcontent: qna.value.qcontent, cno: cno};
-    console.log("큐엔에이 제목", JSON.parse(JSON.stringify(qna.value)));
-    return classAPI.qnaRegister(JSON.parse(JSON.stringify(qna.value)));
+    qnaInit.value = {qtitle: qnaInit.value.qtitle, qcontent: qnaInit.value.qcontent, cno: cno};
+    console.log("큐엔에이 제목", JSON.parse(JSON.stringify(qnaInit.value)));
+    return classAPI.qnaRegister(JSON.parse(JSON.stringify(qnaInit.value)));
 }
 
 //------- qna data read function ---------------------------------------------------------------------------------------------- 
@@ -195,7 +196,7 @@ async function getQna(cno){
             qnaArray.value[i].originalQtitle = qnaArray.value[i].qtitle;
             qnaArray.value[i].originalQcontent = qnaArray.value[i].qcontent;
             qnaArray.value[i].originalQreply = qnaArray.value[i].qreply;
-            
+            //
             //console.log("유저롤: ", store.state.userId);
             //console.log("유저롤: ", store.state.mrole);
         }

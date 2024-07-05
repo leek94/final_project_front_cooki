@@ -90,8 +90,8 @@ function qnaDelete(qno){
 function getClassList(pageNo=1){
     return axios.get("/class/getClassList", {params:{pageNo}})
 }
-function getSearchClass(search){
-    return axios.post("/ClassSearch",search)
+function getSearchClass(search, pageNo=1){
+    return axios.post("/ClassSearch",search,{params:{pageNo}})
 }
 
 function qreplyUpdate(qreplyData){

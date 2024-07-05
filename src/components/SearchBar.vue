@@ -22,7 +22,7 @@
             </form>
     
 
-            <div class="d-flex mb-5">
+            <div class="d-flex mb-5 " >
                 <input type="button" class="category-button" value="한식" :class="{ active: activeIndex === '한식' }" @click="handlecategory('한식')">
                 <input type="button" class="category-button" value="중식" :class="{ active: activeIndex === '중식' }" @click="handlecategory('중식')">
                 <input type="button" class="category-button" value="일식" :class="{ active: activeIndex === '일식' }" @click="handlecategory('일식')">
@@ -37,20 +37,30 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useRoute } from 'vue-router';
 const emit= defineEmits(['searchword'])
 
 let search = ref({
     searchText : "",
-    searchTitle : "all"
+    searchTitle : "all",
+    
 })
+
+const route = useRoute();
+
+search.value.searchText= route.query.searchText||'';
+search.value.searchTitle= route.query.searchTitle||'all';
+
 
 
 
 // 정렬을 위한 자바스크립트 시작
 const activeIndex = ref(null);
+activeIndex.value=search.value.searchText;
+
 
 const handlecategory = (index) => {
-
+    
     activeIndex.value = index;
     search.value.searchText = index;
     search.value.searchTitle = 'category';

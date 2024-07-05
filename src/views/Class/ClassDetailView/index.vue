@@ -91,7 +91,7 @@
         <hr style="margin:10px"/>
         <RouterView/>
         <div style="text-align: center; margin-top: 100px;">
-            <RouterLink to="/Class/ClassListView"><button class="backList btn btn-outline-success btn-sm">목록으로</button></RouterLink>
+            <RouterLink :to="`/Class/ClassListView?pageNo=${pageNo}&searchTitle=${searchTitle}&searchText=${searchText}&searchSort=${searchSort}`"><button class="backList btn btn-outline-success btn-sm">목록으로</button></RouterLink>
         </div>
         </div>
         
@@ -117,6 +117,10 @@ register();
 console.log("cno"+route.query.cno)
 let cno=route.query.cno;
 
+let pageNo= route.query.pageNo;
+let searchTitle = route.query.searchTitle;
+let searchText = route.query.searchText;
+let searchSort = route.query.searchSort;
 //클래스 신청 성공 시 모달
 let registerModal=null;
 //클래스 취소 시 모달

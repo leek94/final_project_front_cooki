@@ -33,15 +33,38 @@
                         <div class="checkError m-1" v-if="mnicknameResultError">올바른 형식의 닉네임을 입력해주세요</div>
                     </div>
                 
-                    <div class="row my-3 px-3">
+                    <div class="row my-3 px-3" >
                         <li class="green-point">비밀번호</li>
-                        <input class="p-2 border" v-model="member.mpassword" placeholder="알파벳 대소문자, 숫자를 혼용해서 8자 이상 15장 이하" @keyup="mpasswordCheck"/>
+                           <div class="m-0 p-0" style="position: relative; display: flex;" v-if="!showPassword" >
+                               <input class="p-2 border" type="password" style="width: 100%;" v-model="member.mpassword" placeholder="알파벳 대소문자, 숫자를 혼용해서 8자 이상 15장 이하" @keyup="mpasswordCheck"/>
+                               <button class="border-0 bg-white" style="position: absolute; top: 5px; bottom: 5px; right: 5px;" @click="showPasswordBtn">
+                                   <i class="fa-regular fa-eye border-0"></i>
+                               </button>
+                           </div>
+                           <div class="m-0 p-0" style="position: relative; display: flex;" v-if="showPassword" >
+                               <input class="p-2 border" style="width: 100%;" v-model="member.mpassword" placeholder="알파벳 대소문자, 숫자를 혼용해서 8자 이상 15장 이하" @keyup="mpasswordCheck"/>
+                               <button class="border-0 bg-white" style="position: absolute; top: 5px; bottom: 5px; right: 5px;" @click="showPasswordBtn">
+                                   <i class="fa-regular fa-eye-slash border-0"></i>
+                               </button>
+                           </div>
                         <div class="checkError m-1" v-if="mpasswordResultError">올바른 형식의 비밀번호를 입력해주세요</div>
                     </div>
                 
                     <div class="row my-3 px-3">
                         <li class="green-point">비밀번호 확인</li>
-                        <input class="p-2 border" v-model="member.mpasswordcheck" placeholder="비밀번호를 한 번 더입력해주세요" @keyup="mpasswordMatchCheck"/>
+                        <div class="m-0 p-0" style="position: relative; display: flex;" v-if="!showPasswordCheck" >
+                            <input class="p-2 border" type="password" style="width: 100%;" v-model="member.mpasswordcheck" placeholder="비밀번호를 한 번 더입력해주세요" @keyup="mpasswordMatchCheck"/>
+                            <button class="border-0 bg-white" style="position: absolute; top: 5px; bottom: 5px; right: 5px;" @click="showPasswordMatchBtn">
+                                <i class="fa-regular fa-eye border-0"></i>
+                            </button>
+                        </div>
+                        <div class="m-0 p-0" style="position: relative; display: flex;" v-if="showPasswordCheck" >
+                            <input class="p-2 border" style="width: 100%;" v-model="member.mpasswordcheck" placeholder="비밀번호를 한 번 더입력해주세요" @keyup="mpasswordMatchCheck"/>
+                            <button class="border-0 bg-white" style="position: absolute; top: 5px; bottom: 5px; right: 5px;" @click="showPasswordMatchBtn">
+                                <i class="fa-regular fa-eye-slash border-0"></i>
+                            </button>
+                        </div>
+
                         <div class="checkError m-1" v-if="mpasswordMatchError">입력한 비밀번호와 일치하지않습니다</div>
                         
                     </div>
@@ -111,7 +134,7 @@
                 </div>
 
                 <div>
-                    <button class="py-2 border rounded w-100" @click="joinFormSubmit">회원가입</button>
+                    <button class="btn py-2 border rounded w-100" @click="joinFormSubmit">회원가입</button>
                 </div>
             </div>    
         </div>
@@ -151,7 +174,16 @@ const checkFirst = ref(false);
 const checkSecond = ref(false);
 const checkThird = ref(false);
 
+let showPassword = ref(false);
+let showPasswordCheck = ref(false);
 
+function showPasswordBtn() {
+    showPassword.value = !showPassword.value;
+}
+
+function showPasswordMatchBtn() {
+    showPasswordCheck.value = !showPasswordCheck.value;
+}
 
 // function midCheck() {
 //     var midPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
@@ -324,13 +356,13 @@ async function handleSubmit() {
     accent-color: #D9EDBF;
 }
 
-button {
+.btn {
     width: 50px;
     background-color: white;
     font-weight: bold;
 }
 
-button:hover {
+.btn:hover {
     background-color: #15a775;
     color: white;
 }

@@ -3,7 +3,7 @@
 
     <!-- 댓글 등록 -->
     <!-- 로그인 한 유저만 등록 가능 v-show로 -->
-    <div class="d-flex p-2 m-2 border rounded bg-light">
+    <div class="d-flex p-2 m-2 border rounded bg-light" v-if="store.state.userId!=''">
         <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;">
         <div class="flex-grow-1 row my-3">
              <div class="d-flex mb-1">
@@ -26,7 +26,7 @@
 
     <!-- 로그인 페이지 링크 -->
     <!-- 로그인 안했을 경우 v-if-->
-    <div class="d-flex p-2 m-2 border rounded bg-light" style="color: gray;">
+    <div class="d-flex p-2 m-2 border rounded bg-light" style="color: gray;" v-if="store.state.userId==''">
         <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;">
         <div class="flex-grow-1 row my-3" style="align-items: center;">
 
@@ -52,7 +52,7 @@
                 
                 <div class="flex-grow-1 row justify-content-start">
                     <!-- 에디터한테만 보여야 하는 버튼 -->
-                    <button class="border-0 bg-white text-start me-5 pe-5" style="font-size: small; color: grey; font-weight: bold;" v-if="qnaArray[index].qreply===null || qnaArray[index].qreply===''" @click="qreplyResist(index)">
+                    <button class="border-0 bg-white text-start me-5 pe-5" style="font-size: small; color: grey; font-weight: bold;" v-if="(qnaArray[index].qreply===null || qnaArray[index].qreply==='') && isEditor" @click="qreplyResist(index)">
                         <!-- <img src="/images/photos/ic_talk.png"> -->
                         <img src="/images/photos/ic_comment.png">
                         답글달기
@@ -60,7 +60,7 @@
                 </div>
                 <div class="flex-grow-1 row justify-content-end">
                     <!-- 작성자에게만 보여야 하는 버튼 -->
-                    <div class="text-end">
+                    <div class="text-end" v-if="isWriter[index]">
                         <button class="px-2 mx-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold; " @click="qnaUpdateOpen(index)">수정</button>
                         <button class="px-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="qnaDelete(index)">삭제</button>
                     </div>
@@ -83,7 +83,7 @@
                     <div class="me-3" style="font-weight: bold;">내용 : </div>
                     <textarea class="p-3 ms-3 me-3 border rounded" style="color: grey;" placeholder="수정할 문의 내용을 입력해주세요." v-model="qna.qcontent"></textarea>
                 </div>
-                <div class=" text-end mt-3 pe-5">
+                <div class=" text-end mt-3 pe-5" v-if="isWriter[index]">
                     <button class="px-2 mx-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="qnaUpdate(index)">등록</button>
                     <button type="button" class="px-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="qnaClose(index)">닫기</button>
                 </div>
@@ -103,7 +103,7 @@
                 <div class="w-100 row pe-5">
                     <textarea class="p-3 ms-3 me-3 border rounded" style="color: grey;" placeholder="문의에 대한 답글을 입력해주세요." v-model="qna.qreply"></textarea>
                 </div>
-                <div class="text-end mt-3 pe-5">
+                <div class="text-end mt-3 pe-5" v-if="isWriter[index]">
                     <button class="px-2 mx-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="qreplyInsert(index)">등록</button>
                     <button class="px-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;"  @click="qreplyClose(index)">닫기</button>
                 </div>
@@ -126,7 +126,7 @@
                 
                 <div class="flex-grow-1 justify-content-end">
                     <!-- 에디터에게만 보여야 하는 버튼 -->
-                    <div class="text-end  mt-3 pe-5">
+                    <div class="text-end  mt-3 pe-5" v-if="isEditor">
                         <button class="px-2 mx-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="qreplyUpdate(index)">수정</button>
                         <button class="px-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="qreplyDelete(index)">삭제</button>
                     </div>
@@ -156,6 +156,8 @@ const qnaArray = ref([]);
 
 const store = useStore();
 
+const isWriter = ref([]);
+const isEditor = ref(false);
 
 // function getUserRole() {
 //     console.log("editor: ", store.state.userId);
@@ -169,6 +171,7 @@ const store = useStore();
 
 //------- qna data insert function ---------------------------------------------------------------------------------------------- 
 
+
 function qnaInsert() {
     qnaInit.value = {qtitle: qnaInit.value.qtitle, qcontent: qnaInit.value.qcontent, cno: cno};
     console.log("큐엔에이 제목", JSON.parse(JSON.stringify(qnaInit.value)));
@@ -181,7 +184,7 @@ async function getQna(cno){
     try{
         const response = await classAPI.qnaRead(cno);
         qnaArray.value = response.data.qnaList;
-        console.log("큐앤에이어레이 길이111:" ,qnaArray.value.length);
+        //console.log("큐앤에이어레이 길이111:" ,qnaArray.value.length);
         //console.log(typeof qnaArray.value[0].qdate);
         //qnaArray 안에 있는 qna들을 반복문을 통해 하나씩 꺼내기
         for(let i=0; qnaArray.value.length; i++){
@@ -199,13 +202,35 @@ async function getQna(cno){
             //
             //console.log("유저롤: ", store.state.userId);
             //console.log("유저롤: ", store.state.mrole);
+            //console.log("유저롤: ", store.state);
+            isWriter.value[i] = false; 
+            if(store.state.userId==qnaArray.value[i].mid) {
+                isWriter.value[i] = true; 
+                //console.log("유저롤: ", store.state.userId);
+                //console.log("큐앤에이 작성자 아이디", qnaArray.value[i].mid);
+                //console.log("isWriter: ", isWriter.value[i]);
+            }
         }
+        
+    } catch(error) {
+        console.log(error);
+    }
+    
+    try{
+
+        const response2 = await classAPI.classRead(cno);
+        console.log("클래스등록아이디: ", response2.data.classes.mid);
+        if(store.state.userId==response2.data.classes.mid) {
+            isEditor.value = true;
+        }
+        console.log("isEditor: ", isEditor.value);
+        //console.log("큐앤에이어레이 길이:" , qnaArray.value.length);
+        //console.log("큐앤에이 목록:", JSON.parse(JSON.stringify(qnaArray.value)));
     } catch(error) {
         console.log(error);
     }
 
-    console.log("큐앤에이어레이 길이:" , qnaArray.value.length);
-    console.log("큐앤에이 목록:", JSON.parse(JSON.stringify(qnaArray.value)));
+    console.log("로그인여부", store.state.userId)
 }
 
 getQna(cno);

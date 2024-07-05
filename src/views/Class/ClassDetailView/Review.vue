@@ -11,11 +11,11 @@
 
     <!-- 댓글 등록 -->
     <!-- 로그인 한 유저만 등록 가능 v-show로 -->
-    <div class="d-flex p-2 m-2 border rounded bg-light">
+    <div class="d-flex p-2 m-2 border rounded bg-light" v-if="store.state.userId != ''">
         <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;">
         <div class="flex-grow-1 row my-3">
              <div class="d-flex mb-1">
-                  <div class="me-3" style="font-weight: bold;">닉네임</div>
+                  <div class="me-3" style="font-weight: bold;"></div>
              </div>
             <form>
 
@@ -52,7 +52,7 @@
         </div>
     </div>
     <!-- 로그인 안했을 경우 v-if-->
-    <div class="d-flex p-2 m-2 border rounded bg-light" style="color: gray;">
+    <div class="d-flex p-2 m-2 border rounded bg-light" style="color: gray;" v-if="store.state.userId == ''">
         <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;">
         <div class="flex-grow-1 row my-3" style="align-items: center;">
 
@@ -82,7 +82,7 @@
                     {{ review.crcontent }}
                 </div>
                 <!-- 작성자에게만 보여야 하는 버튼 -->
-                <div class=" text-end mt-3 pe-5">
+                <div class=" text-end mt-3 pe-5" v-if="isWriter[index]">
                     <button class="px-2 mx-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="reviewUpdateOpen(index)">수정</button>
                     <button class="px-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="reviewDelete(index)">삭제</button>
                 </div>
@@ -123,7 +123,7 @@
                         <div class="me-3" style="font-weight: bold;">내용 : </div>
                         <textarea class="p-3 ms-3 me-3 border rounded" style="color: grey;" v-model="review.crcontent"></textarea>
                     </div>
-                    <div class=" text-end mt-3 pe-5">
+                    <div class=" text-end mt-3 pe-5" v-if="isWriter[index]">
                         <button class="px-2 mx-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="reviewUpdate(index)">등록</button>
                         <button class="px-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="reviewClose(index)">닫기</button>
                     </div>
@@ -132,10 +132,12 @@
         </div>
     </div>
 
+<div class="d-flex p-2 m-2" style="justify-content: center; color: grey; font-weight: bold;">등록된 리뷰가 없습니다. </div>
 </template>
 
 <script setup>
 import classAPI from '@/apis/classAPI';
+import store from '@/store';
 import { ref } from 'vue';
 
 const reviewInit = ref({});
@@ -147,6 +149,9 @@ const isReviewArray = ref([]);
 
 //별점 체크 디폴트값 설정
 const starClick = ref(0);
+
+//댓글 수정 및 삭제를 위한 글쓴이 여부
+const isWriter = ref([]);
 
 //별점 체크 함수
 function starCheck(index) {
@@ -167,7 +172,7 @@ const cno = 81;
 
 let avgCrratio = 0;
 
-//dateFormating (2024-06-28)
+//날짜 형식 함수
 function dateFormat(date) {
     let dateFormat = date.getFullYear() +
     '-' + ((date.getMonth() +1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) +
@@ -175,9 +180,55 @@ function dateFormat(date) {
     return dateFormat;
 }
 
+
+async function reviewInsertValid() {
+    //출결 여부 확인 후 출결한 사람에 한해서 댓글 등록할 수 있도록 해주기
+   
+    /*
+    const response = await classAPI.classRead(cno);
+    console.log("강의날짜: " , response.data.classes.cdday);
+    
+    //강의 날짜 체크
+    let today = new Date();
+    //console.log("오늘날짜: " , today); //Fri Jul 05 2024 11:36:36 GMT+0900 (한국 표준시)
+    let dday = new Date(response.data.classes.cdday);
+    //console.log("강의날짜데이터포맷팅: " , dday);
+    let dayCheck = false;
+    let testday1 = new Date("2025-06-01"); //오늘 7월 5일 true
+ 
+    //console.log("오늘연도",today.getFullYear(),"클래스연도",testday1.getFullYear())
+    if(today.getFullYear()>testday1.getFullYear()) {
+        //console.log("오늘연도",today.getFullYear(),"클래스연도",testday1.getFullYear())
+        dayCheck = true;
+    } else if (today.getFullYear()==testday1.getFullYear()) {
+        if(today.getMonth()>testday1.getMonth()) {
+            dayCheck = true;
+        } else if (today.getMonth()==testday1.getMonth()) {
+            if(today.getDate()>=testday1.getDate()){
+                dayCheck = true;
+            }
+        }
+    }
+    console.log("데이체크 결과", dayCheck)
+
+    //강의 시간 체크
+    let nowtime = new Date().getHours();
+    let endtime = new Date(response.data.classes.cendtime).getHours();
+    let testtime = new Date("Fri Jul 05 2024 13:57:09").getHours();
+    console.log("nowtime:", nowtime, ", testtime ", testtime, ", endtime: ", endtime);
+    let timeCheck = false;
+    if(nowtime>testtime) {
+        timeCheck = true;
+    }
+    console.log("타임체크 결과", timeCheck)
+    */
+
+}
+
+reviewInsertValid();
 //------- review data insert function ---------------------------------------------------------------------------------------------- 
 
-function reviewInsert() {
+async function reviewInsert() {
     //reviewArray.value.push({crtitle: review.value.crtitle, crcontent: review.value.crcontent, crratio: review.value.crratio })
     reviewInit.value = {crtitle: reviewInit.value.crtitle, crcontent: reviewInit.value.crcontent, crratio: reviewInit.value.crratio, cno: cno};
     console.log("리뷰데이터: ", JSON.parse(JSON.stringify(reviewInit.value)));
@@ -197,6 +248,9 @@ async function getReview(cno) {
             reviewArray.value[i].originalCrtitle = reviewArray.value[i].crtitle;
             reviewArray.value[i].originalCrcontent = reviewArray.value[i].crcontent;
             reviewArray.value[i].originalCrratio = reviewArray.value[i].crratio;
+            if(store.state.userId==reviewArray.value[i].mid) {
+                isWriter.value[i] = true; 
+            }
         }
     } catch(error) {
         console.log(error);

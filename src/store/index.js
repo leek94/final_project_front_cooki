@@ -52,7 +52,7 @@ const store= createStore({
    saveAuth(context, payload){
     context.commit("setUserId",payload.userId);
     context.commit("setAccessToken", payload.accessToken);
-    context.commit("setMrole",payload.getMrole);
+    context.commit("setMrole",payload.mrole);
     localStorage.setItem("userId", payload.userId);
     localStorage.setItem("accessToken", payload.accessToken);
     localStorage.setItem("mrole",payload.mrole);

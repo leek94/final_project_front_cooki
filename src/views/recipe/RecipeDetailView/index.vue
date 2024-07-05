@@ -63,6 +63,8 @@
                 </swiper-container>
             </div>
 
+            <Review/>
+            
         </div>
     </div>
 </template>
@@ -74,6 +76,7 @@ import recipeAPI from '@/apis/recipeAPI';
 import axios from 'axios';
 import RecipeItems from '@/components/Items.vue';
 import { useStore } from 'vuex';
+import Review from '@/views/Recipe/RecipeDetailView/Review.vue'
 
 const store = useStore();
 const rno = 55;
@@ -168,9 +171,16 @@ async function getRecipeData(rno){
     try{
         const response = await recipeAPI.recipeRead(rno);
         cookRecipes.value = response.data
-        console.log("성공1");
+        console.log("디테일 성공");
     } catch{
-        console.log("실패1");
+        console.log("디테일 실패");
+    }
+
+    try{
+        const response = await recipeAPI.recipeIncreaseHitcount(rno);
+        console.log("조회수 성공");
+    }catch{
+        console.log("조회수 실패");
     }
 
     try{
@@ -186,9 +196,9 @@ async function getRecipeData(rno){
             )
         }
         recipeCurriculumes.value = response.data.recipeProcess;
-        console.log("성공2");
+        console.log("재료 프로세스 성공");
     } catch{
-        console.log("실패2");
+        console.log("재료 프로세스 실패");
     }
 }
 

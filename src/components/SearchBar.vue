@@ -16,7 +16,8 @@
                     <div class="d-flex search-input-box">
                         <input v-if="search.searchTitle!=='category'" class="search-input me-1" type="text" placeholder="어떤 레시피가 궁금하신가요?" v-model="search.searchText">
                         <input v-if="search.searchTitle==='category'" class="search-input me-1" type="text" placeholder="어떤 레시피가 궁금하신가요?" v-model="search.searchText" readonly>
-                        <button type="submit" class="search-button align-items-center justify-content-center" @click="$emit('searchword',search)" >검색 &ensp;<i class="fa-solid fa-magnifying-glass"></i></button>
+                        <button type="submit" class="search-button align-items-center justify-content-center" @click="$emit('searchword',search)" >
+                            검색 &ensp;<i class="fa-solid fa-magnifying-glass"></i></button>
                     </div>
                 </div>
             </form>
@@ -29,6 +30,7 @@
                 <input type="button" class="category-button" value="양식" :class="{ active: activeIndex === '양식' }" @click="handlecategory('양식')">
                 <input type="button" class="category-button" value="디저트" :class="{ active: activeIndex === '디저트' }" @click="handlecategory('디저트')">
                 <input type="button" class="category-button" value="베이커리" :class="{ active: activeIndex === '베이커리' }" @click="handlecategory('베이커리')">
+                <button type="button" class="category-button" @click="handlecategory('초기화')"><i class="fa-solid fa-arrows-rotate"></i></button>
             </div>
         </div>
     </div>
@@ -36,7 +38,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 const emit= defineEmits(['searchword'])
 
@@ -52,23 +54,42 @@ search.value.searchText= route.query.searchText||'';
 search.value.searchTitle= route.query.searchTitle||'all';
 
 
-
-
 // 정렬을 위한 자바스크립트 시작
 const activeIndex = ref(null);
 activeIndex.value=search.value.searchText;
 
 
 const handlecategory = (index) => {
-    
-    activeIndex.value = index;
-    search.value.searchText = index;
-    search.value.searchTitle = 'category';
+    if(index==='초기화'){
+        activeIndex.value=null;
+        search.value.searchText = '';
+        search.value.searchTitle = 'all';
+    }else{
+        activeIndex.value = index;
+        search.value.searchText = index;
+        search.value.searchTitle = 'category';
+    }
     // 카테고리 버튼 선택시 자동으로 실행될 수 있게 
     emit('searchword',search.value);
     
 };
 
+//클래스 초기 화면으로 이동할 때 전에 검색어를 초기화 
+watch(route ,(newRoute,oldRoute)=>{
+    if(route.query.pageNo){
+        console.log("")
+    }else{
+        search.value.searchTitle='all'
+        search.value.searchText=''
+        activeIndex.value=0
+    }
+})
+watch(()=>search.value.searchTitle,(newSearchTitle,oldSearchTitle)=> {
+    if(newSearchTitle!=='category'){
+        activeIndex.value=null;
+        search.value.searchText=''
+    }
+});
 </script>
 
 <style scoped>

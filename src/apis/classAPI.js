@@ -87,20 +87,11 @@ function qnaUpdate(qnaData){
 function qnaDelete(qno){
     return axios.delete("/class/qnaDelete/" + qno);
 }
-function getClassList(pageNo=1){
-    return axios.get("/class/getClassList", {params:{pageNo}})
-}
-function getSearchClass(search, pageNo=1){
-    return axios.post("/ClassSearch",search,{params:{pageNo}})
-}
 
 function qreplyUpdate(qreplyData){
     return axios.put("/class/qreplyUpdate", qreplyData)
 }
 
-function getReviewCount(cno){
-    return axios.get("/class/reviewCount/"+cno)
-}
 
 function reviewRegister(reviewData) {
     return axios.post("/class/reviewRegister", reviewData)
@@ -122,7 +113,6 @@ export default {
     classRegister,
     itemRegister,
     curriculumRegister,
-    getClassList,
     classRead,
     curriculumAndItemRead,
     classUpdate,
@@ -138,8 +128,6 @@ export default {
     qnaRead,
     qnaUpdate,
     qnaDelete,
-    getSearchClass,
-    getReviewCount,
     qreplyUpdate,
     reviewRegister,
     reviewRead,

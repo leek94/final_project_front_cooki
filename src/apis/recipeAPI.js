@@ -52,6 +52,7 @@ function recipeReviewUpdate(recipeReview){
 function recipeReviewDelete(rrno){
     return axios.get("/recipe/reviewDelete/" + rrno);
 }
+
 export default{
     recipeRegister,
     recipeItemRegister,

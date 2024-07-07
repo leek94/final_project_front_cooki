@@ -4,6 +4,7 @@
             <div class="recipe-title mb-5"></div>
             <!--검색바-->
             <SearchBar @searchword="searchresult"></SearchBar>
+            <SearchModal id="searchModal"/>
 
             <!-- 작성바 & 작성 버튼 -->
             <RouterLink to="./ClassRegisterView">클래스 등록</RouterLink>
@@ -24,7 +25,7 @@
                     <ul class="main-img d-flex ss">
 
                     <!-- 클래스 카드 -->
-                    <ClassCard v-for="(clcard, index) in classCard" :key="index" :objectProp="clcard" :dataProp="searchText" @click="routerLinkto(index)"></ClassCard>
+                    <ClassCard v-for="(clcard, index) in classCard" :key="index" :objectProp="clcard"  @click="routerLinkto(index)"></ClassCard>
                     </ul>
                 </div>
             </div>
@@ -40,11 +41,18 @@
 
 <script setup>
 import classAPI from '@/apis/classAPI';
+import searchAPI from '@/apis/searchAPI';
 import ClassCard from '@/components/ClassCard.vue';
 import SearchBar from '@/components/SearchBar.vue';
-import { ref, watch } from 'vue';
+import SearchModal from '@/components/SearchModal.vue';
+import { Modal } from 'bootstrap';
+import { onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
+let searchModal=null;
+onMounted(()=>{
+    searchModal=new Modal(document.querySelector("#searchModal"))
+})
 const classCard = ref([
     {
         cno:null,
@@ -58,7 +66,7 @@ const classCard = ref([
         cprice:null,
         cnowPerson:null,
         reviewCount:null,
-        classRatio:null
+        crratio:null
 
     },
 ])
@@ -68,8 +76,6 @@ const page=ref({
 })
 const route= useRoute();
 const pageNo = ref(route.query.pageNo||1);
-
-
 
 function dateFormat(date) {
     let dateFormat = date.getFullYear() +
@@ -85,24 +91,26 @@ const data=ref({
     pageNo:1
 })
 
+//목록에서 다시 들어가거나 새로 고침 했을 때 실행
+console.log("새로 들어옴")
 data.value.searchText = route.query.searchText||'';
 data.value.searchTitle=route.query.searchTitle||'all';
-
+data.value.searchSort=route.query.searchSort||0;
+getClssList(pageNo.value);
 
 async function getClssList(pageNo){
     try{
-        console.log("확인")
-        console.log(data.value);
-        const response1 = await classAPI.getSearchClass(JSON.parse(JSON.stringify(data.value)),pageNo);
+        //클래스 리스트를 받아오기 위한 axios 호출
+        const response1 = await searchAPI.getSearchClass(JSON.parse(JSON.stringify(data.value)),pageNo);
         classCard.value= response1.data.searchClass;
         page.value.pager=response1.data.pager;
-        console.log("pager"+response1.data.pager)
+        console.log("eeee"+classCard.value[1].reviewCount)
+        console.log("ddddd"+classCard.value[0].crratio)
+        //
         for(let i=0;i<classCard.value.length;i++){
+            classCard.value[i].crratio=Math.round(classCard.value[i].crratio*10)/10
             const resoponse2= await classAPI.classNowPerson(classCard.value[i].cno);
             classCard.value[i].cnowPerson = resoponse2.data.nowPerson;
-            const response3=await classAPI.getReviewCount(classCard.value[i].cno);
-            classCard.value[i].reviewCount= response3.data;
-            console.log("count"+classCard.value[i].reviewCount)
             let date = new Date(classCard.value[i].cdday);
             classCard.value[i].cdday= dateFormat(date);
         }
@@ -111,36 +119,37 @@ async function getClssList(pageNo){
     }
 }
 
-getClssList(pageNo.value);
-
 const router= useRouter();
 
+//클래스 디테일로 이동할 때 -> 다시 목록으로 돌아가기 위해 query로 값을 저장
 function routerLinkto(index){
-    console.log("pp"+data.value.searchCategory);
     router.push(`./ClassDetailView?cno=${classCard.value[index].cno}&pageNo=${pageNo.value}&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=${data.value.searchSort}`);
 }
 
 const activeIndex = ref(null);
-console.log("r"+route.query.searchSort);
+
 
 activeIndex.value=parseInt(route.query.searchSort)||0;
 
-console.log("dd"+activeIndex.value)
+//watch로 다시 getclasslist 함수가 실행될 때 
+//같은 페이지에서 같은페이지로 이동하면서 검색어 갑을 다시 setting 해준다 
 async function searchresult(search){
+    if(search.searchText===''){
+    searchModal.show();
+    }
+   
    data.value.searchText=search.searchText
    data.value.searchTitle=search.searchTitle
-    // 검색어와 검색 타이틀로 DB에서 확인해서 찾아옴
-    router.push(`/class/classListView?pageNo=${pageNo.value}&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=${data.value.searchSort}`);
+   
+    router.push(`/class/classListView?pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=${data.value.searchSort}`);
 
     }
 
 // 정렬을 위한 자바스크립트 시작
-
 const setActive = (index) => {
     activeIndex.value = index;
     data.value.searchSort= index;
     pageNo.value=1;
-    console.log("data"+data.value.searchSort)
     changePageNo(1)
 };
 
@@ -150,11 +159,19 @@ function changePageNo(argpageNo){
     
 }
 
+//같은 페이지->같은 페이지로 이동했을 때 
+//route(url) 값이 단 하나라도 바뀌었을 때 실행
 watch(route,(newRoute,oldRoute) => {
     if(newRoute.query.pageNo){ 
+        console.log("다시 들어옴")
         getClssList(newRoute.query.pageNo);
         pageNo.value=newRoute.query.pageNo;
-    } else{   
+    } else {   
+        //pageNo가 존재하지 않으면 list를 다시 호출하기 위한 초기값을 설정해주는 것
+        data.value.searchTitle='all'
+        data.value.searchSort=0
+        data.value.searchText=''
+        activeIndex.value=0
         getClssList(1)
         pageNo.value=1;
     }

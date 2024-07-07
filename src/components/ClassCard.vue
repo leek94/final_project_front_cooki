@@ -19,9 +19,10 @@
                     <div class="class-date border-left-solid me-3">강의날짜 : {{ prop.objectProp.cdday }}</div>
                     <div class="dday-box">D-{{ checker() }}</div>
                 </div>
-                <div class="d-flex">
-                    <div>리뷰수 : {{ prop.objectProp.reviewCount }}</div>
-                    <div>리뷰수 : {{ prop.objectProp.classRatio }}</div>
+                <div class="d-flex justify-content-end mt-3">
+                    <div class="me-2"><img src="/images/photos/ic_talk.png" width="25px">: {{ prop.objectProp.reviewCount }}</div>
+                    <div class="me-2"><img src="/images/photos/ic_star_pink.png" width="25px" />: {{ prop.objectProp.crratio }}</div>
+                    <div><img src="/images/photos/ic_eyes.jpg" width="25px" />: {{ prop.objectProp.chitcount }}</div>
                 </div>
             </div>
         </div>
@@ -29,9 +30,8 @@
     <!-- 클래스 카드 끝 -->
 </template>
 <script setup>
-import classAPI from '@/apis/classAPI';
+
 import axios from 'axios';
-import { ref } from 'vue';
 
 const prop = defineProps(["objectProp"]);
 

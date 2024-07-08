@@ -29,12 +29,21 @@
                     </ul>
                 </div>
             </div>
-            <div class="text-center" >
+            <!--pagination-->
+            <div class="text-center" v-if="page.pager.totalRows!==0">
                 <button class="initial btn btn-sm" @click="changePageNo(1)"> 처음 </button>
                 <button class="prev btn btn-sm" v-if="page.pager.groupNo>1" @click="changePageNo(page.pager.startPageNo-1)">이전</button>
                 <button class="btn btn-sm" v-for="pageNo in page.pager.pageArray" :key="pageNo" @click="changePageNo(pageNo)">{{pageNo}}</button>
                 <button  class="btn btn-sm" v-if="page.pager.groupNo<page.pager.totalGroupNo" @click="changePageNo(page.pager.endPageNo+1)">다음</button>
                 <button class="last btn btn-sm" @click="changePageNo(page.pager.totalPageNo)">마지막</button>
+            </div>
+
+            <div v-if="page.pager.totalRows===0" style="margin-top:100px">
+                <hr/>
+                <div style="margin: 60px auto; text-align: center">
+                    <h5>검색어어가 존재하지 않습니다.</h5>
+                </div>
+                <hr/>
             </div>
     </div>
 </template>
@@ -134,7 +143,10 @@ activeIndex.value=parseInt(route.query.searchSort)||0;
 //watch로 다시 getclasslist 함수가 실행될 때 
 //같은 페이지에서 같은페이지로 이동하면서 검색어 갑을 다시 setting 해준다 
 async function searchresult(search){
-    if(search.searchText===''){
+    if(search.searchText==='' && search.toggle === true){
+        console.log("초기화 실행")
+        
+    }else if(search.searchText===''){
     searchModal.show();
     }
    

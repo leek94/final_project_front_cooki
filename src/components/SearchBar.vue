@@ -30,7 +30,6 @@
                 <input type="button" class="category-button" value="양식" :class="{ active: activeIndex === '양식' }" @click="handlecategory('양식')">
                 <input type="button" class="category-button" value="디저트" :class="{ active: activeIndex === '디저트' }" @click="handlecategory('디저트')">
                 <input type="button" class="category-button" value="베이커리" :class="{ active: activeIndex === '베이커리' }" @click="handlecategory('베이커리')">
-                <button type="button" class="category-button" @click="handlecategory('초기화')"><i class="fa-solid fa-arrows-rotate"></i></button>
             </div>
         </div>
     </div>
@@ -45,7 +44,6 @@ const emit= defineEmits(['searchword'])
 let search = ref({
     searchText : "",
     searchTitle : "all",
-    
 })
 
 const route = useRoute();
@@ -64,6 +62,7 @@ const handlecategory = (index) => {
         activeIndex.value=null;
         search.value.searchText = '';
         search.value.searchTitle = 'all';
+        search.value.toggle = true;
     }else{
         activeIndex.value = index;
         search.value.searchText = index;

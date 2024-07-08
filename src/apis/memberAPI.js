@@ -36,6 +36,7 @@ function setAwards(awards){
 function getCreatorInfo(cno){
     return axios.get("/member/getCreatroInfo/"+cno);
 }
+
 function login(member){
     
     /*
@@ -48,10 +49,21 @@ function login(member){
    return axios.post("/member/login",member);
 
 }
+
+function getEditorProfile(mid,mrole){
+    return axios.get("member/editorProfile/" + mid + "/" + mrole);
+} 
+
+function getMyProfile(mid){
+    return axios.get("member/myProfile/" + mid);
+} 
+
 export default{
     join,
     setCareer,
     setAwards,
     getCreatorInfo,
     login,
+    getEditorProfile,
+    getMyProfile,
 }

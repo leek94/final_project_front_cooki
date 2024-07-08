@@ -141,9 +141,11 @@
 import { ref } from 'vue';
 import classAPI from '@/apis/classAPI';
 import { useStore } from 'vuex';
+import { useRoute } from 'vue-router';
 
 // 추후 변경 예정
-const cno = 81;
+const route = useRoute();
+const cno = route.query.cno;
 
 const isQna = ref(false);
 const isQnaArray = ref([]);
@@ -158,6 +160,8 @@ const store = useStore();
 
 const isWriter = ref([]);
 const isEditor = ref(false);
+
+
 
 // function getUserRole() {
 //     console.log("editor: ", store.state.userId);
@@ -181,6 +185,7 @@ function qnaInsert() {
 //------- qna data read function ---------------------------------------------------------------------------------------------- 
 
 async function getQna(cno){
+    console.log("게시글번호: ", cno)
     try{
         const response = await classAPI.qnaRead(cno);
         qnaArray.value = response.data.qnaList;

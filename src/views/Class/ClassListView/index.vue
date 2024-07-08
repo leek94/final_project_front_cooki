@@ -4,6 +4,7 @@
             <div class="recipe-title mb-5"></div>
             <!--검색바-->
             <SearchBar @searchword="searchresult"></SearchBar>
+            <SearchModal id="searchModal"/>
 
             <!-- 작성바 & 작성 버튼 -->
             <RouterLink to="./ClassRegisterView">클래스 등록</RouterLink>
@@ -24,27 +25,43 @@
                     <ul class="main-img d-flex ss">
 
                     <!-- 클래스 카드 -->
-                    <ClassCard v-for="(clcard, index) in classCard" :key="index" :objectProp="clcard" @click="routerLinkto(index)"></ClassCard>
+                    <ClassCard v-for="(clcard, index) in classCard" :key="index" :objectProp="clcard"  @click="routerLinkto(index)"></ClassCard>
                     </ul>
                 </div>
             </div>
-            <div class="text-center" style="border: none none solid none">
+            <!--pagination-->
+            <div class="text-center" v-if="page.pager.totalRows!==0">
                 <button class="initial btn btn-sm" @click="changePageNo(1)"> 처음 </button>
-                <button class="prev btn btn-sm" v-if="pager.groupNo>1" @click="changePageNo(pager.startPageNo-1)">이전</button>
-                <button class="btn btn-sm" v-for="pageNo in pager.pageArray" :key="pageNo" @click="changePageNo(pageNo)">{{pageNo}}</button>
-                <button  class="btn btn-sm" v-if="pager.groupNo<pager.totalGroupNo" @click="changePageNo(pager.endPageNo+1)">다음</button>
-                <button class="last btn btn-sm" @click="changePageNo(pager.totalPageNo)">마지막</button>
+                <button class="prev btn btn-sm" v-if="page.pager.groupNo>1" @click="changePageNo(page.pager.startPageNo-1)">이전</button>
+                <button class="btn btn-sm" v-for="pageNo in page.pager.pageArray" :key="pageNo" @click="changePageNo(pageNo)">{{pageNo}}</button>
+                <button  class="btn btn-sm" v-if="page.pager.groupNo<page.pager.totalGroupNo" @click="changePageNo(page.pager.endPageNo+1)">다음</button>
+                <button class="last btn btn-sm" @click="changePageNo(page.pager.totalPageNo)">마지막</button>
+            </div>
+
+            <div v-if="page.pager.totalRows===0" style="margin-top:100px">
+                <hr/>
+                <div style="margin: 60px auto; text-align: center">
+                    <h5>검색어어가 존재하지 않습니다.</h5>
+                </div>
+                <hr/>
             </div>
     </div>
 </template>
 
 <script setup>
 import classAPI from '@/apis/classAPI';
+import searchAPI from '@/apis/searchAPI';
 import ClassCard from '@/components/ClassCard.vue';
 import SearchBar from '@/components/SearchBar.vue';
-import { ref } from 'vue';
+import SearchModal from '@/components/SearchModal.vue';
+import { Modal } from 'bootstrap';
+import { onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
+let searchModal=null;
+onMounted(()=>{
+    searchModal=new Modal(document.querySelector("#searchModal"))
+})
 const classCard = ref([
     {
         cno:null,
@@ -58,15 +75,17 @@ const classCard = ref([
         cprice:null,
         cnowPerson:null,
         reviewCount:null,
-        classRatio:null
+        crratio:null
 
     },
 ])
 
-const pager=ref({})
+const page=ref({
+    pager:{}
+})
 const route= useRoute();
-const pageNo = ref(route.query.pageNo || 1)
-;
+const pageNo = ref(route.query.pageNo||1);
+
 function dateFormat(date) {
     let dateFormat = date.getFullYear() +
     '-' + ((date.getMonth() +1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) +
@@ -74,18 +93,33 @@ function dateFormat(date) {
     return dateFormat;
 }
 
+const data=ref({
+    searchText:'', 
+    searchTitle:'all',
+    searchSort:0,
+    pageNo:1
+})
+
+//목록에서 다시 들어가거나 새로 고침 했을 때 실행
+console.log("새로 들어옴")
+data.value.searchText = route.query.searchText||'';
+data.value.searchTitle=route.query.searchTitle||'all';
+data.value.searchSort=route.query.searchSort||0;
 getClssList(pageNo.value);
+
 async function getClssList(pageNo){
     try{
-        const response1 = await classAPI.getClassList(pageNo);
-        classCard.value= response1.data.classes;
-        pager.value=response1.data.pager;
+        //클래스 리스트를 받아오기 위한 axios 호출
+        const response1 = await searchAPI.getSearchClass(JSON.parse(JSON.stringify(data.value)),pageNo);
+        classCard.value= response1.data.searchClass;
+        page.value.pager=response1.data.pager;
+        console.log("eeee"+classCard.value[1].reviewCount)
+        console.log("ddddd"+classCard.value[0].crratio)
+        //
         for(let i=0;i<classCard.value.length;i++){
+            classCard.value[i].crratio=Math.round(classCard.value[i].crratio*10)/10
             const resoponse2= await classAPI.classNowPerson(classCard.value[i].cno);
             classCard.value[i].cnowPerson = resoponse2.data.nowPerson;
-            const response3=await classAPI.getReviewCount(classCard.value[i].cno);
-            classCard.value[i].reviewCount= response3.data;
-            console.log("count"+classCard.value[i].reviewCount)
             let date = new Date(classCard.value[i].cdday);
             classCard.value[i].cdday= dateFormat(date);
         }
@@ -93,46 +127,67 @@ async function getClssList(pageNo){
         console.log(error);
     }
 }
+
 const router= useRouter();
 
-function routerLinkto(index,pageNo){
-        router.push(`./ClassDetailView?cno=${classCard.value[index].cno}&pageNo=${pageNo}`);
-    
+//클래스 디테일로 이동할 때 -> 다시 목록으로 돌아가기 위해 query로 값을 저장
+function routerLinkto(index){
+    router.push(`./ClassDetailView?cno=${classCard.value[index].cno}&pageNo=${pageNo.value}&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=${data.value.searchSort}`);
 }
-const activeIndex = ref(0);
-const data={
-    searchText:'', 
-    searchTitle:'all',
-    searchSort:0
-}
-async function searchresult(search){
-   data.searchText=search.searchText
-   data.searchTitle=search.searchTitle
-    console.log(data);
-    // 검색어와 검색 타이틀로 DB에서 확인해서 찾아옴
-    const response = await classAPI.getSearchClass(JSON.parse(JSON.stringify(data)));
-    classCard.value=response.data.searchClass;
-    for(let i=0; i<classCard.value.length;i++){
-        let date = new Date(classCard.value[i].cdday);
-        classCard.value[i].cdday=await dateFormat(date);
-        const resoponse2= await classAPI.classNowPerson(classCard.value[i].cno);
-        classCard.value[i].cnowPerson = resoponse2.data.nowPerson;
-        const response3=await classAPI.getReviewCount(classCard.value[i].cno);
-        classCard.value[i].reviewCount= response3.data; 
-    }
-}
-// 정렬을 위한 자바스크립트 시작
 
+const activeIndex = ref(null);
+
+
+activeIndex.value=parseInt(route.query.searchSort)||0;
+
+//watch로 다시 getclasslist 함수가 실행될 때 
+//같은 페이지에서 같은페이지로 이동하면서 검색어 갑을 다시 setting 해준다 
+async function searchresult(search){
+    if(search.searchText==='' && search.toggle === true){
+        console.log("초기화 실행")
+        
+    }else if(search.searchText===''){
+    searchModal.show();
+    }
+   
+   data.value.searchText=search.searchText
+   data.value.searchTitle=search.searchTitle
+   
+    router.push(`/class/classListView?pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=${data.value.searchSort}`);
+
+    }
+
+// 정렬을 위한 자바스크립트 시작
 const setActive = (index) => {
     activeIndex.value = index;
-    data.searchSort= index;
-    searchresult(data);
+    data.value.searchSort= index;
+    pageNo.value=1;
+    changePageNo(1)
 };
 
 //pager
-function changePageNo(clpageNo){
-    router.push(`/class/classListView?pageNo=${clpageNo}`);
+function changePageNo(argpageNo){
+    router.push(`/class/classListView?pageNo=${argpageNo}&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=${data.value.searchSort}`);
+    
 }
+
+//같은 페이지->같은 페이지로 이동했을 때 
+//route(url) 값이 단 하나라도 바뀌었을 때 실행
+watch(route,(newRoute,oldRoute) => {
+    if(newRoute.query.pageNo){ 
+        console.log("다시 들어옴")
+        getClssList(newRoute.query.pageNo);
+        pageNo.value=newRoute.query.pageNo;
+    } else {   
+        //pageNo가 존재하지 않으면 list를 다시 호출하기 위한 초기값을 설정해주는 것
+        data.value.searchTitle='all'
+        data.value.searchSort=0
+        data.value.searchText=''
+        activeIndex.value=0
+        getClssList(1)
+        pageNo.value=1;
+    }
+})
 
 </script>
 

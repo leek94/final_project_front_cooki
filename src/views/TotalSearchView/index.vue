@@ -1,7 +1,7 @@
 <template>
     <div class="container_box ss">
         <div class="recipe-title mb-5"></div>
-        <SearchBar></SearchBar>
+        <SearchBar @searchword="searchResult"/>
 
         <!-- 검색 이후에 v-if로 삭제할 예정 -->
         <div class="result">
@@ -48,42 +48,6 @@ const classCardes = ref([
         cpersoncount: 30,
         cprice:48000,
     },
-    {
-        mname: '손혜선씨',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
-    },
-    {
-        mname: '손혜선씨',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
-    },
-    {
-        mname: '손혜선씨',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
-    },
-    {
-        mname: '손혜선씨',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
-    },
 ]);
 
 const recipeCardes = ref([
@@ -95,43 +59,11 @@ const recipeCardes = ref([
         bhitcount: 112,
         isActive: false,
     },
-    {
-        mname: '손혜선씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 30,
-        bhitcount: 112,
-        isActive: false,
-    },
-    {
-        mname: '손혜선씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 30,
-        bhitcount: 112,
-        isActive: false,
-    },
-    {
-        mname: '손혜선씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 30,
-        bhitcount: 112,
-        isActive: false,
-    },
-    {
-        mname: '손혜선씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 30,
-        bhitcount: 112,
-        isActive: false,
-    },
-
 ]);
 
-provide("classCardes", {classCardes});
-provide("recipeCardes", {recipeCardes});
+async function searchResult(){
+    
+}
 
 </script>
 

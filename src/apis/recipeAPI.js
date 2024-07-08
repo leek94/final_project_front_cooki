@@ -33,6 +33,26 @@ function recipeDislike(likes){
     return axios.post("/recipe/deleteLike", likes);
 }
 
+function recipeIncreaseHitcount(rno){
+    return axios.get("/recipe/recipeIncreaseHitcount/"+rno);
+}
+
+function recipeReviewList(rno){
+    return axios.get("/recipe/reviewList/" + rno);
+}
+
+function registerRecipeReview(recipeReview){
+    return axios.post("/recipe/reviewRegister", recipeReview);
+}
+
+function recipeReviewUpdate(recipeReview){
+    return axios.post("/recipe/reviewUpdate", recipeReview);
+}
+
+function recipeReviewDelete(rrno){
+    return axios.get("/recipe/reviewDelete/" + rrno);
+}
+
 export default{
     recipeRegister,
     recipeItemRegister,
@@ -43,5 +63,10 @@ export default{
     processUpdate,
     itemUpdate,
     recipeLike,
-    recipeDislike
+    recipeDislike,
+    recipeIncreaseHitcount,
+    recipeReviewList,
+    registerRecipeReview,
+    recipeReviewUpdate,
+    recipeReviewDelete
 }

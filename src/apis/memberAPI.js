@@ -36,6 +36,7 @@ function setAwards(awards){
 function getCreatorInfo(cno){
     return axios.get("/member/getCreatroInfo/"+cno);
 }
+
 function login(member){
     
     /*
@@ -64,6 +65,23 @@ function editorRecruitHistory(mid) {
 function editorNowRecruit(mid) {
     return axios.get("/member/editorNowRecruit/" + mid);
 }
+
+function getEditorProfile(mid,mrole){
+    return axios.get("member/editorProfile/" + mid + "/" + mrole);
+} 
+
+function getMyProfile(mid){
+    return axios.get("member/myProfile/" + mid);
+} 
+
+function updateNickname(member){
+    return axios.put("member/updateNickname", member);
+}
+
+function updatePassword(member){
+    return axios.put("member/updatePassword", member);
+}
+
 export default{
     join,
     setCareer,
@@ -74,4 +92,8 @@ export default{
     myNowClass,
     editorRecruitHistory,
     editorNowRecruit,
+    getEditorProfile,
+    getMyProfile,
+    updateNickname,
+    updatePassword,
 }

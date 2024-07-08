@@ -23,11 +23,7 @@ import classAPI from '@/apis/classAPI';
 import memberAPI from '@/apis/memberAPI';
 import MypageClassCard from '@/components/MypageClassCard.vue';
 import { computed, ref } from 'vue';
-import { useRoute, useStore } from 'vuex';
-
-//const route = useRoute();
-//const cno = route.query.cno;
-//let nowPerson = ref()
+import { useStore } from 'vuex';
 
 const cookClasses = ref([ ]);
 
@@ -49,12 +45,17 @@ async function editorNowRecruit() {
     console.log("내아이디: ", mid)
     //console.log("cno", cno)
     try{
+        //아이디로 내가 개설한 클래스 리스트 불러오기
         const response = await memberAPI.editorNowRecruit(mid);
         cookClasses.value = response.data.myClassList;
-        //nowPerson.value = await classAPI.classNowPerson(cno);
         console.log("cdday", dateFormat(new Date(cookClasses.value[1].cdday)))
         for(let i=0; i<cookClasses.value.length; i++) {
             cookClasses.value[i].cdday = dateFormat(new Date(cookClasses.value[i].cdday));
+            //개설한 클래스 번호로 신청 인원수 불러오기
+            const cno = cookClasses.value[i].cno;
+            const response2 = await classAPI.classNowPerson(cno);
+            cookClasses.value[i].nowPerson = response2.data.nowPerson;
+            console.log("신청한 사람수", cookClasses.value[i].nowPerson)
             
         }
     } catch(error) {

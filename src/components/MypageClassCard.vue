@@ -17,7 +17,7 @@
                                     <h6>모집강사 : {{ prop.objectProp.mname }}</h6>
                                 </div>
                                 <div>
-                                    <h6>모집인원 : 1/{{ prop.objectProp.cpersoncount }}</h6>
+                                    <h6>모집인원 : {{ prop.objectProp.nowPerson }}/{{ prop.objectProp.cpersoncount }}</h6>
                                     <!-- {{ prop.objectProp.nowPerson }} -->
                                 </div>
                                 <div class="info d-flex mb-3">

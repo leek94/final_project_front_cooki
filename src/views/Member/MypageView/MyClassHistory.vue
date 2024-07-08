@@ -20,6 +20,7 @@
  
  <script setup>
 import memberAPI from '@/apis/memberAPI';
+import classAPI from '@/apis/classAPI';
 import MypageClassCard from '@/components/MypageClassCard.vue';
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
@@ -45,12 +46,17 @@ async function myClassHistoryRead() {
     let mid = store.state.userId;
     console.log("내아이디: ", mid)
     try{
+        //아이디로 신청한 클래스 리스트 받아오기
         const response = await memberAPI.myClassHistory(mid);
         cookClasses.value = response.data.myClassList;
         console.log("cdday", dateFormat(new Date(cookClasses.value[0].cdday)))
         for(let i=0; i<cookClasses.value.length; i++) {
             cookClasses.value[i].cdday = dateFormat(new Date(cookClasses.value[i].cdday));
-            
+            //신청한 클래스 번호로 신청인원수 불러오기
+            const cno = cookClasses.value[i].cno;
+            const response2 = await classAPI.classNowPerson(cno);
+            cookClasses.value[i].nowPerson = response2.data.nowPerson;
+            console.log("신청한 사람수", cookClasses.value[i].nowPerson)
         }
 
     } catch(error) {

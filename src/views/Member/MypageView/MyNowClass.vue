@@ -23,8 +23,9 @@ import memberAPI from '@/apis/memberAPI';
 import classAPI from '@/apis/classAPI';
 import MypageClassCard from '@/components/MypageClassCard.vue';
 import { computed, ref } from 'vue';
-import { useRoute, useStore } from 'vuex';
+import { useStore } from 'vuex';
 const cookClasses = ref ([]);
+const store = useStore();
 
 //dateFormating (2024-06-28)
 function dateFormat(date) {
@@ -34,29 +35,23 @@ function dateFormat(date) {
     return dateFormat;
 }
 
-
 const countClass=computed(()=> cookClasses.value.length)
-
-const store = useStore();
-
-//const route = useRoute();
-//const cno = route.query.cno;
-//let nowPerson = ref()
 
 async function myNowClassRead() {
     let mid = store.state.userId;
     console.log("내아이디: ", mid)
-    //console.log("cno", cno)
     try{
+        //아이디로 신청한 클래스 리스트 받아오기
         const response1 = await memberAPI.myNowClass(mid);
         cookClasses.value = response1.data.myClassList;
-        //const response2 = await classAPI.classNowPerson(cno);
-        //nowPerson.value = response2.data.nowPerson;
-        //console.log("신청한 사람수", response2.data.nowPerson)
         console.log("cdday", dateFormat(new Date(cookClasses.value[1].cdday)))
         for(let i=0; i<cookClasses.value.length; i++) {
             cookClasses.value[i].cdday = dateFormat(new Date(cookClasses.value[i].cdday));
-            
+            //신청한 클래스 번호로 신청인원수 불러오기
+            const cno = cookClasses.value[i].cno;
+            const response2 = await classAPI.classNowPerson(cno);
+            cookClasses.value[i].nowPerson = response2.data.nowPerson;
+            console.log("신청한 사람수", cookClasses.value[i].nowPerson)
         }
     } catch(error) {
         console.log(error);

@@ -230,9 +230,9 @@ function saveAwards(){
     editingAwards.value= !editingAwards.value;
 }
 
-<<<<<<< HEAD
+
 // 경력 추가 및 삭제
-=======
+
 function cancelCareers(){
     editingCareers.value=! editingCareers.value;
 }
@@ -241,8 +241,6 @@ function cancelAwards(){
     editingAwards.value=!editingAwards.value;
 }
 
-
->>>>>>> e72c8b9b470444881870c997ff0a4114935ac777
 function careerAdd() {
     const newcareer=ref({
         cano:careers.value.length+1,

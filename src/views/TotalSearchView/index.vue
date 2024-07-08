@@ -1,10 +1,10 @@
 <template>
     <div class="container_box ss">
         <div class="recipe-title mb-5"></div>
-        <SearchBar @searchword="searchResult"/>
+        <SearchBar @searchword="searchresult"/>
 
         <!-- 검색 이후에 v-if로 삭제할 예정 -->
-        <div class="result">
+        <div class="result" v-if="data.searchText===''">
             <div class="default-result">
                 <b>어떤 요리가 궁금하신가요?</b>
                 <br>
@@ -17,13 +17,13 @@
             <div class="container-fluid">
                 <ul class="navbar-nav d-flex w-100">
                     <li class="nav-item" style="display: inline-block; ">
-                        <RouterLink class="menu" to="/TotalSearchView/Total">전체(8)</RouterLink>
+                        <RouterLink class="menu" :to="`/TotalSearchView/Total?searchTitle=${data.searchTitle}&searchText=${data.searchText}`">전체({{ classCount+recipeCount }})</RouterLink>
                     </li>
                     <li class="nav-item w-15" style="display: inline-block; ">
-                        <RouterLink class="menu" to="/TotalSearchView/ClassCompact">클래스(5)</RouterLink>
+                        <RouterLink class="menu" :to="`/TotalSearchView/ClassCompact?searchTitle=${data.searchTitle}&searchText=${data.searchText}`">클래스({{classCount}})</RouterLink>
                     </li>
                     <li class="nav-item w-15" style="display: inline-block; ">
-                        <RouterLink class="menu" to="/TotalSearchView/RecipeCompact">레시피(3)</RouterLink> 
+                        <RouterLink class="menu" :to="`/TotalSearchView/RecipeCompact?searchTitle=${data.searchTitle}&searchText=${data.searchText}`">레시피({{ recipeCount }})</RouterLink> 
                     </li>
                 </ul>
             </div>
@@ -35,37 +35,40 @@
 </template>
 
 <script setup>
+import searchAPI from '@/apis/searchAPI';
 import SearchBar from '@/components/SearchBar.vue';
-import { ref, provide } from "vue";
+import { ref, provide, watch } from "vue";
+import { useRoute, useRouter } from 'vue-router';
 
-const classCardes = ref([
-    {
-        mname: '손혜선씨',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
-    },
-]);
+const route = useRoute();
+const router = useRouter();
 
-const recipeCardes = ref([
-{
-        mname: '손혜선씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 30,
-        bhitcount: 112,
-        isActive: false,
-    },
-]);
+const data=ref({
+    searchText:'', 
+    searchTitle:'all',
+    searchSort:1
+})
 
-async function searchResult(){
+data.value.searchTitle=route.query.searchTitle||'all'
+data.value.searchText=route.query.searchText||''
+let classCount= ref(0);
+let recipeCount=ref(0);
+async function searchresult(search){
+   data.value.searchText=search.searchText
+   data.value.searchTitle=search.searchTitle 
+   const response = await searchAPI.getTotalCount(JSON.parse(JSON.stringify(data.value)));
+    classCount.value= response.data.searchClasses;
+    recipeCount.value= response.data.searchRecipes;
     
+   if(data.value.searchText===''){
+        data.value.searchText==='';
+        data.value.searchTitle='all'
+    }
+   router.push(`/TotalSearchView/Total?pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}`);
 }
 
-</script>
+
+</script>   
 
 <style scoped>
 

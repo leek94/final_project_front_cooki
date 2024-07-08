@@ -4,15 +4,20 @@
             <div class=" mb-2">
                 <h5 class="class-name mb-3">클래스</h5>
                 <div class="main-box mb-5">
-                    <ul class="main-img d-flex">
-                        <ClassCard v-for="(clcard,index) in classCardes" :key="index" :objectProp="clcard"/>
-                        
-                    </ul>
-
-                    <div class="d-flex justify-content-center">
-                        <button class="plus-button btn">더보기</button>
+                    <div v-if="data.searchText==='' || classCards.length === 0" style="margin-top:100px">
+                        <div style="margin: 60px auto; text-align: center">
+                            <h5>검색어어가 존재하지 않습니다.</h5>
+                        </div>
                     </div>
-                    
+
+                    <div  v-if="classCards.length !== 0 && data.searchText!==''" >
+                        <ul class="main-img d-flex">
+                            <ClassCard v-for="(clcard,index) in classCards" :key="index" :objectProp="clcard" @click="routerLinkTo(index)"/>
+                        </ul>
+                        <div class="d-flex justify-content-center">
+                            <button class="plus-button btn" @click="MovetoList">더보기</button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -21,7 +26,6 @@
                 <div class="main-box">
                     <ul class="main-img d-flex">
                         <RecipeCard  v-for="(recard,index) in recipeCardes" :key="index" :objectProp="recard" @click="handleClick(index)" />
-                        
                     </ul>
 
                     <div class="d-flex justify-content-center">
@@ -34,108 +38,107 @@
 </template>
 
 <script setup>
+import classAPI from '@/apis/classAPI';
+import searchAPI from '@/apis/searchAPI';
 import ClassCard from '@/components/ClassCard.vue';
 import RecipeCard from '@/components/RecipeCard.vue';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
+const route = useRoute();
+const router = useRouter();
+const emit=defineEmits(['countSearchClass'])
 function handleClick(index) {
     console.log(recipeCardes.value[index].isActive)
     recipeCardes.value[index].isActive = !recipeCardes.value[index].isActive;
     console.log(recipeCardes.value[index].isActive)
 }
 
-const classCardes = ref([
+const classCards = ref([
     {
-        mname: '손혜선씨',
+        cno:null,
+        mname: '',
         ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
-    },
-    {
-        mname: '손혜선씨',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
-    },
-    {
-        mname: '손혜선씨',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
-    },
-    {
-        mname: '손혜선씨',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
-    },
-    {
-        mname: '손혜선씨',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
-    },
+        ccontent:"",
+        cdday: '', 
+        ctime:'',
+        chitcount:null,
+        cpersoncount: null,
+        cprice:null,
+        cnowPerson:null,
+        reviewCount:null,
+        crratio:null
+    }
 ]);
 
 const recipeCardes = ref([
 {
-        mname: '손혜선씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 30,
-        bhitcount: 112,
+        mname: '',
+        bdate: '',
+        btitle:'',
+        blike: null,
+        bhitcount: null,
         isActive: false,
-    },
-    {
-        mname: '손혜선씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 30,
-        bhitcount: 112,
-        isActive: false,
-    },
-    {
-        mname: '손혜선씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 30,
-        bhitcount: 112,
-        isActive: false,
-    },
-    {
-        mname: '손혜선씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 30,
-        bhitcount: 112,
-        isActive: false,
-    },
-    {
-        mname: '손혜선씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 30,
-        bhitcount: 112,
-        isActive: false,
-    },
-
+    }
 ]);
 
+const data= ref({
+    searchTitle:'all',
+    searchText:'',
+    searchSort:1
+})
+
+data.value.searchTitle=route.query.searchTitle||'all';
+data.value.searchText=route.query.searchText||'';
+
+let countSearchClass= ref(null);
+
+if(data.value.searchText!==''){
+    console.log("eeee"+data.value.searchText)
+    getSearchClass(1,4);
+}
+
+
+
+function dateFormat(date) {
+    let dateFormat = date.getFullYear() +
+    '-' + ((date.getMonth() +1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) +
+    '-' + (date.getDate() < 10 ? "0" + date .getDate() : date.getDate());
+    return dateFormat;
+}
+
+async function getSearchClass(pageNo,perPage){
+    console.log("getclass 실행")
+    const response = await searchAPI.getSearchClass(JSON.parse(JSON.stringify(data.value)), pageNo,perPage)
+    classCards.value=response.data.searchClass;
+    countSearchClass.value=classCards.value.length;
+    emit("countSearchClass",countSearchClass.value)
+    for(let i=0;i<classCards.value.length;i++){
+            classCards.value[i].crratio=Math.round(classCards.value[i].crratio*10)/10
+            const resoponse2= await classAPI.classNowPerson(classCards.value[i].cno);
+            classCards.value[i].cnowPerson = resoponse2.data.nowPerson;
+            let date = new Date(classCards.value[i].cdday);
+            classCards.value[i].cdday= dateFormat(date);
+        }
+}
+function MovetoList(){
+    router.push(`/class/classListView?pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}`)
+}
+
+ function routerLinkTo(index){
+    router.push(`/class/ClassDetailView?cno=${classCards.value[index].cno}&pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}`);
+}
+
+watch(route,(newRoute,oldRoute)=>{
+    if(newRoute.query.searchText!==''){
+        data.value.searchTitle=newRoute.query.searchTitle||'all';
+        data.value.searchText=newRoute.query.searchText||'';
+        getSearchClass(1,4)
+    } else{
+        data.value.searchText=''
+    }
+
+})
 </script>
 
 <style scoped>

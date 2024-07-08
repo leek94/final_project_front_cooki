@@ -5,7 +5,7 @@
             <h5 class="class-name mb-3">클래스</h5>
             <div class="main-box mb-5">
                 <ul class="main-img d-flex">
-                    <ClassCard v-for="(clcard, index) in classCardes" :key="index" :objectProp="clcard"/>
+                    <ClassCard v-for="(clcard, index) in classCards" :key="index" :objectProp="clcard"/>
                 </ul>
 
                 <div class="d-flex justify-content-center">
@@ -18,25 +18,42 @@
 </template>
 
 <script setup>
+import searchAPI from '@/apis/searchAPI';
 import ClassCard from '@/components/ClassCard.vue';
 import { ref } from 'vue';
+import { useRoute } from 'vue-router';
 
+const route = useRoute();
 
-const classCardes = ref([
+const classCards = ref([
     {
+        cno:null,
         mname: '',
-        ctitle: ' ',
+        ctitle: '쿠킹클래스 쿡쿠키스',
         ccontent:"",
         cdday: '', 
         ctime:'',
+        chitcount:null,
         cpersoncount: null,
         cprice:null,
+        cnowPerson:null,
+        reviewCount:null,
+        crratio:null
     },
     
 ]);
+const data=ref({
+    searchText:'', 
+    searchTitle:'all',
+})
 
-async function getSearchClass(){
-    
+data.value.searchTitle=route.query.searchTitle||'all'
+data.value.searchText=route.query.searchText||''
+
+
+async function getSearchClass(pageNo=1){
+    const response = await searchAPI.getSearchClass(JSON.parse(JSON.stringify(data.value)), pageNo)
+    classCards.value=response.data.getSearchClass;
 }
 </script>
 

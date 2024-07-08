@@ -2,7 +2,7 @@
     <li class="img-li ss">
         <div class="router-div">
             <div class="image">
-                <i class="icon-heart fa-solid fa-heart like-heart" :class="{active: prop.objectProp.islike}"></i>
+                <i id="like" class="icon-heart fa-solid fa-heart like-heart" :class="{active: islike}" @click.stop="changeLike"></i>
                 <img :src="`${axios.defaults.baseURL}/recipe/thumbattach/${prop.objectProp.rno}`">
             </div>
 
@@ -25,11 +25,42 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import axios from 'axios';
+import { useStore } from 'vuex';
+import recipeAPI from '@/apis/recipeAPI';
 
+const store = useStore();
 const prop = defineProps(["objectProp"]);
+let islike  = ref((prop.objectProp.islike) ? true : false);
+console.log("aaaa",islike.value);
 
+async function changeLike() {
+    let btn = document.getElementById("like");
+    let data = {rno:prop.objectProp.rno,mid:store.state.userId};
+    data = JSON.parse(JSON.stringify(data));
+    if(islike.value){
+        try{
+            const response = await recipeAPI.recipeDislike(data);
+            console.log("dislike success")
+        }catch{
+            console.log("dislike fail")
+        }
+    }else{
+        try{
+            const response = await recipeAPI.recipeLike(data);
+            console.log("like success")
+        }catch{
+            console.log("like fail")
+        }
+    }
+    islike.value = !islike.value;
+}
+
+watch(prop, (newprop,oldprop) => {
+    console.log("확인");
+    islike.value = newprop.objectProp.islike;
+})
 </script>
 
 <style scoped>

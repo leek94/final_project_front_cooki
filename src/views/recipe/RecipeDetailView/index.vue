@@ -77,9 +77,11 @@ import axios from 'axios';
 import RecipeItems from '@/components/Items.vue';
 import { useStore } from 'vuex';
 import Review from '@/views/Recipe/RecipeDetailView/Review.vue'
+import { useRoute, useRouter } from 'vue-router';
 
 const store = useStore();
-const rno = 55;
+const route = useRoute();
+const rno = route.query.rno;
 
 const cookRecipes = ref({
     rtitle:'자작자작 서울식 소불고기',rdate:'2024.06.11 08:00' , rcontent:'촉촉하게, 감칠맛 가득 불고기 만드는 법! 좋아하는 채소와 떡, 당면 등 재료를 마음껏 추가해 완성',

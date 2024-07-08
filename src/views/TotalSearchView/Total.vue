@@ -6,7 +6,7 @@
                 <div class="main-box mb-5">
                     <div v-if="data.searchText==='' || classCards.length === 0" style="margin-top:100px">
                         <div style="margin: 60px auto; text-align: center">
-                            <h5>검색어어가 존재하지 않습니다.</h5>
+                            <h6><strong>검색어어가 존재하지 않습니다.</strong></h6>
                         </div>
                     </div>
 
@@ -24,12 +24,19 @@
             <div class=" mb-2">
                 <h5 class="class-name mb-3">레시피</h5>
                 <div class="main-box">
-                    <ul class="main-img d-flex">
-                        <RecipeCard  v-for="(recard,index) in recipeCardes" :key="index" :objectProp="recard" @click="handleClick(index)" />
-                    </ul>
+                    <div v-if="data.searchText==='' || recipeCardes.length === 0" style="margin-top:100px">
+                        <div style="margin: 60px auto; text-align: center">
+                            <h6><strong>검색어어가 존재하지 않습니다.</strong></h6>
+                        </div>
+                    </div>
+                    <div v-if="recipeCardes.length !== 0 && data.searchText!==''" >
+                        <ul class="main-img d-flex">
+                            <RecipeCard  v-for="(recard,index) in recipeCardes" :key="index" :objectProp="recard" @click="handleClick(index)" />
+                        </ul>
 
-                    <div class="d-flex justify-content-center">
-                        <button class="plus-button btn">더보기</button>
+                        <div class="d-flex justify-content-center">
+                            <button class="plus-button btn">더보기</button>
+                        </div>
                     </div>
 
                 </div>

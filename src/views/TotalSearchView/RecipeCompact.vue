@@ -30,47 +30,15 @@ function handleClick(index) {
 
 const recipeCardes = ref([
 {
-        mname: '손혜선씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 30,
-        bhitcount: 112,
+        mname: '',
+        bdate: '',
+        btitle:'',
+        blike: null,
+        bhitcount: null,
         isActive: false,
     },
-    {
-        mname: '손혜선씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 30,
-        bhitcount: 112,
-        isActive: false,
-    },
-    {
-        mname: '손혜선씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 30,
-        bhitcount: 112,
-        isActive: false,
-    },
-    {
-        mname: '손혜선씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 30,
-        bhitcount: 112,
-        isActive: false,
-    },
-    {
-        mname: '손혜선씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 30,
-        bhitcount: 112,
-        isActive: false,
-    },
-
 ]);
+
 </script>
 
 <style scoped>

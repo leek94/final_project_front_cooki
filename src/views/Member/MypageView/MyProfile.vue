@@ -65,18 +65,18 @@
             </div>
             <!-- db에 저장된 수만큼 for문 -->
             <div  v-if="!editingCareers" >
-                <div class="mb-1" style="margin-top:10px" v-for="(ca, index) in careers" :key="index">
+                <div class="mb-1" style="margin-top:10px" v-for="(career, index) in careers" :key="index">
                     <div class="mnicknameinput d-flex bg-light" style="height:50px; align-items: center; width:100%" >
-                        <div>{{ ca.cacontent }}</div>
+                        <div>{{ career.cacontent }}</div>
                     </div>
                 </div>
             </div>
             <div v-if="editingCareers">
-                <div class="input-group input-group-box w-100 mb-1" v-for="(ca, index) in careers" :key="index">
-                    <input type="text" class="form-control input-box" placeholder="경력을 입력해주세요" v-model="ca.careerContent" aria-label="Recipient's username" aria-describedby="button-addon2">
+                <div class="input-group input-group-box w-100 mb-1" v-for="(career, index) in careers" :key="index">
+                    <input type="text" class="form-control input-box" placeholder="경력을 입력해주세요" v-model="career.cacontent" aria-label="Recipient's username" aria-describedby="button-addon2">
                     <button class="btn border" type="button" id="button-addon2"  @click="careerRemove(index)">x</button>
                 </div>
-                <div class="text-center mt-3" >
+                <div class="text-center mt-3">
                     <button class="btn btn border" style="width:40px; font-size: 24px" @click="careerAdd()">+</button>
                 </div>
 
@@ -115,7 +115,7 @@
             </div>
             <div v-if="editingAwards">
                 <div class="input-group input-group-box w-100 mb-1" v-for="(aw, index) in awards" :key="index">
-                    <input type="text" class="form-control input-box" placeholder="경력을 입력해주세요" v-model="aw.awardsContent" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <input type="text" class="form-control input-box" placeholder="경력을 입력해주세요" v-model="aw.acontent" aria-label="Recipient's username" aria-describedby="button-addon2">
                     <button class="btn border" type="button" id="button-addon2"  @click="awardsRemove(index)">x</button>
                 </div>
                 <div class="text-center mt-3" >
@@ -144,32 +144,39 @@ const member = ref( {
 
 const careers=ref([
     {
-        cano:null,
-        cacontent:"",
+        cano:1,
+        cacontent:"손짱1",
     },
 ])
 
 const awards=ref([
     {
-        ano: null,
-        acontent: "",
+        ano: 1,
+        acontent: "손짱 1등",
     },
 ])
 
-member.value.mid = store.state.userId;
-member.value.mrole = store.state.mrole;
+// 위에서 v-if에서 mrole을 사용하기 때문에 여기서 초기화 해줘야함
+const mrole = store.state.mrole;
+// 마이프로필을 호출
 getMyProfile();
 
+// 마이프로필로 값을 가져오는 함수
 async function getMyProfile() {
-        const response = await memberAPI.getMyProfile(store.state.userId);
-        member.value = response.data.member;
-        console.log("esdf"+response.data.member.mnickname);
+    try{
+            const response = await memberAPI.getMyProfile(store.state.userId);
+            member.value = response.data.member;
+            console.log("esdf"+response.data.member.mnickname);
 
-    if(store.state.mrole === 'ROLE_EDITOR'){
-        const response = await memberAPI.getEditorProfile(store.state.userId, store.state.mrole);
-        careers.value = response.data.career;
-        awards.value = response.data.awards;
-    } 
+        if(store.state.mrole === 'ROLE_EDITOR'){
+            const response = await memberAPI.getEditorProfile(store.state.userId, store.state.mrole);
+            careers.value = response.data.career;
+            awards.value = response.data.awards;
+        }
+    }catch(error){
+        console.log("에러남: " + error);
+    }
+        
 }
 
 const mnicknameResultError = ref(false);
@@ -230,57 +237,101 @@ function changeAwards(){
 
 // 닉네임 DB에 업데이트 하는 함수
 async function updateNickname(){
-    const response = await memberAPI.updateNickname(JSON.parse(JSON.stringify(member.value)));
+    await memberAPI.updateNickname(JSON.parse(JSON.stringify(member.value)));
 }
 
+// 닉네임 업데이트 버튼
 function savenickname(){
     editingMnickname.value= !editingMnickname.value;
     updateNickname();
 }
-function saveCareers(){
-    editingCareers.value= !editingCareers.value;
+
+
+
+
+// 경력 추가 및 삭제--------------------------------------
+// 변경 저장
+async function saveCareers(){
+    editingCareers.value = !editingCareers.value;
+    
+    // 전체 Delete 했다가, 현재 값 insert해야 편함 전체 수를 확인 하지 않아도 됨
+    // Delete 식
+    await memberAPI.deleteCareers(store.state.userId);
+
+    // Insert 식 - for문으로 던져야함
+    for(let i=0; i<careers.value.length; i++){
+        console.log("cano 확인: "+ careers.value[1].cano);
+        console.log("cacontent 확인: " + careers.value[i].cacontent);
+        careers.value[i].cano=i+1; // 번호 지정
+        careers.value[i].mid=store.state.userId; // 아이디값 저장
+        await memberAPI.setCareer(JSON.parse(JSON.stringify(careers.value[i])));
+    }
+    
 }
-function saveAwards(){
-    editingAwards.value= !editingAwards.value;
-}
 
-
-// 경력 추가 및 삭제
-
+// 변경 취소
 function cancelCareers(){
-    editingCareers.value=! editingCareers.value;
+    editingCareers.value = !editingCareers.value;
+    console.log("경력 취소 실행")
+    // Axios 들러서 원래 값 받아오기
+    getMyProfile();
 }
 
-function cancelAwards(){
-    editingAwards.value=!editingAwards.value;
-}
-
+// 칸 추가
 function careerAdd() {
     const newcareer=ref({
-        cano:careers.value.length+1,
+        cano:'',
         cacontent: ''
     })
     careers.value.push(newcareer);
 }
 
+// 칸 삭제 - 마지막 하나는 삭제 안됨
 function careerRemove(index){
     if(careers.value.length>1){
         careers.value.splice(index,1);
     }
 }
 
-// 수상 추가 및 삭제
+// 수상 추가 및 삭제----------------------------------------
+// 변경 저장
+async function saveAwards(){
+    editingAwards.value= !editingAwards.value;
+    // 전체 Delete 했다가, 현재 값 insert
+    // Delete 식
+    await memberAPI.deleteAwards(store.state.userId);
+
+    // Insert식 - for문으로 던져야함
+    for(let i =0; i<awards.value.length; i++){
+        awards.value[i].ano = i+1;
+        awards.value[i].mid = store.state.userId;
+        await memberAPI.setAwards(JSON.parse(JSON.stringify(awards.value[i])));
+    }
+}
+
+// 변경 취소
+function cancelAwards(){
+    editingAwards.value=!editingAwards.value;
+    // Axios 들러서 원래 값 받아오기
+    getMyProfile();
+}
+
+// 칸 추가
 function awardsAdd() {
     const newawards=ref({
-        cano:awards.value.length+1,
+        ano:'',
         cacontent: ''
     })
     awards.value.push(newawards);
 }
 
+// 칸 삭제 - 마지막 하나는 삭제 안됨
 function awardsRemove(index){
-    awards.value.splice(index,1)
+    if(awards.value.length>1){
+        awards.value.splice(index,1)
+    }
 }
+
 </script>
 
 <style scoped>

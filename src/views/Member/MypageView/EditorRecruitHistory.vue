@@ -11,12 +11,12 @@
          <hr class="mt-0"/>
          <div class="d-flex"  >
         <div class="qcards d-flex"  style="flex-wrap: wrap;">
-            <div class="card qnaCard mt-3" style="padding:0;"  v-for="(classes, index) in cookClasses" :key="index">
+            <div class="card qnaCard mt-3" style="padding:0;"  v-for="(classes, index) in cookClasses" :key="index" @click="routerLinkto(index)">
                 <div class="card-body text-center">
                     <li class="class-img-li ss" >
                         <div class="router-div">
                             <div class="class-image">
-                                <img src="/images/photos/semi2.jpg">
+                                <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes.cno}/1`">
                             </div>
                             <div class="text-start" >
                                 <div class="class-text text-start">
@@ -51,7 +51,8 @@ import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import memberAPI from '@/apis/memberAPI';
 import classAPI from '@/apis/classAPI';
-import classes from '@/store/classes';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
 
 
  // 데이터 바인딩을 위한 더미 데이터
@@ -95,8 +96,13 @@ async function editorRecruitHistory() {
 
 editorRecruitHistory();
 
-
-
+//카드 클릭 시 디테일 페이지로 가는 함수
+const router= useRouter();
+function routerLinkto(index){
+    console.log("인덱스", index)
+    console.log("클래스번호" , cookClasses.value[index].cno)
+    router.push(`/Class/ClassDetailView?cno=${cookClasses.value[index].cno}`);
+}
  </script>
  
  <style scoped>

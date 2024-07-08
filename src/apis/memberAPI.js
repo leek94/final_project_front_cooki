@@ -16,6 +16,10 @@ function join(member){
     return axios.post("/member/join",member);
 }
 
+function deleteCareers(mid){
+    return axios.delete("member/careers/"+mid);
+}
+
 function setCareer(careers){
     /*
     careers= {
@@ -76,4 +80,5 @@ export default{
     getMyProfile,
     updateNickname,
     updatePassword,
+    deleteCareers,
 }

@@ -48,10 +48,30 @@ function login(member){
    return axios.post("/member/login",member);
 
 }
+
+function myClassHistory(mid) {
+    return axios.get("/member/myClassHistory/" + mid);
+}
+
+function myNowClass(mid) {
+    return axios.get("/member/myNowClass/" + mid);
+}
+
+function editorRecruitHistory(mid) {
+    return axios.get("/member/editorRecruitHistory/" + mid);
+}
+
+function editorNowRecruit(mid) {
+    return axios.get("/member/editorNowRecruit/" + mid);
+}
 export default{
     join,
     setCareer,
     setAwards,
     getCreatorInfo,
     login,
+    myClassHistory,
+    myNowClass,
+    editorRecruitHistory,
+    editorNowRecruit,
 }

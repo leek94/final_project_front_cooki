@@ -220,6 +220,13 @@ function saveAwards(){
     editingAwards.value= !editingAwards.value;
 }
 
+function cancelCareers(){
+    editingCareers.value=! editingCareers.value;
+}
+
+function cancelAwards(){
+    editingAwards.value=!editingAwards.value;
+}
 
 
 function careerAdd() {

@@ -19,6 +19,7 @@
             </div>
         </div>
 
+        
         <div class="flex-grow-1 row mx-2 mb-3">
             <li class="green-point m-1">닉네임
                 <span style="margin-left:10px; font-size: 12px; color:green"> * 3~16자 이내</span>
@@ -47,7 +48,7 @@
             <div class="checkError" v-if="mpasswordResultError">올바른 형식의 비밀번호를 입력해주세요</div>
             <div class="input-group input-group-box w-100">
                 <input type="text" placeholder="비밀번호 확인" v-model="member.mpasswordcheck" aria-label="passwordCheck" class="form-control" @keyup="mpasswordMatchCheck">
-                <button class="btn border" type="button" id="button-addon2">변경</button>
+                <button class="btn border" type="button" id="button-addon2" @click="changePassword">변경</button>
             </div>
             <div class="checkError col  m-2 w-50" v-if="mpasswordMatchError">입력한 비밀번호와 일치하지않습니다</div>
         </div>
@@ -135,8 +136,8 @@ import store from '@/store';
 import { ref } from 'vue';
 
 const member = ref( {
-    mid: "cooki@naver.com",
-    mnickname: "김쿠키",
+    mid: "",
+    mnickname: "",
     mpassword: "",
     mpasswordcheck: "",
 });
@@ -144,35 +145,32 @@ const member = ref( {
 const careers=ref([
     {
         cano:null,
-        cacontent:null
+        cacontent:"",
     },
 ])
 
 const awards=ref([
     {
         ano: null,
-        acontent: null
+        acontent: "",
     },
 ])
-let mrole = store.state.mrole;
-getMyProfile(mrole);
 
-async function getMyProfile(mrole) {
+member.value.mid = store.state.userId;
+member.value.mrole = store.state.mrole;
+getMyProfile();
+
+async function getMyProfile() {
         const response = await memberAPI.getMyProfile(store.state.userId);
         member.value = response.data.member;
-        console.log("엠롤" + mrole);
+        console.log("esdf"+response.data.member.mnickname);
 
-    if(mrole === 'ROLE_EDITOR'){
-        const response = await memberAPI.getEditorProfile(store.state.userId, mrole);
+    if(store.state.mrole === 'ROLE_EDITOR'){
+        const response = await memberAPI.getEditorProfile(store.state.userId, store.state.mrole);
         careers.value = response.data.career;
         awards.value = response.data.awards;
     } 
 }
-
-
-
-
-
 
 const mnicknameResultError = ref(false);
 const mpasswordResultError = ref(false);
@@ -204,6 +202,17 @@ function mpasswordMatchCheck(){
 
     return mpasswordCheckResult;
 }
+
+// 비밀번호 업데이트
+async function changePassword() {
+    console.log("비밀번호 체크: " + member.value.mpassword)
+    if(member.value.mpassword === member.value.mpasswordcheck){ 
+        const response = await memberAPI.updatePassword(JSON.parse(JSON.stringify(member.value)));
+        member.value.mpassword = "";
+        member.value.mpasswordcheck = "";
+    }
+}
+
 const editingMnickname=ref(false);
 const editingCareers=ref(false);
 const editingAwards=ref(false);
@@ -219,9 +228,14 @@ function changeAwards(){
     editingAwards.value= !editingAwards.value;
 }
 
+// 닉네임 DB에 업데이트 하는 함수
+async function updateNickname(){
+    const response = await memberAPI.updateNickname(JSON.parse(JSON.stringify(member.value)));
+}
+
 function savenickname(){
     editingMnickname.value= !editingMnickname.value;
-
+    updateNickname();
 }
 function saveCareers(){
     editingCareers.value= !editingCareers.value;

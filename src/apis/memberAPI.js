@@ -58,6 +58,14 @@ function getMyProfile(mid){
     return axios.get("member/myProfile/" + mid);
 } 
 
+function updateNickname(member){
+    return axios.put("member/updateNickname", member);
+}
+
+function updatePassword(member){
+    return axios.put("member/updatePassword", member);
+}
+
 export default{
     join,
     setCareer,
@@ -66,4 +74,6 @@ export default{
     login,
     getEditorProfile,
     getMyProfile,
+    updateNickname,
+    updatePassword,
 }

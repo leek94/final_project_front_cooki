@@ -17,7 +17,7 @@ function join(member){
 }
 
 function deleteCareers(mid){
-    return axios.delete("member/careers/"+mid);
+    return axios.delete("member/careers/"+ mid);
 }
 
 function setCareer(careers){
@@ -35,6 +35,10 @@ function setCareer(careers){
 
 function setAwards(awards){
     return axios.post( "/member/setAwards" ,awards);
+}
+
+function deleteAwards(mid){
+    return axios.delete("member/awards/" + mid);
 }
 
 function getCreatorInfo(cno){
@@ -86,6 +90,8 @@ function updatePassword(member){
     return axios.put("member/updatePassword", member);
 }
 
+
+
 export default{
     join,
     setCareer,
@@ -101,4 +107,5 @@ export default{
     updateNickname,
     updatePassword,
     deleteCareers,
+    deleteAwards,
 }

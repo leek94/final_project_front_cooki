@@ -295,21 +295,31 @@ function careerRemove(index){
 
 // 수상 추가 및 삭제----------------------------------------
 // 변경 저장
-function saveAwards(){
+async function saveAwards(){
     editingAwards.value= !editingAwards.value;
     // 전체 Delete 했다가, 현재 값 insert
+    // Delete 식
+    await memberAPI.deleteAwards(store.state.userId);
+
+    // Insert식 - for문으로 던져야함
+    for(let i =0; i<awards.value.length; i++){
+        awards.value[i].ano = i+1;
+        awards.value[i].mid = store.state.userId;
+        await memberAPI.setAwards(JSON.parse(JSON.stringify(awards.value[i])));
+    }
 }
 
 // 변경 취소
 function cancelAwards(){
     editingAwards.value=!editingAwards.value;
     // Axios 들러서 원래 값 받아오기
+    getMyProfile();
 }
 
 // 칸 추가
 function awardsAdd() {
     const newawards=ref({
-        ano:awards.value.length+1,
+        ano:'',
         cacontent: ''
     })
     awards.value.push(newawards);

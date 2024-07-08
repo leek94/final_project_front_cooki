@@ -24,51 +24,20 @@ import { ref } from 'vue';
 
 const classCardes = ref([
     {
-        mname: '손혜선씨',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
+        mname: '',
+        ctitle: ' ',
+        ccontent:"",
+        cdday: '', 
+        ctime:'',
+        cpersoncount: null,
+        cprice:null,
     },
-    {
-        mname: '손혜선씨',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
-    },
-    {
-        mname: '손혜선씨',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
-    },
-    {
-        mname: '손혜선씨',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
-    },
-    {
-        mname: '손혜선씨',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"맛있는 쿠키를 만들어볼까요? 유후",
-        cdday: '2024-06-25', 
-        ctime:'14:00',
-        cpersoncount: 30,
-        cprice:48000,
-    },
+    
 ]);
+
+async function getSearchClass(){
+    
+}
 </script>
 
 <style scoped>

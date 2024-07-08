@@ -84,9 +84,9 @@
                         <div class="d-flex m-1" v-for="(career, index) in careerArray" :key="index">
                             <input class="flex-grow-1 p-2 border" placeholder="경력을 입력해주세요" v-model="career.cacontent"/>
                             <!-- 삭제 버튼은 index=0(첫행)일 때만 안보이고 항상 보임-->
-                            <button class="p-2 ms-3 border" v-if="index > 0" @click="careerRemove(index)"> - </button>
+                            <button class="button p-2 ms-3 border" v-if="index > 0" @click="careerRemove(index)"> - </button>
                             <!-- 추가 버튼은 마지막행일 때만 보임 -->
-                            <button class="p-2 ms-3 border" v-if="index+1===careerArray.length" @click="careerAdd(index)"> + </button>
+                            <button class="button p-2 ms-3 border" v-if="index+1===careerArray.length" @click="careerAdd(index)"> + </button>
                         </div>
                         <div class="checkError m-1" v-if="cacontentNullError">빈칸을 채워주세요</div>
                     </div>
@@ -97,9 +97,9 @@
                         <div class="d-flex m-1" v-for="(awards, index) in awardsArray" :key="index">
                             <input class="flex-grow-1 p-2 border" placeholder="수상 이력을 입력해주세요" v-model="awards.acontent"/>
                             <!-- 삭제 버튼은 index=0(첫행)일 때만 안보이고 항상 보임-->
-                            <button class="p-2 ms-3 border" v-if="index > 0" @click="awardsRemove(index)"> - </button>
+                            <button class="button p-2 ms-3 border" v-if="index > 0" @click="awardsRemove(index)"> - </button>
                             <!-- 추가 버튼은 마지막행일 때만 보임 -->
-                            <button class="p-2 ms-3 border" v-if="index+1===awardsArray.length" @click="awardsAdd(index)"> + </button>
+                            <button class="button p-2 ms-3 border" v-if="index+1===awardsArray.length" @click="awardsAdd(index)"> + </button>
                         </div>
                         <div class="checkError m-1" v-if="cacontentNullError">빈칸을 채워주세요</div>
                     </div>
@@ -356,13 +356,13 @@ async function handleSubmit() {
     accent-color: #D9EDBF;
 }
 
-.btn {
+.button {
     width: 50px;
     background-color: white;
     font-weight: bold;
 }
 
-.btn:hover {
+.button:hover {
     background-color: #15a775;
     color: white;
 }

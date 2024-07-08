@@ -54,6 +54,22 @@ function login(member){
 
 }
 
+function myClassHistory(mid) {
+    return axios.get("/member/myClassHistory/" + mid);
+}
+
+function myNowClass(mid) {
+    return axios.get("/member/myNowClass/" + mid);
+}
+
+function editorRecruitHistory(mid) {
+    return axios.get("/member/editorRecruitHistory/" + mid);
+}
+
+function editorNowRecruit(mid) {
+    return axios.get("/member/editorNowRecruit/" + mid);
+}
+
 function getEditorProfile(mid,mrole){
     return axios.get("member/editorProfile/" + mid + "/" + mrole);
 } 
@@ -76,6 +92,10 @@ export default{
     setAwards,
     getCreatorInfo,
     login,
+    myClassHistory,
+    myNowClass,
+    editorRecruitHistory,
+    editorNowRecruit,
     getEditorProfile,
     getMyProfile,
     updateNickname,

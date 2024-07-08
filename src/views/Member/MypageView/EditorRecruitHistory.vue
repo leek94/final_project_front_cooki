@@ -26,7 +26,7 @@
                                     <h6>모집강사 : {{ classes.mname }}</h6>
                                 </div>
                                 <div>
-                                    <h6>모집인원 : 17/{{ classes.cpersoncount }}</h6>
+                                    <h6>모집인원 : {{ classes.nowPerson }}/{{ classes.cpersoncount }}</h6>
                                 </div>
                                 <div class="info d-flex mb-3">
                                     <div class="class-date border-left-solid me-3">강의날짜 : {{ classes.cdday }}</div>
@@ -47,66 +47,56 @@
  </template>
  
  <script setup>
-
 import { computed, ref } from 'vue';
+import { useStore } from 'vuex';
+import memberAPI from '@/apis/memberAPI';
+import classAPI from '@/apis/classAPI';
+import classes from '@/store/classes';
 
 
  // 데이터 바인딩을 위한 더미 데이터
-const cookClasses = ([
-    { 
-        cno:1, 
-        ctitle:"쿠키쿠킹클래스1",
-        cpersoncount: 30, 
-        cprice:48000, 
-        mname: "손혜선", 
-        cdday: "2024-06-21", 
-        ctime:"14:00" 
-    },
-    { 
-        cno:2, 
-        ctitle:"쿠키쿠킹클래스2",
-        ccontent:"맛있는 쿠키를 만들어볼까요2 유후", 
-        cpersoncount: 30, 
-        cprice:48000, 
-        mname: "손혜선", 
-        cdday: "2024-06-21", 
-        ctime:"14:00" 
-    },
-    { 
-        cno:3, 
-        ctitle:"쿠키쿠킹클래스3",
-        ccontent:"맛있는 쿠키를 만들어볼까요3 유후", 
-        cpersoncount: 30, 
-        cprice:48000, 
-        mname: "손혜선", 
-        cdday: "2024-06-21", 
-        ctime:"14:00" 
-    },
-    { 
-        cno:4, 
-        ctitle:"쿠키쿠킹클래스4",
-        ccontent:"맛있는 쿠키를 만들어볼까요4 유후", 
-        cpersoncount: 30, 
-        cprice:48000, 
-        mname: "손혜선", 
-        cdday: "2024-06-21", 
-        ctime:"14:00" 
-    },
-    { 
-        cno:5, 
-        ctitle:"쿠키쿠킹클래스5",
-        ccontent:"맛있는 쿠키를 만들어볼까요5 유후", 
-        cpersoncount: 30, 
-        cprice:48000, 
-        mname: "손혜선", 
-        cdday: "2024-06-21", 
-        ctime:"14:00" 
-    },
-   
-]);
+const cookClasses = ref([]);
 
-const countClass=computed(()=> cookClasses.length)
+const countClass=computed(()=> cookClasses.value.length)
  
+
+//dateFormating (2024-06-28)
+function dateFormat(date) {
+    let dateFormat = date.getFullYear() +
+    '-' + ((date.getMonth() +1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) +
+    '-' + (date.getDate() < 10 ? "0" + date .getDate() : date.getDate());
+    return dateFormat;
+}
+
+const store = useStore();
+
+async function editorRecruitHistory() {
+    let mid = store.state.userId;
+    console.log("내아이디: ", mid)
+    try{
+        //아이디로 내가 개설한 클래스 리스트 불러오기
+        const response = await memberAPI.editorRecruitHistory(mid);
+        cookClasses.value = response.data.myClassList;
+        console.log("cdday", dateFormat(new Date(cookClasses.value[1].cdday)))
+        for(let i=0; i<cookClasses.value.length; i++) {
+            cookClasses.value[i].cdday = dateFormat(new Date(cookClasses.value[i].cdday));
+            //개설한 클래스 번호로 신청 인원수 불러오기
+            const cno = cookClasses.value[i].cno;
+            const response2 = await classAPI.classNowPerson(cno);
+            cookClasses.value[i].nowPerson = response2.data.nowPerson;
+            console.log("신청한 사람수", cookClasses.value[i].nowPerson)
+            
+        }
+    } catch(error) {
+        console.log(error);
+    }
+    console.log("내가 모집하고있는 클래스 리스트", JSON.parse(JSON.stringify(cookClasses.value)));
+}
+
+editorRecruitHistory();
+
+
+
  </script>
  
  <style scoped>

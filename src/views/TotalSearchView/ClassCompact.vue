@@ -11,11 +11,11 @@
                     </div>
                     <div v-if="classCards.length !== 0 && data.searchText!==''">
                         <ul class="main-img d-flex">
-                            <ClassCard v-for="(clcard, index) in classCards" :key="index" :objectProp="clcard"/>
+                            <ClassCard v-for="(clcard, index) in classCards" :key="index" :objectProp="clcard" @click="routerLinkTo(index)"/>
                         </ul>
 
                         <div class="d-flex justify-content-center">
-                            <button class="plus-button btn">더보기</button>
+                            <button class="plus-button btn" @click="MovetoList">더보기</button>
                         </div>
                  </div>
                 
@@ -89,11 +89,11 @@ async function getSearchClass(pageNo,perPage){
         }
 }
 function MovetoList(){
-    router.push(`/class/classListView?pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}`)
+    router.push(`/class/classListView?pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=1`)
 }
 
  function routerLinkTo(index){
-    router.push(`/class/ClassDetailView?cno=${classCards.value[index].cno}&pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}`);
+    router.push(`/class/ClassDetailView?cno=${classCards.value[index].cno}&pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=1`);
 }
 
 watch(route,(newRoute,oldRoute)=>{

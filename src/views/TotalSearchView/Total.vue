@@ -15,7 +15,7 @@
                             <ClassCard v-for="(clcard,index) in classCards" :key="index" :objectProp="clcard" @click="routerLinkTo(index)"/>
                         </ul>
                         <div class="d-flex justify-content-center">
-                            <button class="plus-button btn" @click="MovetoList">더보기</button>
+                            <button class="plus-button btn" @click="MovetoClassList">더보기</button>
                         </div>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                         </ul>
 
                         <div class="d-flex justify-content-center">
-                            <button class="plus-button btn">더보기</button>
+                            <button class="plus-button btn" @click="MovetoRecipeList">더보기</button>
                         </div>
                     </div>
 
@@ -46,6 +46,7 @@
 
 <script setup>
 import classAPI from '@/apis/classAPI';
+import recipeAPI from '@/apis/recipeAPI';
 import searchAPI from '@/apis/searchAPI';
 import ClassCard from '@/components/ClassCard.vue';
 import RecipeCard from '@/components/RecipeCard.vue';
@@ -58,6 +59,7 @@ const emit=defineEmits(['countSearchClass'])
 function handleClick(index) {
     console.log(recipeCardes.value[index].isActive)
     recipeCardes.value[index].isActive = !recipeCardes.value[index].isActive;
+    router.push(`/recipe/recipeDetailView?cno=${recipeCardes.value[index].rno}&pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=1`);
     console.log(recipeCardes.value[index].isActive)
 }
 
@@ -79,13 +81,8 @@ const classCards = ref([
 ]);
 
 const recipeCardes = ref([
-{
-        mname: '',
-        bdate: '',
-        btitle:'',
-        blike: null,
-        bhitcount: null,
-        isActive: false,
+    {
+
     }
 ]);
 
@@ -103,6 +100,7 @@ let countSearchClass= ref(null);
 if(data.value.searchText!==''){
     console.log("eeee"+data.value.searchText)
     getSearchClass(1,4);
+    getSearchRecipe(1,4);
 }
 
 
@@ -128,12 +126,28 @@ async function getSearchClass(pageNo,perPage){
             classCards.value[i].cdday= dateFormat(date);
         }
 }
-function MovetoList(){
-    router.push(`/class/classListView?pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}`)
+
+async function getSearchRecipe(pageNo,perPage){
+    console.log("getclass 실행")
+    const response = await recipeAPI.getRecipeList(JSON.parse(JSON.stringify(data.value)), pageNo,perPage)
+    recipeCardes.value=response.data.searchRecipe;
+    console.log(response.data.searchRecipe);
+    countSearchClass.value=recipeCardes.value.length;
+  
+}
+function MovetoClassList(){
+    router.push(`/recipe/recipeListView?pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=1`)
+}
+
+ function routerLinkToRecipeDetail(index){
+    router.push(`/recipe/recipeDetailView?cno=${recipeCardes.value[index].rno}&pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=1`);
+}
+function MovetoRecipeList(){
+    router.push(`/class/classListView?pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=1`)
 }
 
  function routerLinkTo(index){
-    router.push(`/class/ClassDetailView?cno=${classCards.value[index].cno}&pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}`);
+    router.push(`/class/ClassDetailView?cno=${classCards.value[index].cno}&pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=1`);
 }
 
 watch(route,(newRoute,oldRoute)=>{

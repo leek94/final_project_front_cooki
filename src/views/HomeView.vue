@@ -515,133 +515,146 @@
  
 </template>
    
- <script setup>
- import { onMounted, ref } from 'vue';
- import { register } from 'swiper/element/bundle';
- 
- register();
- 
- const classSwiperNow = ref(null);
- const lastIndex = ref(3);
- const isRun = ref(true);
- let imgCount = null;
- let classCenterSwiper = null
- 
-   onMounted(() => {
-     classCenterSwiper = document.querySelector('.classCenterSwiper');
-     const classLeftSwiper = document.querySelector('.classLeftSwiper');
-     const classRightSwiper = document.querySelector('.classRightSwiper');
-     const left1 = document.querySelector(".left1");
-     const right1 = document.querySelector(".right1");
-     const progressBar = document.querySelector(".progress-bar");
-     imgCount = "0"+6;
- 
-     const categorySwiper = document.querySelector('.categorySwiper');
-     const left2 = document.querySelector(".left2");
-     const right2 = document.querySelector(".right2");
- 
-     const recipeCenterSwiper = document.querySelector('.recipeCenterSwiper');
-     const recipeLeftSwiper1 = document.querySelector('.recipeLeftSwiper1');
-     const recpieRightSwiper1 = document.querySelector('.recpieRightSwiper1');
-     const recipeLeftSwiper2 = document.querySelector('.recipeLeftSwiper2');
-     const recpieRightSwiper2 = document.querySelector('.recpieRightSwiper2');
-     const left3 = document.querySelector(".left3");
-     const right3 = document.querySelector(".right3");
-     setProgressbar();
+<script setup>
+import { onMounted, ref } from 'vue';
+import { register } from 'swiper/element/bundle';
+import axios from 'axios';
+import searchAPI from '@/apis/searchAPI';
+
+register();
+
+const classSwiperNow = ref(null);
+const lastIndex = ref(3);
+const isRun = ref(true);
+let imgCount = null;
+let classCenterSwiper = null
+
+getBestItems();
+
+async function getBestItems(){
+  try{
+    const response = await searchAPI.getBestClassRecipe();
+    console.log(response.data);
+    console.log("bi success");
+  }catch{
+    console.log("bi fail");
+  }
+}
+
+function stopAuto(){
+  classCenterSwiper.swiper.autoplay.pause();
+  isRun.value = !isRun.value;
+}
      
-     classCenterSwiper.swiper.controller.control = [classLeftSwiper.swiper,classRightSwiper.swiper];
-     classCenterSwiper.addEventListener("swiperslidechange", setProgressbar);
-     categorySwiper.addEventListener("swiperslidechange",setLastIndex);
-     recipeCenterSwiper.swiper.controller.control = [recipeLeftSwiper1.swiper, recpieRightSwiper1.swiper,recipeLeftSwiper2.swiper,recpieRightSwiper2.swiper];
- 
-     left1.addEventListener("click", () => {
-       classCenterSwiper.swiper.slidePrev();
-     })
- 
-     right1.addEventListener("click", () => {
-       classCenterSwiper.swiper.slideNext();
-     });
- 
-     left2.addEventListener("click", () => {
-       categorySwiper.swiper.slidePrev();
-     })
- 
-     right2.addEventListener("click", () => {
-       categorySwiper.swiper.slideNext();
-     });
- 
-     left3.addEventListener("click", () => {
-       recipeCenterSwiper.swiper.slidePrev();
-     })
- 
-     right3.addEventListener("click", () => {
-       recipeCenterSwiper.swiper.slideNext();
-     });
- 
-     function setProgressbar(){
-       let now = classLeftSwiper.swiper.realIndex + 1;
-       classSwiperNow.value = "0" + now;
-       progressBar.style.width =  now/imgCount * 100 + "%";
-     }
- 
-     function setLastIndex(){
-       lastIndex.value = categorySwiper.swiper.realIndex + 3;
-       if(lastIndex.value >= 5){
-         lastIndex.value -= 5;
-       }
-     }
- 
-     })
- 
-     function stopAuto(){
-       classCenterSwiper.swiper.autoplay.pause();
-       isRun.value = !isRun.value;
-     }
-     
-     function runAuto(){
-       classCenterSwiper.swiper.autoplay.resume();
-       isRun.value = !isRun.value;
-     }
- 
-   </script>
+function runAuto(){
+  classCenterSwiper.swiper.autoplay.resume();
+  isRun.value = !isRun.value;
+}
+
+onMounted(() => {
+  classCenterSwiper = document.querySelector('.classCenterSwiper');
+  const classLeftSwiper = document.querySelector('.classLeftSwiper');
+  const classRightSwiper = document.querySelector('.classRightSwiper');
+  const left1 = document.querySelector(".left1");
+  const right1 = document.querySelector(".right1");
+  const progressBar = document.querySelector(".progress-bar");
+  imgCount = "0"+6;
+
+  const categorySwiper = document.querySelector('.categorySwiper');
+  const left2 = document.querySelector(".left2");
+  const right2 = document.querySelector(".right2");
+
+  const recipeCenterSwiper = document.querySelector('.recipeCenterSwiper');
+  const recipeLeftSwiper1 = document.querySelector('.recipeLeftSwiper1');
+  const recpieRightSwiper1 = document.querySelector('.recpieRightSwiper1');
+  const recipeLeftSwiper2 = document.querySelector('.recipeLeftSwiper2');
+  const recpieRightSwiper2 = document.querySelector('.recpieRightSwiper2');
+  const left3 = document.querySelector(".left3");
+  const right3 = document.querySelector(".right3");
+  setProgressbar();
+
+  classCenterSwiper.swiper.controller.control = [classLeftSwiper.swiper,classRightSwiper.swiper];
+  classCenterSwiper.addEventListener("swiperslidechange", setProgressbar);
+  categorySwiper.addEventListener("swiperslidechange",setLastIndex);
+  recipeCenterSwiper.swiper.controller.control = [recipeLeftSwiper1.swiper, recpieRightSwiper1.swiper,recipeLeftSwiper2.swiper,recpieRightSwiper2.swiper];
+
+  left1.addEventListener("click", () => {
+    classCenterSwiper.swiper.slidePrev();
+  })
+
+  right1.addEventListener("click", () => {
+    classCenterSwiper.swiper.slideNext();
+  });
+
+  left2.addEventListener("click", () => {
+    categorySwiper.swiper.slidePrev();
+  })
+
+  right2.addEventListener("click", () => {
+    categorySwiper.swiper.slideNext();
+  });
+
+  left3.addEventListener("click", () => {
+    recipeCenterSwiper.swiper.slidePrev();
+  })
+
+  right3.addEventListener("click", () => {
+    recipeCenterSwiper.swiper.slideNext();
+  });
+
+  function setProgressbar(){
+    let now = classLeftSwiper.swiper.realIndex + 1;
+    classSwiperNow.value = "0" + now;
+    progressBar.style.width =  now/imgCount * 100 + "%";
+  }
+
+  function setLastIndex(){
+    lastIndex.value = categorySwiper.swiper.realIndex + 3;
+    if(lastIndex.value >= 5){
+      lastIndex.value -= 5;
+    }
+  }
+}
+)
+</script>
    
-   <style scoped>
-     
-     #rDiv{
-       background-image: url(/public/images/assets/bg_pattern.png);
-       background-color: #fff9e2;
-       background-size: 100% 100%
-       
-     }
- 
-     .rCard{
-       background-image: url(/public/images/assets/bg_frame.png);
-       background-size: 100% 100%;
-       background-repeat: no-repeat;
-     }
- 
-     swiper-container {
-       width: 100%;
-       height: 100%;
-     }
- 
-     swiper-slide {
-       text-align: center;
-       font-size: 18px;
-       display: flex;
-       justify-content: center;
-       align-items: center;
-     }
- 
-     swiper-slide img {
-       width: 100%;
-       height: 100%;
-     }
+<style scoped>
+
+#rDiv{
+background-image: url(/public/images/assets/bg_pattern.png);
+background-color: #fff9e2;
+background-size: 100% 100%
+
+}
+
+.rCard{
+background-image: url(/public/images/assets/bg_frame.png);
+background-size: 100% 100%;
+background-repeat: no-repeat;
+}
+
+swiper-container {
+width: 100%;
+height: 100%;
+}
+
+swiper-slide {
+text-align: center;
+font-size: 18px;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+swiper-slide img {
+width: 100%;
+height: 100%;
+}
 
 
-     .categorySwiper swiper-slide img:hover{
-      transform: scale(1.1);
-      transition: all 0.2s linear;
-     }
+.categorySwiper swiper-slide img:hover{
+transform: scale(1.1);
+transition: all 0.2s linear;
+}
 
-   </style>
+</style>

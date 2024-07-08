@@ -139,6 +139,10 @@
 import classAPI from '@/apis/classAPI';
 import store from '@/store';
 import { ref } from 'vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+const cno = route.query.cno;
 
 const reviewInit = ref({});
 const review = ref({});
@@ -168,8 +172,7 @@ function starCheckUpdate(index, starIndex) {
     //return classAPI.reviewUpdate(JSON.parse(JSON.stringify(reviewArray.value[index])));
 }
 
-const cno = 81;
-
+//리뷰 등록 전 초기 평점 선언
 let avgCrratio = 0;
 
 //날짜 형식 함수
@@ -226,6 +229,7 @@ async function reviewInsertValid() {
 }
 
 reviewInsertValid();
+
 //------- review data insert function ---------------------------------------------------------------------------------------------- 
 
 async function reviewInsert() {

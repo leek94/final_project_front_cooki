@@ -11,12 +11,12 @@
          <hr class="mt-0"/>
          <div class="d-flex"  >
         <div class="qcards d-flex"  style="flex-wrap: wrap;">
-            <div class="card qnaCard mt-3" style="padding:0;"  v-for="(classes, index) in cookClasses" :key="index">
+            <div class="card qnaCard mt-3" style="padding:0;"  v-for="(classes, index) in cookClasses" :key="index" @click="routerLinkto(index)">
                 <div class="card-body text-center">
                     <li class="class-img-li ss" >
                         <div class="router-div">
                             <div class="class-image">
-                                <img src="/images/photos/semi2.jpg">
+                                <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes.cno}/1`">
                             </div>
                             <div class="text-start" >
                                 <div class="class-text text-start">
@@ -26,7 +26,7 @@
                                     <h6>모집강사 : {{ classes.mname }}</h6>
                                 </div>
                                 <div>
-                                    <h6>모집인원 : 17/{{ classes.cpersoncount }}</h6>
+                                    <h6>모집인원 : {{ classes.nowPerson }}/{{ classes.cpersoncount }}</h6>
                                 </div>
                                 <div class="info d-flex mb-3">
                                     <div class="class-date border-left-solid me-3">강의날짜 : {{ classes.cdday }}</div>
@@ -47,66 +47,62 @@
  </template>
  
  <script setup>
-
 import { computed, ref } from 'vue';
+import { useStore } from 'vuex';
+import memberAPI from '@/apis/memberAPI';
+import classAPI from '@/apis/classAPI';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
 
 
  // 데이터 바인딩을 위한 더미 데이터
-const cookClasses = ([
-    { 
-        cno:1, 
-        ctitle:"쿠키쿠킹클래스1",
-        cpersoncount: 30, 
-        cprice:48000, 
-        mname: "손혜선", 
-        cdday: "2024-06-21", 
-        ctime:"14:00" 
-    },
-    { 
-        cno:2, 
-        ctitle:"쿠키쿠킹클래스2",
-        ccontent:"맛있는 쿠키를 만들어볼까요2 유후", 
-        cpersoncount: 30, 
-        cprice:48000, 
-        mname: "손혜선", 
-        cdday: "2024-06-21", 
-        ctime:"14:00" 
-    },
-    { 
-        cno:3, 
-        ctitle:"쿠키쿠킹클래스3",
-        ccontent:"맛있는 쿠키를 만들어볼까요3 유후", 
-        cpersoncount: 30, 
-        cprice:48000, 
-        mname: "손혜선", 
-        cdday: "2024-06-21", 
-        ctime:"14:00" 
-    },
-    { 
-        cno:4, 
-        ctitle:"쿠키쿠킹클래스4",
-        ccontent:"맛있는 쿠키를 만들어볼까요4 유후", 
-        cpersoncount: 30, 
-        cprice:48000, 
-        mname: "손혜선", 
-        cdday: "2024-06-21", 
-        ctime:"14:00" 
-    },
-    { 
-        cno:5, 
-        ctitle:"쿠키쿠킹클래스5",
-        ccontent:"맛있는 쿠키를 만들어볼까요5 유후", 
-        cpersoncount: 30, 
-        cprice:48000, 
-        mname: "손혜선", 
-        cdday: "2024-06-21", 
-        ctime:"14:00" 
-    },
-   
-]);
+const cookClasses = ref([]);
 
-const countClass=computed(()=> cookClasses.length)
+const countClass=computed(()=> cookClasses.value.length)
  
+
+//dateFormating (2024-06-28)
+function dateFormat(date) {
+    let dateFormat = date.getFullYear() +
+    '-' + ((date.getMonth() +1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) +
+    '-' + (date.getDate() < 10 ? "0" + date .getDate() : date.getDate());
+    return dateFormat;
+}
+
+const store = useStore();
+
+async function editorRecruitHistory() {
+    let mid = store.state.userId;
+    console.log("내아이디: ", mid)
+    try{
+        //아이디로 내가 개설한 클래스 리스트 불러오기
+        const response = await memberAPI.editorRecruitHistory(mid);
+        cookClasses.value = response.data.myClassList;
+        console.log("cdday", dateFormat(new Date(cookClasses.value[1].cdday)))
+        for(let i=0; i<cookClasses.value.length; i++) {
+            cookClasses.value[i].cdday = dateFormat(new Date(cookClasses.value[i].cdday));
+            //개설한 클래스 번호로 신청 인원수 불러오기
+            const cno = cookClasses.value[i].cno;
+            const response2 = await classAPI.classNowPerson(cno);
+            cookClasses.value[i].nowPerson = response2.data.nowPerson;
+            console.log("신청한 사람수", cookClasses.value[i].nowPerson)
+            
+        }
+    } catch(error) {
+        console.log(error);
+    }
+    console.log("내가 모집하고있는 클래스 리스트", JSON.parse(JSON.stringify(cookClasses.value)));
+}
+
+editorRecruitHistory();
+
+//카드 클릭 시 디테일 페이지로 가는 함수
+const router= useRouter();
+function routerLinkto(index){
+    console.log("인덱스", index)
+    console.log("클래스번호" , cookClasses.value[index].cno)
+    router.push(`/Class/ClassDetailView?cno=${cookClasses.value[index].cno}`);
+}
  </script>
  
  <style scoped>

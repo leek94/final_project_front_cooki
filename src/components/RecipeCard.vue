@@ -2,20 +2,21 @@
     <li class="img-li ss">
         <div class="router-div">
             <div class="image">
-                <i class="icon-heart fa-solid fa-heart like-heart" :class="{active: prop.objectProp.isActive}" @click="$emit('click')"></i>
-                <img src="/images/photos/140114575djmw.jpg">
+                <i class="icon-heart fa-solid fa-heart like-heart" :class="{active: prop.objectProp.islike}"></i>
+                <img :src="`${axios.defaults.baseURL}/recipe/thumbattach/${prop.objectProp.rno}`">
             </div>
 
             <div>
             <div class="info d-flex mt-3 ">
-                <div class="name me-2">{{ prop.objectProp.mname }}</div>
-                <div class="date border-left-solid">{{ prop.objectProp.bdate}}</div>
+                <div class="name me-2">{{ prop.objectProp.mnickname }}</div>
+                <div class="date border-left-solid">{{ prop.objectProp.rdate}}</div>
             </div>
             <div class="text text-start">
-                <h4>{{  prop.objectProp.btitle }}</h4>
+                <h4>{{  prop.objectProp.rtitle }}</h4>
                 <div class="d-flex justify-content-end">
-                    <div class="me-2"><i class="fa-solid fa-heart like-heart" style="color:red;">&ensp;</i>{{  prop.objectProp.blike }}</div>
-                    <div><i class="fa-solid fa-eye">&ensp;</i>{{  prop.objectProp.bhitcount }}</div>
+                    <div class="me-2"><img src="/images/photos/ic_talk.png" width="25px">: {{ prop.objectProp.reviewcount }}</div>
+                    <div class="me-2"><i class="fa-solid fa-heart like-heart" style="color:red;">&ensp;</i>{{  prop.objectProp.likecount }}</div>
+                    <div><img src="/images/photos/ic_eyes.jpg" width="25px" />: {{ prop.objectProp.rhitcount }}</div>
                 </div>
             </div>
         </div>
@@ -25,18 +26,9 @@
 
 <script setup>
 import { ref } from 'vue';
+import axios from 'axios';
 
 const prop = defineProps(["objectProp"]);
-const emit = defineEmits(["click"]);
-
-
-// console.log(prop.objectProp);
-//좋아요 버튼 자바스크립트 시작
-
-console.log("카드 찍힘")
-console.log(prop.objectProp.isActive);
-//좋아요 버튼 자바스크립트 끝
-
 
 </script>
 

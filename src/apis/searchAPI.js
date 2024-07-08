@@ -5,7 +5,12 @@ function getSearchClass(search, pageNo=1,perPage){
 function getTotalCount(search){
     return axios.post("/getTotalCount",search)
 }
+
+function getBestClassRecipe(){
+    return axios.get("/bestClassesRecipe");
+}
 export default{
     getSearchClass,
-    getTotalCount
+    getTotalCount,
+    getBestClassRecipe,
 }

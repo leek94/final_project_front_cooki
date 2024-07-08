@@ -1,9 +1,7 @@
 <template>
     <div class="container_box ss">
-        
-        <form>
             <div class="recipe-title mb-5"><h3>레시피</h3></div>
-            <SearchBar></SearchBar>
+            <SearchBar @searchword="searchresult"></SearchBar>>
             <!-- 작성바 & 작성 버튼 -->
             <div class="top-box ss d-flex align-content-center align-content-center mb-5">
                 <img src="/images/photos/il_samie_3.png">
@@ -26,34 +24,44 @@
                     <ul class="sorted-part d-flex">
                         <li class="clicked-li me-4" :class="{ active: activeIndex === 0 }" @click="setActive(0)">최신순</li>
                         <li class="clicked-li me-4" :class="{ active: activeIndex === 1 }" @click="setActive(1)">조회순</li>
-                        <li class="clicked-li me-4" :class="{ active: activeIndex === 2 }" @click="setActive(2)">좋아요순</li>
+                        <li class="clicked-li me-4" :class="{ active: activeIndex === 2 }" @click="setActive(2)">리뷰순</li>
+                        <li class="clicked-li me-4" :class="{ active: activeIndex === 3 }" @click="setActive(3)">좋아요순</li>
                     </ul>
                 </div>
                 <!-- 사진 -->
                 
                 <div class="main-box ss">
                     <ul class="main-img d-flex ss">
-                        <RecipeCard v-for="(recard, index) in recipeCard" :key="index" :objectProp="recard" @click="handleClick(index)"/>
+                        <RecipeCard v-for="(recard, index) in recipeCard" :key="index" :objectProp="recard" @click="routerLinkto(recard.rno)"/>
                     </ul>
                 </div>
             </div>
 
-        </form>
+            <!--pagination-->
+            <div class="text-center" v-if="page.pager.totalRows!==0">
+                <button class="initial btn btn-sm" @click="changePageNo(1)"> 처음 </button>
+                <button class="prev btn btn-sm" v-if="page.pager.groupNo>1" @click="changePageNo(page.pager.startPageNo-1)">이전</button>
+                <button class="btn btn-sm" v-for="pageNo in page.pager.pageArray" :key="pageNo" @click="changePageNo(pageNo)">{{pageNo}}</button>
+                <button  class="btn btn-sm" v-if="page.pager.groupNo<page.pager.totalGroupNo" @click="changePageNo(page.pager.endPageNo+1)">다음</button>
+                <button class="last btn btn-sm" @click="changePageNo(page.pager.totalPageNo)">마지막</button>
+            </div>
+
+            <div v-if="page.pager.totalRows===0" style="margin-top:100px">
+                <hr/>
+                <div style="margin: 60px auto; text-align: center">
+                    <h5>검색어어가 존재하지 않습니다.</h5>
+                </div>
+                <hr/>
+            </div>
     </div>
 </template>
 
 <script setup>
 import SearchBar from '@/components/SearchBar.vue';
 import RecipeCard from '@/components/RecipeCard.vue';
-import { ref } from 'vue';
-
-function handleClick(index){
-    console.log("레시피 리스트 실행");
-    console.log(recipeCard.value[index].isActive);
-    recipeCard.value[index].isActive = !recipeCard.value[index].isActive;
-    console.log(recipeCard.value[index].isActive);
-
-}
+import recipeAPI from '@/apis/recipeAPI';
+import { ref, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 const recipeCard = ref([
     {
@@ -64,110 +72,96 @@ const recipeCard = ref([
         bhitcount: 112,
         isActive: false,
     },
-    {
-        mname: '손혜삼씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 330,
-        bhitcount: 8112,
-        isActive: false,
-    },
-    {
-        mname: '손혜사씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 26,
-        bhitcount: 1122,
-        isActive: false,
-    },
-    {
-        mname: '손혜사씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 26,
-        bhitcount: 1122,
-        isActive: false,
-    },
-    {
-        mname: '손혜사씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 26,
-        bhitcount: 1122,
-        isActive: false,
-    },
-    {
-        mname: '손혜사씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 26,
-        bhitcount: 1122,
-        isActive: false,
-    },
-    {
-        mname: '손혜사씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 26,
-        bhitcount: 1122,
-        isActive: false,
-    },
-    {
-        mname: '손혜사씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 26,
-        bhitcount: 1122,
-        isActive: false,
-    },
-    {
-        mname: '손혜사씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 26,
-        bhitcount: 1122,
-        isActive: false,
-    },
-    {
-        mname: '손혜선씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 30,
-        bhitcount: 112,
-        isActive: false,
-    },
-    {
-        mname: '손혜선씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 30,
-        bhitcount: 112,
-        isActive: false,
-    },
-    {
-        mname: '손혜선씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 30,
-        bhitcount: 112,
-        isActive: false,
-    },
 ])
+
+const data=ref({
+    searchText:'', 
+    searchTitle:'all',
+    searchSort:0,
+    pageNo:1
+})
+
+const page=ref({
+    pager:{}
+})
+
+const router = useRouter();
+const route= useRoute();
+const pageNo = ref(route.query.pageNo||1);
+data.value.searchText = route.query.searchText||'';
+data.value.searchTitle=route.query.searchTitle||'all';
+data.value.searchSort=route.query.searchSort||0;
+getRecipeList(pageNo.value);
+
+async function getRecipeList(pageNo){
+    try{
+        //클래스 리스트를 받아오기 위한 axios 호출
+        const response1 = await recipeAPI.getRecipeList(JSON.parse(JSON.stringify(data.value)),pageNo);
+        recipeCard.value= response1.data.searchRecipe;
+        page.value.pager=response1.data.pager;
+        //날짜 세팅
+        for(let i=0;i<recipeCard.value.length;i++){
+            let date = new Date(recipeCard.value[i].rdate);
+            recipeCard.value[i].rdate= dateFormat(date);
+        }
+        console.log("success");
+    }catch(error){
+        console.log(error);
+    }
+}
+
+function dateFormat(date) {
+    let dateFormat = date.getFullYear() +
+    '-' + ((date.getMonth() +1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) +
+    '-' + (date.getDate() < 10 ? "0" + date .getDate() : date.getDate());
+    return dateFormat;
+}
+
+function routerLinkto(rno){
+    console.log("???");
+    router.push(`./RecipeDetailView?rno=${rno}&pageNo=${pageNo.value}&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=${data.value.searchSort}`);
+}
+
+
+async function searchresult(search){
+   data.value.searchText=search.searchText
+   data.value.searchTitle=search.searchTitle
+   
+    router.push(`/recipe/recipeListView?pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=${data.value.searchSort}`);
+}
 
 // 정렬을 위한 코드
 const activeIndex = ref(0);
-
+activeIndex.value=parseInt(route.query.searchSort)||0;
 const setActive = (index) => {
-  activeIndex.value = index;
-  // 로직 axios
-  if(index == 0){
-    // 최신순 axios
-  } else if(index == 1) {
-    // 조회순 axios
-  } else {
-    // 좋아요순 axios
-  }
+    activeIndex.value = index;
+    data.value.searchSort= index;
+    pageNo.value=1;
+    changePageNo(1)
 };
+
+function changePageNo(argpageNo){
+    router.push(`/recipe/recipeListView?pageNo=${argpageNo}&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=${data.value.searchSort}`);
+}
+
+//같은 페이지->같은 페이지로 이동했을 때 
+//route(url) 값이 단 하나라도 바뀌었을 때 실행
+watch(route,(newRoute,oldRoute) => {
+    if(newRoute.query.pageNo){ 
+        console.log("다시 들어옴")
+        getRecipeList(newRoute.query.pageNo);
+        pageNo.value=newRoute.query.pageNo;
+    } else {   
+        //pageNo가 존재하지 않으면 list를 다시 호출하기 위한 초기값을 설정해주는 것
+        data.value.searchTitle='all'
+        data.value.searchSort=0
+        data.value.searchText=''
+        activeIndex.value=0
+        getRecipeList(1)
+        pageNo.value=1;
+    }
+})
+
 </script>
 
 <style scoped>

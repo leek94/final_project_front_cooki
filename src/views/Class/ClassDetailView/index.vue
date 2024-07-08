@@ -80,10 +80,10 @@
                         <RouterLink class="menu" id="creatorInfo" :to="`/Class/ClassDetailView/CreatorInfo?cno=${cno}`">에디터경력</RouterLink> 
                     </li>
                     <li class="nav-item w-25" style="display: inline-block; ">
-                        <RouterLink class="menu" id="qAnda" to="/Class/ClassDetailView/QAndA">QAndA</RouterLink> 
+                        <RouterLink class="menu" id="qAnda" :to="`/Class/ClassDetailView/QAndA?cno=${cno}`">QAndA</RouterLink> 
                     </li>
                     <li class="nav-item w-25" style="display: inline-block; ">
-                        <RouterLink class="menu" id="review" to="/Class/ClassDetailView/Review">리뷰</RouterLink> 
+                        <RouterLink class="menu" id="review" :to="`/Class/ClassDetailView/Review?cno=${cno}`">리뷰</RouterLink> 
                     </li>
                 </ul>
             </div>

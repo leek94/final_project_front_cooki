@@ -80,8 +80,10 @@
 import recipeAPI from '@/apis/recipeAPI';
 import { ref } from 'vue';
 import { useStore } from 'vuex';
-
+import { useRoute } from 'vue-router';
 const store = useStore();
+const route = useRoute();
+const rno = route.query.rno;
 
 const reviewInit = ref({
     rrtitle: "",
@@ -93,8 +95,6 @@ const reviewInit = ref({
 const review = ref({});
 const reviewArray = ref([]);
 const isReviewArray = ref([]);
-
-const rno = 55;
 
 //dateFormating (2024-06-28)
 function dateFormat(date) {

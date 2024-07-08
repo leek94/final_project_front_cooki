@@ -7,7 +7,7 @@
                     <li class="class-img-li ss">
                         <div class="router-div" :style="prop.style">
                             <div class="class-image">
-                                <img src="/images/photos/semi2.jpg">
+                                <img :src="`${axios.defaults.baseURL}/class/thumbattach/${prop.objectProp.cno}/1`"> 
                             </div>
                             <div class="text-start" >
                                 <div class="class-text text-start">
@@ -17,12 +17,13 @@
                                     <h6>모집강사 : {{ prop.objectProp.mname }}</h6>
                                 </div>
                                 <div>
-                                    <h6>모집인원 : 17/{{ prop.objectProp.cpersoncount }}</h6>
+                                    <h6>모집인원 : {{ prop.objectProp.nowPerson }}/{{ prop.objectProp.cpersoncount }}</h6>
+                                    <!-- {{ prop.objectProp.nowPerson }} -->
                                 </div>
                                 <div class="info d-flex mb-3">
                                     <div class="class-date border-left-solid me-3">강의날짜 : {{ prop.objectProp.cdday }}</div>
-                                    <div class="dday-box" :class="prop.class" >D-5</div>
                                 </div>
+                                    <div class="dday-box" :class="prop.class" >D-{{ checker() }}</div>
                             </div>
                         </div>
                     </li>
@@ -34,7 +35,19 @@
 </template>
 
 <script setup>
+import axios from 'axios';
+
 const prop= defineProps([ "class","objectProp"])
+// D-Day 구하는 함수
+function checker(){
+const today = new Date();
+// 날짜 형태가 2024-06-20여야만 가능 아니면 형태를 변경해서 넣어줘야함
+
+const cday = new Date(prop.objectProp.cdday);
+const diff = cday - today; // 초 단위로 나와서 밑에서 변경해줘야함
+const diffDays = Math.ceil(diff / (1000 * 60 * 60 * 24));
+return diffDays
+}
 
 console.log(prop.style)
 

@@ -19,6 +19,7 @@
             </div>
         </div>
 
+        
         <div class="flex-grow-1 row mx-2 mb-3">
             <li class="green-point m-1">닉네임
                 <span style="margin-left:10px; font-size: 12px; color:green"> * 3~16자 이내</span>
@@ -47,13 +48,13 @@
             <div class="checkError" v-if="mpasswordResultError">올바른 형식의 비밀번호를 입력해주세요</div>
             <div class="input-group input-group-box w-100">
                 <input type="text" placeholder="비밀번호 확인" v-model="member.mpasswordcheck" aria-label="passwordCheck" class="form-control" @keyup="mpasswordMatchCheck">
-                <button class="btn border" type="button" id="button-addon2">변경</button>
+                <button class="btn border" type="button" id="button-addon2" @click="changePassword">변경</button>
             </div>
             <div class="checkError col  m-2 w-50" v-if="mpasswordMatchError">입력한 비밀번호와 일치하지않습니다</div>
         </div>
 
         <!-- 에디터한테만 보이는 화면 -->
-        <div class="flex-grow-1 row mx-2 mb-3">
+        <div class="flex-grow-1 row mx-2 mb-3" v-if="mrole === 'ROLE_EDITOR'">
             <div class="d-flex justify-content-between">
                 <li class="green-point m-1">경력</li>
                 <button class="btn btn-md btn-outline-success" v-if="!editingCareers" @click="changeCareers()">변경</button>
@@ -63,23 +64,23 @@
                 </div>
             </div>
             <!-- db에 저장된 수만큼 for문 -->
-            <div  v-if="!editingCareers">
-                <div class="mb-1" style="margin-top:10px" v-for="(ca, index) in careers" :key="index">
+            <div  v-if="!editingCareers" >
+                <div class="mb-1" style="margin-top:10px" v-for="(career, index) in careers" :key="index">
                     <div class="mnicknameinput d-flex bg-light" style="height:50px; align-items: center; width:100%" >
-                        <div>{{ ca.careerContent }}</div>
+                        <div>{{ career.cacontent }}</div>
                     </div>
                 </div>
             </div>
             <div v-if="editingCareers">
-            <div class="input-group input-group-box w-100 mb-1" v-for="(ca, index) in careers" :key="index">
-                <input type="text" class="form-control input-box" placeholder="경력을 입력해주세요" v-model="ca.careerContent" aria-label="Recipient's username" aria-describedby="button-addon2">
-                <button class="btn border" type="button" id="button-addon2"  @click="careerRemove(index)">x</button>
-            </div>
-            <div class="text-center mt-3" >
-                <button class="btn btn border" style="width:40px; font-size: 24px" @click="careerAdd()">+</button>
-            </div>
+                <div class="input-group input-group-box w-100 mb-1" v-for="(career, index) in careers" :key="index">
+                    <input type="text" class="form-control input-box" placeholder="경력을 입력해주세요" v-model="career.cacontent" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <button class="btn border" type="button" id="button-addon2"  @click="careerRemove(index)">x</button>
+                </div>
+                <div class="text-center mt-3">
+                    <button class="btn btn border" style="width:40px; font-size: 24px" @click="careerAdd()">+</button>
+                </div>
 
-        </div>
+            </div>
         </div>
 
             <div class="row  mx-2 mb-5 " v-if="pluscareer">
@@ -95,7 +96,7 @@
         
 
         <!-- 에디터한테만 보이는 화면 -->
-        <div class="flex-grow-1 row mx-2 mb-3">
+        <div class="flex-grow-1 row mx-2 mb-3" v-if="mrole === 'ROLE_EDITOR'">
             <div class="d-flex justify-content-between">
                 <li class="green-point m-1">수상내역</li>
                 <button class="btn btn-md btn-outline-success" v-if="!editingAwards" @click="changeAwards()">변경</button>
@@ -108,20 +109,20 @@
             <div  v-if="!editingAwards">
                 <div class="mb-1" style="margin-top:10px" v-for="(aw, index) in awards" :key="index">
                     <div class="mnicknameinput d-flex bg-light" style="height:50px; align-items: center; width:100%" >
-                        <div>{{ aw.awardsContent }}</div>
+                        <div>{{ aw.acontent }}</div>
                     </div>
                 </div>
             </div>
             <div v-if="editingAwards">
-            <div class="input-group input-group-box w-100 mb-1" v-for="(aw, index) in awards" :key="index">
-                <input type="text" class="form-control input-box" placeholder="경력을 입력해주세요" v-model="aw.awardsContent" aria-label="Recipient's username" aria-describedby="button-addon2">
-                <button class="btn border" type="button" id="button-addon2"  @click="awardsRemove(index)">x</button>
-            </div>
-            <div class="text-center mt-3" >
-                <button class="btn btn border" style="width:40px; font-size: 24px" @click="awardsAdd()">+</button>
-            </div>
+                <div class="input-group input-group-box w-100 mb-1" v-for="(aw, index) in awards" :key="index">
+                    <input type="text" class="form-control input-box" placeholder="경력을 입력해주세요" v-model="aw.acontent" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <button class="btn border" type="button" id="button-addon2"  @click="awardsRemove(index)">x</button>
+                </div>
+                <div class="text-center mt-3" >
+                    <button class="btn btn border" style="width:40px; font-size: 24px" @click="awardsAdd()">+</button>
+                </div>
 
-        </div>
+            </div>
         </div>
     
     </div>
@@ -130,40 +131,54 @@
 </template>
 
 <script setup>
+import memberAPI from '@/apis/memberAPI';
+import store from '@/store';
 import { ref } from 'vue';
 
 const member = ref( {
-    mid: "cooki@naver.com",
-    mnickname: "김쿠키",
+    mid: "",
+    mnickname: "",
     mpassword: "",
-    mpasswordcheck: ""
+    mpasswordcheck: "",
 });
 
 const careers=ref([
     {
         cano:1,
-        careerContent:"쿠키호텔 주방장 3년"
-    },
-    {
-        cano:2,
-        careerContent:"키쿠제과 베이킹 클래스 운영 2년"
+        cacontent:"손짱1",
     },
 ])
 
 const awards=ref([
     {
-        ano:1,
-        awardsContent:"제1회 쿠키쿠 베이킹 대회 장려상"
-    },
-    {
-        ano:2,
-        awardsContent:"제2회 쿠키쿠 베이킹 대회 장려상"
-    },
-    {
-        ano:3,
-        awardsContent:"제3회 쿠키쿠 베이킹 대회 장려상"
+        ano: 1,
+        acontent: "손짱 1등",
     },
 ])
+
+// 위에서 v-if에서 mrole을 사용하기 때문에 여기서 초기화 해줘야함
+const mrole = store.state.mrole;
+// 마이프로필을 호출
+getMyProfile();
+
+// 마이프로필로 값을 가져오는 함수
+async function getMyProfile() {
+    try{
+            const response = await memberAPI.getMyProfile(store.state.userId);
+            member.value = response.data.member;
+            console.log("esdf"+response.data.member.mnickname);
+
+        if(store.state.mrole === 'ROLE_EDITOR'){
+            const response = await memberAPI.getEditorProfile(store.state.userId, store.state.mrole);
+            careers.value = response.data.career;
+            awards.value = response.data.awards;
+        }
+    }catch(error){
+        console.log("에러남: " + error);
+    }
+        
+}
+
 const mnicknameResultError = ref(false);
 const mpasswordResultError = ref(false);
 const mpasswordMatchError = ref(false);
@@ -194,6 +209,17 @@ function mpasswordMatchCheck(){
 
     return mpasswordCheckResult;
 }
+
+// 비밀번호 업데이트
+async function changePassword() {
+    console.log("비밀번호 체크: " + member.value.mpassword)
+    if(member.value.mpassword === member.value.mpasswordcheck){ 
+        const response = await memberAPI.updatePassword(JSON.parse(JSON.stringify(member.value)));
+        member.value.mpassword = "";
+        member.value.mpasswordcheck = "";
+    }
+}
+
 const editingMnickname=ref(false);
 const editingCareers=ref(false);
 const editingAwards=ref(false);
@@ -209,51 +235,103 @@ function changeAwards(){
     editingAwards.value= !editingAwards.value;
 }
 
+// 닉네임 DB에 업데이트 하는 함수
+async function updateNickname(){
+    await memberAPI.updateNickname(JSON.parse(JSON.stringify(member.value)));
+}
+
+// 닉네임 업데이트 버튼
 function savenickname(){
     editingMnickname.value= !editingMnickname.value;
-
-}
-function saveCareers(){
-    editingCareers.value= !editingCareers.value;
-}
-function saveAwards(){
-    editingAwards.value= !editingAwards.value;
+    updateNickname();
 }
 
+
+
+
+// 경력 추가 및 삭제--------------------------------------
+// 변경 저장
+async function saveCareers(){
+    editingCareers.value = !editingCareers.value;
+    
+    // 전체 Delete 했다가, 현재 값 insert해야 편함 전체 수를 확인 하지 않아도 됨
+    // Delete 식
+    await memberAPI.deleteCareers(store.state.userId);
+
+    // Insert 식 - for문으로 던져야함
+    for(let i=0; i<careers.value.length; i++){
+        console.log("cano 확인: "+ careers.value[1].cano);
+        console.log("cacontent 확인: " + careers.value[i].cacontent);
+        careers.value[i].cano=i+1; // 번호 지정
+        careers.value[i].mid=store.state.userId; // 아이디값 저장
+        await memberAPI.setCareer(JSON.parse(JSON.stringify(careers.value[i])));
+    }
+    
+}
+
+// 변경 취소
 function cancelCareers(){
-    editingCareers.value=! editingCareers.value;
+    editingCareers.value = !editingCareers.value;
+    console.log("경력 취소 실행")
+    // Axios 들러서 원래 값 받아오기
+    getMyProfile();
 }
 
-function cancelAwards(){
-    editingAwards.value=!editingAwards.value;
-}
-
-
+// 칸 추가
 function careerAdd() {
     const newcareer=ref({
-        cano:careers.value.length+1,
+        cano:'',
         cacontent: ''
     })
     careers.value.push(newcareer);
 }
 
+// 칸 삭제 - 마지막 하나는 삭제 안됨
 function careerRemove(index){
     if(careers.value.length>1){
         careers.value.splice(index,1);
     }
 }
 
+// 수상 추가 및 삭제----------------------------------------
+// 변경 저장
+async function saveAwards(){
+    editingAwards.value= !editingAwards.value;
+    // 전체 Delete 했다가, 현재 값 insert
+    // Delete 식
+    await memberAPI.deleteAwards(store.state.userId);
+
+    // Insert식 - for문으로 던져야함
+    for(let i =0; i<awards.value.length; i++){
+        awards.value[i].ano = i+1;
+        awards.value[i].mid = store.state.userId;
+        await memberAPI.setAwards(JSON.parse(JSON.stringify(awards.value[i])));
+    }
+}
+
+// 변경 취소
+function cancelAwards(){
+    editingAwards.value=!editingAwards.value;
+    // Axios 들러서 원래 값 받아오기
+    getMyProfile();
+}
+
+// 칸 추가
 function awardsAdd() {
     const newawards=ref({
-        cano:awards.value.length+1,
+        ano:'',
         cacontent: ''
     })
     awards.value.push(newawards);
 }
 
+// 칸 삭제 - 마지막 하나는 삭제 안됨
 function awardsRemove(index){
-    awards.value.splice(index,1)
+    if(awards.value.length>1){
+        awards.value.splice(index,1)
+    }
 }
+
 </script>
 
 <style scoped>

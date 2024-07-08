@@ -44,7 +44,7 @@ const store= createStore({
     context.commit("setUserId",localStorage.getItem("userId") || "");
     const accessToken = localStorage.getItem("accessToken") || "";
     context.commit("setAccessToken",accessToken);
-    context.commit(localStorage.getItem("mrole") || "");
+    context.commit("setMrole",localStorage.getItem("mrole") || "");
     if(accessToken !==""){
       axiosConfig.addAuthHeader(accessToken);
     }

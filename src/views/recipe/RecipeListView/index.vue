@@ -65,12 +65,7 @@ import { useRoute, useRouter } from 'vue-router';
 
 const recipeCard = ref([
     {
-        mname: '손혜선씨',
-        bdate: '2024-06-25 14:00',
-        btitle:'이거 맛있어 보이세요?',
-        blike: 30,
-        bhitcount: 112,
-        isActive: false,
+
     },
 ])
 
@@ -91,6 +86,7 @@ const pageNo = ref(route.query.pageNo||1);
 data.value.searchText = route.query.searchText||'';
 data.value.searchTitle=route.query.searchTitle||'all';
 data.value.searchSort=route.query.searchSort||0;
+
 getRecipeList(pageNo.value);
 
 async function getRecipeList(pageNo){

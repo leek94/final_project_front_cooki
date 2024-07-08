@@ -10,7 +10,7 @@
  
          <hr class="mt-0"/>
          <div class="d-flex" style="flex-wrap: wrap;" >
-            <div class="qcard" v-for="(ccards,index) in cookClasses" :key="index">
+            <div class="qcard" v-for="(ccards,index) in cookClasses" :key="index"  @click="routerLinkto(index)">
                     <MypageClassCard :objectProp="ccards"/>
             </div>
         </div>
@@ -24,6 +24,8 @@ import classAPI from '@/apis/classAPI';
 import MypageClassCard from '@/components/MypageClassCard.vue';
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+
 const cookClasses = ref ([]);
 const store = useStore();
 
@@ -60,6 +62,14 @@ async function myNowClassRead() {
 }
 
 myNowClassRead();
+
+//카드 클릭 시 디테일 페이지로 가는 함수
+const router= useRouter();
+function routerLinkto(index){
+    console.log("인덱스", index)
+    console.log("클래스번호" , cookClasses.value[index].cno)
+    router.push(`/Class/ClassDetailView?cno=${cookClasses.value[index].cno}`);
+}
 
  </script>
  

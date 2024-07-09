@@ -53,8 +53,8 @@ function recipeReviewDelete(rrno){
     return axios.get("/recipe/reviewDelete/" + rrno);
 }
 
-function getRecipeList(search, pageNo=1){
-    return axios.post("/recipe/recipeList",search,{params:{pageNo}});
+function getRecipeList(search, pageNo=1,perPage){
+    return axios.post("/recipe/recipeList",search,{params:{pageNo,perPage}});
 }
 
 export default{

@@ -1,5 +1,4 @@
 <template>
-    
     <div>
         <div>
             <form @submit.prevent="handleSubmit" >
@@ -62,7 +61,6 @@ const handlecategory = (index) => {
         activeIndex.value=null;
         search.value.searchText = '';
         search.value.searchTitle = 'all';
-        search.value.toggle = true;
     }else{
         activeIndex.value = index;
         search.value.searchText = index;

@@ -107,14 +107,12 @@ data.value.searchTitle=route.query.searchTitle||'all';
 data.value.searchSort=route.query.searchSort||0;
 getClssList(pageNo.value);
 
-async function getClssList(pageNo){
+async function getClssList(pageNo,perPage){
     try{
         //클래스 리스트를 받아오기 위한 axios 호출
-        const response1 = await searchAPI.getSearchClass(JSON.parse(JSON.stringify(data.value)),pageNo);
+        const response1 = await searchAPI.getSearchClass(JSON.parse(JSON.stringify(data.value)),pageNo,perPage);
         classCard.value= response1.data.searchClass;
         page.value.pager=response1.data.pager;
-        console.log("eeee"+classCard.value[1].reviewCount)
-        console.log("ddddd"+classCard.value[0].crratio)
         //
         for(let i=0;i<classCard.value.length;i++){
             classCard.value[i].crratio=Math.round(classCard.value[i].crratio*10)/10
@@ -143,19 +141,14 @@ activeIndex.value=parseInt(route.query.searchSort)||0;
 //watch로 다시 getclasslist 함수가 실행될 때 
 //같은 페이지에서 같은페이지로 이동하면서 검색어 갑을 다시 setting 해준다 
 async function searchresult(search){
-    if(search.searchText==='' && search.toggle === true){
-        console.log("초기화 실행")
-        
-    }else if(search.searchText===''){
-    searchModal.show();
+    if(search.searchText===''){
+        searchModal.show();
+        return
     }
-   
    data.value.searchText=search.searchText
    data.value.searchTitle=search.searchTitle
-   
-    router.push(`/class/classListView?pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=${data.value.searchSort}`);
-
-    }
+   router.push(`/class/classListView?pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=${data.value.searchSort}`);
+}
 
 // 정렬을 위한 자바스크립트 시작
 const setActive = (index) => {

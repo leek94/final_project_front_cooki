@@ -53,20 +53,36 @@ data.value.searchTitle=route.query.searchTitle||'all'
 data.value.searchText=route.query.searchText||''
 let classCount= ref(0);
 let recipeCount=ref(0);
-async function searchresult(search){
-   data.value.searchText=search.searchText
-   data.value.searchTitle=search.searchTitle 
-   const response = await searchAPI.getTotalCount(JSON.parse(JSON.stringify(data.value)));
+if(data.value.searchText!==''){
+    getTotalCount();
+}
+
+async function getTotalCount(){
+    const response = await searchAPI.getTotalCount(JSON.parse(JSON.stringify(data.value)));
     classCount.value= response.data.searchClasses;
     recipeCount.value= response.data.searchRecipes;
-    
-   if(data.value.searchText===''){
+}
+
+function searchresult(search){
+   data.value.searchText=search.searchText
+   data.value.searchTitle=search.searchTitle 
+   if(data.value.searchText!==''){
+    getTotalCount();
+   }else{
         data.value.searchText==='';
         data.value.searchTitle='all'
     }
    router.push(`/TotalSearchView/Total?pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}`);
 }
 
+watch(route,(newRoute,oldRoute)=>{
+    console.log("d"+newRoute.query.searchText)
+        if(!newRoute.query.searchText){
+            console.log("undefined")
+            classCount.value=0;
+            recipeCount.value=0;
+        }
+})
 
 </script>   
 

@@ -7,7 +7,7 @@
         검색어를 입력해주세요
     </template>
     <template v-slot:footer> 
-        <button type="button" class="btn btn-success btn-sm" data-bs-dismiss="modal">확인</button>
+        <button type="button" class="btn btn-success btn-sm" data-bs-dismiss="modal" @click="$emit('close')">확인</button>
     </template>
 
    
@@ -16,6 +16,8 @@
 
 <script setup>
 import ModalTemplate from './ModalTemplate.vue'
+
+const emit = defineEmits(['close'])
 </script>
 
 <style scoped>

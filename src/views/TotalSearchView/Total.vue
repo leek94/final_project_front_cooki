@@ -21,7 +21,7 @@
                 </div>
             </div>
 
-            <div class=" mb-2">
+            <div class=" mb-5 pb-3">
                 <h5 class="class-name mb-3">레시피</h5>
                 <div class="main-box">
                     <div v-if="data.searchText==='' || recipeCardes.length === 0" style="margin-top:100px">
@@ -64,26 +64,11 @@ function handleClick(index) {
 }
 
 const classCards = ref([
-    {
-        cno:null,
-        mname: '',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"",
-        cdday: '', 
-        ctime:'',
-        chitcount:null,
-        cpersoncount: null,
-        cprice:null,
-        cnowPerson:null,
-        reviewCount:null,
-        crratio:null
-    }
+    { }
 ]);
 
 const recipeCardes = ref([
-    {
-
-    }
+    { }
 ]);
 
 const data= ref({
@@ -155,6 +140,7 @@ watch(route,(newRoute,oldRoute)=>{
         data.value.searchTitle=newRoute.query.searchTitle||'all';
         data.value.searchText=newRoute.query.searchText||'';
         getSearchClass(1,4)
+        getSearchRecipe(1,4)
     } else{
         data.value.searchText=''
     }

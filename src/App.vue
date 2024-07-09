@@ -3,8 +3,10 @@
     <div>
       <Header></Header>
     </div>
+    <div class="router">
     <router-view/>
-    <div>
+   </div>
+    <div >
       <Footer></Footer>
     </div>
 </div>
@@ -44,5 +46,10 @@ nav a.router-link-exact-active {
 Footer{
   position : relative;
   transform : translateY(-100%);
+}
+.router{
+  min-height: 675px;
+  overflow-x:hidden;
+  align-content: center;
 }
 </style>

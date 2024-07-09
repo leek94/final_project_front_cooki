@@ -286,7 +286,6 @@ function qnaUpdate(index) {
 }
 
 function qnaClose(index) {
-    console.log("큐엔에이 닫기 정보", JSON.parse(JSON.stringify(qnaArray.value[index])));
     //qna 정보 수정 취소 버튼 클릭시 초기값으로 돌려주기 위한 설정
     qnaArray.value[index].qtitle = qnaArray.value[index].originalQtitle;
     qnaArray.value[index].qcontent = qnaArray.value[index].originalQcontent;
@@ -298,9 +297,7 @@ function qnaClose(index) {
 
 async function qnaDelete(index) {
     try{
-        console.log("큐앤에이 삭제 함수 클릭")
         let qno = qnaArray.value[index].qno;
-        console.log("큐앤에이 번호: ", qno);
         qnaArray.value.splice(index, 1);
         const response = await classAPI.qnaDelete(qno);
         getQna(cno);
@@ -321,8 +318,6 @@ function qreplyInsert(index) {
     qna.value.qreply = qnaArray.value[index].qreply;
     qna.value.qno = qnaArray.value[index].qno;
     qnaArray.value[index].originalQreply = qna.value.qreply
-    console.log("대댓글 수정 정보", JSON.parse(JSON.stringify(qna.value.qreply)));
-    console.log("큐엔에이 수정 정보", JSON.parse(JSON.stringify(qna.value)));
     isWriteArray.value[index] = !isWriteArray.value[index];
     return classAPI.qreplyUpdate(JSON.parse(JSON.stringify(qna.value)));
     //qnaArray.value.push({qtitle: qna.value.qreply});
@@ -349,7 +344,6 @@ function qreplyDelete(index) {
     qnaArray.value[index].qreply = '';
     qna.value.qreply = null;
     qna.value.qno = qnaArray.value[index].qno;
-    console.log("큐엔에이 삭제 정보", JSON.parse(JSON.stringify(qna.value)));
     return classAPI.qreplyUpdate(JSON.parse(JSON.stringify(qna.value)));
 }
 

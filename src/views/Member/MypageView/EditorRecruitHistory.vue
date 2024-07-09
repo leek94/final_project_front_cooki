@@ -78,7 +78,6 @@ async function editorRecruitHistory() {
         //아이디로 내가 개설한 클래스 리스트 불러오기
         const response = await memberAPI.editorRecruitHistory(mid);
         cookClasses.value = response.data.myClassList;
-        console.log("cdday", dateFormat(new Date(cookClasses.value[1].cdday)))
         for(let i=0; i<cookClasses.value.length; i++) {
             cookClasses.value[i].cdday = dateFormat(new Date(cookClasses.value[i].cdday));
             //개설한 클래스 번호로 신청 인원수 불러오기

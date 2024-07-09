@@ -107,6 +107,11 @@ function updateMrole(mid){
     return axios.put("member/updateMrole/" + mid)
 }
 
+
+function updatePhonenum(member){
+    return axios.put("member/updatePhonenum", member);
+}
+
 //마이페이지 내가 작성한 레시피 읽기
 function getMyRecipe(mid) {
     return axios.get("/member/myRecipe/" + mid)
@@ -138,4 +143,5 @@ export default{
     updateMrole,
     getMyRecipe,
     getMyLikeRecipe,
+    updatePhonenum,
 }

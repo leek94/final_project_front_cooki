@@ -10,7 +10,7 @@
             <div class="text-start my-3">
                 <!-- <h5 class=" p-2 border-bottom border-dark border-1" >추가 정보</h5> -->
                     <!-- 경력 추가 -->
-                    <div class="row my-3 px-3" v-if="isEditor">
+                    <div class="row my-3 px-3">
                         <li class="green-point">경력</li>
                         <div class="d-flex m-1" v-for="(career, index) in careerArray" :key="index">
                             <input class="flex-grow-1 p-2 border" placeholder="경력을 입력해주세요" v-model="career.cacontent"/>
@@ -23,7 +23,7 @@
                     </div>
 
                     <!-- 수상내역 추가 -->
-                    <div class="row my-3 px-3" v-if="isEditor">
+                    <div class="row my-3 px-3">
                         <li class="green-point">수상 내역</li>
                         <div class="d-flex m-1" v-for="(awards, index) in awardsArray" :key="index">
                             <input class="flex-grow-1 p-2 border" placeholder="수상 이력을 입력해주세요" v-model="awards.acontent"/>
@@ -39,7 +39,7 @@
     </template>
 
     <template v-slot:footer>
-       <button class="btn btn-success" style="width:75px; height:40px" @click="$emit('close')">신청</button>
+       <button class="btn btn-success" style="width:75px; height:40px" @click="registerEditor">신청</button> 
        <button class="btn " style="background-color:rgb(243, 243, 243); color:black;width:75px; height:40px" @click="$emit('close')">취소</button>
     </template>
 
@@ -48,25 +48,42 @@
 </template>
 
 <script setup>
+import store from '@/store';
+import { useRoute, useRouter } from "vue-router";
 import ModalTemplate from "../../../components/ModalTemplate.vue";
 import {ref} from'vue'
-const isEditor = ref(true);
-const emit=defineEmits(['close'])
+import memberAPI from "@/apis/memberAPI";
+const router = useRouter();
 
-// 에디터로 가입하기 선택시 폼을 열어주는 함수
-function joinEditor() {
-    isEditor.value = !isEditor.value;
-    console.log(isEditor.value);
+const isEditor = ref(true);
+const emit=defineEmits(['close','register'])
+
+async function registerEditor() {
+    
+    console.log("에디터 레지스터 실행")
+    // 부모 요소에 전달
+    emit('register');
+    await saveCareers();
+    await saveAwards();
+    await memberAPI.updateMrole(store.state.userId);
+
+    const payload={
+        mrole:"ROLE_EDITOR"
+    };
+    store.dispatch("changeMrole",payload);
+    router.go(0);
+
+
 }
 
-// 커리어 상태 객체 선언
+// 커리어 상태 객체 선언 ---------------------------------------------
 const career = ref({
     cano: 1,
     cacontent: ''
- })
+})
 
- // 커리어 상태 배열 선언
- const careerArray = ref([career.value]);
+// 커리어 상태 배열 선언
+const careerArray = ref([career.value]);
 //const careerArray = ref([{ cano: '', cacontent: '' }]);
 //let nextCano = 2;
 
@@ -75,14 +92,18 @@ const cacontentNullError = ref(false);
 
 //커리어 입력 태그 추가 함수
 function careerAdd(index) {
-        //cacontentNullError.value = !cacontentNullError.value;
-        careerArray.value.push({cano: index+2, cacontent: ''});
-        careerAddAfter.value = !careerAddAfter.value;
-        //careerArray.value.push({ cano: index+2, cacontent: '' });
-        //console.log("다음인덱스번호",nextCano );
-        console.log("배열객체",JSON.parse(JSON.stringify(careerArray.value)));
-        console.log("커리어이름",careerArray.value[index].cacontent);
-        console.log("인덱스번호",careerArray.value[index].cano);
+    //cacontentNullError.value = !cacontentNullError.value;
+    // 객체 생성해서 배열에 넣어줌
+    const newcareer =ref({
+        cano:'',
+        cacontent:''
+    })
+    careerArray.value.push(newcareer);
+
+   
+    //careerArray.value.push({ cano: index+2, cacontent: '' });
+    //console.log("다음인덱스번호",nextCano );
+
 }
 
 // 수상내역 입력 태그 삭제 함수
@@ -90,28 +111,58 @@ function careerRemove(index) {
     careerArray.value.splice(index,index);
 }
 
-// 수상내역 상태 객체 선언
+async function saveCareers(){
+    console.log("에디터 경력 실행")
+
+    // 처음 값을 넣기 때문에 삭제 할 필요가 없음
+
+    // Insert 식 - 1개씩 던져줌
+    for(let i = 0; i<careerArray.value.length; i++){
+        console.log("경력 콘솔: " +careerArray.value[i].cano)
+        careerArray.value[i].cano = i+1;
+        careerArray.value[i].mid = store.state.userId;
+        await memberAPI.setCareer(JSON.parse(JSON.stringify(careerArray.value[i])));
+    }
+}
+
+
+// 수상내역 상태 객체 선언 ----------------------------------------
 const awards = ref({
     ano: 1,
     acontent: ''
- })
+})
 
- // 수상내역 상태 배열 선언
- const awardsArray = ref([awards.value]);
+// 수상내역 상태 배열 선언
+const awardsArray = ref([awards.value]);
 
 const awardsAddAfter = ref(false);
 const awardsNullError = ref(false);
 
 // 수상내역 입력 태그 추가 함수
 function awardsAdd(index) {
-        awardsArray.value.push({ano: index+2, acontent: ''});
-        awardsAddAfter.value = !awardsAddAfter.value;
-        console.log("배열객체",JSON.parse(JSON.stringify(awardsArray.value)));
+    const newawards = ref({
+        ano:'',
+        acontent:''
+    })
+    awardsArray.value.push(newawards);
+
+    console.log("배열객체",JSON.parse(JSON.stringify(awardsArray.value)));
 }
 
 // 수상내역 입력 태그 삭제 함수
 function awardsRemove(index) {
     awardsArray.value.splice(index,index);
+}
+
+async function saveAwards() {
+    //처음 값을 넣기 때문에 삭제 할 필요 없음
+    console.log("에디터 수상 실행")
+
+    for(let i = 0; i<awardsArray.value.length; i++){
+        awardsArray.value[i].ano = i + 1;
+        awardsArray.value[i].mid = store.state.userId;
+        await memberAPI.setAwards(JSON.parse(JSON.stringify(awardsArray.value[i])));
+    }
 }
 
 //폼 제출 함수

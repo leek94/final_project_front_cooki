@@ -3,27 +3,27 @@
     <h4 class="fw-bold text-start mb-4" >내가 작성한 QnA </h4>
         <div class="d-flex" style="font-size:20px">
             <p>총 &ensp;</p>
-            <p style="color:darkseagreen"> {{qnaCount}}</p>
+            <p style="color:darkseagreen"> {{qnaCard.length}}</p>
             <p>개</p>
         </div>
 
         <hr class="mt-0"/>
         <div class="qcards d-flex">
-        <div class="card qnaCard mt-5" style="padding:0 0 10px 0 " v-for="(qna,index) in qnaCard" :key="index">
+        <div class="card qnaCard mt-5" style="padding:0 0 10px 0 " v-for="(qna,index) in qnaCard" :key="index" @click="routerLinkto(index)">
             <div class="card-body">
-                <div v-if="qna.qreply===''" class="qnaAnswered mb-3" style="background-color: #eff9ef; color:gray">미답변</div>
-                <div v-if="qna.qreply!==''" class="qnaAnswered mb-3" style="background-color: #15a775;; color:white">답변완료</div>
+                <div v-if="qnaCard[index].qreply== null" class="qnaAnswered mb-3" style="background-color: #eff9ef; color:gray">미답변</div>
+                <div v-if="qnaCard[index].qreply!= null" class="qnaAnswered mb-3" style="background-color: #15a775;; color:white">답변완료</div>
                 
             </div>
             <div class="qtitle d-flex" style="font-size: 16px; color:grey">
-                <div style="border-right:1px solid grey; padding:0 20px">원글</div>
-                <diV style="padding:0 30px">{{ qna.qtitle }}</diV>
+                <div style="border-right:1px solid grey; padding:0 20px">{{qnaCard[index].ctitle}}</div>
+                <diV style="padding:0 30px">{{ qnaCard[index].qtitle }}</diV>
             </div>
             <div class="qcont mt-4"  style="font-size: 17px; font-weight:bold ;color:black;">
                 <diV style="padding:0 20px;">
-                   {{ qna.qcontent}}</diV>
+                   {{ qnaCard[index].qcontent}}</diV>
             </div>
-            <div class="qdate mt-4 text-start" style="padding:0 20px; color:gray">{{ qna.qdate }}</div>
+            <div class="qdate mt-4 text-start" style="padding:0 20px; color:gray">{{ qnaCard[index].qdate }}</div>
         </div>     
     </div>
 
@@ -32,37 +32,49 @@
 </template>
 
 <script setup>
+import memberAPI from '@/apis/memberAPI';
+import { tr } from 'date-fns/locale';
 import { computed, ref } from 'vue';
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 
+const store = useStore();
+const mid = store.state.userId;
 
-const qnaCard=([
-    {
-        qno:1,
-        qtitle:"깻잎이 질겨요",
-        qcontent:
-        "마트에서 뒷다리살을 사서 수육을 했어요 보통 앞다리나 삼겹살로 많이 하시던데 뒷다리가 싸서 해봤거든요.마늘 양파 등 재료넣고 잡내제거로 인스터트 커피넣고 된장넣고 1시간 30분 삶았는데 넘 질기더라규요 ㅠ.ㅠ 부드러운 수육맛을 원했는데 고기종류가 문제였을까요 아님 시간이 문제였을까요?",
-        qdate:"2024.06.19 11:23",
-        qreply:''
-    },
-    {
-        qno:2,
-        qtitle:"깻잎이 질겨요",
-        qcontent:
-        "마트에서 뒷다리살을 사서 수육을 했어요 보통 앞다리나 삼겹살로 많이 하시던데 뒷다리가 싸서 해봤거든요.마늘 양파 등 재료넣고 잡내제거로 인스터트 커피넣고 된장넣고 1시간 30분 삶았는데 넘 질기더라규요 ㅠ.ㅠ 부드러운 수육맛을 원했는데 고기종류가 문제였을까요 아님 시간이 문제였을까요?",
-        qdate:"2024.06.19 11:23",
-        qreply:''
-    },
-    {
-        qno:2,
-        qtitle:"깻잎이 질겨요",
-        qcontent:
-        "마트에서 뒷다리살을 사서 수육을 했어요 보통 앞다리나 삼겹살로 많이 하시던데 뒷다리가 싸서 해봤거든요.마늘 양파 등 재료넣고 잡내제거로 인스터트 커피넣고 된장넣고 1시간 30분 삶았는데 넘 질기더라규요 ㅠ.ㅠ 부드러운 수육맛을 원했는데 고기종류가 문제였을까요 아님 시간이 문제였을까요?",
-        qdate:"2024.06.19 11:23",
-        qreply:'1'
+const qnaCard = ref([ ]);
+//const qnaCount = computed(() => qnaCard.value.length);
+
+//dateFormating (2024-06-28)
+function dateFormat(date) {
+    let dateFormat = date.getFullYear() +
+    '-' + ((date.getMonth() +1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) +
+    '-' + (date.getDate() < 10 ? "0" + date .getDate() : date.getDate());
+    return dateFormat;
+}
+
+//내가 쓴 Q&A read 함수
+async function myQAndA(mid) {
+    try{
+        const response = await memberAPI.getMyQAndA(mid);
+        qnaCard.value = response.data.myQnaList;
+        
+        for(let i=0; i<qnaCard.value.length; i++) {
+            qnaCard.value[i].qdate = dateFormat(new Date(qnaCard.value[i].qdate))
+        }
+    } catch(error) {
+        console.log(error);
     }
+    console.log("문의리스트", qnaCard.value.length)
+}
 
-])
-const qnaCount = computed(() => qnaCard.length);
+myQAndA(mid);
+
+//카드 클릭 시 해당 클래스의 Q&A 카테고리로 이동함
+const router= useRouter();
+function routerLinkto(index){
+    router.push(`/Class/ClassDetailView/QAndA?cno=${qnaCard.value[index].cno}`);
+}
+
 </script>
 
 <style scoped>

@@ -131,7 +131,7 @@
         </div>
     </div>
 
-<div class="d-flex p-2 m-2" style="justify-content: center; color: grey; font-weight: bold;" v-if="!isReview">등록된 리뷰가 없습니다. </div>
+<div class="d-flex p-5 m-5" style="justify-content: center; color: grey; font-weight: bold;" v-if="!isReview">등록된 리뷰가 없습니다. </div>
 
 </template>
 
@@ -238,11 +238,13 @@ async function reviewInsert() {
     console.log("리뷰데이터: ", JSON.parse(JSON.stringify(reviewInit.value)));
     try{
         const response  = await classAPI.reviewRegister(JSON.parse(JSON.stringify(reviewInit.value)));
+        isReview.value = true
         getReview(cno);
+        console.log("리뷰있는지확인: " , isReview.value)
         reviewInit.value.crtitle = '';
         reviewInit.value.crcontent = '';
         starClick.value = 0;
-
+        
     } catch (error) {
         console.log(error);
     }
@@ -251,34 +253,37 @@ async function reviewInsert() {
 
 //------- review data read function ---------------------------------------------------------------------------------------------- 
 
+
 async function getReview(cno) {
     console.log("클래스번호", cno)
     try{
-        const response = await classAPI.reviewRead(cno);
-        reviewArray.value = response.data.classReviewList;
+        const response1 = await classAPI.reviewRead(cno);
+        reviewArray.value = response1.data.classReviewList;
         if (reviewArray.value.length==0) {
         isReview.value = false
         } else {
-            avgCrratio.value = response.data.avgCrratio;
+            avgCrratio.value = response1.data.avgCrratio;
             for(let i=0; i<reviewArray.value.length; i++){
                 reviewArray.value[i].crdate = dateFormat(new Date(reviewArray.value[i].crdate));
                 // review 정보 수정 취소 버튼 클릭시 초기값으로 돌려주기 위한 설정
                 reviewArray.value[i].originalCrtitle = reviewArray.value[i].crtitle;
                 reviewArray.value[i].originalCrcontent = reviewArray.value[i].crcontent;
                 reviewArray.value[i].originalCrratio = reviewArray.value[i].crratio;
-    
+                if(reviewArray.value[i].mid == store.state.userId) {
+                    isWriter.value[i] = true;
+                } else {
+                    isWriter.value[i] = false;
+                }
             }
         }
     } catch(error) {
         console.log(error);
     }
-    
-   
     console.log("별점 평균:" , avgCrratio.value);
     console.log("리뷰어레이 길이:" , reviewArray.value.length);
     console.log("리뷰 목록:", JSON.parse(JSON.stringify(reviewArray.value)));
+    console.log("isWriter", isWriter.value)
 }
-
 
 getReview(cno);
 
@@ -315,11 +320,19 @@ function reviewClose(index) {
 
 //------- review data delete function ---------------------------------------------------------------------------------------------- 
 
-function reviewDelete(index) {
-    let crno = reviewArray.value[index].crno;
-    reviewArray.value.splice(index, 1);
-    return classAPI.reviewDelete(crno);
-    
+async function reviewDelete(index) {
+    try {
+        let crno = reviewArray.value[index].crno;
+        reviewArray.value.splice(index, 1);
+        const response = await classAPI.reviewDelete(crno);
+        console.log("엑시오스 요청 후 리뷰 목록:", JSON.parse(JSON.stringify(reviewArray.value)));
+        console.log("엑시오스 요청 후 isWriter:", JSON.parse(JSON.stringify(isWriter.value)));
+        getReview(cno);
+        console.log("리뷰 목록 다시 불러오기 후 리뷰 목록:", JSON.parse(JSON.stringify(reviewArray.value)));
+        console.log("리뷰 목록 다시 불러오기 후 리뷰 목록:", JSON.parse(JSON.stringify(isWriter.value)));
+    } catch(error) {
+        console.log(error);
+    }
 }
 
 

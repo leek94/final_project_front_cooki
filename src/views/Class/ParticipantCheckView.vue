@@ -1,7 +1,10 @@
 <template>
 
     <div>
-        <h1>출석 명단</h1>
+        <div class="d-flex align-items-end justify-content-between">
+            <h1>출석 명단</h1>
+            <button class="btn btn-md btn_grey me-5" @click="saveAttendence"> 출석 저장</button>
+        </div>
         <div class="check-table">
             <table class="table text-center">
                 <thead>
@@ -17,16 +20,16 @@
                     </tr>
                 </thead>
                 <tbody class="table-group-divider align-middle">
-                    <tr v-for="(cookClass, cno) in cookClasses" :key="cno">
-                        <th scope="row">{{ cookClass.cno }}</th>
-                        <td>{{ cookClass.name }}</td>
-                        <td>{{ cookClass.classname }}</td>
-                        <td>{{ cookClass.cdate }}</td>
-                        <td>{{ cookClass.starttime }}</td>
-                        <td>{{ cookClass.email }}</td>
-                        <td><button class="btn btn-md" 
-                            :class="{active: cookClass.isActive }" 
-                            @click="changeData(cno)">{{ cookClass.attendence }}</button></td>
+                    <tr v-for="(cookClass, index) in cookClasses" :key="index">
+                        <th scope="row">{{ index+1 }}</th>
+                        <td>{{ cookClass.mname }}</td>
+                        <td>{{ cookClass.ctitle }}</td>
+                        <td>{{ cookClass.cdday }}</td>
+                        <td>{{ cookClass.cstarttime }}</td>
+                        <td>{{ cookClass.mid }}</td>
+                        <td><button class="btn_red btn btn-md" v-if="cookClass.isParticipant==0"  @click="changeDataFalse(index)">결석</button>
+                            <button class="btn_red btn btn-md active" v-if="cookClass.isParticipant==1"  @click="changeDataTrue(index)">출석</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -35,37 +38,60 @@
 </template>
 
 <script setup>
+import classAPI from '@/apis/classAPI';
 import { ref } from 'vue';
+import { useRoute } from 'vue-router';
 
-function changeData(index) {
-    const cookClass = cookClasses.value[index];
-    cookClass.attendence = cookClass.attendence === "결석" ? "출석" : "결석";
-    cookClass.isActive = !cookClass.isActive;
-
-    //test
-    const today = new Date();
-    const cday = new Date(cookClasses.value[0].cdate);
-    console.log(cookClasses.value[0].cdate);
-    const diff = today - cday;
-    console.log(diff);
-    const diffDays = Math.floor(diff / (1000 * 60 * 60 * 24));
-    console.log(diffDays);
-    console.log(`현재 날짜와 cdday 사이의 차이는 ${diffDays}일 입니다.`);
-    
-}
+const route = useRoute();
+const classNum = route.query.cno;
+console.log("클래스 넘버: " + classNum);
 
 const cookClasses = ref([
-    {cno:1, name:"손혜선", classname: "쿠키쿠킹클래스", cdate:"2024-06-19", starttime:"14:00", email:"heaSon@naver.com",attendence:"결석", isActive: false },
-    {cno:2, name:"손혜선", classname: "쿠키쿠킹클래스", cdate:"2024.06.19", starttime:"14:00", email:"heaSon@naver.com",attendence:"결석", isActive: false },
-    {cno:3, name:"손혜선", classname: "쿠키쿠킹클래스", cdate:"2024.06.19", starttime:"14:00", email:"heaSon@naver.com",attendence:"결석", isActive: false },
-    {cno:4, name:"손혜선", classname: "쿠키쿠킹클래스", cdate:"2024.06.19", starttime:"14:00", email:"heaSon@naver.com",attendence:"결석", isActive: false },
-    {cno:5, name:"손혜선", classname: "쿠키쿠킹클래스", cdate:"2024.06.19", starttime:"14:00", email:"heaSon@naver.com",attendence:"결석", isActive: false },
-    {cno:6, name:"손혜선", classname: "쿠키쿠킹클래스", cdate:"2024.06.19", starttime:"14:00", email:"heaSon@naver.com",attendence:"결석", isActive: false },
-    {cno:7, name:"손혜선", classname: "쿠키쿠킹클래스", cdate:"2024.06.19", starttime:"14:00", email:"heaSon@naver.com",attendence:"결석", isActive: false },
-    {cno:8, name:"손혜선", classname: "쿠키쿠킹클래스", cdate:"2024.06.19", starttime:"14:00", email:"heaSon@naver.com",attendence:"결석", isActive: false },
-    {cno:9, name:"손혜선", classname: "쿠키쿠킹클래스", cdate:"2024.06.19", starttime:"14:00", email:"heaSon@naver.com",attendence:"결석", isActive: false },
-    {cno:10, name:"손혜선", classname: "쿠키쿠킹클래스", cdate:"2024.06.19", starttime:"14:00", email:"heaSon@naver.com",attendence:"결석", isActive: false },
+    {
+        mname:"손혜선", 
+        ctitle: "쿠키쿠킹클래스", 
+        cdday:"2024-06-19", 
+        cstarttime:"14:00", 
+        mid:"heaSon@naver.com", 
+        isActive: false,
+        isParticipant:0,
+    }
 ])
+
+async function saveAttendence(){
+    for(let i =0 ; i<cookClasses.value.length; i++){
+        cookClasses.value[i].cno = route.query.cno;
+        await classAPI.saveAttedenceList(JSON.parse(JSON.stringify(cookClasses.value[i])));
+    }
+   
+}
+
+getParticpantList(classNum);
+async function getParticpantList(classNum){
+    const response = await classAPI.getParticpantList(parseInt(classNum));
+    cookClasses.value = response.data.participantList;
+
+    for(let i=0;i<cookClasses.value.length;i++){
+        let date = new Date(cookClasses.value[i].cdday);
+        cookClasses.value[i].cdday= dateFormat(date);
+    }
+}
+
+// isparticipant가 1이면 출석 0 이면 결석
+function changeDataFalse(index){
+    cookClasses.value[index].isParticipant  = 1;
+}
+
+function changeDataTrue(index){
+    cookClasses.value[index].isParticipant  = 0;
+}
+
+function dateFormat(date) {
+    let dateFormat = date.getFullYear() +
+    '-' + ((date.getMonth() +1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) +
+    '-' + (date.getDate() < 10 ? "0" + date .getDate() : date.getDate());
+    return dateFormat;
+}
 
 
 </script>
@@ -87,11 +113,18 @@ h1 {
 }
 
 .active{
-    background-color: green!important;
+    background-color: green !important;
 }
-.btn{
+.btn_red{
     background-color: #c02727;
     color:#fff;
+}
+
+.btn_grey{
+    background-color: #BDBDBD;
+    font-weight: bold;
+    width: 100px;
+    height: 50px;
 }
 
 </style>

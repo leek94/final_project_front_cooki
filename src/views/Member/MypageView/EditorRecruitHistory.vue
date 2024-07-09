@@ -32,7 +32,7 @@
                                     <div class="class-date border-left-solid me-3">강의날짜 : {{ classes.cdday }}</div>
                                 </div>
                                 <div class="text-end">
-                                    <RouterLink to="/Class/ParticipantCheckView"><button class=" btn btn-sm" style="background-color: #f3f3f3; font-weight: bold;">출석 확인</button></RouterLink> 
+                                    <RouterLink :to="`/Class/ParticipantCheckView?cno=${classes.cno}`"><button class=" btn btn-sm" style="background-color: #f3f3f3; font-weight: bold;">출석 확인</button></RouterLink> 
                                     <button class=" btn btn-success btn-sm ms-2">다시 열기</button>
                                 </div>
                             </div>
@@ -78,7 +78,6 @@ async function editorRecruitHistory() {
         //아이디로 내가 개설한 클래스 리스트 불러오기
         const response = await memberAPI.editorRecruitHistory(mid);
         cookClasses.value = response.data.myClassList;
-        console.log("cdday", dateFormat(new Date(cookClasses.value[1].cdday)))
         for(let i=0; i<cookClasses.value.length; i++) {
             cookClasses.value[i].cdday = dateFormat(new Date(cookClasses.value[i].cdday));
             //개설한 클래스 번호로 신청 인원수 불러오기

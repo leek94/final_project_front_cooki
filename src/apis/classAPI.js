@@ -92,7 +92,6 @@ function qreplyUpdate(qreplyData){
     return axios.put("/class/qreplyUpdate", qreplyData)
 }
 
-
 function reviewRegister(reviewData) {
     return axios.post("/class/reviewRegister", reviewData)
 }
@@ -107,6 +106,14 @@ function reviewUpdate(reviewData){
 
 function reviewDelete(crno){
     return axios.delete("/class/reviewDelete/" + crno)
+}
+
+function getParticpantList(cno){
+    return axios.get("/class/getParticipantList/" + cno);
+}
+
+function saveAttedenceList(participant){
+    return axios.put("/class/updateParticipant", participant)
 }
 
 export default {
@@ -133,5 +140,7 @@ export default {
     reviewRead,
     reviewUpdate,
     reviewDelete,
+    getParticpantList,
+    saveAttedenceList,
 
 }

@@ -94,6 +94,19 @@ function updateImg(myPageFormdata){
     return axios.post("member/updateImg", myPageFormdata);
 }
 
+function deleteMemberImg(mid){
+    return axios.put("member/deleteImg/" + mid);
+}
+
+
+function getMyQAndA(mid){
+    return axios.get("member/myQAndA/" + mid);
+}
+
+function updateMrole(mid){
+    return axios.put("member/updateMrole/" + mid)
+}
+
 export default{
     join,
     setCareer,
@@ -111,4 +124,7 @@ export default{
     deleteCareers,
     deleteAwards,
     updateImg,
+    deleteMemberImg,
+    getMyQAndA,
+    updateMrole,
 }

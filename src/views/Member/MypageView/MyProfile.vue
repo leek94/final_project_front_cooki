@@ -5,11 +5,13 @@
         
         <div class="row mx-2 mb-3">
             <li class="green-point m-3" >프로필 사진</li>
-            <img class=" mx-3 mb-3 mt-1" style="width:220px" v-show="isPreImg===false" :src="`${axios.defaults.baseURL}/member/mattach/${store.state.userId}`"/>
-            <img class="preImg rounded-4 mx-3 mb-3 mt-1"  style="width:220px" v-show="isPreImg===true"/>
+            <img class="mx-3 mb-3 mt-1 " style="width: 220px" v-show="isPreImg === 0" src="/images/photos/profile.png"/> 
+            <img class=" mx-3 mb-3 mt-1" style="width:220px" v-show="isPreImg=== 2" :src="`${axios.defaults.baseURL}/member/mattach/${store.state.userId}`"/>
+            <img class="preImg rounded-4 mx-3 mb-3 mt-1"  style="width:220px" v-show="isPreImg===1"/>
             <div class="input-group w-100">
                 <input type="file" class="form-control" id="inputGroupFile" aria-describedby="inputGroupFileAddon" aria-label="파일첨부" ref="memberImg" @change="setPreviewImg">
                 <button class="btn border" type="button" id="inputGroupFileAddon" @click="submitClass">변경</button>
+                <button class="btn border" type="button" @click="deletImg">삭제</button>
             </div>
         </div>
 
@@ -153,6 +155,7 @@ async function submitClass(){
     
 }
 
+
 const member = ref( {
     mid: "",
     mnickname: "",
@@ -185,7 +188,11 @@ async function getMyProfile() {
     try{
             const response = await memberAPI.getMyProfile(store.state.userId);
             member.value = response.data.member;
-            console.log("esdf"+response.data.member.mnickname);
+            console.log("esdf"+response.data.member.oname);
+            // 이미지 oname이 있으면 값을 띠우고 없으면 디폴트 사진을 뜨게함
+            if(response.data.member.mimgoname !== null){
+                isPreImg.value = 2;
+            }
 
         if(store.state.mrole === 'ROLE_EDITOR'){
             const response = await memberAPI.getEditorProfile(store.state.userId, store.state.mrole);
@@ -198,7 +205,8 @@ async function getMyProfile() {
         
 }
 
-let isPreImg = ref(false);
+
+let isPreImg = ref(0);
 // 마이프로필 사진 미리 보기
 function setPreviewImg(e){
     if(e.target.files.length !== 0){
@@ -209,12 +217,18 @@ function setPreviewImg(e){
             const img = document.querySelector(".preImg");
             console.log(img);
             img.src = e.target.result;
-            isPreImg.value = true;
+            isPreImg.value = 1;
         }
     } else {
-        isPreImg.value = false;
+        isPreImg.value = 2;
     }
 }
+
+async function deletImg() {
+    isPreImg.value = 0;
+    await memberAPI.deleteMemberImg(store.state.userId);
+}
+
 
 const mnicknameResultError = ref(false);
 const mpasswordResultError = ref(false);

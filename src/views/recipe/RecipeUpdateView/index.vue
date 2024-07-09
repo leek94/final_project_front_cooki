@@ -16,7 +16,7 @@
 
             <div class="d-flex flex-column align-items-center w-100 mb-3">
                 <div class="mt-3" style="text-align: center;"> 
-                    <img class="preImg rounded-4" v-if="isPreImg" style="width: 250px; height: 250px" />
+                    <img class="preImg rounded-4" v-show="isPreImg" style="width: 250px; height: 250px" />
                     <img class="preImg rounded-4" v-if="!isPreImg" style="width: 250px; height: 250px" :src="`${axios.defaults.baseURL}/recipe/thumbattach/${rno}`"/>
                 </div> 
 
@@ -50,6 +50,9 @@
                         <div class="mt-3" style="text-align: center;" v-show="isRpImg[index]"> 
                             <img class="rounded-4" style="width: 250px; height: 250px"/>
                         </div>
+                        <div class="mt-3" style="text-align: center;" v-show="nowRpImgs[index]"> 
+                            <img :src="`${axios.defaults.baseURL}/recipe/recipeprocessattach/${rno}/${index+1}`" class="rounded-4" style="width: 250px; height: 250px"/>
+                        </div> 
                         <label class="form-label my-3"> 이미지(필수!!!)</label>
                         <input  type="file" class="form-control" ref="rpImgs" @change="setPrImg($event,index)">
                     </div>
@@ -80,6 +83,7 @@
 
 <script setup>
 import recipeAPI from '@/apis/recipeAPI';
+import EditorNowRecruit from '@/views/Member/MypageView/EditorNowRecruit.vue';
 import axios from 'axios';
 import { ref } from 'vue';
 
@@ -109,12 +113,10 @@ const recipeProcesses = ref([
 ])
 
 const rpImgs = ref([]);
-let isRpImg = ref([
-    false,
-]);
+let isRpImg = ref([]);
+let nowRpImgs = ref([])
 
 function setPreviewImg(e){
-
     if(e.target.files.length !== 0){
         isPreImg.value = true;
         const file  = e.target.files[0]
@@ -152,9 +154,15 @@ function setPrImg(event,index){
 
         const img  = nowCu.querySelector("img");
         img.src = e.target.result;
+        if(index +1  <= nowRpImgs.value.length){
+            nowRpImgs.value[index] = false;
+        }
         isRpImg.value[index] = true;
         }
     }else{
+        if(index +1  <= nowRpImgs.value.length){
+            nowRpImgs.value[index] = true;
+        }
         isRpImg.value[index] = false;
     }
 }
@@ -165,14 +173,17 @@ function addPr(){
         rptitle:"",
         rpcontent:"",
     };
-
     recipeProcesses.value.push(newCuriculum);
     isRpImg.value.push(false);
+
 }
 
 function removePr(){
     if(recipeProcesses.value.length > 1){
         recipeProcesses.value.splice(-1,1);
+        if(nowRpImgs.value.length===isRpImg.value.length){
+            nowRpImgs.value.splice(-1,1);
+        }
         isRpImg.value.splice(-1,1);
     }
 }
@@ -191,6 +202,10 @@ async function getRecipe(rno){
     recipeItems.value=response2.data.recipeItems;
     recipeProcesses.value= response2.data.recipeProcess;
     initialLength.value=response2.data.recipeProcess.length;
+    for(let i=1;i<=recipeProcesses.value.length;i++){
+        nowRpImgs.value.push(true);
+        isRpImg.value.push(false);
+    }
 }
 getRecipe(rno);
 

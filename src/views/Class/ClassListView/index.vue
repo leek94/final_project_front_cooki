@@ -4,7 +4,6 @@
             <div class="recipe-title mb-5"></div>
             <!--검색바-->
             <SearchBar @searchword="searchresult"></SearchBar>
-            <SearchModal id="searchModal"/>
 
             <!-- 작성바 & 작성 버튼 -->
             <RouterLink to="./ClassRegisterView">클래스 등록</RouterLink>
@@ -53,7 +52,6 @@ import classAPI from '@/apis/classAPI';
 import searchAPI from '@/apis/searchAPI';
 import ClassCard from '@/components/ClassCard.vue';
 import SearchBar from '@/components/SearchBar.vue';
-import SearchModal from '@/components/SearchModal.vue';
 import { Modal } from 'bootstrap';
 import { onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -141,10 +139,6 @@ activeIndex.value=parseInt(route.query.searchSort)||0;
 //watch로 다시 getclasslist 함수가 실행될 때 
 //같은 페이지에서 같은페이지로 이동하면서 검색어 갑을 다시 setting 해준다 
 async function searchresult(search){
-    if(search.searchText===''){
-        searchModal.show();
-        return
-    }
    data.value.searchText=search.searchText
    data.value.searchTitle=search.searchTitle
    router.push(`/class/classListView?pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=${data.value.searchSort}`);

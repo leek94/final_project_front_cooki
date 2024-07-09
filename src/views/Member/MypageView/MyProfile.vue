@@ -5,10 +5,11 @@
         
         <div class="row mx-2 mb-3">
             <li class="green-point m-3" >프로필 사진</li>
-            <img class="border rounded p-2 mx-3 mb-3 mt-1" style="width:220px" src="/images/photos/profile.png">
-            <div class="input-group  w-100">
-                <input type="file" class="form-control" id="inputGroupFile" aria-describedby="inputGroupFileAddon" aria-label="파일첨부">
-                <button class="btn border" type="button" id="inputGroupFileAddon" >변경</button>
+            <img class=" mx-3 mb-3 mt-1" style="width:220px" v-show="isPreImg===false" :src="`${axios.defaults.baseURL}/member/mattach/${store.state.userId}`"/>
+            <img class="preImg rounded-4 mx-3 mb-3 mt-1"  style="width:220px" v-show="isPreImg===true"/>
+            <div class="input-group w-100">
+                <input type="file" class="form-control" id="inputGroupFile" aria-describedby="inputGroupFileAddon" aria-label="파일첨부" ref="memberImg" @change="setPreviewImg">
+                <button class="btn border" type="button" id="inputGroupFileAddon" @click="submitClass">변경</button>
             </div>
         </div>
 
@@ -133,7 +134,24 @@
 <script setup>
 import memberAPI from '@/apis/memberAPI';
 import store from '@/store';
+import axios from 'axios';
 import { ref } from 'vue';
+
+const memberImg = ref(null);
+
+async function submitClass(){
+    const myPageFormdata = new FormData();
+    myPageFormdata.append("mid", store.state.userId);
+    const preAttach = memberImg.value; // input 태그를 selector로 찾는거랑 비슷하게 ref로 태그를 찾아옴
+    // 이미지를 FormData로 전달 하려고 append로 값을 넣어줌
+    myPageFormdata.append("mattach", preAttach.files[0]);
+    try{
+        const response = await memberAPI.updateImg(myPageFormdata);
+    } catch(error){
+        console.log("에러남" + error);
+    }
+    
+}
 
 const member = ref( {
     mid: "",
@@ -156,6 +174,7 @@ const awards=ref([
     },
 ])
 
+
 // 위에서 v-if에서 mrole을 사용하기 때문에 여기서 초기화 해줘야함
 const mrole = store.state.mrole;
 // 마이프로필을 호출
@@ -177,6 +196,24 @@ async function getMyProfile() {
         console.log("에러남: " + error);
     }
         
+}
+
+let isPreImg = ref(false);
+// 마이프로필 사진 미리 보기
+function setPreviewImg(e){
+    if(e.target.files.length !== 0){
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function(e){
+            const img = document.querySelector(".preImg");
+            console.log(img);
+            img.src = e.target.result;
+            isPreImg.value = true;
+        }
+    } else {
+        isPreImg.value = false;
+    }
 }
 
 const mnicknameResultError = ref(false);
@@ -224,7 +261,6 @@ const editingMnickname=ref(false);
 const editingCareers=ref(false);
 const editingAwards=ref(false);
 
-
 function changeMnickname(){
     editingMnickname.value= !editingMnickname.value;
 }
@@ -245,9 +281,6 @@ function savenickname(){
     editingMnickname.value= !editingMnickname.value;
     updateNickname();
 }
-
-
-
 
 // 경력 추가 및 삭제--------------------------------------
 // 변경 저장

@@ -32,7 +32,7 @@
                                     <div class="class-date border-left-solid me-3">강의날짜 : {{ classes.cdday }}</div>
                                 </div>
                                 <div class="text-end">
-                                    <RouterLink to="/Class/ParticipantCheckView"><button class=" btn btn-sm" style="background-color: #f3f3f3; font-weight: bold;">출석 확인</button></RouterLink> 
+                                    <RouterLink :to="`/Class/ParticipantCheckView?cno=${classes.cno}`"><button class=" btn btn-sm" style="background-color: #f3f3f3; font-weight: bold;">출석 확인</button></RouterLink> 
                                     <button class=" btn btn-success btn-sm ms-2">다시 열기</button>
                                 </div>
                             </div>

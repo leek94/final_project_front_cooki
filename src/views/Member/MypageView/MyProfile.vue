@@ -249,7 +249,7 @@ async function deletImg() {
 }
 
 function mnicknameCheck(){
-    const mnicknamePattern = /^[가-힣a-zA-Z0-9-_]{3,10}$/;
+    const mnicknamePattern = /^[가-힣a-zA-Z0-9-_]{2,10}$/;
     const mnicknameResult = mnicknamePattern.test(member.value.mnickname);
     mnicknameResultError.value = !mnicknameResult;
     return mnicknameResult;

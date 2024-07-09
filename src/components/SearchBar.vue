@@ -15,12 +15,12 @@
                     <div class="d-flex search-input-box">
                         <input v-if="search.searchTitle!=='category'" class="search-input me-1" type="text" placeholder="어떤 레시피가 궁금하신가요?" v-model="search.searchText">
                         <input v-if="search.searchTitle==='category'" class="search-input me-1" type="text" placeholder="어떤 레시피가 궁금하신가요?" v-model="search.searchText" readonly>
-                        <button type="submit" class="search-button align-items-center justify-content-center" @click="$emit('searchword',search)" >
+                        <button type="submit" class="search-button align-items-center justify-content-center" @click="searchClick" >
                             검색 &ensp;<i class="fa-solid fa-magnifying-glass"></i></button>
                     </div>
                 </div>
             </form>
-    
+            <SearchModal id="searchModal" @close="hideModal" />
 
             <div class="d-flex mb-5 " >
                 <input type="button" class="category-button" value="한식" :class="{ active: activeIndex === '한식' }" @click="handlecategory('한식')">
@@ -36,21 +36,35 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import SearchModal from './SearchModal.vue';
+import { Modal } from 'bootstrap';
 const emit= defineEmits(['searchword'])
 
-let search = ref({
-    searchText : "",
-    searchTitle : "all",
+let searchModal= null;
+onMounted(()=>{
+    searchModal= new Modal(document.querySelector("#searchModal"))
 })
+let search = ref({})
 
 const route = useRoute();
 
 search.value.searchText= route.query.searchText||'';
 search.value.searchTitle= route.query.searchTitle||'all';
 
+function searchClick(){
+    if(search.value.searchText===""){
+        searchModal.show();
+        return
+    }else{
+        emit('searchword',search.value);
+    }
+}
 
+function hideModal(){
+    searchModal.hide();
+}
 // 정렬을 위한 자바스크립트 시작
 const activeIndex = ref(null);
 activeIndex.value=search.value.searchText;
@@ -67,8 +81,7 @@ const handlecategory = (index) => {
         search.value.searchTitle = 'category';
     }
     // 카테고리 버튼 선택시 자동으로 실행될 수 있게 
-    emit('searchword',search.value);
-    
+    emit('searchword',search.value); 
 };
 
 //클래스 초기 화면으로 이동할 때 전에 검색어를 초기화 

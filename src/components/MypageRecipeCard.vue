@@ -6,20 +6,23 @@
                 <li class="img-li ss" >
                     <div class="router-div">
                         <div class="image" style="width:210px;height:210px">
-                            <i class="icon-heart fa-solid fa-heart like-heart" :class="{active: prop.objectProp.isActive}" @click="$emit('click')"></i>
-                            <img src="/images/photos/140114575djmw.jpg">
+                            <!-- 카드 이미지 클릭 시 디테일 페이지로 이동과 좋아요 카운트를 분리 시킴 -->
+                            <i id="like" class="icon-heart fa-solid fa-heart like-heart" :class="{active: islike}" @click.stop="changeLike"></i>
+                            <img :src="`${axios.defaults.baseURL}/recipe/thumbattach/${prop.objectProp.rno}`">
+                            <!-- <i class="icon-heart fa-solid fa-heart like-heart" :class="{active: prop.objectProp.isActive}" @click="$emit('click')"></i>
+                            <img src="/images/photos/140114575djmw.jpg"> -->
                         </div>
 
                         <div>
                             <div class="info d-flex mt-3 ">
-                                <div class="name me-2">{{ prop.objectProp.mname }}</div>
-                                <div class="date border-left-solid">{{prop.objectProp.bdate}}</div>
+                                <div class="name me-2">{{ prop.objectProp.mnickname }}</div>
+                                <div class="date border-left-solid">{{prop.objectProp.rdate}}</div>
                             </div>
                             <div class="text text-start">
-                                <div style="font-size: 20px; font-weight: bold">{{prop.objectProp.btitle }}</div>
+                                <div style="font-size: 20px; font-weight: bold">{{prop.objectProp.rtitle }}</div>
                                 <div class="d-flex justify-content-end mt-2">
-                                    <div class="me-2"><i class="fa-solid fa-heart like-heart" style="color:red;">&ensp;</i>{{ prop.objectProp.blike }}</div>
-                                    <div><i class="fa-solid fa-eye">&ensp;</i>{{ prop.objectProp.bhitcount }}</div>
+                                    <div class="me-2"><i class="fa-solid fa-heart like-heart" style="color:red;">&ensp;</i>{{ prop.objectProp.likecount }}</div>
+                                    <div><i class="fa-solid fa-eye">&ensp;</i>{{ prop.objectProp.rhitcount }}</div>
                                 </div>
                             </div>
                         </div>
@@ -32,17 +35,46 @@
 </template>
 
 <script setup>
+import axios from 'axios';
+import { ref, watch } from 'vue';
+import { useStore } from 'vuex';
+import recipeAPI from '@/apis/recipeAPI';
 
-import { ref } from 'vue';
-
-// 데이터 바인딩을 위한 더미 데이터
 const prop = defineProps(["objectProp"]);
 const emit = defineEmits(["click"]);
 
-// 좋아요 버튼 자바스크립트 시작
+const store = useStore();
 
+// 좋아요 기능
+let islike  = ref((prop.objectProp.islike) ? true : false);
+console.log("aaaa",islike.value);
 
-// 좋아요 버튼 자바스크립트 끝
+async function changeLike() {
+    let btn = document.getElementById("like");
+    let data = {rno:prop.objectProp.rno,mid:store.state.userId};
+    data = JSON.parse(JSON.stringify(data));
+    if(islike.value){
+        try{
+            const response = await recipeAPI.recipeDislike(data);
+            console.log("dislike success")
+        }catch{
+            console.log("dislike fail")
+        }
+    }else{
+        try{
+            const response = await recipeAPI.recipeLike(data);
+            console.log("like success")
+        }catch{
+            console.log("like fail")
+        }
+    }
+    islike.value = !islike.value;
+}
+
+watch(prop, (newprop,oldprop) => {
+    console.log("확인");
+    islike.value = newprop.objectProp.islike;
+})
 
 </script>
 

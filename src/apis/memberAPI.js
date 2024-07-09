@@ -107,6 +107,11 @@ function updateMrole(mid){
     return axios.put("member/updateMrole/" + mid)
 }
 
+//마이페이지 내가 작성한 레시피 읽기
+function getMyRecipe(mid) {
+    return axios.get("/member/myRecipe/" + mid)
+}
+
 export default{
     join,
     setCareer,
@@ -127,4 +132,5 @@ export default{
     deleteMemberImg,
     getMyQAndA,
     updateMrole,
+    getMyRecipe
 }

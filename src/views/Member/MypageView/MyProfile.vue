@@ -29,10 +29,10 @@
 
             </li>
             <div class="d-flex input-group input-group-box" v-if="!editingMnickname">
-                <div class="mnicknameinput d-flex bg-light" style="height:50px; align-items: center" >
+                <div class="mnicknameinput d-flex bg-light" style="height:50px; align-items: center">
                     <div >{{ member.mnickname  }}</div>
                 </div>
-                <button class="btn border" style="height:50px" type="button" id="button-addon2" @click="changeMnickname" >변경</button>
+                <button class="btn border" style="height:50px" type="button" id="button-addon2" @click="changeMnickname">변경</button>
             </div>
             <div class="input-group input-group-box w-100" v-if="editingMnickname" >
                 <input type="text" class="form-control input-box" v-model="member.mnickname" aria-label="Recipient's username" aria-describedby="button-addon2" @keyup="mnicknameCheck">
@@ -51,7 +51,7 @@
             </div>
             <div class="input-group input-group-box w-100" v-if="editingPhonenum" >
                 <input type="text" class="form-control input-box" v-model="member.mphonenum" aria-label="Recipient's username" aria-describedby="button-addon2" @keyup="phonenumCheck">
-                <button class="btn border" type="button" id="button-addon2" @click="savephonenum" >저장</button>
+                <button class="btn border" type="button" id="button-addon2" @click="savephonenum">저장</button>
             </div>
             <div class="checkError m-2" v-if="mphonenumResultError">올바른 형식의 전화번호를 입력해주세요</div>
         </div>
@@ -264,17 +264,15 @@ async function deletImg() {
 }
 
 function phonenumCheck(){
-    const mphonenumPattern = /^(\d{3})-(\d{3,4})-(\d{4})$/;
+    const mphonenumPattern = /^010-(\d{3,4})-(\d{4})$/;
     const mphonenumResult = mphonenumPattern.test(member.value.mphonenum);
     mphonenumResultError.value = !mphonenumResult;
-    return mphonenumResult;
 }
 
 function mnicknameCheck(){
-    const mnicknamePattern = /^[가-힣a-zA-Z0-9-_]{2,10}$/;
+    const mnicknamePattern = /^[가-힣]{2,10}$/;
     const mnicknameResult = mnicknamePattern.test(member.value.mnickname);
     mnicknameResultError.value = !mnicknameResult;
-    return mnicknameResult;
 }
 
 function mpasswordCheck(){
@@ -282,7 +280,6 @@ function mpasswordCheck(){
     const mpasswordResult = mpasswordPattern.test(member.value.mpassword);
     mpasswordResultError.value = !mpasswordResult;
     console.log(member.value.mpassword);
-    return mpasswordResult;
 }
 
 function mpasswordMatchCheck(){
@@ -302,7 +299,7 @@ function mpasswordMatchCheck(){
 // 비밀번호 업데이트
 async function changePassword() {
     console.log("비밀번호 체크: " + member.value.mpassword)
-    if(member.value.mpassword === member.value.mpasswordcheck){ 
+    if(member.value.mpassword === member.value.mpasswordcheck && mpasswordResultError.value === false && mpasswordMatchError.value ===false){ 
         const response = await memberAPI.updatePassword(JSON.parse(JSON.stringify(member.value)));
         member.value.mpassword = "";
         member.value.mpasswordcheck = "";
@@ -335,13 +332,17 @@ async function updateNickname(){
 
 // 닉네임 업데이트 버튼
 function savenickname(){
-    editingMnickname.value= !editingMnickname.value;
-    updateNickname();
+    if(mnicknameResultError.value===false){
+        editingMnickname.value= !editingMnickname.value;
+        updateNickname();
+    }
 }
 
 async function savephonenum() {
-    editingPhonenum.value = !editingPhonenum.value;
-    await memberAPI.updatePhonenum(JSON.parse(JSON.stringify(member.value)));
+    if(mphonenumResultError.value===false){
+        editingPhonenum.value = !editingPhonenum.value;
+        await memberAPI.updatePhonenum(JSON.parse(JSON.stringify(member.value)));
+    } 
 }
 
 // 경력 추가 및 삭제---------------------------------------

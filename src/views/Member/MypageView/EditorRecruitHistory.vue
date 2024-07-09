@@ -32,7 +32,7 @@
                                     <div class="class-date border-left-solid me-3">강의날짜 : {{ classes.cdday }}</div>
                                 </div>
                                 <div class="text-end">
-                                    <RouterLink :to="`/Class/ParticipantCheckView?cno=${classes.cno}`"><button class=" btn btn-sm" style="background-color: #f3f3f3; font-weight: bold;">출석 확인</button></RouterLink> 
+                                    <button class=" btn btn-sm" style="background-color: #f3f3f3; font-weight: bold;" @click.stop="participantList(index)">출석 확인</button>
                                     <button class=" btn btn-success btn-sm ms-2">다시 열기</button>
                                 </div>
                             </div>
@@ -53,14 +53,17 @@ import memberAPI from '@/apis/memberAPI';
 import classAPI from '@/apis/classAPI';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-
+const router = useRouter();
 
  // 데이터 바인딩을 위한 더미 데이터
 const cookClasses = ref([]);
 
 const countClass=computed(()=> cookClasses.value.length)
  
-
+// 출석 확인 하는 페이지로 이동
+function participantList(index) {
+    router.push(`/Class/ParticipantCheckView?cno=${cookClasses.value[index].cno}`)
+}
 //dateFormating (2024-06-28)
 function dateFormat(date) {
     let dateFormat = date.getFullYear() +
@@ -96,7 +99,6 @@ async function editorRecruitHistory() {
 editorRecruitHistory();
 
 //카드 클릭 시 디테일 페이지로 가는 함수
-const router= useRouter();
 function routerLinkto(index){
     console.log("인덱스", index)
     console.log("클래스번호" , cookClasses.value[index].cno)

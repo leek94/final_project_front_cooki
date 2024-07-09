@@ -112,6 +112,10 @@ function getMyRecipe(mid) {
     return axios.get("/member/myRecipe/" + mid)
 }
 
+function getMyLikeRecipe(mid) {
+    return axios.get("/member/myLikeRecipe/" + mid)
+}
+
 export default{
     join,
     setCareer,
@@ -132,5 +136,6 @@ export default{
     deleteMemberImg,
     getMyQAndA,
     updateMrole,
-    getMyRecipe
+    getMyRecipe,
+    getMyLikeRecipe,
 }

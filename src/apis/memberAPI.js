@@ -98,6 +98,10 @@ function deleteMemberImg(mid){
     return axios.put("member/deleteImg/" + mid);
 }
 
+function getMyQAndA(mid){
+    return axios.get("member/myQAndA/" + mid);
+}
+
 export default{
     join,
     setCareer,
@@ -116,4 +120,5 @@ export default{
     deleteAwards,
     updateImg,
     deleteMemberImg,
+    getMyQAndA,
 }

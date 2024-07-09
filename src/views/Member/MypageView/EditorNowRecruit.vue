@@ -41,7 +41,7 @@ function dateFormat(date) {
     return dateFormat;
 }
 
-async function editorNowRecruit() {
+async function editorNowRecruitRead() {
     let mid = store.state.userId;
     console.log("내아이디: ", mid)
     //console.log("cno", cno)
@@ -65,7 +65,7 @@ async function editorNowRecruit() {
     console.log("내가 모집하고있는 클래스 리스트", JSON.parse(JSON.stringify(cookClasses.value)));
 }
 
-editorNowRecruit();
+editorNowRecruitRead();
 
 //카드 클릭 시 디테일 페이지로 가는 함수
 const router= useRouter();

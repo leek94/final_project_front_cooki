@@ -16,8 +16,8 @@
 
             <div class="d-flex flex-column align-items-center w-100 mb-3">
                 <div class="mt-3" style="text-align: center;"> 
-                    <img class="preImg rounded-4" v-if="isPreImg===false" style="width: 250px; height: 250px" />
-                    <img class="preImg rounded-4" v-if="isPreImg===true" style="width: 250px; height: 250px" :src="`${axios.defaults.baseURL}/recipe/thumbattach/${rno}`"/>
+                    <img class="preImg rounded-4" v-if="isPreImg" style="width: 250px; height: 250px" />
+                    <img class="preImg rounded-4" v-if="!isPreImg" style="width: 250px; height: 250px" :src="`${axios.defaults.baseURL}/recipe/thumbattach/${rno}`"/>
                 </div> 
 
                 <div class="tInputForm w-100">            
@@ -84,7 +84,7 @@ import axios from 'axios';
 import { ref } from 'vue';
 
 const presetImg = ref(null);
-let isPreImg = ref(true);
+let isPreImg = ref(false);
 const rno=55;
 
 const recipe = ref({
@@ -116,13 +116,13 @@ let isRpImg = ref([
 function setPreviewImg(e){
 
     if(e.target.files.length !== 0){
+        isPreImg.value = true;
         const file  = e.target.files[0]
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = function(e){
-        const img  = document.querySelector(".preImg");
-        img.src = e.target.result;
-        isPreImg.value = true;
+            const img  = document.querySelector(".preImg");
+            img.src = e.target.result;
         }
     }else{
         isPreImg.value = false;

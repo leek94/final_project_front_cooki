@@ -293,8 +293,6 @@ async function saveCareers(){
 
     // Insert 식 - for문으로 던져야함
     for(let i=0; i<careers.value.length; i++){
-        console.log("cano 확인: "+ careers.value[1].cano);
-        console.log("cacontent 확인: " + careers.value[i].cacontent);
         careers.value[i].cano=i+1; // 번호 지정
         careers.value[i].mid=store.state.userId; // 아이디값 저장
         await memberAPI.setCareer(JSON.parse(JSON.stringify(careers.value[i])));

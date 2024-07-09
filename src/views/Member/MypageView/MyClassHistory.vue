@@ -50,7 +50,6 @@ async function myClassHistoryRead() {
         //아이디로 신청한 클래스 리스트 받아오기
         const response = await memberAPI.myClassHistory(mid);
         cookClasses.value = response.data.myClassList;
-        console.log("cdday", dateFormat(new Date(cookClasses.value[0].cdday)))
         for(let i=0; i<cookClasses.value.length; i++) {
             cookClasses.value[i].cdday = dateFormat(new Date(cookClasses.value[i].cdday));
             //신청한 클래스 번호로 신청인원수 불러오기

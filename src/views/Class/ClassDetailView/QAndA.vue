@@ -55,7 +55,7 @@
                     
                     <div class="flex-grow-1 row justify-content-start">
                         <!-- 에디터한테만 보여야 하는 버튼 -->
-                        <button class="border-0 bg-white text-start me-5 pe-5" style="font-size: small; color: grey; font-weight: bold;" v-if="(qnaArray[index].qreply===null || qnaArray[index].qreply==='') && isEditor" @click="qreplyResist(index)">
+                        <button class="border-0 bg-white text-start me-5 pe-5" style="font-size: small; color: grey; font-weight: bold;" v-if="(qnaArray[index].qreply===null || qnaArray[index].qreply==='') && isEditor[index]" @click="qreplyResist(index)">
                             <!-- <img src="/images/photos/ic_talk.png"> -->
                             <img src="/images/photos/ic_comment.png">
                             답글달기
@@ -212,7 +212,6 @@ async function getQna(cno){
                 //이 때 new Date(qnaArray.value[i].qdate)를 해주는 이유는 dateFormat 함수가 제대로 작동하기 위해서는 매개변수가 Date타입이어야 하기 때문
                 //그 전의 무슨 타입이 었는지 궁금하다면 console.log(typeof qnaArray.value[i].qdate); 
                 //new Date()이후에는 Date타입
-                //추가로 할일 xml에서 order by를 통해 최신 댓글이 맨 위로 갈 수 있도록 설정
                 qnaArray.value[i].qdate = dateFormat(new Date(qnaArray.value[i].qdate));
                 qnaArray.value[i].qreplydate = dateFormat(new Date(qnaArray.value[i].qreplydate));
                 // qna 정보 수정 취소 버튼 클릭시 초기값으로 돌려주기 위한 설정

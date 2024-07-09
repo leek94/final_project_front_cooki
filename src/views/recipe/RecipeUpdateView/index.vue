@@ -49,7 +49,7 @@
                     <div class="cInputForm my-3">
                         <div class="mt-3" style="text-align: center;" v-show="isRpImg[index]"> 
                             <img class="rounded-4" style="width: 250px; height: 250px"/>
-                        </div>    
+                        </div>
                         <label class="form-label my-3"> 이미지(필수!!!)</label>
                         <input  type="file" class="form-control" ref="rpImgs" @change="setPrImg($event,index)">
                     </div>

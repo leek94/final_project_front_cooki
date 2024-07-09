@@ -66,7 +66,11 @@ const store= createStore({
     localStorage.removeItem("accessToken");
     localStorage.removeItem("mrole");
     axiosConfig.removeAuthHeader();
-   }
+   },
+   changeMrole(context, payload){
+    context.commit("setMrole",payload.mrole);
+    localStorage.setItem("mrole",payload.mrole);
+   },
   },
   modules: {
     classes:classes

@@ -90,7 +90,22 @@ function updatePassword(member){
     return axios.put("member/updatePassword", member);
 }
 
+function updateImg(myPageFormdata){
+    return axios.post("member/updateImg", myPageFormdata);
+}
 
+function deleteMemberImg(mid){
+    return axios.put("member/deleteImg/" + mid);
+}
+
+
+function getMyQAndA(mid){
+    return axios.get("member/myQAndA/" + mid);
+}
+
+function updateMrole(mid){
+    return axios.put("member/updateMrole/" + mid)
+}
 
 export default{
     join,
@@ -108,4 +123,8 @@ export default{
     updatePassword,
     deleteCareers,
     deleteAwards,
+    updateImg,
+    deleteMemberImg,
+    getMyQAndA,
+    updateMrole,
 }

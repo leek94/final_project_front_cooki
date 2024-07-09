@@ -2,15 +2,16 @@
         <div class="d-flex">
             <div class="mypage_bg"> 
                 <div>
-                    <img src="/images/photos/profile.png" width="120px" height="120px" style="margin-top: 120px; ">
+                    <img class="myimg" v-show="preImg === true" width="120px" height="120px" style="margin-top: 120px;" :src="`${axios.defaults.baseURL}/member/mattach/${store.state.userId}`"/>
+                    <img src="/images/photos/profile.png" v-show="preImg === false" width="120px" height="120px" style="margin-top: 120px; ">
                 </div>
                 <div class="d-flex username" style="justify-content: center">
-                    <div style="color:#04AA6D">손혜선  </div>
-                    <div> 님</div>
+                    <div style="color:#04AA6D">{{ member.mnickname }}</div>
+                    <div> &nbsp; 님</div>
                  </div>
                  <div>
-                    <button class="btn btn-outline-success btn-md" @click="EidtorRegister">에디터 신청</button>
-                    <EditorRegisterModal id="editorRegisterModal" @close="hideEditorform"/>
+                    <button class="btn btn-outline-success btn-md" v-if="store.state.mrole === 'ROLE_USER'" @click="EidtorModal">에디터 신청</button>
+                    <EditorRegisterModal id="editorRegisterModal" @close="hideEditorform" @register="editorRegister"/>
                     </div>
                 <ul style="list-style-type: none;margin-top:80px; padding:0px;">
                     
@@ -48,20 +49,51 @@ import EditorRegisterModal from './EditorRegisterModal.vue'
 import { Modal } from 'bootstrap';
 import { ref } from 'vue';
 import { useStore } from 'vuex';
+import memberAPI from '@/apis/memberAPI';
+import axios from 'axios';
+
+let store = useStore();
 
 let eRegisterModal=null;
 onMounted(()=>{
     eRegisterModal=new Modal(document.querySelector("#editorRegisterModal"))
 })
-function EidtorRegister(){
+function EidtorModal(){
     eRegisterModal.show();
 }
 function hideEditorform(){
+    console.log("에디터 폼 실행")
     eRegisterModal.hide();
 }
 
+function editorRegister(){
+    console.log("에디터 레지스터 실행")
+    eRegisterModal.hide();
+}
+
+const member = ref({
+    mid: '',
+    mnickname: '',
+})
+const preImg = ref(false);
+
+getMypageprofile();
+
+async function getMypageprofile() {
+    const response = await memberAPI.getMyProfile(store.state.userId);
+    member.value = response.data.member;
+
+    if(response.data.member.mimgoname !== null){
+        preImg.value = true;
+    }
+
+
+}
+
+
 // 에디터만 볼 수 있는 페이지를 위한 변수 선언
-const store = useStore();
+
+
 let isEditor = ref(store.state.mrole=="ROLE_EDITOR");
 console.log("롤", store.state.mrole=="ROLE_EDITOR");
 console.log("롤", store.state.mrole);
@@ -69,6 +101,9 @@ console.log("롤", store.state.mrole);
 </script>
 
 <style scoped>
+.myimg{
+    border-radius: 100px;
+}
 .mypage_bg{
   background-color:#eff9ef;
   height: auto;

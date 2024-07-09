@@ -118,7 +118,7 @@
                     <div class="cInputForm my-3">
                         <div class="mt-3" style="text-align: center;" v-show="isCuImg[index]"> 
                             <img class="rounded-4" style="width: 250px; height: 250px"/>
-                        </div>    
+                        </div>
                         <label class="form-label my-3"> 이미지(필수!!!)</label>
                         <input  type="file" class="form-control" ref="cuImgs" @change="setCuImg($event,index)">
                     </div>
@@ -265,8 +265,9 @@ function setCuImg(event,index){
         const file  = event.target.files[0]
         const reader = new FileReader();
         reader.readAsDataURL(file);
-        reader.onload = function(e){
 
+        // 이미지 올라갔을 때만 발동
+        reader.onload = function(e){
         const img  = nowCu.querySelector("img");
         img.src = e.target.result;
         isCuImg.value[index] = true;

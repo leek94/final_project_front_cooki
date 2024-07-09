@@ -184,6 +184,7 @@ async function qnaInsert() {
     try{
         qnaInit.value = {qtitle: qnaInit.value.qtitle, qcontent: qnaInit.value.qcontent, cno: cno};
         const response = await classAPI.qnaRegister(JSON.parse(JSON.stringify(qnaInit.value)));
+        isQna.value = true
         getQna(cno);
         qnaInit.value.qtitle = '';
         qnaInit.value.qcontent = '';

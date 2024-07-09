@@ -22,7 +22,7 @@
                     <div class="position-absolute top-50 start-100 translate-middle" style="z-index: 99;">
                         <img src="/images/assets/ic_right.png" class="right btn" @click='swipeNext'>
                     </div>
-                    <swiper-container class="mySwiper1 mt-3" loop="true" style="height: 300px;" v-show="nowPreImg">
+                    <swiper-container class="mySwiper1 mt-3" loop="true" style="height: 300px;" v-show="!isPreImg">
                         <swiper-slide v-for="n in imgCount" :key="n">
                             <img :src="`${axios.defaults.baseURL}/class/thumbattach/${cno}/${n}`">
                         </swiper-slide>

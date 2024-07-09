@@ -238,11 +238,13 @@ async function reviewInsert() {
     console.log("리뷰데이터: ", JSON.parse(JSON.stringify(reviewInit.value)));
     try{
         const response  = await classAPI.reviewRegister(JSON.parse(JSON.stringify(reviewInit.value)));
+        isReview.value = true
         getReview(cno);
+        console.log("리뷰있는지확인: " , isReview.value)
         reviewInit.value.crtitle = '';
         reviewInit.value.crcontent = '';
         starClick.value = 0;
-
+        
     } catch (error) {
         console.log(error);
     }
@@ -250,6 +252,7 @@ async function reviewInsert() {
 }
 
 //------- review data read function ---------------------------------------------------------------------------------------------- 
+
 
 async function getReview(cno) {
     console.log("클래스번호", cno)

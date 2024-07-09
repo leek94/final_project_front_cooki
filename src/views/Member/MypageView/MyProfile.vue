@@ -5,14 +5,15 @@
         
         <div class="row mx-2 mb-3">
             <li class="green-point m-3" >프로필 사진</li>
-            <img class="mx-3 mb-3 mt-1 " style="width: 220px" v-show="isPreImg === 0" src="/images/photos/profile.png"/> 
-            <img class=" mx-3 mb-3 mt-1" style="width:220px" v-show="isPreImg=== 2" :src="`${axios.defaults.baseURL}/member/mattach/${store.state.userId}`"/>
-            <img class="preImg rounded-4 mx-3 mb-3 mt-1"  style="width:220px" v-show="isPreImg===1"/>
+            <img class="mx-3 mb-3 mt-1 " style="width: 160px; height: 150px" v-show="isPreImg === 0" src="/images/photos/profile.png"/> 
+            <img class="myimg mx-3 mb-3 mt-1" style="width: 160px; height: 160px" v-show="isPreImg=== 2" :src="`${axios.defaults.baseURL}/member/mattach/${store.state.userId}`"/>
+            <img class="myimg preImg mx-3 mb-3 mt-1"  style="width: 160px; height: 160px" v-show="isPreImg===1"/>
             <div class="input-group w-100">
                 <input type="file" class="form-control" id="inputGroupFile" aria-describedby="inputGroupFileAddon" aria-label="파일첨부" ref="memberImg" @change="setPreviewImg">
-                <button class="btn border" type="button" id="inputGroupFileAddon" @click="submitClass">변경</button>
+                <button class="btn border" type="button" id="inputGroupFileAddon" @click="submitImg">변경</button>
                 <button class="btn border" type="button" @click="deletImg">삭제</button>
             </div>
+            <div class="checkError m-2" v-if="fileResultError">올바른 파일을 넣어주세요</div>
         </div>
 
         <div class="row mx-2 mb-3" >
@@ -135,26 +136,45 @@
 
 <script setup>
 import memberAPI from '@/apis/memberAPI';
-import store from '@/store';
+import { useStore } from 'vuex';
 import axios from 'axios';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+const router = useRouter();
+const store = useStore();
 
 const memberImg = ref(null);
 
-async function submitClass(){
-    const myPageFormdata = new FormData();
-    myPageFormdata.append("mid", store.state.userId);
-    const preAttach = memberImg.value; // input 태그를 selector로 찾는거랑 비슷하게 ref로 태그를 찾아옴
-    // 이미지를 FormData로 전달 하려고 append로 값을 넣어줌
-    myPageFormdata.append("mattach", preAttach.files[0]);
-    try{
-        const response = await memberAPI.updateImg(myPageFormdata);
-    } catch(error){
-        console.log("에러남" + error);
+// 에러시 보이게 하는 토글
+const mnicknameResultError = ref(false);
+const mpasswordResultError = ref(false);
+const mpasswordMatchError = ref(false);
+const fileResultError = ref(false);
+
+async function submitImg(){
+
+    if(memberImg.value.files.length !== 0){
+        fileResultError.value = false;
+        console.log("사진 변경 실행")
+        const myPageFormdata = new FormData();
+        myPageFormdata.append("mid", store.state.userId);
+        const preAttach = memberImg.value; // input 태그를 selector로 찾는거랑 비슷하게 ref로 태그를 찾아옴
+        // 이미지를 FormData로 전달 하려고 append로 값을 넣어줌
+        myPageFormdata.append("mattach", preAttach.files[0]);
+        router.go(0);
+        try{
+            const response = await memberAPI.updateImg(myPageFormdata);
+        } catch(error){
+            console.log("에러남" + error);
+        }
+        
+    } else {
+        console.log("파일이 없습니다.");
+        fileResultError.value = true;
+
     }
     
 }
-
 
 const member = ref( {
     mid: "",
@@ -177,7 +197,6 @@ const awards=ref([
     },
 ])
 
-
 // 위에서 v-if에서 mrole을 사용하기 때문에 여기서 초기화 해줘야함
 const mrole = store.state.mrole;
 // 마이프로필을 호출
@@ -189,7 +208,7 @@ async function getMyProfile() {
             const response = await memberAPI.getMyProfile(store.state.userId);
             member.value = response.data.member;
             console.log("esdf"+response.data.member.oname);
-            // 이미지 oname이 있으면 값을 띠우고 없으면 디폴트 사진을 뜨게함
+            // 이미지 oname이 있으면 값을 띠우고 없으면 디폴트 사진을
             if(response.data.member.mimgoname !== null){
                 isPreImg.value = 2;
             }
@@ -205,9 +224,8 @@ async function getMyProfile() {
         
 }
 
-
 let isPreImg = ref(0);
-// 마이프로필 사진 미리 보기
+// 마이프로필 사진 미리 보기를 위한 로직
 function setPreviewImg(e){
     if(e.target.files.length !== 0){
         const file = e.target.files[0];
@@ -227,12 +245,8 @@ function setPreviewImg(e){
 async function deletImg() {
     isPreImg.value = 0;
     await memberAPI.deleteMemberImg(store.state.userId);
+    router.go(0);
 }
-
-
-const mnicknameResultError = ref(false);
-const mpasswordResultError = ref(false);
-const mpasswordMatchError = ref(false);
 
 function mnicknameCheck(){
     const mnicknamePattern = /^[가-힣a-zA-Z0-9-_]{3,10}$/;
@@ -296,7 +310,7 @@ function savenickname(){
     updateNickname();
 }
 
-// 경력 추가 및 삭제--------------------------------------
+// 경력 추가 및 삭제---------------------------------------
 // 변경 저장
 async function saveCareers(){
     editingCareers.value = !editingCareers.value;
@@ -338,7 +352,7 @@ function careerRemove(index){
     }
 }
 
-// 수상 추가 및 삭제----------------------------------------
+// 수상 추가 및 삭제-----------------------------------------
 // 변경 저장
 async function saveAwards(){
     editingAwards.value= !editingAwards.value;
@@ -380,6 +394,12 @@ function awardsRemove(index){
 </script>
 
 <style scoped>
+
+.myimg{
+    border-radius: 200px;
+    padding: 0;
+}
+
 .myprofile{
     margin:0 auto;
     padding:50px 50px 0; 

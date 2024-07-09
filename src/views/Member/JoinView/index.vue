@@ -296,8 +296,6 @@ let awards = ref({
 
  // 수상내역 상태 배열 선언
 const awardsArray = ref([awards.value]);
-
-
 const awardsNullError = ref(false);
 
 // 수상내역 입력 태그 추가 함수
@@ -310,6 +308,7 @@ function awardsAdd(index) {
 function awardsRemove(index) {
     awardsArray.value.splice(index,index);
 }
+
 const router = useRouter();
 //폼 제출 함수
 async function handleSubmit() {

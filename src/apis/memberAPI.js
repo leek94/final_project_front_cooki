@@ -98,6 +98,10 @@ function deleteMemberImg(mid){
     return axios.put("member/deleteImg/" + mid);
 }
 
+function updateMrole(mid){
+    return axios.put("member/updateMrole/" + mid)
+}
+
 export default{
     join,
     setCareer,
@@ -116,4 +120,5 @@ export default{
     deleteAwards,
     updateImg,
     deleteMemberImg,
+    updateMrole,
 }

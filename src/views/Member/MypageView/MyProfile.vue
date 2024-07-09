@@ -22,7 +22,6 @@
                 <input type="text" class="form-control bg-light input-box" v-model=" member.mid" aria-label="Recipient's username" aria-describedby="button-addon2" readonly>
             </div>
         </div>
-
         
         <div class="flex-grow-1 row mx-2 mb-3">
             <li class="green-point m-1">닉네임
@@ -40,6 +39,21 @@
                 <button class="btn border" type="button" id="button-addon2" @click="savenickname" >저장</button>
             </div>
             <div class="checkError m-2" v-if="mnicknameResultError">올바른 형식의 닉네임을 입력해주세요</div>
+        </div>
+
+        <div class="flex-grow-1 row mx-2 mb-3">
+            <li class="green-point m-1">전화번호</li>
+            <div class="d-flex input-group input-group-box" v-if="!editingPhonenum">
+                <div class="mnicknameinput d-flex bg-light" style="height:50px; align-items: center" >
+                    <div >{{ member.mphonenum  }}</div>
+                </div>
+                <button class="btn border" style="height:50px" type="button" id="button-addon2" @click="changePhonenum" >변경</button>
+            </div>
+            <div class="input-group input-group-box w-100" v-if="editingPhonenum" >
+                <input type="text" class="form-control input-box" v-model="member.mphonenum" aria-label="Recipient's username" aria-describedby="button-addon2" @keyup="phonenumCheck">
+                <button class="btn border" type="button" id="button-addon2" @click="savephonenum" >저장</button>
+            </div>
+            <div class="checkError m-2" v-if="mphonenumResultError">올바른 형식의 전화번호를 입력해주세요</div>
         </div>
 
         <div class="flex-grow-1 row mx-2 mb-4" >
@@ -150,6 +164,7 @@ const mnicknameResultError = ref(false);
 const mpasswordResultError = ref(false);
 const mpasswordMatchError = ref(false);
 const fileResultError = ref(false);
+const mphonenumResultError = ref(false);
 
 async function submitImg(){
 
@@ -248,6 +263,13 @@ async function deletImg() {
     router.go(0);
 }
 
+function phonenumCheck(){
+    const mphonenumPattern = /^(\d{3})-(\d{3,4})-(\d{4})$/;
+    const mphonenumResult = mphonenumPattern.test(member.value.mphonenum);
+    mphonenumResultError.value = !mphonenumResult;
+    return mphonenumResult;
+}
+
 function mnicknameCheck(){
     const mnicknamePattern = /^[가-힣a-zA-Z0-9-_]{2,10}$/;
     const mnicknameResult = mnicknamePattern.test(member.value.mnickname);
@@ -275,6 +297,8 @@ function mpasswordMatchCheck(){
     return mpasswordCheckResult;
 }
 
+
+
 // 비밀번호 업데이트
 async function changePassword() {
     console.log("비밀번호 체크: " + member.value.mpassword)
@@ -288,6 +312,7 @@ async function changePassword() {
 const editingMnickname=ref(false);
 const editingCareers=ref(false);
 const editingAwards=ref(false);
+const editingPhonenum = ref(false);
 
 function changeMnickname(){
     editingMnickname.value= !editingMnickname.value;
@@ -299,6 +324,10 @@ function changeAwards(){
     editingAwards.value= !editingAwards.value;
 }
 
+function changePhonenum() {
+    editingPhonenum.value = !editingPhonenum.value;
+}
+
 // 닉네임 DB에 업데이트 하는 함수
 async function updateNickname(){
     await memberAPI.updateNickname(JSON.parse(JSON.stringify(member.value)));
@@ -308,6 +337,11 @@ async function updateNickname(){
 function savenickname(){
     editingMnickname.value= !editingMnickname.value;
     updateNickname();
+}
+
+async function savephonenum() {
+    editingPhonenum.value = !editingPhonenum.value;
+    await memberAPI.updatePhonenum(JSON.parse(JSON.stringify(member.value)));
 }
 
 // 경력 추가 및 삭제---------------------------------------

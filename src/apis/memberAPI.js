@@ -107,6 +107,10 @@ function updateMrole(mid){
     return axios.put("member/updateMrole/" + mid)
 }
 
+function updatePhonenum(member){
+    return axios.put("member/updatePhonenum", member);
+}
+
 export default{
     join,
     setCareer,
@@ -127,4 +131,5 @@ export default{
     deleteMemberImg,
     getMyQAndA,
     updateMrole,
+    updatePhonenum,
 }

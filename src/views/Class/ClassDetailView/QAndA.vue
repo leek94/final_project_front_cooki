@@ -9,7 +9,6 @@
              <div class="d-flex mb-1">
                   <div class="me-3" style="font-weight: bold;">닉네임</div>
              </div>
-            <form>
                 <div class="w-100 row pe-5">
                     <div class="me-3" style="font-weight: bold;">제목 : </div>
                     <input class="p-3 ms-3 me-3 border rounded" style="color: grey;" placeholder="문의 제목을 입력해주세요." v-model="qnaInit.qtitle">
@@ -20,7 +19,7 @@
                     <button class="px-2 mx-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="qnaInsert">등록</button>
                     <!-- <button class="px-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;">닫기</button> -->
                 </div>
-            </form>
+
         </div>
     </div>
 
@@ -76,7 +75,6 @@
              <div class="d-flex mb-1">
                   <div class="me-3" style="font-weight: bold;">닉네임</div>
              </div>
-            <form>
                 <div class="w-100 row pe-5">
                     <div class="me-3" style="font-weight: bold;">제목 : </div>
                     <input class="p-3 ms-3 me-3 border rounded" style="color: grey;" placeholder="수정할 문의 제목을 입력해주세요." v-model="qna.qtitle">
@@ -87,7 +85,6 @@
                     <button class="px-2 mx-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="qnaUpdate(index)">등록</button>
                     <button type="button" class="px-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="qnaClose(index)">닫기</button>
                 </div>
-            </form>
         </div>
     </div>
 
@@ -99,7 +96,7 @@
              <div class="d-flex mb-1">
                   <div class="me-3" style="font-weight: bold;">닉네임</div>
              </div>
-            <form>
+   
                 <div class="w-100 row pe-5">
                     <textarea class="p-3 ms-3 me-3 border rounded" style="color: grey;" placeholder="문의에 대한 답글을 입력해주세요." v-model="qna.qreply"></textarea>
                 </div>
@@ -107,7 +104,7 @@
                     <button class="px-2 mx-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="qreplyInsert(index)">등록</button>
                     <button class="px-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;"  @click="qreplyClose(index)">닫기</button>
                 </div>
-            </form>
+
         </div>
     </div>
 
@@ -176,10 +173,16 @@ const isEditor = ref(false);
 //------- qna data insert function ---------------------------------------------------------------------------------------------- 
 
 
-function qnaInsert() {
-    qnaInit.value = {qtitle: qnaInit.value.qtitle, qcontent: qnaInit.value.qcontent, cno: cno};
-    console.log("큐엔에이 제목", JSON.parse(JSON.stringify(qnaInit.value)));
-    return classAPI.qnaRegister(JSON.parse(JSON.stringify(qnaInit.value)));
+async function qnaInsert() {
+    try{
+        qnaInit.value = {qtitle: qnaInit.value.qtitle, qcontent: qnaInit.value.qcontent, cno: cno};
+        const response = await classAPI.qnaRegister(JSON.parse(JSON.stringify(qnaInit.value)));
+        getQna(cno);
+        qnaInit.value.qtitle = '';
+        qnaInit.value.qcontent = '';
+    } catch(error) {
+        console.log(error);
+    }
 }
 
 //------- qna data read function ---------------------------------------------------------------------------------------------- 
@@ -234,7 +237,6 @@ async function getQna(cno){
     } catch(error) {
         console.log(error);
     }
-
     console.log("로그인여부", store.state.userId)
 }
 

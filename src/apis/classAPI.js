@@ -76,8 +76,8 @@ function qnaRegister(qnaData){
     return axios.post("/class/qnaRegister", qnaData);
 }
 
-function qnaRead(cno){
-    return axios.get("/class/qnaList/" + cno);
+function qnaRead(cno, pageNo=1){
+    return axios.get("/class/qnaList/" + cno, {params: {pageNo:pageNo}});
 }
 
 function qnaUpdate(qnaData){
@@ -97,7 +97,7 @@ function reviewRegister(reviewData) {
 }
 
 function reviewRead(cno, pageNo=1){
-    return axios.get("/class/reviewList/" + cno , {params: {pageNo:pageNo}})
+    return axios.get("/class/reviewList/" + cno, {params: {pageNo:pageNo}})
 }
 
 function reviewUpdate(reviewData){

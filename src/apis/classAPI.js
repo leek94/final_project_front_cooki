@@ -96,8 +96,8 @@ function reviewRegister(reviewData) {
     return axios.post("/class/reviewRegister", reviewData)
 }
 
-function reviewRead(cno){
-    return axios.get("/class/reviewList/" + cno)
+function reviewRead(cno, pageNo=1){
+    return axios.get("/class/reviewList/" + cno , {params: {pageNo:pageNo}})
 }
 
 function reviewUpdate(reviewData){

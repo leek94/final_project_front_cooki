@@ -7,7 +7,6 @@ function getTotalCount(search){
 }
 
 function getBestClassRecipe(number){
-    console.log(number);
     return axios.get("/bestClassesRecipe", {params:{number}});
 }
 export default{

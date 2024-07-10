@@ -10,6 +10,16 @@ const routes = [
         component: () =>  import(/* webpackChunkName: "Member" */ '@/views/Member/JoinView')
     },
     {         
+        path: '/Member/FindIdView',
+        name: 'FindIdView',
+        component: () =>  import(/* webpackChunkName: "Member" */ '@/views/Member/FindIdView')
+    },
+    {         
+        path: '/Member/FindPasswordView',
+        name: 'FindPasswordView',
+        component: () =>  import(/* webpackChunkName: "Member" */ '@/views/Member/FindPasswordView')
+    },
+    {         
         path: '/Member/MypageView',
         name: 'Mypage',
         component: () =>  import(/* webpackChunkName: "Member" */ '@/views/Member/MypageView'),

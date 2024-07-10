@@ -23,7 +23,7 @@
             <div class="w-100 mb-3">
                 <label class="form-label mb-3 fw-bold">내용</label>
                 <textarea class="form-control" rows="10" v-model="recipe.rcontent"
-                    placeholder="클래스를 간단히 소개해주세요">
+                    placeholder="레시피를 간단히 소개해주세요">
                 </textarea>
             </div>
 
@@ -77,7 +77,7 @@
                     <div class="mb-1">
                         <label class="form-label mb-3 fw-bold">내용</label>
                         <textarea class="form-control" v-model="recipeProcess.rpcontent" rows="5" 
-                        placeholder="커리큘럼을 소개해주세요">
+                        placeholder="요리법을 소개해주세요">
                         </textarea>
                     </div>
                    

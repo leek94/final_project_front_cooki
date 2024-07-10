@@ -4,14 +4,20 @@
             <div class="d-flex" style="justify-content: center;">
                 <div class="row mx-5 p-5 " style="width: 500px; justify-content: center;">
                     <h3 class="mb-5" style="font-weight: bold; text-align: center">로그인</h3>
-                    <input class="p-2 mb-3 border" v-model="member.mid" placeholder="이메일 형식의 아이디"/>
-                    <input class="p-2 mb-4 border" v-model="member.mpassword" placeholder="비밀번호"/>
+                    <input class="p-2 mb-3 border" v-model="member.mid" placeholder="이메일 형식의 아이디" @keyup="midCheck"/>
+                    <div class="checkError mb-3" v-if="midResultError" style="color:red;">올바른 형식의 아이디를 입력해주세요</div>
+                    <input type="password" class="p-2 mb-4 border" v-model="member.mpassword" placeholder="비밀번호"/>
                     <button type="submit" class="btn p-2 w-100 rounded">로그인</button>
                 </div>
             </div>
         </form>
-         <div class="d-flex row mb-5" style="justify-content: center;">
+        <LoginModal id="loginModal" @close="hideModal"></LoginModal>
+         <div class="d-flex mb-5" style="justify-content: center;">
             <RouterLink class="linkJoin" to="/Member/JoinView" style="text-align: center; text-decoration: none;font-size: 17px">회원가입</RouterLink>
+            <div>&nbsp; | &nbsp;</div>
+            <RouterLink class="linkJoin" to="/Member/JoinView" style="text-align: center; text-decoration: none;font-size: 17px">아이디 찾기</RouterLink>
+            <div>&nbsp; | &nbsp;</div>
+            <RouterLink class="linkJoin" to="/Member/JoinView" style="text-align: center; text-decoration: none;font-size: 17px">비밀번호 찾기</RouterLink>
         </div>
     </div>
 </template>
@@ -19,19 +25,36 @@
 <script setup>
 import memberAPI from '@/apis/memberAPI';
 import store from '@/store';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import LoginModal from './LoginModal.vue';
+import { Modal } from 'bootstrap';
 
+let loginModal=null;
+onMounted(() =>{
+    loginModal = new Modal(document.querySelector("#loginModal"));
+});
 
+function hideModal() {
+
+}
 const member = ref({
     mid:"",
     mpassword:""
 });
 
+const midResultError = ref(false);
+
 const router = useRouter()
 
 async function handleLogin(){
-    try{
+    // 아무 값도 넣지 않았을 경우
+    if(member.value.mid === "" || member.value.mpassword === ""){
+        console.log("아이디 또는 비밀번호가 없습니다.");
+        loginModal.show();
+        // 정규화 형식이 맞을 경우 타는 if문
+    } else if(midResultError.value !== true){
+        try{
         const data = JSON.parse(JSON.stringify(member.value));
         //아이디와 토큰을 return받음
         const response = await memberAPI.login(data);
@@ -43,17 +66,33 @@ async function handleLogin(){
                 accessToken:response.data.accessToken,
                 mrole:response.data.mrole
             };
-
             store.dispatch("saveAuth",payload);
             router.push("/")
+        } else { // 받아온 값이 success가 아닐경우 - 아이디와 비밀번호가 틀린 경우
+            console.log("로그인 실패");
+            loginModal.show();
         }
-    }catch(error){
-        console.log(error);
+        }catch(error){
+            console.log(error);
+        }
+    } else { // 정규화 형식이 틀린 경우 타는 if문
+        console.log("로그인 실패 - 정규화 틀림");
+        loginModal.show();
     }
-   
-    
 }
+
+// 이메일 형식 확인
+function midCheck() {
+  const midPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
+  const midResult = midPattern.test(member.value.mid);
+  midResultError.value = !midResult;
+  return midResult;
+}
+
+
 </script>
+
+
 
 <style scoped>
 .btn {
@@ -81,10 +120,10 @@ async function handleLogin(){
 }
 
 .linkJoin:hover {
-    color: #D9EDBF;
+    color: #000;
 }
 
 .linkJoin:active {
-    color: #D9EDBF;
+    color: #000;
 } 
 </style>

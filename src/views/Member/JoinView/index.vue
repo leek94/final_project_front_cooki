@@ -4,7 +4,6 @@
         <form @submit.prevent="handleSubmit">
         <div class="row m-5 px-5 " style=" width: 700px; ">
             <h3 style="font-weight: bold; text-align: center">회원가입</h3>
-            <div class="">
 
                 <!-- 일반유저/에디터 공통 항목 -->
                 <div class="text-start bg-light p-5 my-5">
@@ -137,7 +136,6 @@
                     <button class="btn py-2 border rounded w-100" @click="joinFormSubmit">회원가입</button>
                 </div>
             </div>    
-        </div>
         </form>
     </div>
 </template>
@@ -184,18 +182,6 @@ function showPasswordBtn() {
 function showPasswordMatchBtn() {
     showPasswordCheck.value = !showPasswordCheck.value;
 }
-
-// function midCheck() {
-//     var midPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
-//     var midResult = midPattern.test(member.value.mid);
-//     //member.value.mid == null || member.value.mid.equals("")
-//     if(midResult == false) {
-//         this.midResultError = true;
-//     } else {
-//         this.midResultError = false;
-//     } 
-//     return midResult;
-// }
 
 //아이디 정규 표현식 검사
 

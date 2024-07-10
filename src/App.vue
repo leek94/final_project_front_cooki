@@ -17,17 +17,12 @@
   import Footer from "@/components/Footer.vue";
 </script>
 <style>
-@font-face {
-    font-family: 'Ownglyph_noocar-Rg';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2405-2@1.0/Ownglyph_noocar-Rg.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-}
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   height: auto;
+  font-family: 'SUIT', sans-serif;
   min-height: 100%;
 }
 

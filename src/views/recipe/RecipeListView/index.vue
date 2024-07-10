@@ -32,7 +32,7 @@
                 
                 <div class="main-box ss">
                     <ul class="main-img d-flex ss">
-                        <RecipeCard v-for="(recard, index) in recipeCard" :key="index" :objectProp="recard" @click="routerLinkto(recard.rno)"/>
+                        <RecipeCard v-for="(recard, index) in recipeCard" :key="index" :objectProp="recard" @click="routerLinkto(recard.rno)" @like="handleLike"/>
                     </ul>
                 </div>
             </div>
@@ -140,6 +140,18 @@ function changePageNo(argpageNo){
     router.push(`/recipe/recipeListView?pageNo=${argpageNo}&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=${data.value.searchSort}`);
 }
 
+function handleLike(rno){
+    for(let i=0; i<recipeCard.value.length; i++){
+        if(recipeCard.value[i].rno === rno){
+            recipeCard.value[i].islike = !recipeCard.value[i].islike;
+            if(recipeCard.value[i].islike){
+                recipeCard.value[i].likecount += 1;
+            }else{
+                recipeCard.value[i].likecount -= 1;
+            }
+        }
+    }
+}
 //같은 페이지->같은 페이지로 이동했을 때 
 //route(url) 값이 단 하나라도 바뀌었을 때 실행
 watch(route,(newRoute,oldRoute) => {

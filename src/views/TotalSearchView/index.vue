@@ -17,13 +17,13 @@
             <div class="container-fluid">
                 <ul class="navbar-nav d-flex w-100">
                     <li class="nav-item" style="display: inline-block; ">
-                        <RouterLink class="menu" :to="`/TotalSearchView/Total?searchTitle=${data.searchTitle}&searchText=${data.searchText}`">전체({{ classCount+recipeCount }})</RouterLink>
+                        <RouterLink class="menu" :to="`/TotalSearchView/Total?pageNo=1&searchTitle=${data.searchTitle}&searchText=${data.searchText}`">전체({{ classCount+recipeCount }})</RouterLink>
                     </li>
                     <li class="nav-item w-15" style="display: inline-block; ">
-                        <RouterLink class="menu" :to="`/TotalSearchView/ClassCompact?searchTitle=${data.searchTitle}&searchText=${data.searchText}`">클래스({{classCount}})</RouterLink>
+                        <RouterLink class="menu" :to="`/TotalSearchView/ClassCompact?pageNo=1&searchTitle=${data.searchTitle}&searchText=${data.searchText}`">클래스({{classCount}})</RouterLink>
                     </li>
                     <li class="nav-item w-15" style="display: inline-block; ">
-                        <RouterLink class="menu" :to="`/TotalSearchView/RecipeCompact?searchTitle=${data.searchTitle}&searchText=${data.searchText}`">레시피({{ recipeCount }})</RouterLink> 
+                        <RouterLink class="menu" :to="`/TotalSearchView/RecipeCompact?pageNo=1&searchTitle=${data.searchTitle}&searchText=${data.searchText}`">레시피({{ recipeCount }})</RouterLink> 
                     </li>
                 </ul>
             </div>

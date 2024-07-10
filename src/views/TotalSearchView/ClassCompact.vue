@@ -15,7 +15,7 @@
                         </ul>
 
                         <div class="d-flex justify-content-center">
-                            <button class="plus-button btn" @click="MovetoList">더보기</button>
+                            <button class="plus-button btn"  @click="appendList">더보기</button>
                         </div>
                  </div>
                 
@@ -34,22 +34,11 @@ import { useRoute, useRouter } from 'vue-router';
 const route = useRoute();
 const router = useRouter();
 const classCards = ref([
-    {
-        cno:null,
-        mname: '',
-        ctitle: '쿠킹클래스 쿡쿠키스',
-        ccontent:"",
-        cdday: '', 
-        ctime:'',
-        chitcount:null,
-        cpersoncount: null,
-        cprice:null,
-        cnowPerson:null,
-        reviewCount:null,
-        crratio:null
-    },
-    
+
 ]);
+const page=ref({
+    pager:{}
+})
 const data= ref({
     searchTitle:'all',
     searchText:'',
@@ -59,11 +48,12 @@ const data= ref({
 data.value.searchTitle=route.query.searchTitle||'all';
 data.value.searchText=route.query.searchText||'';
 
-let countSearchClass= ref(null);
+//다음 페이지 넘버를 받아와 카드를 늘려주기 위해 pageNo를 변수로 받는다 
+let pageNo=1;
+const perPage=8;
 
 if(data.value.searchText!==''){
-    console.log("eeee"+data.value.searchText)
-    getSearchClass(1,4);
+    getSearchClass();
 }
 
 
@@ -75,18 +65,29 @@ function dateFormat(date) {
     return dateFormat;
 }
 
-async function getSearchClass(pageNo,perPage){
-    console.log("getclass 실행")
+async function getSearchClass(){
+
     const response = await searchAPI.getSearchClass(JSON.parse(JSON.stringify(data.value)), pageNo,perPage)
-    classCards.value=response.data.searchClass;
-    countSearchClass.value=classCards.value.length;
-    for(let i=0;i<classCards.value.length;i++){
-            classCards.value[i].crratio=Math.round(classCards.value[i].crratio*10)/10
-            const resoponse2= await classAPI.classNowPerson(classCards.value[i].cno);
-            classCards.value[i].cnowPerson = resoponse2.data.nowPerson;
-            let date = new Date(classCards.value[i].cdday);
-            classCards.value[i].cdday= dateFormat(date);
+
+    let clData =response.data.searchClass
+    //for문을 clData 배열에 있는 객체를 가져온다
+    for(let i=0;i<clData.length;i++){
+            //별점 소수점 첫째자리에서 반올림
+            clData[i].crratio=Math.round(clData[i].crratio*10)/10;
+            //현재 클래스 신청 인원수 받아오기 
+            const resoponse2= await classAPI.classNowPerson(clData[i].cno);
+            clData[i].cnowPerson = resoponse2.data.nowPerson;
+            //dateformat
+            let date = new Date(clData[i].cdday);
+            clData[i].cdday= dateFormat(date);
+            //classCards 배열에 clData 객체 하나씩 할당 해준다(넣어준다)
+            classCards.value.push(clData[i])
         }
+}
+//더보기를 눌렀을 때 pageNo+1을 해서 (2)페이지에 나오는 카드 불러오기
+async function appendList(){
+    pageNo+=1
+    getSearchClass()
 }
 function MovetoList(){
     router.push(`/class/classListView?pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=1`)
@@ -100,7 +101,7 @@ watch(route,(newRoute,oldRoute)=>{
     if(newRoute.query.searchText!==''){
         data.value.searchTitle=newRoute.query.searchTitle||'all';
         data.value.searchText=newRoute.query.searchText||'';
-        getSearchClass(1,4)
+        getSearchClass(1,8)
     } else{
         data.value.searchText=''
     }

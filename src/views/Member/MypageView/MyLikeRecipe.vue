@@ -9,7 +9,7 @@
  
         <hr class="mt-0"/>
         <div class="d-flex" style="flex-wrap: wrap;" >
-            <div class="qcard" v-for="(recards,index) in recipeCard" :key="index">
+            <div class="qcard" v-for="(recards,index) in recipeCard" :key="index" @click="routerLinkto(index)">
                 <MypageRecipeCard :objectProp="recards" @click="handleClick(index)"/>
             </div>
         </div>
@@ -17,65 +17,46 @@
 </template>
  
 <script setup>
+import memberAPI from '@/apis/memberAPI';
 import MypageRecipeCard from '@/components/MypageRecipeCard.vue';
-
+import { useStore } from 'vuex';
 import { computed, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 function handleClick(index){
-
     recipeCard.value[index].isActive = !recipeCard.value[index].isActive;
 }
  
-const recipeCard = ref([
-    { 
-        bno:1, 
-        btitle:"이거 맛있겠죠1", 
-        blike: 3, 
-        bhitcount: 129, 
-        mname: "Sonhyeseon",
-        bdate: "2024-06-21 14:00", 
-        isActive: false 
-    },
-    { 
-        bno:2, 
-        btitle:"이거 맛있겠죠2", 
-        blike: 30, 
-        bhitcount: 129, 
-        mname: "Sonhyeseon",
-        bdate: "2024-06-21 14:00", 
-        isActive: false 
-    },
-    { 
-        bno:3, 
-        btitle:"이거 맛있겠죠3", 
-        blike: 23, 
-        bhitcount: 129, 
-        mname: "Sonhyeseon",
-        bdate: "2024-06-21 14:00", 
-        isActive: false 
-    },
-    { 
-        bno:4, 
-        btitle:"이거 맛있겠죠4", 
-        blike: 35, 
-        bhitcount:129, 
-        mname: "Sonhyeseon",
-        bdate: "2024-06-21 14:00", 
-        isActive: false 
-    },
-    { 
-        bno:4, 
-        btitle:"이거 맛있겠죠5", 
-        blike: 31, 
-        bhitcount:129, 
-        mname: "Sonhyeseon",
-        bdate: "2024-06-21 14:00", 
-        isActive: false 
-    },
-
-])
+const recipeCard = ref([ ])
 
 const countR= computed(()=>recipeCard.value.length)
+
+//dateFormating (2024-06-28)
+function dateFormat(date) {
+    let dateFormat = date.getFullYear() +
+    '-' + ((date.getMonth() +1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) +
+    '-' + (date.getDate() < 10 ? "0" + date .getDate() : date.getDate());
+    return dateFormat;
+}
+
+const store = useStore();
+const mid = store.state.userId;
+
+async function myLikeRecipeRead() {
+    const response = await memberAPI.getMyLikeRecipe(mid);
+    recipeCard.value = response.data.myLikeRecipe;
+    for(let i=0; i<recipeCard.value.length; i++) {
+        recipeCard.value[i].rdate = dateFormat(new Date(recipeCard.value[i].rdate));
+    }
+}
+
+myLikeRecipeRead()
+
+const router = useRouter();
+function routerLinkto(index){
+    router.push(`/Recipe/RecipeDetailView?rno=${recipeCard.value[index].rno}`);
+}
+
  </script>
  
  <style scoped>

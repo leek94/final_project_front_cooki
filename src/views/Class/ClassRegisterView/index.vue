@@ -448,9 +448,14 @@ function registerCuriculums(cno){
     return classAPI.curriculumRegister(cuFormData);
 }
 
-async function submitClass() {
-    let cno;    
+async function submitClass() { 
+    const iv = isValid();
+    if(!iv){
+        alert("모든 값을 입력해주세요");
+        return
+    }
 
+    let cno;   
     //----- 기본 정보 받기 -----
     try{
         //axios를 통해서 저장한 formData 전달하기
@@ -499,7 +504,7 @@ function isValid(){
     }
 
     for(const v of classitems.value){
-        if(!v.riname){
+        if(!v.ciname){
             iv = false;
             break;
         }

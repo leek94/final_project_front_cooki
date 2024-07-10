@@ -68,7 +68,7 @@
                 <input type="text" placeholder="비밀번호 확인" v-model="member.mpasswordcheck" aria-label="passwordCheck" class="form-control" @keyup="mpasswordMatchCheck">
                 <button class="btn border" type="button" id="button-addon2" @click="changePassword">변경</button>
             </div>
-            <div class="checkError col  m-2 w-50" v-if="mpasswordMatchError">입력한 비밀번호와 일치하지않습니다</div>
+            <div class="checkError col  m-2 w-50" v-if="mpasswordMatchError">입력한 비밀번호와 일치하지 않습니다</div>
         </div>
 
         <!-- 에디터한테만 보이는 화면 -->
@@ -167,7 +167,7 @@ const fileResultError = ref(false);
 const mphonenumResultError = ref(false);
 
 async function submitImg(){
-
+    console.log("사진변경 로직 실행중");
     if(memberImg.value.files.length !== 0){
         fileResultError.value = false;
         console.log("사진 변경 실행")
@@ -176,9 +176,9 @@ async function submitImg(){
         const preAttach = memberImg.value; // input 태그를 selector로 찾는거랑 비슷하게 ref로 태그를 찾아옴
         // 이미지를 FormData로 전달 하려고 append로 값을 넣어줌
         myPageFormdata.append("mattach", preAttach.files[0]);
-        router.go(0);
         try{
             const response = await memberAPI.updateImg(myPageFormdata);
+            router.go(0);
         } catch(error){
             console.log("에러남" + error);
         }

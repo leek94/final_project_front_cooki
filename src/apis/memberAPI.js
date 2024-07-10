@@ -114,11 +114,15 @@ function updatePhonenum(member){
 
 //마이페이지 내가 작성한 레시피 읽기
 function getMyRecipe(mid) {
-    return axios.get("/member/myRecipe/" + mid)
+    return axios.get("/member/myRecipe/" + mid);
 }
 
 function getMyLikeRecipe(mid) {
-    return axios.get("/member/myLikeRecipe/" + mid)
+    return axios.get("/member/myLikeRecipe/" + mid);
+}
+
+function searchId(member) {
+    return axios.post("/member/searchId", member);
 }
 
 export default{
@@ -144,4 +148,5 @@ export default{
     getMyRecipe,
     getMyLikeRecipe,
     updatePhonenum,
+    searchId,
 }

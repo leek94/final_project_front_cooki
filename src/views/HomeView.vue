@@ -28,15 +28,30 @@
        </div>
  
        <div class=" m-0 p-0 px-2" style="width: 46%; height: 100%;">
-             <swiper-container class="classCenterSwiper" style="width: 75%; height: 90%"
-               loop="true"
-               speed="800"
-               space-between="30"
-               autoplay-delay="3000">
-               <swiper-slide v-for="(c, index) in classes" :key="index">
-                 <img :src="`${axios.defaults.baseURL}/class/thumbattach/${c.cno}/1`" class="rounded-4"/>
-               </swiper-slide>
-             </swiper-container>
+            <swiper-container class="classCenterSwiper" style="width: 75%; height: 90%"
+            loop="true"   
+            speed="800"
+            space-between="30"
+            autoplay-delay="3000">
+            <swiper-slide>
+              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[0].cno}/1`" class="rounded-4"/>
+            </swiper-slide>
+            <swiper-slide>
+              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[1].cno}/1`" class="rounded-4"/>
+            </swiper-slide>
+            <swiper-slide>
+              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[2].cno}/1`" class="rounded-4"/>
+            </swiper-slide>
+            <swiper-slide>
+              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[3].cno}/1`" class="rounded-4"/>
+            </swiper-slide>
+            <swiper-slide>
+              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[4].cno}/1`" class="rounded-4"/>
+            </swiper-slide>
+            <swiper-slide>
+              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[5].cno}/1`" class="rounded-4"/>
+            </swiper-slide>
+            </swiper-container>
        </div>
        
        <div class="d-flex flex-column m-0 p-0" style="width: 27%; height: 100%">
@@ -57,11 +72,13 @@
            </div>
  
            <div class="d-flex justify-content-center align-items-center col-6 m-0 p-0">
-             <div class="progress w-100" role="progressbar"  style="height: 4px;">
+             <div class="progress w-75" role="progressbar"  style="height: 4px;">
                <div class="progress-bar" style="width: 25%; background-color: green;"></div>
              </div>
-             <button class="btn" v-show="isRun" @click="stopAuto">&#8214;</button>
-             <button class="btn" v-show="!isRun" @click="runAuto">&#9654;</button>
+             <div class="w-25">
+             <button class="btn w-100" v-show="isRun" @click="stopAuto">&#8214;</button>
+             <button class="btn w-100" v-show="!isRun" @click="runAuto">&#9654;</button>
+            </div>
            </div>
  
            <div class="d-flex justify-content-center align-items-center col-1 m-0 p-0">
@@ -298,23 +315,32 @@
 </template>
    
 <script setup>
-import { onMounted, ref, computed } from 'vue';
+import { onBeforeMount, onMounted, ref} from 'vue';
 import { register } from 'swiper/element/bundle';
+import { useRouter } from 'vue-router';
 import axios from 'axios';
 import searchAPI from '@/apis/searchAPI';
 
 register();
+const router = useRouter();
 
-const classSwiperNow = ref(null);
+const classSwiperNow = ref("01");
 const lastIndex = ref(3);
 const isRun = ref(true);
 const number = 6;
 
-const classes = ref([]);
+const classes = ref([{},{},{},{},{},{}]);
 const recipe = ref({});
-getBestItems();
 
-async function getBestItems(){
+function dateFormat(rdate) {
+    const date = new Date(rdate);
+    let dateFormat = date.getFullYear() +
+    '-' + ((date.getMonth() +1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) +
+    '-' + (date.getDate() < 10 ? "0" + date .getDate() : date.getDate());
+    return dateFormat;
+}
+
+onBeforeMount(async()=>{
   try{
     const response = await searchAPI.getBestClassRecipe(number);
     classes.value = response.data.classes;
@@ -326,20 +352,11 @@ async function getBestItems(){
   }catch{
     console.log("bi fail");
   }
-}
+})
 
-function dateFormat(rdate) {
-    const date = new Date(rdate);
-    let dateFormat = date.getFullYear() +
-    '-' + ((date.getMonth() +1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) +
-    '-' + (date.getDate() < 10 ? "0" + date .getDate() : date.getDate());
-    return dateFormat;
-}
-
-onMounted(() => {
+onMounted( () => {
   const classCenterSwiper = document.querySelector('.classCenterSwiper');
   const classLeftSwiper = document.querySelector('.classLeftSwiper');
-
   const classRightSwiper = document.querySelector('.classRightSwiper');
   const left1 = document.querySelector(".left1");
   const right1 = document.querySelector(".right1");
@@ -357,12 +374,11 @@ onMounted(() => {
   const left3 = document.querySelector(".left3");
   const right3 = document.querySelector(".right3");
   
-  setProgressbar();
-
   classCenterSwiper.swiper.controller.control = [classLeftSwiper.swiper,classRightSwiper.swiper];
-  classCenterSwiper.addEventListener("swiperslidechange", setProgressbar);
+  classCenterSwiper.addEventListener("swiperrealindexchange", setProgressbar);
   categorySwiper.addEventListener("swiperslidechange",setLastIndex);
   recipeCenterSwiper.swiper.controller.control = [recipeLeftSwiper1.swiper, recpieRightSwiper1.swiper,recipeLeftSwiper2.swiper,recpieRightSwiper2.swiper];
+  setProgressbar();
 
   left1.addEventListener("click", () => {
     classCenterSwiper.swiper.slidePrev();
@@ -389,7 +405,7 @@ onMounted(() => {
   });
 
   function setProgressbar(){
-    console.log(classLeftSwiper.swiper.realIndex);
+    console.log(classCenterSwiper.swiper.realIndex);
     let now = classCenterSwiper.swiper.realIndex + 1;
     classSwiperNow.value = "0" + now;
     progressBar.style.width =  now/number * 100 + "%";
@@ -401,18 +417,24 @@ onMounted(() => {
       lastIndex.value -= 5;
     }
   }
-
-function stopAuto(){
-  classCenterSwiper.swiper.autoplay.pause();
-  isRun.value = !isRun.value;
-  }
-     
-function runAuto(){
-  classCenterSwiper.swiper.autoplay.resume();
-  isRun.value = !isRun.value;
-  }
 }
 )
+
+function stopAuto(){
+  const classCenterSwiper = document.querySelector('.classCenterSwiper');
+  classCenterSwiper.swiper.autoplay.pause();
+  isRun.value = !isRun.value;
+}
+     
+function runAuto(){
+  const classCenterSwiper = document.querySelector('.classCenterSwiper');
+  classCenterSwiper.swiper.autoplay.resume();
+  isRun.value = !isRun.value;
+}
+
+function gotoClassDetail(cno){
+  router.push(`class/ClassDetailView?cno=${cno}`);
+}
 </script>
    
 <style scoped>

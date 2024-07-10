@@ -1,6 +1,6 @@
 <template>
     <div class="container_box ss">
-            <div class="recipe-title mb-5"><h3>레시피</h3></div>
+            <div class="recipe-title mb-5"></div>
             <SearchBar @searchword="searchresult"></SearchBar>
             <!-- 작성바 & 작성 버튼 -->
             <div class="top-box ss d-flex align-content-center align-content-center mb-5">

@@ -1,14 +1,14 @@
 <template>
-    <div class="d-flex flex-column justify-content-center align-items-center">
+    <div class="d-flex flex-column justify-content-center align-items-center" >
 
-        <div class="d-flex flex-column justify-content-center align-items-start w-50 my-5 p-3 rounded-4" style='background-color: #fff9e2;'>
+        <div class="d-flex flex-column justify-content-center align-items-start my-5 p-3 rounded-4" style='width:850px' >
             <div class="w-100 my-3">
-                <label class="form-label mb-3">제목</label>
+                <label class="form-label mb-3 fw-bold">제목</label>
                 <input type="text" class="form-control" v-model="classes.ctitle" placeholder="클래스 이름을 입력해주세요.">
             </div>
 
             <div class="w-100 mb-3">
-                <label class="form-label mb-3">내용</label>
+                <label class="form-label mb-3 fw-bold">내용</label>
                 <textarea class="form-control" rows="10" v-model="classes.ccontent"
                     placeholder="클래스를 간단히 소개해주세요">
                 </textarea>
@@ -32,13 +32,15 @@
                 </div>
 
                 <div class="tInputForm w-100">            
-                    <label for="tFile" class="form-label my-3"> 완성품 사진(필수!!!!)</label>
+                    <label for="tFile" class="form-label my-3 fw-bold"> 완성품 사진</label>
                     <input id="tFile" type="file" class="form-control" ref="presetImg" multiple @change="setPreviewImg">
                 </div>
             </div>
         </div>
 
-        <div class="d-flex flex-column justify-content-center align-items-start w-50 mb-5 p-3 rounded-4" style='background-color: #fff9e2;'>
+        <div class="d-flex flex-column justify-content-center align-items-start mb-5 p-3 rounded-4" >
+            <h5 class="mb-3 p-3 text-success fw-bold">* 필수 입력 사항 </h5>
+            <div class="mb-5 p-3 rounded-4" style='background-color: rgba(var(--bs-light-rgb));width:850px'>
             <div class="w-25 my-3">
                 <label class="form-label mb-3">모집 인원(5~30명 사이의 인원)</label>
                 <input type="number" class="form-control" v-model="classes.cpersoncount" min="5" max="30"  @change="isValidPersonCount">
@@ -99,27 +101,32 @@
                 <div><input type="text" v-model="classes.caddress" placeholder="주소" class="w-50 mb-3 form-control"></div>
                 <div><input type="text" v-model="classes.cdetailaddress" placeholder="상세주소" class="w-50 mb-3 form-control"></div>
             </div>
+            </div>
         </div>
 
-        <div id="classItems" class="w-50 rounded-4 mb-5 p-3" style='background-color: #fff9e2;'>
-            <h5 class="my-3">주재료</h5>
+        <div id="classItems" class=" rounded-4 mb-5 p-3" style='background-color: rgba(var(--bs-light-rgb));width:850px'>
+            <h5 class="my-3 fw-bold">주재료</h5>
             <div class="d-flex flex-column align-items-center mb-3">
                 <div class="d-flex justify-content-center align-items-center row w-100 mt-2" v-for="(classitem, index) in classitems" :key="index"  >
                     <div class="col-11 d-flex justify-content-center align-items-center m-0 p-0">
                         <input type="text" class="form-control w-100 me-1" v-model="classitem.ciname" placeholder="예) 다진 돼지고기 600g">
                     </div>
                     <div class="col-1 d-flex justify-content-start align-items-center m-0  p-0">
-                        <button class="btn bg-white me-1 w-50 d-flex justify-content-center align-items-center" v-if="index !== 0" @click="removeClassItem(index)">&#10134;</button>
-                        <button class="btn bg-white w-50 d-flex justify-content-center align-items-center" v-if="index + 1 === classitems.length" @click="addClassItem(index)">&#10133;</button>
+                        <button class="btn bg-white me-1 w-50 d-flex justify-content-center align-items-center text-success" v-if="index !== 0" @click="removeClassItem(index)">
+                            <i class="fa-solid fa-minus"></i>
+                        </button>
+                        <button class="btn bg-white w-50 d-flex justify-content-center align-items-center text-success" v-if="index + 1 === classitems.length" @click="addClassItem(index)">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div id="curiculums" class="w-50 mb-3" v-for="(curiculum, index) in curiculums" :key="index">
-            <div class="d-flex flex-column justify-content-center">
-                <h5 class="mb-3">Step.{{ index+1 }}</h5>
-                <div class="rounded-4 p-3 w-100" style='background-color: #fff9e2;'>
+        <div id="curiculums" class="mb-3" v-for="(curiculum, index) in curiculums" :key="index">
+            <div class="d-flex flex-column justify-content-center" style="width:850px">
+                <h5 class="mb-3 text-success fw-bold">Chapter.{{ index+1 }}</h5>
+                <div class="p-3 w-100" style='background-color: rgba(var(--bs-light-rgb));border-top:1px solid #15a775;border-radius: 0 0 5px 5px'>
                     <div class="cInputForm my-3">
                         <div class="mt-3" style="text-align: center;" v-show="isCuImg[index]"> 
                             <img class="rounded-4" style="width: 250px; height: 250px"/>
@@ -127,17 +134,17 @@
                         <div class="mt-3" style="text-align: center;" v-show="nowCuImgs[index]"> 
                             <img :src="`${axios.defaults.baseURL}/class/curriculumattach/${cno}/${index+1}`" class="rounded-4" style="width: 250px; height: 250px"/>
                         </div> 
-                        <label class="form-label my-3"> 이미지(필수!!!)</label>
+                        <label class="form-label my-3 fw-bold"> 이미지</label>
                         <input  type="file" class="form-control" ref="cuImgs" @change="setCuImg($event,index)">
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label mb-3">제목</label>
+                        <label class="form-label mb-3 fw-bold">제목</label>
                         <input type="text" class="form-control" v-model="curiculum.cutitle" placeholder="제목을 입력해주세요.">
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label mb-3">내용</label>
+                        <label class="form-label mb-3 fw-bold">내용</label>
                         <textarea class="form-control" v-model="curiculum.cucontent" rows="5" 
                         placeholder="커리큘럼을 소개해주세요">
                         </textarea>
@@ -146,12 +153,15 @@
             </div>
         </div>
 
-        <div>
-            <button class="btn btn-outline-warning" @click="removeCu">단계 삭제하기</button>
-            <button class="btn btn-outline-warning" @click="addCu">단계 추가하기</button>
+        <div class="dd mt-3 d-flex text-center mb-5" style="justify-content: center;width:850px" >
+            <button class="prbtn btn" @click="removeCu" style="font-size:18px;">단계 삭제 - </button>
+            <button class="prbtn btn" @click="addCu"  style="font-size: 18px;">단계 추가 +</button>
         </div>
-
-        <button class="btn" @click="submitClass">저장 </button>
+        <div class="d-flex mb-5 text-center">
+            <RouterLink to="/recipe/classListView?pageNo=1"><button class="backList btn btn-outline-secondary btn-sm">취소</button></RouterLink>
+            <button class="backList btn btn-outline-success btn-sm ms-3" @click="submitClass">수정</button>
+            <button class="backList btn btn-outline-success btn-sm ms-3" @click="reopenClass">다시 열기</button>
+        </div>
     </div>
 </template>
 
@@ -523,6 +533,68 @@ async function submitClass() {
     }
 }
 
+// 클래스 다시 열기---------------------------------------------------------------
+async function reopenClass(){
+    const initialLength=curiculums.value.length;
+    let initCno=classes.value.cno;
+    //class thumbnail을 받기 위해 formdata로 전송
+    const reformData= new FormData();
+    reformData.append("ctitle", classes.value.ctitle);
+    reformData.append("ccontent", classes.value.ccontent);
+    reformData.append("cpersoncount", classes.value.cpersoncount);
+    reformData.append("cprice", classes.value.cprice);
+    reformData.append("cdday", classes.value.cdday);
+    reformData.append("cstarttime", classes.value.cstarttime.hours +":"+(classes.value.cstarttime.minutes===0? "00" : "30"));
+    reformData.append("cendtime", classes.value.cendtime.hours +":"+(classes.value.cendtime.minutes===0? "00" : "30"));
+    reformData.append("caddress", classes.value.caddress + ", " +classes.value.cdetailaddress);
+  
+    const cenddate = new Date(classes.value.cdday);
+    cenddate.setDate(cenddate.getDate()-1);  
+    reformData.append("cenddate", cenddate);
+    reformData.append("cno", cno);
+    reformData.append("ctno", 1);
+    const climg=presetImg.value;
+    if(climg.files.length!==0){
+        //list 형태의 이미지를 하나씩 전달
+        for(let i=0;i<climg.files.length;i++){
+            reformData.append("cthumbnailimgs",climg.files[i])
+        }
+    }
+    try{
+        const response1 = await classAPI.reopenClass(reformData);
+        classes.value.cno=response1.data;
+    } catch(error){
+        console.log(error);
+    }
+    // 클래스 아이템 ---------------------------------------------------------
+ 
+    for(let i=0;i<classitems.value.length;i++){
+        classitems.value[i].cno=classes.value.cno;
+        classitems.value[i].cino=i+1
+    }
+        const data= JSON.parse(JSON.stringify(classitems.value));
+        const response2 = await classAPI.itemRegister(data);
+
+    // 커리 큘럼---------------------------------------------------------------------
+    const curFormData= new FormData();
+    for(let i=0; i<curiculums.value.length;i++){
+        curFormData.append("initCno",initCno);
+        console.log("dd"+initCno)
+        curFormData.append("cno",classes.value.cno);
+        curFormData.append("initialLength",initialLength);
+        curFormData.append("nowLength",curiculums.value.length);
+        curFormData.append("curriculums["+i+"].cuorder",i+1)
+        curFormData.append("curriculums["+i+"].cutitle",curiculums.value[i].cutitle)
+        curFormData.append("curriculums["+i+"].cucontent",curiculums.value[i].cucontent)
+        const clmf=cuImgs.value[i];
+        console.log("img"+clmf);
+        if(clmf.files.length!==0){
+            console.log("들어옴")
+            curFormData.append("curriculums["+i+"].cuimg",clmf.files[0])
+        }
+    }
+    const response3= await classAPI.reopenClassCurri(curFormData);
+}
 </script>
 
 <style scoped>
@@ -544,6 +616,20 @@ swiper-slide {
 swiper-slide img {
     width: 100%;
     height: 100%;
+}
+.backList{
+    font-size: 1rem;
+    font-weight: bold;
+    padding:1.2rem 2.238rem 1.138rem 2.3rem; 
+    border-radius: 38px;
+    border-width: 2px;
+}
+.prbtn{
+    padding:0.65rem 1.5rem;
+    border:solid 1px #d4d4d4;
+    border-radius: 5px;
+    width: calc(100% - 2rem);
+    margin: 0 0.5rem;
 }
 
 </style>

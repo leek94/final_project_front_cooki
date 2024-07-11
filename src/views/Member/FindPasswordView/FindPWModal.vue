@@ -67,11 +67,13 @@ const mpasswordMatchError = ref(false);
 const emit = defineEmits(["click"]);
 
 function updateButton() {
+    mpasswordMatchError.value = false;
     if(checker.value.check === checker.value.reCheck && mpasswordResultError.value === false && mpasswordMatchError.value === false){
         emit('click', checker.value.reCheck);
         console.log("비밀번호가 변경됨")
     } else {
         console.log("비밀번호 변경이 안됨")
+        mpasswordMatchError.value = !mpasswordMatchError.value;
     }
     
 }

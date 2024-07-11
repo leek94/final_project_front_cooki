@@ -19,9 +19,10 @@
                 </div>
                 <div class="text-center mb-3" style="font-size: 20px;" v-if="midResultError">회원님의 정보와 일치하는 아이디</div>
                 <div class="text-center mb-3 find_id" style="font-weight: bold; height: 30px;" v-if="midResultError">{{member.mid}}</div>
-                <div  class="text-center mb-3" style="font-size: 20px; color: red;" v-if="resultError">정확한 이름과 전화번호를 입력하세요</div>
+                <div class="text-center mb-3" style="font-size: 20px; color: red;" v-if="resultError">정확한 이름과 전화번호를 입력하세요</div>
+                <div class="text-center mb-3" style="font-size: 20px; color: red;" v-if="noInputError">아무값도 입력하지 않았습니다</div>
                 <div>
-                    <button class="btn py-2 border rounded w-100" @click.prevent="joinFormSubmit">아이디 찾기</button>
+                    <button class="btn py-2 border rounded w-100" @click.prevent="findIdSubmit">아이디 찾기</button>
                 </div>
             </div>
         </form>
@@ -50,6 +51,7 @@ const mnameResultError = ref(false);
 const mphonenumResultError = ref(false);
 const midResultError = ref(false);
 const resultError = ref(false);
+const noInputError = ref(false);
 
 function mnameCheck() {
   const mnamePattern = /^[가-힣]{2,5}$/;	
@@ -65,10 +67,22 @@ function mphonenumCheck() {
     return mphonenumResult;
 }
 
-async function joinFormSubmit() {
+async function findIdSubmit() {
+    mnameResultError.value = false;
+    mphonenumResultError.value = false;
+    midResultError.value = false;
+    resultError.value = false;
+    noInputError.value = false;
+
     console.log("로그 실행");
     // 이름과 전화번호 정규화를 통과할 경우
-    if(mnameResultError.value === false && mphonenumResultError.value === false){
+    if(member.value.mname === "" || member.value.mphonenum === ""){
+        console.log("값을 입력하지 않음");
+       
+        resultError.value = !resultError.value;
+
+    } else if (mnameResultError.value === false && mphonenumResultError.value === false){
+        
         // mid를 받아와서 표시해줌
         const response = await memberAPI.searchId(JSON.parse(JSON.stringify(member.value)));
 
@@ -77,12 +91,14 @@ async function joinFormSubmit() {
         member.value = response.data.memberSaved;
         console.log("멤버 로그 확인" +  member.value.mid);
         midResultError.value = !midResultError.value;
+        
         } else {
             console.log("DB에 값이 없음");
             resultError.value = !resultError.value;
         }
     } else {
         console.log("정규화를 틀림");
+        resultError.value = !resultError.value;
     }
     
 

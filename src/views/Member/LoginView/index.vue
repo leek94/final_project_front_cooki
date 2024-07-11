@@ -11,13 +11,13 @@
                 </div>
             </div>
         </form>
-        <LoginModal id="loginModal" @close="hideModal"></LoginModal>
+        <LoginModal id="loginModal"></LoginModal>
          <div class="d-flex mb-5" style="justify-content: center;">
             <RouterLink class="linkJoin" to="/Member/JoinView" style="text-align: center; text-decoration: none;font-size: 17px">회원가입</RouterLink>
-            <div>&nbsp; | &nbsp;</div>
-            <RouterLink class="linkJoin" to="/Member/JoinView" style="text-align: center; text-decoration: none;font-size: 17px">아이디 찾기</RouterLink>
-            <div>&nbsp; | &nbsp;</div>
-            <RouterLink class="linkJoin" to="/Member/JoinView" style="text-align: center; text-decoration: none;font-size: 17px">비밀번호 찾기</RouterLink>
+            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <RouterLink class="linkJoin" to="/Member/FindIdView" style="text-align: center; text-decoration: none;font-size: 17px">아이디 찾기</RouterLink>
+            <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+            <RouterLink class="linkJoin" to="/Member/FindPasswordView" style="text-align: center; text-decoration: none;font-size: 17px">비밀번호 찾기</RouterLink>
         </div>
     </div>
 </template>
@@ -35,9 +35,7 @@ onMounted(() =>{
     loginModal = new Modal(document.querySelector("#loginModal"));
 });
 
-function hideModal() {
 
-}
 const member = ref({
     mid:"",
     mpassword:""

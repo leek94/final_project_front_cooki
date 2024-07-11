@@ -11,7 +11,7 @@
                             </div>
                             <div class="text-start" >
                                 <div class="class-text text-start">
-                                    <h6>{{ prop.objectProp.ctitle }}</h6>
+                                    <h6 style="font-weight: bold">{{ prop.objectProp.ctitle }}</h6>
                                 </div>
                                 <div>
                                     <h6>모집강사 : {{ prop.objectProp.mname }}</h6>
@@ -22,8 +22,17 @@
                                 </div>
                                 <div class="info d-flex mb-3">
                                     <div class="class-date border-left-solid me-3">강의날짜 : {{ prop.objectProp.cdday }}</div>
-                                </div>
                                     <div class="dday-box" :class="prop.class" >D-{{ checker() }}</div>
+                                </div>
+
+                                <!-- 클래스 카드의 버튼들은 해당 클래스를 개설한 에디터롤의 유저에게만 보여짐 -->
+                                <div v-if="store.state.mrole=='ROLE_EDITOR' && prop.objectProp.mid==store.state.userId">
+                                        <button class="btn btn-sm w-100 mb-1"  @click.stop="participantList(index)">출석확인</button>
+                                        <button class="btn btn-sm w-100 mb-1">클래스 다시 열기</button>
+                                        <button class="btn btn-sm w-100 mb-1" v-if="checker()>0">수정하기</button>
+                                        <button class="btn btn-sm w-100">미답변 문의 {{prop.objectProp.qreplyNullCount}}개</button>
+                                    
+                                </div>
                             </div>
                         </div>
                     </li>
@@ -36,7 +45,9 @@
 
 <script setup>
 import axios from 'axios';
+import { useStore } from 'vuex';
 
+const store = useStore();
 const prop= defineProps([ "class","objectProp"])
 // D-Day 구하는 함수
 function checker(){
@@ -50,8 +61,8 @@ return diffDays
 }
 
 console.log(prop.style)
-
-
+console.log("mid", prop.objectProp.mid)
+console.log("mid", store.state.userId)
 </script>
 
 <style scoped>
@@ -91,6 +102,8 @@ console.log(prop.style)
 
 .dday-box{
     color:red;
+    font-size: small;
+    font-weight: bold;
 }
 
 .class-label{
@@ -103,7 +116,8 @@ console.log(prop.style)
     border-radius: 5px;
     background-color: #0bab6d;
 }
- .qnaCard{
+
+.qnaCard{
      border:solid 1px #e5e5e5;
      border-radius: 0.7rem;
      box-shadow: 0 2px 20px 0 rgba(0, 0, 3, 0.2);
@@ -111,5 +125,15 @@ console.log(prop.style)
      margin:0 1rem;
      width: 245px;
  }
+
+.btn{
+    background-color: #f3f3f3; 
+    font-weight: bold;
+}
+
+.btn:hover{
+    background-color: #15a775;
+    color: white;
+}
 
 </style>

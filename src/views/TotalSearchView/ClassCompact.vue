@@ -14,7 +14,7 @@
                             <ClassCard v-for="(clcard, index) in classCards" :key="index" :objectProp="clcard" @click="routerLinkTo(index)"/>
                         </ul>
 
-                        <div class="d-flex justify-content-center">
+                        <div class="d-flex justify-content-center" v-if="classCards.length !== page.pager.totalRows">
                             <button class="plus-button btn"  @click="appendList">더보기</button>
                         </div>
                  </div>
@@ -68,8 +68,8 @@ function dateFormat(date) {
 async function getSearchClass(){
 
     const response = await searchAPI.getSearchClass(JSON.parse(JSON.stringify(data.value)), pageNo,perPage)
-
     let clData =response.data.searchClass
+    page.value.pager =  response.data.pager
     //for문을 clData 배열에 있는 객체를 가져온다
     for(let i=0;i<clData.length;i++){
             //별점 소수점 첫째자리에서 반올림
@@ -89,6 +89,7 @@ async function appendList(){
     pageNo+=1
     getSearchClass()
 }
+
 function MovetoList(){
     router.push(`/class/classListView?pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=1`)
 }

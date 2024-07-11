@@ -3,7 +3,7 @@
     <h4 class="fw-bold text-start mb-4" >나의 레시피 </h4>
         <div class="d-flex" style="font-size:20px">
             <p>총 &ensp;</p>
-            <p style="color:darkseagreen"> {{ countR }}</p>
+            <p style="color:darkseagreen"> {{  page.pager.totalRows  }}</p>
             <p>개</p>
         </div>
  

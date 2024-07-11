@@ -51,7 +51,7 @@ info(cno);
 async function info(cno){
     const response=await memberAPI.getCreatorInfo(cno);
     careerinfo.value=response.data.career;
-    console.log("sef"+response.data.career)
+
     awardinfo.value=response.data.awards;
     mnickname.value= response.data.mnickname;
 }

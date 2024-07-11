@@ -28,7 +28,7 @@
                         <li class="border-top pt-3 pb-3  ">
                             <div style="display:inline-block;text-align: center ;width:100%;padding:0px 5% 0px 5%;">
                                 <div style="display:inline-block;width:35%; border-right: 1px solid #dee2e6 ; margin-right: 50px;padding-right:50px">
-                                    <span style="display:inline-block;">강의 시간</span>
+                                    <div >강의 시간</div>
                                     <span class="fw-bold" style="display:inline-block;">{{info.cstarttime}}&nbsp;</span>
                                     <span class="fw-bold" style="display:inline-block;">- {{info.cendtime}}</span>
                                 </div>
@@ -56,7 +56,7 @@
                 </div>
     <hr/>
     <div class="d-flex" style="justify-content: end; align-items: center">
-        <div style="font-size: 26px;font-weight: bold; margin-right: 60px;">48,000원</div>
+        <div style="font-size: 26px;font-weight: bold; margin-right: 60px;">{{ info.cprice }}원</div>
             <button class="btn btn-success btn-lg" v-if="applyresult===0" @click="isParticipant(cno)">신청하기</button>
             <button class="btn btn-danger btn-lg" v-if="applyresult===1" @click="showDialogCancel">취소하기</button>
         <ClassOverPersonModal id="overPersonModal"/>
@@ -114,13 +114,13 @@ const route= useRoute();
 
 // register Swiper custom elements
 register();
-console.log("cno"+route.query.cno)
+//list에서 query로 받아오는 값들
 let cno=route.query.cno;
-
 let pageNo= route.query.pageNo;
 let searchTitle = route.query.searchTitle;
 let searchText = route.query.searchText;
 let searchSort = route.query.searchSort;
+
 //클래스 신청 성공 시 모달
 let registerModal=null;
 //클래스 취소 시 모달
@@ -190,6 +190,8 @@ async function detailInfo(cno){
     let deadline = new Date(info.value.cdday);
     //클래스 dday 하루 전에 신청 마감 
     deadline.setDate(deadline.getDate() -1);
+    let date = new Date(info.value.cdday);
+    info.value.cdday= dateFormat(date);
     //클래스 참여자 수 
     countPerson.value= response.data.participants;
     console.log("몇명인지 확인 : " + countPerson.value);
@@ -264,10 +266,6 @@ async function isParticipant(cno){
     const response = await classAPI.classNowPerson(cno);
     // cno와 마감인원을 back 단으로 전달
     // const response= await classAPI.SetClassApply(64, info.value.cpersoncount);
-
-    console.log("personcount"+info.value.cpersoncount);
-    console.log("is"+response.data.isParticipant);
-    console.log("결과 확인: " + response.data.result);
 
     // 날짜 계산을 위한 포맷 변경
     let today = new Date();

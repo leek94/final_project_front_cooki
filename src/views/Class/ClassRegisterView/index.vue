@@ -406,7 +406,7 @@ function registerClass(){
     const cenddate = new Date(classes.value.cdday);
     cenddate.setDate(cenddate.getDate()-1);  
     classFormData.append("cenddate", cenddate);
-    classFormData.append("ctno", 1);
+    classFormData.append("ctno", activeIndex.value);
     classFormData.append("mid", store.state.userId);
 
     //----- 사진 data 받기 -----

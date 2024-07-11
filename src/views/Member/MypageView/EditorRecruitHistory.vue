@@ -4,7 +4,7 @@
     <h5 class="text-start mb-4" > - 모집 마감된 클래스 </h5>
         <div class="d-flex" style="font-size:20px">
             <p>총 &ensp;</p>
-            <p style="color:darkseagreen"> {{countClass}}</p>
+            <p style="color:darkseagreen"> {{ page.pager.totalRows }}</p>
             <p>개</p>
         </div>
         <hr class="mt-0"/>
@@ -53,6 +53,11 @@ const pageNo = ref(route.query.pageNo||1);
 // 출석 확인 하는 페이지로 이동
 function participantList(index) {
     router.push(`/Class/ParticipantCheckView?cno=${cookClasses.value[index].cno}`)
+}
+
+//클래스 다시 열기 => updateform으로 이동 
+function ReopenClass(index){
+    router.push(`/class/classUpdateView?cno=${cookClasses.value[index].cno}`)
 }
 //dateFormating (2024-06-28)
 function dateFormat(date) {

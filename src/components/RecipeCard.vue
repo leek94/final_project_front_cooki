@@ -11,8 +11,8 @@
                 <div class="name me-2">{{ prop.objectProp.mnickname }}</div>
                 <div class="date border-left-solid">{{ prop.objectProp.rdate}}</div>
             </div>
-            <div class="text text-start"> 
-                <h4 style="height: 65px">{{  prop.objectProp.rtitle }}</h4>
+            <div class="text text-start">
+                <h4 class="rtitle">{{  prop.objectProp.rtitle }}</h4>
                 <div class="d-flex justify-content-end">
                     <div class="me-2"><img src="/images/photos/ic_talk.png" width="25px">: {{ prop.objectProp.reviewcount }}</div>
                     <div class="me-2"><i class="fa-solid fa-heart like-heart" style="color:red;">&ensp;</i>{{  prop.objectProp.likecount }}</div>
@@ -29,13 +29,18 @@ import { ref, watch } from 'vue';
 import axios from 'axios';
 import { useStore } from 'vuex';
 import recipeAPI from '@/apis/recipeAPI';
+import { useRoute, useRouter } from 'vue-router';
 
+const router = useRouter();
 const store = useStore();
 const prop = defineProps(["objectProp"]);
 const emit = defineEmits(["like"])
 
 
 async function changeLike() {
+    if(store.state.userId===""){
+        router.push('/Member/LoginView');
+    }
     let data = {rno:prop.objectProp.rno,mid:store.state.userId};
     data = JSON.parse(JSON.stringify(data));
     if(prop.objectProp.islike){
@@ -129,5 +134,11 @@ ul{
 .image:hover img{
     transform: translate(-50%, -50%) scale(1.1);
     transition: all 0.2s linear;
+}
+.rtitle{
+    -webkit-box-orient: vertical;
+    line-clamp: 2; /* 최대 3줄까지만 표시 */
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 </style>

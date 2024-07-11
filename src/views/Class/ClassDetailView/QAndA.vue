@@ -4,10 +4,11 @@
     <!-- 댓글 등록 -->
     <!-- 로그인 한 유저만 등록 가능 v-show로 -->
     <div class="d-flex p-2 m-2 border rounded bg-light" v-if="store.state.userId!=''">
-        <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;">
+        <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;" v-if="!isProfileIMG">
+        <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${store.state.userId}`" style="width: 50px; height: 50px;" v-if="isProfileIMG">
         <div class="flex-grow-1 row my-3">
              <div class="d-flex mb-1">
-                  <div class="me-3" style="font-weight: bold;">닉네임</div>
+                  <div class="me-3" style="font-weight: bold;">{{nickname}}</div>
              </div>
                 <div class="w-100 row pe-5">
                     <div class="me-3" style="font-weight: bold;">제목 : </div>
@@ -40,7 +41,8 @@
     <div v-if="isQna">
         <div v-for="(qna, index) in qnaArray" :key="index">
             <div class="d-flex p-1" v-if="!isQnaArray[index]">
-                <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;">
+                <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;" v-if="!isProfileIMGArray[index]">
+                <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${qna.mid}`" style="width: 50px; height: 50px;" v-if="isProfileIMGArray[index]">
                 <div class="flex-grow-1 row my-3">
                     <div class="d-flex mb-1">
                         <div class="me-3" style="font-weight: bold;">{{ qna.mnickname}}</div>
@@ -74,7 +76,8 @@
     
         <!-- 댓글 수정하기 -->
         <div class="d-flex p-2 m-2 border rounded" style="background-color: #FCF6DE;" v-if="isQnaArray[index]">
-            <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;">
+            <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;" v-if="!isProfileIMGArray[index]">
+            <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${qna.mid}`" style="width: 50px; height: 50px;" v-if="isProfileIMGArray[index]">
             <div class="flex-grow-1 row my-3">
                  <div class="d-flex mb-1">
                       <div class="me-3" style="font-weight: bold;">닉네임</div>
@@ -95,10 +98,11 @@
         <!-- 로그인 한 유저만 등록 가능 v-show로 -->
         <!-- 대댓글 등록하기 -->
         <div class="d-flex p-2 ms-5 me-2 border rounded" style="background-color: #D9EDBF;" v-if="isWriteArray[index]">
-            <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;">
+            <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;" v-if="!isEditorProfileIMGArray[index]">
+            <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${editorMid}`" style="width: 50px; height: 50px;" v-if="isEditorProfileIMGArray[index]">
             <div class="flex-grow-1 row my-3">
                  <div class="d-flex mb-1">
-                      <div class="me-3" style="font-weight: bold;">에디터</div>
+                      <div class="me-3" style="font-weight: bold;">{{nickname}} <span style="font-size:small;">(editor)</span></div>
                  </div>
        
                     <div class="w-100 row pe-5">
@@ -115,10 +119,11 @@
         <!-- 대댓글 보여주기-->
      
             <div class="d-flex ms-5 me-2 p-1 border rounded" style="background-color: #D9EDBF;" v-if="qnaArray[index].qreply && !isWriteArray[index]">
-                <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;">
+                <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;" v-if="!isEditorProfileIMGArray[index]">
+                <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${editorMid}`" style="width: 50px; height: 50px;" v-if="isEditorProfileIMGArray[index]">
                 <div class="flex-grow-1 row my-3">
                     <div class="d-flex mb-1">
-                        <div class="me-3" style="font-weight: bold;">에디터</div>
+                        <div class="me-3" style="font-weight: bold;">{{nickname}} <span style="font-size:small;">(editor)</span></div>
                         <div style="color: grey; font-size: small">{{ qna.qreplydate }}</div>
                     </div>
                     <div style="color: grey;">
@@ -152,8 +157,10 @@
 <script setup>
 import { ref } from 'vue';
 import classAPI from '@/apis/classAPI';
+import memberAPI from '@/apis/memberAPI';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
+import axios from 'axios';
 
 //클래스 번호 가져오기
 const route = useRoute();
@@ -212,6 +219,14 @@ async function qnaInsert() {
 
 //------- qna data read function ---------------------------------------------------------------------------------------------- 
 
+//댓글 등록 시 프로필 이미지를 바인딩 하기 위한 변수
+const isProfileIMG = ref();
+const isProfileIMGArray = ref([]);
+const isEditorProfileIMGArray = ref([]);
+
+let editorMid = ref();
+let nickname = ref();
+
 //날짜 형식 함수
 function dateFormat(date) {
     let dateFormat = date.getFullYear() +
@@ -222,17 +237,26 @@ function dateFormat(date) {
 
 async function getQna(cno, pageNo) {
     console.log("게시글번호: ", cno)
+
+    //댓글 등록 시에 보여지는 프로필 이미지 가져오는 로직
+    const response1 = await memberAPI.getMyProfile(store.state.userId);
+    if(response1.data.member.mimgoname==null) {
+        isProfileIMG.value = false;
+    } else {
+        isProfileIMG.value = true;
+    }
+
+    //댓글 작성을 위한 로그인한 유저 닉네임 가져오는 로직
+    nickname.value = response1.data.member.mnickname
+    console.log("닉네임", response1.data.member.mnickname)
+    
     try{
-        const response = await classAPI.qnaRead(cno, pageNo);
-        qnaArray.value = response.data.qnaList;
-        page.value.pager = response.data.pager;
-        //const pager = ref({}) 
-        //pager.value 안되는 이유.....?
+        const response2 = await classAPI.qnaRead(cno, pageNo);
+        qnaArray.value = response2.data.qnaList;
+        page.value.pager = response2.data.pager;
         if(qnaArray.value.length==0) {
             isQna.value = false
         } else {
-            //console.log("큐앤에이어레이 길이111:" ,qnaArray.value.length);
-            //console.log(typeof qnaArray.value[0].qdate);
             //qnaArray 안에 있는 qna들을 반복문을 통해 하나씩 꺼내기
             for(let i=0; qnaArray.value.length; i++){
                 //꺼낸 qna 날짜 값을 dateFormat함수를 호출 하여 2024-06-28와 같은 형태로 바꾸기
@@ -245,29 +269,52 @@ async function getQna(cno, pageNo) {
                 qnaArray.value[i].originalQtitle = qnaArray.value[i].qtitle;
                 qnaArray.value[i].originalQcontent = qnaArray.value[i].qcontent;
                 qnaArray.value[i].originalQreply = qnaArray.value[i].qreply;
-                //
-                //console.log("유저롤: ", store.state.userId);
-                //console.log("유저롤: ", store.state.mrole);
-                //console.log("유저롤: ", store.state);
+
                 isWriter.value[i] = false; 
                 if(store.state.userId==qnaArray.value[i].mid) {
                     isWriter.value[i] = true; 
-                    //console.log("유저롤: ", store.state.userId);
-                    //console.log("큐앤에이 작성자 아이디", qnaArray.value[i].mid);
-                    //console.log("isWriter: ", isWriter.value[i]);
                 }
-            }
+
+                //등록된 댓글 프로필 이미지 가져오는 로직
+                //댓글배열의 mid를 매개변수로 axios 요청을 통해 받아오는 mimgoname이 null 값일 경우 public 이미지로 지정하는 v-if
+                //댓글배열의 mid를 매개변수로 axios 요청을 통해 받아오는 mimgoname 값이 있을 경우 img :src에 경로 지정하는 v-if 
+                const response3 = await memberAPI.getMyProfile(qnaArray.value[i].mid)
+                if(response3.data.member.mimgoname==null) {
+                    isProfileIMGArray.value[i] = false
+                } else {
+                    isProfileIMGArray.value[i] = true
+                }
+                console.log("response3.data.member.mimgoname", response3.data.member.mimgoname) 
+                
+                //대댓글 에디터 프로필 이미지 가져오는 로직
+                const response4 = await classAPI.classRead(cno)
+                editorMid.value = response4.data.classes.mid;
+                const response5 = await memberAPI.getMyProfile(editorMid.value)
+                console.log("에디터프로필", response5.data.member.mimgoname)
+                if(response5.data.member.mimgoname==null) {
+                    isEditorProfileIMGArray.value[i] = false
+                } else {
+                    isEditorProfileIMGArray.value[i] = true
+                }
+
+                //에디터에게만 대댓글 등록, 수정 버튼 보이게 하는 로직
+                if(store.state.userId==editorMid.value) {
+                    isEditor.value[i] = true;
+                } else {
+                    isEditor.value[i] = false;
+                }  
+            } 
         }
-        
     } catch(error) {
         console.log(error);
     }
-    
+   
+    /*
     try{
-
-        const response2 = await classAPI.classRead(cno);
-        console.log("클래스등록아이디: ", response2.data.classes.mid);
+        // const response2 = await classAPI.classRead(cno);
+        // console.log("클래스등록아이디: ", response2.data.classes.mid);
         if(store.state.userId==response2.data.classes.mid) {
+            console.log("에디터아이디확인용",editorMid.value )
             for(let i = 0; i<qnaArray.value.length; i++) {
                 isEditor.value[i] = true;
             }
@@ -278,8 +325,10 @@ async function getQna(cno, pageNo) {
     } catch(error) {
         console.log(error);
     }
+    */
     console.log("로그인여부", store.state.userId)
     console.log("작성자배열값", isWriter.value)
+    console.log("qna array",qnaArray.value )
 }
 
 getQna(cno, pageNo.value);

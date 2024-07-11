@@ -9,12 +9,25 @@
          </div>
  
          <hr class="mt-0"/>
-         <div class="d-flex" style="flex-wrap: wrap;" >
+         <div class="d-flex" style="flex-wrap: wrap;" v-if="page.pager.totalRows !==0">
             <div class="qcard" v-for="(ccards,index) in cookClasses" :key="index"  @click="routerLinkto(index)">
                     <MypageClassCard :objectProp="ccards"/>
             </div>
         </div>
 
+        <div class="text-center mt-5"  v-if="page.pager.totalRows !==0">
+                <button class="initial btn btn-sm" @click="changePageNo(1)"> 처음 </button>
+                <button class="prev btn btn-sm" v-if="page.pager.groupNo>1" @click="changePageNo(page.pager.startPageNo-1)">이전</button>
+                <button class="btn btn-sm" v-for="pageNo in page.pager.pageArray" :key="pageNo" @click="changePageNo(pageNo)">{{pageNo}}</button>
+                <button  class="btn btn-sm" v-if="page.pager.groupNo<page.pager.totalGroupNo" @click="changePageNo(page.pager.endPageNo+1)">다음</button>
+                <button class="last btn btn-sm" @click="changePageNo(page.pager.totalPageNo)">마지막</button>
+        </div>
+    </div>
+
+    <div v-if="page.pager.totalRows ===0" style="margin-top:100px">
+                <div style="margin: 60px auto; text-align: center">
+                    <h5>검색어어가 존재하지 않습니다.</h5>
+                </div>
     </div>
  </template>
  
@@ -22,12 +35,18 @@
 import memberAPI from '@/apis/memberAPI';
 import classAPI from '@/apis/classAPI';
 import MypageClassCard from '@/components/MypageClassCard.vue';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 const cookClasses = ref ([]);
 const store = useStore();
+const route = useRoute();
+
+const page=ref({
+    pager:{}
+})
+const pageNo = ref(route.query.pageNo||1);
 
 //dateFormating (2024-06-28)
 function dateFormat(date) {
@@ -41,12 +60,11 @@ const countClass=computed(()=> cookClasses.value.length)
 
 async function myNowClassRead() {
     let mid = store.state.userId;
-    console.log("내아이디: ", mid)
     try{
         //아이디로 신청한 클래스 리스트 받아오기
-        const response1 = await memberAPI.myNowClass(mid);
+        const response1 = await memberAPI.myNowClass(mid,pageNo.value);
         cookClasses.value = response1.data.myClassList;
-        console.log("cdday", dateFormat(new Date(cookClasses.value[1].cdday)))
+        page.value.pager = response1.data.pager;
         for(let i=0; i<cookClasses.value.length; i++) {
             cookClasses.value[i].cdday = dateFormat(new Date(cookClasses.value[i].cdday));
             //신청한 클래스 번호로 신청인원수 불러오기
@@ -70,6 +88,20 @@ function routerLinkto(index){
     console.log("클래스번호" , cookClasses.value[index].cno)
     router.push(`/Class/ClassDetailView?cno=${cookClasses.value[index].cno}`);
 }
+
+function changePageNo(argpageNo){
+    router.push(`/Member/MypageView/MyNowClass?pageNo=${argpageNo}`);
+}
+
+watch(route,(newRoute,oldRoute) => {
+    if(newRoute.query.pageNo){ 
+        pageNo.value=newRoute.query.pageNo;
+        myNowClassRead();
+    } else {   
+        //pageNo가 존재하지 않으면 list를 다시 호출하기 위한 초기값을 설정해주는 것
+        pageNo.value=1;
+    }
+})
 
  </script>
  

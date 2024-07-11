@@ -30,7 +30,7 @@
                                     <button class="btn btn-sm w-100 mb-1"  @click.stop="participantList()">출석확인</button>
                                     <button class="btn btn-sm w-100 mb-1">클래스 다시 열기</button>
                                     <button class="btn btn-sm w-100 mb-1" v-if="checker()>0">수정하기</button>
-                                    <button class="btn btn-sm w-100">미답변 문의 <span style="color: red; font-weight: bold;">{{prop.objectProp.qreplyNullCount}}</span>개</button>
+                                    <button class="btn btn-sm w-100" @click.stop="qna()">미답변 문의 <span style="color: red; font-weight: bold;">{{prop.objectProp.qreplyNullCount}}</span>개</button>
                                 </div>
                             </div>
                         </div>
@@ -63,6 +63,10 @@ return diffDays
 // 출석 확인 하는 페이지로 이동
 function participantList() {
     router.push(`/Class/ParticipantCheckView?cno=${prop.objectProp.cno}`)
+}
+
+function qna() {
+    router.push(`/Class/ClassDetailView/QAndA?cno=${prop.objectProp.cno}`)
 }
 
 console.log(prop.style)

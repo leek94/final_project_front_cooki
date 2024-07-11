@@ -47,7 +47,9 @@
                         <div class="d-flex" style="margin: 20px">
                             <div class="justify-content-center" style="text-align: center;">
                                 <img class="rounded-circle" style=" width:50px; height:50px; margin-right: 30px;" 
-                                src="https://cdn.class101.net/images/7ee5dd7f-be19-4e0c-89b1-d250ef0a2e2f/1920xauto.webp">
+                                src="/images/photos/profile.png" v-if="!isEditorProfile">
+                                <img class="rounded-circle" style=" width:50px; height:50px; margin-right: 30px;" 
+                                :src="`${axios.defaults.baseURL}/member/mattach/${info.mid}`" v-if="isEditorProfile">
                             </div>
                           <span style="align-content: center;">{{info.mnickname}}</span>
                         </div>
@@ -93,6 +95,10 @@
         <div style="text-align: center; margin-top: 100px;">
             <RouterLink :to="`/Class/ClassListView?pageNo=${pageNo}&searchTitle=${searchTitle}&searchText=${searchText}&searchSort=${searchSort}`"><button class="backList btn btn-outline-success btn-sm">목록으로</button></RouterLink>
         </div>
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="backList btn btn-outline-success btn-sm me-3" @click="gotoupdatepage">수정하기</button>
+            <button class="backList btn btn-outline-success btn-sm" @clcik="gotodelete">삭제하기</button>
+        </div>
         </div>
         
 </template>
@@ -106,6 +112,7 @@ import CCancelModal from'./CCancelModal.vue'
 import ClassOverPersonModal from './ClassOverPersonModal.vue'
 import { Modal } from 'bootstrap';
 import classAPI from '@/apis/classAPI';
+import memberAPI from '@/apis/memberAPI';
 import axios from 'axios';
 import store from '@/store';
 import { useRoute, useRouter } from 'vue-router';
@@ -176,6 +183,8 @@ function dateFormat(date) {
     return dateFormat;
 }
 
+const isEditorProfile = ref();
+
 // 클래스 디테일 정보 받기 
 // class 기본 정보, 신청자 수, 마감이 되었는 지, 내가 신청을 했는지 여부 
 
@@ -235,6 +244,16 @@ async function detailInfo(cno){
             console.log("신청 확인")
             applyresult.value=0;
         }
+    }
+
+
+
+    //댓글 등록 시에 보여지는 프로필 이미지 가져오는 로직
+    const response4 = await memberAPI.getMyProfile(info.value.mid);
+    if(response4.data.member.mimgoname==null) {
+        isEditorProfile.value = false;
+    } else {
+        isEditorProfile.value = true;
     }
 }
 
@@ -340,6 +359,7 @@ async function realCancelDialog(cno){
     CancelModal.hide();
     // 모집인원 조회해야함
 }
+
 
 </script>
 

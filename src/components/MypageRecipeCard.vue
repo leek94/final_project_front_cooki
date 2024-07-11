@@ -7,7 +7,7 @@
                     <div class="router-div">
                         <div class="image" style="width:210px;height:210px">
                             <!-- 카드 이미지 클릭 시 디테일 페이지로 이동과 좋아요 카운트를 분리 시킴 -->
-                            <i id="like" class="icon-heart fa-solid fa-heart like-heart" :class="{active: islike}" @click.stop="changeLike"></i>
+                            <i id="like" class="icon-heart fa-solid fa-heart like-heart" :class="{active: prop.objectProp.islike}" @click.stop="changeLike"></i>
                             <img :src="`${axios.defaults.baseURL}/recipe/thumbattach/${prop.objectProp.rno}`">
                             <!-- <i class="icon-heart fa-solid fa-heart like-heart" :class="{active: prop.objectProp.isActive}" @click="$emit('click')"></i>
                             <img src="/images/photos/140114575djmw.jpg"> -->
@@ -41,19 +41,16 @@ import { useStore } from 'vuex';
 import recipeAPI from '@/apis/recipeAPI';
 
 const prop = defineProps(["objectProp"]);
-const emit = defineEmits(["click"]);
+const emit = defineEmits(["like"]);
 
 const store = useStore();
 
 // 좋아요 기능
-let islike  = ref((prop.objectProp.islike) ? true : false);
-console.log("aaaa",islike.value);
 
 async function changeLike() {
-    let btn = document.getElementById("like");
     let data = {rno:prop.objectProp.rno,mid:store.state.userId};
     data = JSON.parse(JSON.stringify(data));
-    if(islike.value){
+    if(prop.objectProp.islike){
         try{
             const response = await recipeAPI.recipeDislike(data);
             console.log("dislike success")
@@ -68,13 +65,8 @@ async function changeLike() {
             console.log("like fail")
         }
     }
-    islike.value = !islike.value;
+    emit("like", prop.objectProp.rno);
 }
-
-watch(prop, (newprop,oldprop) => {
-    console.log("확인");
-    islike.value = newprop.objectProp.islike;
-})
 
 </script>
 

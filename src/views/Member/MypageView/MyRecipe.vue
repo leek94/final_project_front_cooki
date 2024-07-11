@@ -10,7 +10,7 @@
         <hr class="mt-0"/>
         <div class="d-flex" style="flex-wrap: wrap;" v-if="page.pager.totalRows !==0">
             <div class="qcard" v-for="(recards,index) in recipeCard" :key="index" @click="routerLinkto(index)">
-                    <MypageRecipeCard :objectProp="recards" @click="handleClick(index)"/>
+                    <MypageRecipeCard :objectProp="recards" @click="handleClick(index)" @like="handlelike"/>
             </div>
         </div>
 
@@ -78,6 +78,20 @@ async function myRecipeRead() {
 }
 
 myRecipeRead();
+
+function handlelike(rno){
+    for(let i=0; i<recipeCard.value.length; i++){
+        console.log(rno);
+        if(recipeCard.value[i].rno === rno){
+            recipeCard.value[i].islike = !recipeCard.value[i].islike;
+            if(recipeCard.value[i].islike){
+                recipeCard.value[i].likecount += 1;
+            }else{
+                recipeCard.value[i].likecount -= 1;
+            }
+        }
+    }
+}
 
 //카드 클릭 시 디테일 페이지로 가는 함수
 const router= useRouter();

@@ -95,6 +95,10 @@
         <div style="text-align: center; margin-top: 100px;">
             <RouterLink :to="`/Class/ClassListView?pageNo=${pageNo}&searchTitle=${searchTitle}&searchText=${searchText}&searchSort=${searchSort}`"><button class="backList btn btn-outline-success btn-sm">목록으로</button></RouterLink>
         </div>
+        <div style="text-align: center; margin-top: 30px;">
+            <button class="backList btn btn-outline-success btn-sm me-3" @click="gotoupdatepage">수정하기</button>
+            <button class="backList btn btn-outline-success btn-sm" @clcik="gotodelete">삭제하기</button>
+        </div>
         </div>
         
 </template>
@@ -355,6 +359,7 @@ async function realCancelDialog(cno){
     CancelModal.hide();
     // 모집인원 조회해야함
 }
+
 
 </script>
 

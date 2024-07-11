@@ -48,11 +48,11 @@ console.log("클래스 넘버: " + classNum);
 
 const cookClasses = ref([
     {
-        mname:"손혜선", 
-        ctitle: "쿠키쿠킹클래스", 
-        cdday:"2024-06-19", 
-        cstarttime:"14:00", 
-        mid:"heaSon@naver.com", 
+        mname:"", 
+        ctitle: "", 
+        cdday:"", 
+        cstarttime:"", 
+        mid:"", 
         isActive: false,
         isParticipant:0,
     }

@@ -186,9 +186,11 @@ import {ko} from "date-fns/locale";
 import { register } from 'swiper/element/bundle';
 import classAPI from '@/apis/classAPI';
 import axios from 'axios';
+import { useRoute } from 'vue-router';
 
 register();
-const cno = 81;
+const route = useRoute();
+const cno = route.query.qno;
 const imgCount = ref();
 let cuRow;
 

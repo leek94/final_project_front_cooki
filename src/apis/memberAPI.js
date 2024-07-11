@@ -99,8 +99,8 @@ function deleteMemberImg(mid){
 }
 
 
-function getMyQAndA(mid){
-    return axios.get("member/myQAndA/" + mid);
+function getMyQAndA(mid, pageNo){
+    return axios.get("member/myQAndA", {params:{mid,pageNo}});
 }
 
 function updateMrole(mid){
@@ -117,8 +117,8 @@ function getMyRecipe(mid,pageNo) {
     return axios.get("/member/myRecipe", {params:{mid,pageNo}});
 }
 
-function getMyLikeRecipe(mid) {
-    return axios.get("/member/myLikeRecipe/" + mid);
+function getMyLikeRecipe(mid, pageNo) {
+    return axios.get("/member/myLikeRecipe", {params:{mid,pageNo}});
 }
 
 function searchId(member) {

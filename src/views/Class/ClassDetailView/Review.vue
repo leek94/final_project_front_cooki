@@ -12,9 +12,8 @@
     <!-- 댓글 등록 -->
     <!-- 로그인 한 유저만 등록 가능 v-show로 -->
     <div class="d-flex p-2 m-2 border rounded bg-light" v-if="store.state.userId != ''">
-        <!-- <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;"> -->
-        <!-- http://localhost/member/mattach/test12345@naver.com -->
-        <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${mid}`" style="width: 50px; height: 50px;">
+        <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;" v-if="!isProfileIMG">
+        <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${store.state.userId}`" style="width: 50px; height: 50px;" v-if="isProfileIMG">
         <div class="flex-grow-1 row my-3">
              <div class="d-flex mb-1">
                   <div class="me-3" style="font-weight: bold;"></div>
@@ -66,7 +65,8 @@
         <div v-for="(review, index) in reviewArray" :key="index">
             <!-- 등록된 리뷰 보기 -->
             <div class="d-flex p-1" v-if="!isReviewArray[index]">
-                <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;">
+                <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;" v-if="!isProfileIMGArray[index]">
+                <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${review.mid}`" style="width: 50px; height: 50px;" v-if="isProfileIMGArray[index]">
                 <div class="flex-grow-1 row my-3">
                     <div class="d-flex mb-1">
                         <div class="me-3" style="font-weight: bold;">{{ review.mnickname }}</div>
@@ -152,9 +152,7 @@ import store from '@/store';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
-
-const mid = store.state.userId
-const reviewMid = ref()
+import memberAPI from '@/apis/memberAPI';
 
 //댓글
 const reviewInit = ref({});
@@ -276,27 +274,49 @@ async function reviewInsert() {
 
 //------- review data read function ---------------------------------------------------------------------------------------------- 
 
+//댓글 등록 시 프로필 이미지를 바인딩 하기 위한 변수
+const isProfileIMG = ref();
+const isProfileIMGArray = ref([]);
+
 async function getReview(cno, pageNo) {
     try{
-        const response = await classAPI.reviewRead(cno, pageNo);
-        reviewArray.value = response.data.classReviewList;
-        page.value.pager= response.data.pager;
+        const response1 = await classAPI.reviewRead(cno, pageNo);
+        reviewArray.value = response1.data.classReviewList;
+        page.value.pager= response1.data.pager;
+
+        //댓글 등록 시에 보여지는 프로필 이미지 가져오는 로직
+        const response2 = await memberAPI.getMyProfile(store.state.userId);
+        if(response2.data.member.mimgoname==null) {
+            isProfileIMG.value = false;
+        } else {
+            isProfileIMG.value = true;
+        }
 
         if (reviewArray.value.length==0) {
         isReview.value = false
         } else {
-            avgCrratio.value = response.data.avgCrratio;
+            avgCrratio.value = response1.data.avgCrratio;
             for(let i=0; i<reviewArray.value.length; i++){
                 reviewArray.value[i].crdate = dateFormat(new Date(reviewArray.value[i].crdate));
                 // review 정보 수정 취소 버튼 클릭시 초기값으로 돌려주기 위한 설정
                 reviewArray.value[i].originalCrtitle = reviewArray.value[i].crtitle;
                 reviewArray.value[i].originalCrcontent = reviewArray.value[i].crcontent;
                 reviewArray.value[i].originalCrratio = reviewArray.value[i].crratio;
-                //reviewMid.value[i] = reviewArray.value[i].mid
+               
                 if(reviewArray.value[i].mid == store.state.userId) {
                     isWriter.value[i] = true;
                 } else {
                     isWriter.value[i] = false;
+                }
+                
+                //등록된 댓글 프로필 이미지 가져오는 로직
+                //댓글배열의 mid를 매개변수로 axios 요청을 통해 받아오는 mimgoname이 null 값일 경우 public 이미지로 지정하는 v-if
+                //댓글배열의 mid를 매개변수로 axios 요청을 통해 받아오는 mimgoname 값이 있을 경우 img :src에 경로 지정하는 v-if 
+                const response3 = await memberAPI.getMyProfile(reviewArray.value[i].mid)
+                if(response3.data.member.mimgoname==null) {
+                    isProfileIMGArray.value[i] = false
+                } else {
+                    isProfileIMGArray.value[i] = true
                 }
             }
         }

@@ -8,39 +8,48 @@
                 <!-- 일반유저/에디터 공통 항목 -->
                 <div class="text-start bg-light p-5 my-5">
                     <h4 class="p-2 border-bottom border-dark border-3" style="font-weight: bold;">기본 정보</h4>
-                    <div class="row my-3 px-3">
+                    <div class="row my-3 px-3" >
                         <li class="green-point">아이디(이메일)</li>
-                        <input class="p-2 border" v-model="member.mid" placeholder="이메일 형식의 아이디를 입력해주세요" @keyup="midCheck"/>
-                        <div class="checkError m-1" v-if="midResultError">올바른 형식의 아이디를 입력해주세요</div>
+                        <div class="m-0 p-0" style="position: relative; display: flex;">
+                            <input class="p-2 border" style="width: 100%;" v-model="member.mid" placeholder="이메일 형식의 아이디를 입력해주세요" @keyup="midCheck"/>
+                            <i class="fa-solid fa-check" v-if="idChecking === 1" style="position: absolute; top: 50%; transform: translateY(-50%); right: 85px; color: #15a775;"></i>
+                            <i class="fa-solid fa-xmark" v-if="idChecking === -1" style="position: absolute; top: 50%; transform: translateY(-50%); right: 85px; color: red;"></i>
+                            <button class="id_checker border-0 bg-white" style="position: absolute; top: 5px; bottom: 5px; right: 5px; font-weight: bold;" @click.prevent="idCheck">
+                                중복검사
+                            </button>
+                        </div>
+                        <div class="checkError m-1" v-if="midResultError" style="color: red;">올바른 형식의 아이디를 입력해주세요</div>
+                        <div class="checkGood m-1"  v-if="idChecking === 1">생성 가능한 아이디입니다</div>
+                        <div class="checkError m-1" v-if="idChecking === -1">중복된 아이디입니다</div>
                     </div>
-                
+
                     <div class="row my-3 px-3">
                         <li class="green-point">이름</li>
                         <input class="p-2 border" v-model="member.mname" placeholder="한글 이름 2~5자 이내" @keyup="mnameCheck"/>
                         <div class="checkError m-1" v-if="mnameResultError">올바른 형식의 이름을 입력해주세요</div>
                     </div>
-                
+                    
                     <div class="row my-3 px-3">
                         <li class="green-point">휴대폰 번호</li>
                         <input class="p-2 border" v-model="member.mphonenum" placeholder="하이픈(-)을 넣어서 작성해주세요" @keyup="mphonenumCheck"/>
                         <div class="checkError m-1" v-if="mphonenumResultError">올바른 형식의 휴대폰 번호를 입력해주세요</div>
                     </div>
-                
+                    
                     <div class="row my-3 px-3">
                         <li class="green-point">닉네임</li>
                         <input class="p-2 border" v-model="member.mnickname" placeholder="3~16자 이내" @keyup="mnicknameCheck"/>
                         <div class="checkError m-1" v-if="mnicknameResultError">올바른 형식의 닉네임을 입력해주세요</div>
                     </div>
-                
+                    
                     <div class="row my-3 px-3" >
                         <li class="green-point">비밀번호</li>
-                           <div class="m-0 p-0" style="position: relative; display: flex;" v-if="!showPassword" >
+                           <div class="m-0 p-0" style="position: relative; display: flex;" v-if="!showPassword">
                                <input class="p-2 border" type="password" style="width: 100%;" v-model="member.mpassword" placeholder="알파벳 대소문자, 숫자를 혼용해서 8자 이상 15장 이하" @keyup="mpasswordCheck"/>
                                <button class="border-0 bg-white" style="position: absolute; top: 5px; bottom: 5px; right: 5px;" @click="showPasswordBtn">
                                    <i class="fa-regular fa-eye border-0"></i>
                                </button>
                            </div>
-                           <div class="m-0 p-0" style="position: relative; display: flex;" v-if="showPassword" >
+                           <div class="m-0 p-0" style="position: relative; display: flex;" v-if="showPassword">
                                <input class="p-2 border" style="width: 100%;" v-model="member.mpassword" placeholder="알파벳 대소문자, 숫자를 혼용해서 8자 이상 15장 이하" @keyup="mpasswordCheck"/>
                                <button class="border-0 bg-white" style="position: absolute; top: 5px; bottom: 5px; right: 5px;" @click="showPasswordBtn">
                                    <i class="fa-regular fa-eye-slash border-0"></i>
@@ -51,13 +60,13 @@
                 
                     <div class="row my-3 px-3">
                         <li class="green-point">비밀번호 확인</li>
-                        <div class="m-0 p-0" style="position: relative; display: flex;" v-if="!showPasswordCheck" >
+                        <div class="m-0 p-0" style="position: relative; display: flex;" v-if="!showPasswordCheck">
                             <input class="p-2 border" type="password" style="width: 100%;" v-model="member.mpasswordcheck" placeholder="비밀번호를 한 번 더입력해주세요" @keyup="mpasswordMatchCheck"/>
                             <button class="border-0 bg-white" style="position: absolute; top: 5px; bottom: 5px; right: 5px;" @click="showPasswordMatchBtn">
                                 <i class="fa-regular fa-eye border-0"></i>
                             </button>
                         </div>
-                        <div class="m-0 p-0" style="position: relative; display: flex;" v-if="showPasswordCheck" >
+                        <div class="m-0 p-0" style="position: relative; display: flex;" v-if="showPasswordCheck">
                             <input class="p-2 border" style="width: 100%;" v-model="member.mpasswordcheck" placeholder="비밀번호를 한 번 더입력해주세요" @keyup="mpasswordMatchCheck"/>
                             <button class="border-0 bg-white" style="position: absolute; top: 5px; bottom: 5px; right: 5px;" @click="showPasswordMatchBtn">
                                 <i class="fa-regular fa-eye-slash border-0"></i>
@@ -65,7 +74,6 @@
                         </div>
 
                         <div class="checkError m-1" v-if="mpasswordMatchError">입력한 비밀번호와 일치하지않습니다</div>
-                        
                     </div>
                 </div>
             
@@ -166,6 +174,7 @@ const mnicknameResultError = ref(false);
 const mpasswordResultError = ref(false);
 const mpasswordMatchError = ref(false);
 const checkboxError = ref(false);
+const idChecking = ref(0);
 
 
 const checkFirst = ref(false);
@@ -175,17 +184,44 @@ const checkThird = ref(false);
 let showPassword = ref(false);
 let showPasswordCheck = ref(false);
 
+
+// 비밀번호 보이게
 function showPasswordBtn() {
     showPassword.value = !showPassword.value;
 }
 
+// 비밀번호 확인 보이게
 function showPasswordMatchBtn() {
     showPasswordCheck.value = !showPasswordCheck.value;
+}
+
+// mid를 통해서 중복 검사
+async function idCheck() {
+    // 그전에 눌렸던 중복검사을 삭제 하기 위해서 초기화
+    idChecking.value = 0;
+    // 값이 채워져 있고, 이메일 정규식을 통과했을 경우
+    if(member.value.mid !== "" && midResultError.value === false) {
+        // DB에서 아이디가 있는 지 확인 - 중복 검사
+        const response = await memberAPI.idCheck(member.value.mid);
+        
+        // 중복값 확인
+        if(response.data.mid === null){
+            // 중복되지 않을 경우
+            idChecking.value = 1;
+        } else {
+            // 중복된 경우
+            idChecking.value = -1;
+        }
+    } else {
+        // 값이 없거나, 정규식을 통과하지 못함
+        midResultError.value = true;
+    }
 }
 
 //아이디 정규 표현식 검사
 
 function midCheck() {
+  idChecking.value = 0;
   const midPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
   const midResult = midPattern.test(member.value.mid);
   midResultError.value = !midResult;
@@ -352,6 +388,10 @@ async function handleSubmit() {
     color: white;
 }
 
+.id_checker:hover{
+    color: #15a775;
+}
+
 .green-point::marker {
     color: #15a775;
 }
@@ -367,6 +407,11 @@ h6::marker {
 .checkError {
     font-size: 13px;
     color: red;
+}
+
+.checkGood{
+    font-size: 13px;
+    color: #15a775;
 }
 
 a:link {

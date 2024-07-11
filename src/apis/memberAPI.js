@@ -129,6 +129,10 @@ function searchPW(member){
     return axios.post("/member/searchPw", member)
 }
 
+function idCheck(mid){
+    return axios.get("/member/idCheck/" + mid)
+}
+
 export default{
     join,
     setCareer,
@@ -154,4 +158,5 @@ export default{
     updatePhonenum,
     searchId,
     searchPW,
+    idCheck,
 }

@@ -6,7 +6,19 @@
                     <h3 class="mb-5" style="font-weight: bold; text-align: center">로그인</h3>
                     <input class="p-2 mb-3 border" v-model="member.mid" placeholder="이메일 형식의 아이디" @keyup="midCheck"/>
                     <div class="checkError mb-3" v-if="midResultError" style="color:red;">올바른 형식의 아이디를 입력해주세요</div>
-                    <input type="password" class="p-2 mb-4 border" v-model="member.mpassword" placeholder="비밀번호"/>
+                    
+                    <div class=" p-0 mb-4" style="position: relative; display: flex;" v-if="!showPassword" >
+                        <input class="p-2 border" type="password" style="width: 100%;" v-model="member.mpassword" placeholder="비밀번호" />
+                        <button class="border-0 bg-white" style="position: absolute; top: 5px; bottom: 5px; right: 5px;" @click.prevent="showPasswordBtn">
+                            <i class="fa-regular fa-eye border-0"></i>
+                        </button>
+                    </div>
+                    <div class=" p-0 mb-4" style="position: relative; display: flex;" v-if="showPassword" >
+                        <input class="p-2 border" style="width: 100%;" v-model="member.mpassword" placeholder="비밀번호"/>
+                        <button class="border-0 bg-white" style="position: absolute; top: 5px; bottom: 5px; right: 5px;" @click.prevent="showPasswordBtn">
+                            <i class="fa-regular fa-eye-slash border-0"></i>
+                        </button>
+                    </div>
                     <button type="submit" class="btn p-2 w-100 rounded">로그인</button>
                 </div>
             </div>
@@ -40,6 +52,8 @@ const member = ref({
     mid:"",
     mpassword:""
 });
+
+const showPassword = ref(false);
 
 const midResultError = ref(false);
 
@@ -87,6 +101,9 @@ function midCheck() {
   return midResult;
 }
 
+function showPasswordBtn() {
+    showPassword.value = ! showPassword.value;
+}
 
 </script>
 

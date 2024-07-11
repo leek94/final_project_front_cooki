@@ -125,6 +125,10 @@ function searchId(member) {
     return axios.post("/member/searchId", member);
 }
 
+function searchPW(member){
+    return axios.post("/member/searchPw", member)
+}
+
 export default{
     join,
     setCareer,
@@ -149,4 +153,5 @@ export default{
     getMyLikeRecipe,
     updatePhonenum,
     searchId,
+    searchPW,
 }

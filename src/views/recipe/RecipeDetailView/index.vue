@@ -383,4 +383,12 @@ ol{
     padding-left: 0; /* 기본 패딩 제거 */
     margin-left: 0; /* 기본 마진 제거 */
 }
+
+.backList{
+    font-size: 1rem;
+    font-weight: bold;
+    padding:1.5rem 2.938rem 1.438rem 3rem; 
+    border-radius: 38px;
+
+}
 </style>

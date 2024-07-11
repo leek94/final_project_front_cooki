@@ -25,11 +25,11 @@
                                     <div class="dday-box" :class="prop.class" >D-{{ checker() }}</div>
                                 </div>
 
-                                <div v-if="store.state.mrole=='ROLE_EDITOR'">
-                                
+                                <!-- 클래스 카드의 버튼들은 해당 클래스를 개설한 에디터롤의 유저에게만 보여짐 -->
+                                <div v-if="store.state.mrole=='ROLE_EDITOR' && prop.objectProp.mid==store.state.userId">
                                         <button class="btn btn-sm w-100 mb-1"  @click.stop="participantList(index)">출석확인</button>
                                         <button class="btn btn-sm w-100 mb-1">클래스 다시 열기</button>
-                                        <button class="btn btn-sm w-100 mb-1">수정하기</button>
+                                        <button class="btn btn-sm w-100 mb-1" v-if="checker()>0">수정하기</button>
                                         <button class="btn btn-sm w-100">미답변 문의 {{prop.objectProp.qreplyNullCount}}개</button>
                                     
                                 </div>
@@ -61,8 +61,8 @@ return diffDays
 }
 
 console.log(prop.style)
-
-
+console.log("mid", prop.objectProp.mid)
+console.log("mid", store.state.userId)
 </script>
 
 <style scoped>

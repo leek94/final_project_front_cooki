@@ -6,8 +6,8 @@
                 <img :src="`${axios.defaults.baseURL}/class/thumbattach/${prop.objectProp.cno}/1`">
             </div>
             <div class="text-start" >
-                <div class="class-text text-start">
-                    <h4>{{ prop.objectProp.ctitle }}</h4>
+                <div class=" class-text text-start">
+                    <h4 class="classti">{{ prop.objectProp.ctitle }}</h4>
                 </div>
                 <div>
                     <h6>모집강사 : {{ prop.objectProp.mname }}</h6>
@@ -104,6 +104,13 @@ return diffDays
 .class-image:hover img {
     transform: translate(-50%, -50%) scale(1.1);
     transition: all 0.2s linear;
+}
+.classti{
+    -webkit-box-orient: vertical;
+    line-clamp: 2; /* 최대 3줄까지만 표시 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+
 }
 
 </style>

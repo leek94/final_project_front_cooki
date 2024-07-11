@@ -2,6 +2,19 @@
     <div class="d-flex flex-column justify-content-center align-items-center" >
 
         <div class="d-flex flex-column justify-content-center align-items-start my-5 p-3 rounded-4" style='width:850px' >
+            
+            <div class="w-100 my-3">
+                <label class="form-label mb-3 fw-bold">카테고리</label>
+                <div class="d-flex " >
+                    <input type="button" class="category-button" style="margin-left: 0px" value="한식" :class="{ active: activeIndex === 1 }" @click="handlecategory(1)">
+                    <input type="button" class="category-button" value="중식" :class="{ active: activeIndex === 2 }" @click="handlecategory(2)">
+                    <input type="button" class="category-button" value="일식" :class="{ active: activeIndex === 3 }" @click="handlecategory(3)">
+                    <input type="button" class="category-button" value="양식" :class="{ active: activeIndex === 4 }" @click="handlecategory(4)">
+                    <input type="button" class="category-button" value="디저트" :class="{ active: activeIndex === 5 }" @click="handlecategory(5)">
+                    <input type="button" class="category-button" value="베이커리" :class="{ active: activeIndex === 6 }" @click="handlecategory(6)">
+                </div>
+            </div>
+    
             <div class="w-100 my-3">
                 <label class="form-label mb-3 fw-bold">제목</label>
                 <input type="text" class="form-control" v-model="classes.ctitle" placeholder="클래스 이름을 입력해주세요.">
@@ -230,6 +243,12 @@ const cuImgs = ref([]);
 const nowCuImgs = ref([]);
 const isCuImg = ref([]);
     
+const activeIndex = ref(null);
+
+const handlecategory = (index) => {
+    activeIndex.value = index;
+};
+
 function setPreviewImg(e){
     if(e.target.files.length > 0){
         isPreImg.value = true;
@@ -465,7 +484,7 @@ function updateClass(){
     cenddate.setDate(cenddate.getDate()-1);  
     classFormData.append("cenddate", cenddate);
     classFormData.append("cno", cno);
-    classFormData.append("ctno", 1);
+    classFormData.append("ctno", activeIndex.value);
 
     
     //----- 사진 data 받기 -----
@@ -552,7 +571,7 @@ async function reopenClass(){
     cenddate.setDate(cenddate.getDate()-1);  
     reformData.append("cenddate", cenddate);
     reformData.append("cno", cno);
-    reformData.append("ctno", 1);
+    reformData.append("ctno", activeIndex.value);
     const climg=presetImg.value;
     if(climg.files.length!==0){
         //list 형태의 이미지를 하나씩 전달
@@ -630,6 +649,24 @@ swiper-slide img {
     border-radius: 5px;
     width: calc(100% - 2rem);
     margin: 0 0.5rem;
+}
+.category-button{
+    margin-right: 0.5rem;
+    padding: 0.8rem 1.4rem;
+    border-radius: 2rem;
+    border: solid 1px #d4d4d4;
+    background-color: #fff;
+    margin: 0 10px;
+}
+
+.active{
+    background-color:#04AA6D !important;
+    color:#fff !important;
+}
+
+.select-button option:hover {
+  background-color: #04AA6D;
+  color: white;
 }
 
 </style>

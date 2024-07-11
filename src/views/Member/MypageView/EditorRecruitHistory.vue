@@ -33,7 +33,7 @@
                                 </div>
                                 <div class="text-end">
                                     <button class=" btn btn-sm" style="background-color: #f3f3f3; font-weight: bold;" @click.stop="participantList(index)">출석 확인</button>
-                                    <button class=" btn btn-success btn-sm ms-2">다시 열기</button>
+                                    <button class=" btn btn-success btn-sm ms-2" @click.stop="ReopenClass(index)">다시 열기</button>
                                 </div>
                             </div>
                         </div>
@@ -63,6 +63,11 @@ const countClass=computed(()=> cookClasses.value.length)
 // 출석 확인 하는 페이지로 이동
 function participantList(index) {
     router.push(`/Class/ParticipantCheckView?cno=${cookClasses.value[index].cno}`)
+}
+
+//클래스 다시 열기 => updateform으로 이동 
+function ReopenClass(index){
+    router.push(`/class/classUpdateView?cno=${cookClasses.value[index].cno}`)
 }
 //dateFormating (2024-06-28)
 function dateFormat(date) {

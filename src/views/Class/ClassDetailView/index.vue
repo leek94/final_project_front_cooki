@@ -114,13 +114,13 @@ const route= useRoute();
 
 // register Swiper custom elements
 register();
-console.log("cno"+route.query.cno)
+//list에서 query로 받아오는 값들
 let cno=route.query.cno;
-
 let pageNo= route.query.pageNo;
 let searchTitle = route.query.searchTitle;
 let searchText = route.query.searchText;
 let searchSort = route.query.searchSort;
+
 //클래스 신청 성공 시 모달
 let registerModal=null;
 //클래스 취소 시 모달
@@ -264,10 +264,6 @@ async function isParticipant(cno){
     const response = await classAPI.classNowPerson(cno);
     // cno와 마감인원을 back 단으로 전달
     // const response= await classAPI.SetClassApply(64, info.value.cpersoncount);
-
-    console.log("personcount"+info.value.cpersoncount);
-    console.log("is"+response.data.isParticipant);
-    console.log("결과 확인: " + response.data.result);
 
     // 날짜 계산을 위한 포맷 변경
     let today = new Date();

@@ -115,7 +115,12 @@ function getParticpantList(cno){
 function saveAttedenceList(participant){
     return axios.put("/class/updateParticipant", participant)
 }
-
+function reopenClass(reformData){
+    return axios.post("/class/reopenClassesInsert",reformData)
+}
+function reopenClassCurri(reformCurri){
+    return axios.post("/class/reopenCurriInsert",reformCurri)
+}
 export default {
     classRegister,
     itemRegister,
@@ -142,5 +147,7 @@ export default {
     reviewDelete,
     getParticpantList,
     saveAttedenceList,
+    reopenClass,
+    reopenClassCurri
 
 }

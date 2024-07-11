@@ -119,7 +119,7 @@
                         <div class="mt-3" style="text-align: center;" v-show="isCuImg[index]"> 
                             <img class="rounded-4" style="width: 250px; height: 250px"/>
                         </div>
-                        <label class="form-label my-3"> 이미지(필수!!!)</label>
+                        <label class="form-label my-3"> 이미지</label>
                         <input  type="file" class="form-control" ref="cuImgs" @change="setCuImg($event,index)">
                     </div>
 

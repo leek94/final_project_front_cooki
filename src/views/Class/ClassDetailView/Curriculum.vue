@@ -6,14 +6,14 @@
     <div class="curriculum mt-5 ">
         <div class="d-flex mb-5" v-for="(cs,index) in curriculum" :key="index">
             <div class="cimg">
-                <img :src="`${axios.defaults.baseURL}/class/curriculumattach/${cno}/${cs.cuorder}?accessToken=${store.state.accessToken}`">
+                <img :src="`${axios.defaults.baseURL}/class/curriculumattach/${cno}/${cs.cuorder}`">
             </div>
             <div class="cinfo" style=" text-align: left; margin-left: 50px; align-content: center">
                 <div>
                     <span style="color:rgb(91, 91, 91)">CHAPTER</span>
                     <span style="color:rgb(91, 91, 91)">{{cs.cuorder}}</span>
                 </div>
-                <div class="cutitle fw-bold h5" > {{ cs.cutitle }} </div>
+                <div class="cutitle fw-bold h5" > {{ cs.cutitle }} </div>                                              
                 <p class="cucontent">{{ cs.cucontent }}
                 </p>
             </div>
@@ -30,8 +30,9 @@ import { ref} from 'vue';
 import { useRoute } from 'vue-router';
 
 const route= useRoute();
+//클래스 디테일에서 router link에서 cno를 query string으로 전달
 const cno=route.query.cno;
-console.log("cno"+cno)
+
 
 const curriculum=ref([
     {
@@ -46,9 +47,9 @@ let citems = ref([]);
 curri(cno);
 async function curri(cno){
     const response = await classAPI.curriculumAndItemRead(cno);
-    console.log(response.data);
     curriculum.value = response.data.curriculums;
     const itemsData = response.data.classItems;
+
     for(let i=0; i<itemsData.length; i++){
         Object.keys(itemsData[i]).forEach((keys)=>{
             const content = itemsData[i][keys]
@@ -58,7 +59,6 @@ async function curri(cno){
         }
         )
     }
-    console.log(response.data.classItems);
 }
 
 </script>

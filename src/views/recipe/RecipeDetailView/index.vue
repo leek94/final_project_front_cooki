@@ -261,7 +261,7 @@ getRecipeData(rno);
 
 .inner{
     width: 100%;
-    max-width: 45rem;
+    max-width: 65rem;
     margin: 0 auto;
     text-align: left;
 }

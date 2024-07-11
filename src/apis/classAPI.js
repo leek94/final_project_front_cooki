@@ -116,6 +116,10 @@ function saveAttedenceList(participant){
     return axios.put("/class/updateParticipant", participant)
 }
 
+function deleteClass(cno){
+    return axios.put("/class/classDelete/"+cno);
+}
+
 export default {
     classRegister,
     itemRegister,

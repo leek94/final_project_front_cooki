@@ -110,6 +110,7 @@ register();
 async function changeLike() {
     if(store.state.userId===""){
         router.push('/Member/LoginView');
+        return
     }
     let btn = document.getElementById("like");
     const islike = cookRecipes.value.islike;

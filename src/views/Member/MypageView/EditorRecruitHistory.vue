@@ -1,48 +1,18 @@
 <template>
     <div class="myRecipe" style="width:80%;  margin:auto auto;padding:50px 0 0">
-     <h3 class="fw-bold text-start mb-4" >Editor </h3>
-     <h5 class="text-start mb-4" > - 모집 마감된 클래스 </h5>
-         <div class="d-flex" style="font-size:20px">
-             <p>총 &ensp;</p>
-             <p style="color:darkseagreen"> {{countClass}}</p>
-             <p>개</p>
-         </div>
- 
-         <hr class="mt-0"/>
-         <div class="d-flex"  >
-        <div class="qcards d-flex"  style="flex-wrap: wrap;">
-            <div class="card qnaCard mt-3" style="padding:0;"  v-for="(classes, index) in cookClasses" :key="index" @click="routerLinkto(index)">
-                <div class="card-body text-center">
-                    <li class="class-img-li ss" >
-                        <div class="router-div">
-                            <div class="class-image">
-                                <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes.cno}/1`">
-                            </div>
-                            <div class="text-start" >
-                                <div class="class-text text-start">
-                                    <h4>{{ classes.ctitle }}</h4>
-                                </div>
-                                <div>
-                                    <h6>모집강사 : {{ classes.mname }}</h6>
-                                </div>
-                                <div>
-                                    <h6>모집인원 : {{ classes.nowPerson }}/{{ classes.cpersoncount }}</h6>
-                                </div>
-                                <div class="info d-flex mb-3">
-                                    <div class="class-date border-left-solid me-3">강의날짜 : {{ classes.cdday }}</div>
-                                </div>
-                                <div class="text-end">
-                                    <button class=" btn btn-sm" style="background-color: #f3f3f3; font-weight: bold;" @click.stop="participantList(index)">출석 확인</button>
-                                    <button class=" btn btn-success btn-sm ms-2">다시 열기</button>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </div>
+    <h3 class="fw-bold text-start mb-4" >Editor </h3>
+    <h5 class="text-start mb-4" > - 모집 마감된 클래스 </h5>
+        <div class="d-flex" style="font-size:20px">
+            <p>총 &ensp;</p>
+            <p style="color:darkseagreen"> {{countClass}}</p>
+            <p>개</p>
+        </div>
+        <hr class="mt-0"/>
+        <div class="d-flex" style="flex-wrap: wrap;" >
+            <div class="qcard" v-for="(ccards,index) in cookClasses" :key="index" @click="routerLinkto(index)">
+                <MypageClassCard :objectProp="ccards"/>
             </div>
         </div>
-    </div>
-
     </div>
  </template>
  
@@ -51,8 +21,9 @@ import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import memberAPI from '@/apis/memberAPI';
 import classAPI from '@/apis/classAPI';
+import MypageClassCard from '@/components/MypageClassCard.vue';
 import { useRouter } from 'vue-router';
-import axios from 'axios';
+
 const router = useRouter();
 
  // 데이터 바인딩을 위한 더미 데이터

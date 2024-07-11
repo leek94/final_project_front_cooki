@@ -11,8 +11,8 @@
                 <div class="name me-2">{{ prop.objectProp.mnickname }}</div>
                 <div class="date border-left-solid">{{ prop.objectProp.rdate}}</div>
             </div>
-            <div class="text text-start">
-                <h4>{{  prop.objectProp.rtitle }}</h4>
+            <div class="text text-start"> 
+                <h4 style="height: 65px">{{  prop.objectProp.rtitle }}</h4>
                 <div class="d-flex justify-content-end">
                     <div class="me-2"><img src="/images/photos/ic_talk.png" width="25px">: {{ prop.objectProp.reviewcount }}</div>
                     <div class="me-2"><i class="fa-solid fa-heart like-heart" style="color:red;">&ensp;</i>{{  prop.objectProp.likecount }}</div>

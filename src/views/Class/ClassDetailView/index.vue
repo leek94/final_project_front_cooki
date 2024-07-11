@@ -352,6 +352,7 @@ async function realCancelDialog(cno){
     margin:0 auto;
     padding:6rem 0;
 }
+
 .ClassTitle{
     margin-top:30px;
     margin-bottom: 60px;
@@ -361,6 +362,7 @@ async function realCancelDialog(cno){
     text-align: start;
 
 }
+
 
 .ClassContent{
     resize:none;

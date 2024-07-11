@@ -21,7 +21,8 @@
             </div>
             <div class="qcont mt-4"  style="font-size: 17px; font-weight:bold ;color:black;">
                 <diV style="padding:0 20px;">
-                   {{ qnaCard[index].qcontent}}</diV>
+                   {{ qnaCard[index].qcontent}}
+                </diV>
             </div>
             <div class="qdate mt-4 text-start" style="padding:0 20px; color:gray">{{ qnaCard[index].qdate }}</div>
         </div>     
@@ -108,12 +109,12 @@ function routerLinkto(index){
     border-radius: 10px;
     font-weight: bold;
 }
+
 .qcont{
    /* 텍스트 바디 한줄로 표시하는 css*/
    display: -webkit-box; /* 웹킷 기반 브라우저에서 다음 속성을 사용하기 위한 설정 */
    -webkit-line-clamp: 2; /* 원하는 줄 수 지정 */
    -webkit-box-orient: vertical; /* 수직으로 텍스트를 표시 */
    overflow: hidden; /* 넘치는 부분을 숨김 */
-
 }
 </style>

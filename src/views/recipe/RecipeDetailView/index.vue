@@ -84,6 +84,7 @@ import { useRoute, useRouter } from 'vue-router';
 const store = useStore();
 const route = useRoute();
 const rno = route.query.rno;
+const router = useRouter();
 
 let pageNo= route.query.pageNo;
 let searchTitle = route.query.searchTitle;
@@ -107,6 +108,9 @@ let recipeItems = ref([]);
 register();
 
 async function changeLike() {
+    if(store.state.userId===""){
+        router.push('/Member/LoginView');
+    }
     let btn = document.getElementById("like");
     const islike = cookRecipes.value.islike;
     let data = {rno:rno,mid:store.state.userId};

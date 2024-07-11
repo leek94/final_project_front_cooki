@@ -29,13 +29,18 @@ import { ref, watch } from 'vue';
 import axios from 'axios';
 import { useStore } from 'vuex';
 import recipeAPI from '@/apis/recipeAPI';
+import { useRoute, useRouter } from 'vue-router';
 
+const router = useRouter();
 const store = useStore();
 const prop = defineProps(["objectProp"]);
 const emit = defineEmits(["like"])
 
 
 async function changeLike() {
+    if(store.state.userId===""){
+        router.push('/Member/LoginView');
+    }
     let data = {rno:prop.objectProp.rno,mid:store.state.userId};
     data = JSON.parse(JSON.stringify(data));
     if(prop.objectProp.islike){

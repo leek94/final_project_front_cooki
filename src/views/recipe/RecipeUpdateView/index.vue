@@ -86,10 +86,12 @@ import recipeAPI from '@/apis/recipeAPI';
 import EditorNowRecruit from '@/views/Member/MypageView/EditorNowRecruit.vue';
 import axios from 'axios';
 import { ref } from 'vue';
+import { useRoute } from 'vue-router';
 
+const route = useRoute();
 const presetImg = ref(null);
 let isPreImg = ref(false);
-const rno=55;
+const rno=route.query.rno;
 
 const recipe = ref({
     rtitle:"",

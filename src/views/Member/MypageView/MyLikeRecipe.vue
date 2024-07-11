@@ -26,7 +26,7 @@ import { useRouter } from 'vue-router';
 function handleClick(index){
     recipeCard.value[index].isActive = !recipeCard.value[index].isActive;
 }
- 
+
 const recipeCard = ref([ ])
 
 const countR= computed(()=>recipeCard.value.length)

@@ -32,7 +32,7 @@
                     <div class="row my-3 px-3">
                         <li class="green-point">휴대폰 번호</li>
                         <input class="p-2 border" v-model="member.mphonenum" placeholder="하이픈(-)을 넣어서 작성해주세요" @keyup="mphonenumCheck"/>
-                        <div class="checkError m-1" v-if="mphonenumResultError">올바른 형식의 휴대폰 번호를 입력해주세요</div>
+                        <div class="checkError m-1" v-if="mphonenumResultError">(-)을 사용하여 올바른 형식의 휴대폰 번호를 입력해주세요</div>
                     </div>
                     
                     <div class="row my-3 px-3">
@@ -145,14 +145,36 @@
                 </div>
             </div>    
         </form>
+        <DuplicateModal id="duplicateModal"></DuplicateModal>
+        <EssentialModal id="essentialModal"></EssentialModal>
+        <NullcontentModal id="nullcontentModal"></NullcontentModal>
+        <ValidationModal id="validationModal"></ValidationModal>
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import memberAPI from '@/apis/memberAPI'
 import { useRouter } from 'vue-router';
 import store from '@/store';
+import DuplicateModal from './DuplicateModal.vue';
+import EssentialModal from './EssentialModal.vue';
+import NullcontentModal from './NullcontentModal.vue';
+import ValidationModal from './ValidationModal.vue';
+import { Modal } from 'bootstrap';
+
+let duplicateModal = null;
+let essentialModal = null;
+let nullcontentModal = null;
+let validationModal = null;
+
+onMounted(() =>{
+    duplicateModal = new Modal(document.querySelector("#duplicateModal"));
+    essentialModal = new Modal(document.querySelector("#essentialModal"));
+    nullcontentModal = new Modal(document.querySelector("#nullcontentModal"));
+    validationModal = new Modal(document.querySelector("#validationModal"));
+});
+
 
 // 멤버 객체 선언
 let member = ref( {
@@ -165,7 +187,6 @@ let member = ref( {
     isEditor:false
 });
 
-
 // 유효성 검사를 위한 상태 변수 선언
 const midResultError = ref(false);
 const mnameResultError = ref(false);
@@ -176,11 +197,12 @@ const mpasswordMatchError = ref(false);
 const checkboxError = ref(false);
 const idChecking = ref(0);
 
-
+// 약관 동의 필수 값
 const checkFirst = ref(false);
 const checkSecond = ref(false);
 const checkThird = ref(false);
 
+// 비밀번호 보이게 하는 버튼
 let showPassword = ref(false);
 let showPasswordCheck = ref(false);
 
@@ -218,8 +240,8 @@ async function idCheck() {
     }
 }
 
+// 정규 표현식 ---------------------------------------------------------------------
 //아이디 정규 표현식 검사
-
 function midCheck() {
   idChecking.value = 0;
   const midPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/;
@@ -291,7 +313,6 @@ let career = ref({
 //const careerArray = ref([{ cano: '', cacontent: '' }]);
 //let nextCano = 2;
 
-
 const cacontentNullError = ref(false);
 //커리어 입력 태그 추가 함수
 function careerAdd(index) {
@@ -332,41 +353,134 @@ function awardsRemove(index) {
 }
 
 const router = useRouter();
-//폼 제출 함수
+
+// 회원가입 실행 함수
 async function handleSubmit() {
     //에디터로 가입하기 버튼 클릭 시 member 변수에서 isEditor의 값으로 mrole 설정
-    try{
-        if (member.value.isEditor){
-            member.value.mrole="ROLE_EDITOR"
+    
+    if(member.value.mid === "" || member.value.mname === "" || member.value.mphonenum === "" || 
+        member.value.mnickname === "" || member.value.mpassword === "" || member.value.mpasswordcheck === "") {
+
+        console.log("빈칸이 있을 경우 - 빈칸 모달");
+        nullcontentModal.show();
+
+    } else if(midResultError.value === true || mnameResultError.value === true || mphonenumResultError.value === true ||
+              mnicknameResultError.value === true || mpasswordResultError.value === true || mpasswordMatchError.value === true) {
+
+        console.log("정규식을 통과 못했을 경우 - 정규식 모달");
+        validationModal.show();
+
+    } else if(checkFirst.value === false || checkSecond.value === false || checkThird.value === false){
+
+        console.log("필수 항목을 체크하지 않았을 때 - 필수 모달")
+        essentialModal.show();
+    } else if(idChecking.value === 0 || idChecking.value === -1){
+
+        console.log("중복검사를 실행하지 않음 - 중복검사 모달")
+        duplicateModal.show();
+    } else {
+
+        console.log("빈칸&정규식 통과");
+        let hasEmptyCareer = false;
+        let hasEmptyAward = false;
+
+
+        if(member.value.isEditor === true) {
+            for(let i = 0; i<careerArray.value.length; i++){
+                if(careerArray.value[i].cacontent === ''){
+
+                    console.log("경력 빈칸 발생 - 빈칸 모달")
+                    nullcontentModal.show();
+                    hasEmptyCareer = true;
+                    break;
+                }
+            }
+            for(let j = 0; j<awardsArray.value.length; j++){
+                if(awardsArray.value[j].acontent === ''){
+
+                    console.log("수상 경력 빈칸 발생 - 빈칸 모달");
+                    nullcontentModal.show();
+                    hasEmptyAward = true;
+                    break;
+                }
+            }
+
+            console.log("에디터 신청 + 전체 통과 - 값 저장");
+            if(!hasEmptyCareer && !hasEmptyAward){
+                try{
+                    // 에디터로 가입하기가 클릭되면 롤이 에디터
+                    if (member.value.isEditor){
+                        member.value.mrole="ROLE_EDITOR"
+                    } else{
+                        member.value.mrole="ROLE_USER"
+                    }
+                    const data = JSON.parse(JSON.stringify(member.value));
+                    //member 데이터 값을 axios로 back로 전달 -> map 형태로 mid와 result값을 전달 받음
+                    const response = await memberAPI.join(data);
+
+                    if(response.data.result==="success" && data.mrole==="ROLE_EDITOR"){
+                        //배열로 형성된 경력을 객체로 하나씩 전달 
+                        //커리어(수상경력) 테이블의 pk값이 cano(ano)와 mid 복합키로 설정되어 있으므로 두 값을 같이 전달 
+                        for(let i=0; i<careerArray.value.length; i++){ 
+                            careerArray.value[i].cano=i+1;
+                            careerArray.value[i].mid=response.data.mid;
+                            //axios로 value 값 전달 
+                            memberAPI.setCareer(JSON.parse(JSON.stringify(careerArray.value[i])));
+                        }
+
+                        for(let i=0; i<awardsArray.value.length; i++){
+                            awardsArray.value[i].ano=i+1;
+                            awardsArray.value[i].mid=response.data.mid;
+                            memberAPI.setAwards(JSON.parse(JSON.stringify(awardsArray.value[i])));
+                        }
+                    }   
+                router.push("/Member/LoginView")
+
+                }catch(error){
+                    console.log("에러남: " + error);
+                }
+
+            }
             
-        } else{
-            member.value.mrole="ROLE_USER"
+        } else {
+
+            console.log("에디터 신청 X + 전체 통과 - 값 저장");
+            try{
+                // 에디터로 가입하기가 클릭되면 롤이 에디터
+                if (member.value.isEditor){
+                    member.value.mrole="ROLE_EDITOR"
+                } else{
+                    member.value.mrole="ROLE_USER"
+                }
+                const data = JSON.parse(JSON.stringify(member.value));
+                //member 데이터 값을 axios로 back로 전달 -> map 형태로 mid와 result값을 전달 받음
+                const response = await memberAPI.join(data);
+
+                if(response.data.result==="success" && data.mrole==="ROLE_EDITOR"){
+                    //배열로 형성된 경력을 객체로 하나씩 전달 
+                    //커리어(수상경력) 테이블의 pk값이 cano(ano)와 mid 복합키로 설정되어 있으므로 두 값을 같이 전달 
+                    for(let i=0; i<careerArray.value.length; i++){ 
+                        careerArray.value[i].cano=i+1;
+                        careerArray.value[i].mid=response.data.mid;
+                        //axios로 value 값 전달 
+                        memberAPI.setCareer(JSON.parse(JSON.stringify(careerArray.value[i])));
+                    }
+
+                    for(let i=0; i<awardsArray.value.length; i++){
+                        awardsArray.value[i].ano=i+1;
+                        awardsArray.value[i].mid=response.data.mid;
+                        memberAPI.setAwards(JSON.parse(JSON.stringify(awardsArray.value[i])));
+                    }
+                }   
+            router.push("/Member/LoginView")
+
+            }catch(error){
+                console.log("에러남: " + error);
+            }
         }
-        const data = JSON.parse(JSON.stringify(member.value));
-        //member 데이터 값을 axios로 back로 전달 -> map 형태로 mid와 result값을 전달 받음
-        const response = await memberAPI.join(data);
-
-        if(response.data.result==="success" && data.mrole==="ROLE_EDITOR"){
-            //배열로 형성된 경력을 객체로 하나씩 전달 
-            //커리어(수상경력) 테이블의 pk값이 cano(ano)와 mid 복합키로 설정되어 있으므로 두 값을 같이 전달 
-            for(let i=0; i<careerArray.value.length; i++){ 
-                careerArray.value[i].cano=i+1;
-                careerArray.value[i].mid=response.data.mid;
-                //axios로 value 값 전달 
-                memberAPI.setCareer(JSON.parse(JSON.stringify(careerArray.value[i])));
-            }
-
-            for(let i=0; i<awardsArray.value.length; i++){
-                awardsArray.value[i].ano=i+1;
-                awardsArray.value[i].mid=response.data.mid;
-                memberAPI.setAwards(JSON.parse(JSON.stringify(awardsArray.value[i])));
-            }
-        }   
-    router.push("/Member/LoginView")
-
-    }catch(error){
-        console.log("에러남: " + error);
     }
+
+    
 }
         
 

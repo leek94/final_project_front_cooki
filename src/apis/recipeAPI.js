@@ -57,6 +57,10 @@ function getRecipeList(search, pageNo=1,perPage){
     return axios.post("/recipe/recipeList",search,{params:{pageNo,perPage}});
 }
 
+function deleteRecipe(rno){
+    return axios.get("/recipe/recipeDelete/"+rno);
+}
+
 export default{
     recipeRegister,
     recipeItemRegister,
@@ -74,4 +78,5 @@ export default{
     recipeReviewUpdate,
     recipeReviewDelete,
     getRecipeList,
+    deleteRecipe
 }

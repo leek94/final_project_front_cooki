@@ -34,22 +34,22 @@
             space-between="30"
             autoplay-delay="3000">
             <swiper-slide>
-              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[0].cno}/1`" class="rounded-4"/>
+              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[0].cno}/1`" class="rounded-4" @click="gotoClassDetail(classes[0].cno)"/>
             </swiper-slide>
             <swiper-slide>
-              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[1].cno}/1`" class="rounded-4"/>
+              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[1].cno}/1`" class="rounded-4" @click="gotoClassDetail(classes[1].cno)"/>
             </swiper-slide>
             <swiper-slide>
-              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[2].cno}/1`" class="rounded-4"/>
+              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[2].cno}/1`" class="rounded-4" @click="gotoClassDetail(classes[2].cno)"/>
             </swiper-slide>
             <swiper-slide>
-              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[3].cno}/1`" class="rounded-4"/>
+              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[3].cno}/1`" class="rounded-4" @click="gotoClassDetail(classes[3].cno)"/>
             </swiper-slide>
             <swiper-slide>
-              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[4].cno}/1`" class="rounded-4"/>
+              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[4].cno}/1`" class="rounded-4" @click="gotoClassDetail(classes[4].cno)"/>
             </swiper-slide>
             <swiper-slide>
-              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[5].cno}/1`" class="rounded-4"/>
+              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[5].cno}/1`" class="rounded-4" @click="gotoClassDetail(classes[5].cno)"/>
             </swiper-slide>
             </swiper-container>
        </div>
@@ -256,7 +256,7 @@
                   <p> {{ r.mnickname}} | {{dateFormat(r.rdate)}}</p>
                 </div>
                 <div style="height: 40%">
-                  <img :src="`${axios.defaults.baseURL}/recipe/thumbattach/${r.rno}`" class="rounded-4" style="width: 50%;"/>
+                  <img :src="`${axios.defaults.baseURL}/recipe/thumbattach/${r.rno}`" class="rounded-4" style="width: 50%;" @click="gotoRecipeDetail(r.rno)"/>
                 </div>
                 <div class="d-flex align-items-center justify-content-center" style="height: 30%">
                   <p class="m-0 p-3 text-center" style="width: 100%; height:75%; display: -webkit-box; word-wrap: break-word; -webkit-line-clamp: 4; -webkit-box-orient: vertical; text-overflow: ellipsis; overflow: hidden;">
@@ -434,6 +434,10 @@ function runAuto(){
 
 function gotoClassDetail(cno){
   router.push(`class/ClassDetailView?cno=${cno}`);
+}
+
+function gotoRecipeDetail(rno){
+  router.push(`recipe/recipeDetailView?rno=${rno}`);
 }
 </script>
    

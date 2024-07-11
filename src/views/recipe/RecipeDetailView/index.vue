@@ -64,7 +64,9 @@
             </div>
 
             <Review/>
-            
+            <div style="text-align: center; margin-top: 100px;">
+            <RouterLink :to="`/Recipe/RecipeListView?pageNo=${pageNo}&searchTitle=${searchTitle}&searchText=${searchText}&searchSort=${searchSort}`"><button class="backList btn btn-outline-success btn-sm">목록으로</button></RouterLink>
+            </div>
         </div>
     </div>
 </template>
@@ -82,6 +84,11 @@ import { useRoute, useRouter } from 'vue-router';
 const store = useStore();
 const route = useRoute();
 const rno = route.query.rno;
+
+let pageNo= route.query.pageNo;
+let searchTitle = route.query.searchTitle;
+let searchText = route.query.searchText;
+let searchSort = route.query.searchSort;
 
 const cookRecipes = ref({
     rtitle:'자작자작 서울식 소불고기',rdate:'2024.06.11 08:00' , rcontent:'촉촉하게, 감칠맛 가득 불고기 만드는 법! 좋아하는 채소와 떡, 당면 등 재료를 마음껏 추가해 완성',

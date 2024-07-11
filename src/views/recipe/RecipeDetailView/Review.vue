@@ -8,7 +8,7 @@
 
     <!-- 댓글 등록 -->
     <!-- 로그인 한 유저만 등록 가능 v-show로 -->
-    <div class="d-flex p-2 m-2 border rounded bg-light">
+    <div class="d-flex p-2 m-2 border rounded bg-light" v-if="$store.state.userId !== ''">
         <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;">
         <div class="flex-grow-1 row my-3">
             <!-- 리뷰 내용 입력 -->
@@ -24,7 +24,7 @@
         </div>
     </div>
     <!-- 로그인 안했을 경우 v-if-->
-    <div class="d-flex p-2 m-2 border rounded bg-light" style="color: gray;">
+    <div class="d-flex p-2 m-2 border rounded bg-light" style="color: gray;" v-if="$store.state.userId === ''">
         <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;">
         <div class="flex-grow-1 row my-3" style="align-items: center;">
 
@@ -35,7 +35,7 @@
 
 
     <!------------------------------------------------ 리뷰 보기 / 수정 ------------------------------------------------>
-    <div v-for="(review, index) in reviewArray" :key="index">
+    <div v-for="(review, index) in reviewArray" :key="index" >
         <!-- 등록된 리뷰 보기 -->
         <div class="d-flex p-1" v-if="!isReviewArray[index]">
             <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;">
@@ -51,7 +51,7 @@
                     {{ review.rrcontent }}
                 </div>
                 <!-- 작성자에게만 보여야 하는 버튼 -->
-                <div class=" text-end mt-3 pe-5">
+                <div class=" text-end mt-3 pe-5" v-if="$store.state.userId === review.mid">
                     <button class="px-2 mx-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="reviewUpdateOpen(index)">수정</button>
                     <button class="px-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="reviewDelete(index)">삭제</button>
                 </div>

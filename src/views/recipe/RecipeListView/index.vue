@@ -12,8 +12,7 @@
                 </p>
 
                 <div class="regist-recipe d-flex align-items-center justify-content-center">
-                    <!-- 라우터로 변경 예정 -->
-                    <RouterLink to="./RecipeRegisterView" class="regist-button">작성하기 &ensp;<i class="fa-solid fa-pen"></i></RouterLink>
+                    <div class="regist-button" @click="goRecipeRegister">작성하기 &ensp;<i class="fa-solid fa-pen"></i></div>
                 </div>
             </div>
             <!-- main 시작 -->
@@ -61,6 +60,9 @@ import RecipeCard from '@/components/RecipeCard.vue';
 import recipeAPI from '@/apis/recipeAPI';
 import { ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+
+const store = useStore();
 
 const recipeCard = ref([
     {
@@ -122,7 +124,7 @@ async function searchresult(search){
    data.value.searchText=search.searchText
    data.value.searchTitle=search.searchTitle
    
-    router.push(`/recipe/recipeListView?pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=${data.value.searchSort}`);
+    router.push(`/Recipe/RecipeListView?pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=${data.value.searchSort}`);
 }
 
 // 정렬을 위한 코드
@@ -136,7 +138,7 @@ const setActive = (index) => {
 };
 
 function changePageNo(argpageNo){
-    router.push(`/recipe/recipeListView?pageNo=${argpageNo}&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=${data.value.searchSort}`);
+    router.push(`/Recipe/RecipeListView?pageNo=${argpageNo}&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=${data.value.searchSort}`);
 }
 
 function handleLike(rno){
@@ -151,6 +153,13 @@ function handleLike(rno){
         }
     }
 }
+
+function goRecipeRegister(){
+    if(store.state.userId !== ""){
+        router.push("/Recipe/RecipeRegisterView");
+    }
+}
+
 //같은 페이지->같은 페이지로 이동했을 때 
 //route(url) 값이 단 하나라도 바뀌었을 때 실행
 watch(route,(newRoute,oldRoute) => {

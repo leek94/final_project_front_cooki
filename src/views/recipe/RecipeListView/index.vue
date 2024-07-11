@@ -155,8 +155,9 @@ function handleLike(rno){
 }
 
 function goRecipeRegister(){
-    if(store.state.userId !== ""){
-        router.push("/Recipe/RecipeRegisterView");
+    if(store.state.userId === ""){
+        router.push('/Member/LoginView');
+        return;
     }
 }
 

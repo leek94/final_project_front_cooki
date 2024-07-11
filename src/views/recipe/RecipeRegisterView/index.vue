@@ -6,12 +6,12 @@
             <div class="w-100 my-3">
                 <label class="form-label mb-3 fw-bold">카테고리</label>
                 <div class="d-flex " >
-                    <input type="button" class="category-button" value="한식" :class="{ active: activeIndex === '한식' }" @click="handlecategory('한식')">
-                    <input type="button" class="category-button" value="중식" :class="{ active: activeIndex === '중식' }" @click="handlecategory('중식')">
-                    <input type="button" class="category-button" value="일식" :class="{ active: activeIndex === '일식' }" @click="handlecategory('일식')">
-                    <input type="button" class="category-button" value="양식" :class="{ active: activeIndex === '양식' }" @click="handlecategory('양식')">
-                    <input type="button" class="category-button" value="디저트" :class="{ active: activeIndex === '디저트' }" @click="handlecategory('디저트')">
-                    <input type="button" class="category-button" value="베이커리" :class="{ active: activeIndex === '베이커리' }" @click="handlecategory('베이커리')">
+                    <input type="button" class="category-button" value="한식" :class="{ active: activeIndex === 1 }" @click="handlecategory(1)">
+                    <input type="button" class="category-button" value="중식" :class="{ active: activeIndex === 2 }" @click="handlecategory(2)">
+                    <input type="button" class="category-button" value="일식" :class="{ active: activeIndex === 3 }" @click="handlecategory(3)">
+                    <input type="button" class="category-button" value="양식" :class="{ active: activeIndex === 4 }" @click="handlecategory(4)">
+                    <input type="button" class="category-button" value="디저트" :class="{ active: activeIndex === 5 }" @click="handlecategory(5)">
+                    <input type="button" class="category-button" value="베이커리" :class="{ active: activeIndex === 6 }" @click="handlecategory(6)">
                 </div>
             </div>
             
@@ -23,7 +23,7 @@
             <div class="w-100 mb-3">
                 <label class="form-label mb-3 fw-bold">내용</label>
                 <textarea class="form-control" rows="10" v-model="recipe.rcontent"
-                    placeholder="클래스를 간단히 소개해주세요">
+                    placeholder="레시피를 간단히 소개해주세요">
                 </textarea>
             </div>
 
@@ -33,7 +33,7 @@
                 </div> 
 
                 <div class="tInputForm w-100">            
-                    <label for="tFile" class="form-label my-3 fw-bold"> 완성품 사진 <abbr style="font-size: 14px; color:green">*필수</abbr></label>
+                    <label for="tFile" class="form-label my-3 fw-bold"> 완성품 사진</label>
                     <input id="tFile" type="file" class="form-control" ref="presetImg" @change="setPreviewImg">
                 </div>
             </div>
@@ -66,7 +66,7 @@
                         <div class="mt-3" style="text-align: center;" v-show="isRpImg[index]"> 
                             <img class="rounded-4" style="width: 250px; height: 250px"/>
                         </div>    
-                        <label class="form-label my-3 fw-bold"> 이미지 <abbr style="font-size: 14px; color:green">*필수</abbr> </label>
+                        <label class="form-label my-3 fw-bold"> 이미지</label>
                         <input  type="file" class="form-control" ref="rpImgs" @change="setPrImg($event,index)">
                     </div>
                     <div class="mb-3">
@@ -77,7 +77,7 @@
                     <div class="mb-1">
                         <label class="form-label mb-3 fw-bold">내용</label>
                         <textarea class="form-control" v-model="recipeProcess.rpcontent" rows="5" 
-                        placeholder="커리큘럼을 소개해주세요">
+                        placeholder="요리법을 소개해주세요">
                         </textarea>
                     </div>
                    
@@ -107,8 +107,6 @@ const router= useRouter();
 const recipe = ref({
     rtitle:"",
     rcontent:"",
-    mid:"",
-    ctno:1
 })
 
 const presetImg = ref(null);
@@ -207,12 +205,17 @@ function removePr(){
 
 //// ------- 등록 function ------------------------------------------------------------------------------------------------------------------------
 async function submitClass(){
+    const iv = isValid();
+    if(!iv){
+        alert("모든 값을 넣어 주세요");
+        return  
+    }
     //이미지 파일을 전송하기 위해 JSON 대신 폼데이터로 전송 
     const recipeFormdata = new FormData();
     recipeFormdata.append("rtitle",recipe.value.rtitle);
     recipeFormdata.append("rcontent",recipe.value.rcontent);
     recipeFormdata.append("mid",store.state.userId);
-    recipeFormdata.append("ctno",1);
+    recipeFormdata.append("ctno",activeIndex.value);
     const preAttach = presetImg.value;
     //이미지를 배열로 전달
     recipeFormdata.append("rAttach",preAttach.files[0]);
@@ -254,6 +257,40 @@ async function submitClass(){
 
 }
 
+function isValid(){
+    let iv = true;
+    
+    if(!activeIndex.value){
+        iv = false;
+    }
+
+    for(const v of Object.values(recipe.value)){
+        if(!v){
+            iv=false;
+            break;
+        }
+    }
+
+    if(presetImg.value.files.length ===0){
+        iv = false
+    }
+
+    for(const v of recipeItems.value){
+        if(!v.riname){
+            iv = false;
+            break;
+        }
+    }
+    
+    for(let i=0; i<recipeProcesses.value.length; i++){
+        const rp = recipeProcesses.value[i]
+        if(!rp.rptitle || !rp.rpcontent || rpImgs.value[i].files.length ===0){
+            iv = false;
+            break;
+        }  
+    }
+    return iv;
+}
 </script>
 
 <style scoped>
@@ -276,6 +313,7 @@ swiper-slide img {
     width: 100%;
     height: 100%;
 }
+
 .backList{
     font-size: 1rem;
     font-weight: bold;
@@ -290,6 +328,7 @@ swiper-slide img {
     width: calc(100% - 2rem);
     margin: 0 0.5rem;
 }
+
 .category-button{
     margin-right: 0.5rem;
     padding: 0.8rem 1.4rem;
@@ -297,6 +336,11 @@ swiper-slide img {
     border: solid 1px #d4d4d4;
     background-color: #fff;
     margin: 0 10px;
+}
+
+.active{
+    background-color:#04AA6D !important;
+    color:#fff !important;
 }
 
 .select-button option:hover {

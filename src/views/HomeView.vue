@@ -34,22 +34,22 @@
             space-between="30"
             autoplay-delay="3000">
             <swiper-slide>
-              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[0].cno}/1`" class="rounded-4"/>
+              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[0].cno}/1`" class="rounded-4" @click="gotoClassDetail(classes[0].cno)"/>
             </swiper-slide>
             <swiper-slide>
-              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[1].cno}/1`" class="rounded-4"/>
+              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[1].cno}/1`" class="rounded-4" @click="gotoClassDetail(classes[1].cno)"/>
             </swiper-slide>
             <swiper-slide>
-              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[2].cno}/1`" class="rounded-4"/>
+              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[2].cno}/1`" class="rounded-4" @click="gotoClassDetail(classes[2].cno)"/>
             </swiper-slide>
             <swiper-slide>
-              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[3].cno}/1`" class="rounded-4"/>
+              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[3].cno}/1`" class="rounded-4" @click="gotoClassDetail(classes[3].cno)"/>
             </swiper-slide>
             <swiper-slide>
-              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[4].cno}/1`" class="rounded-4"/>
+              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[4].cno}/1`" class="rounded-4" @click="gotoClassDetail(classes[4].cno)"/>
             </swiper-slide>
             <swiper-slide>
-              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[5].cno}/1`" class="rounded-4"/>
+              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[5].cno}/1`" class="rounded-4" @click="gotoClassDetail(classes[5].cno)"/>
             </swiper-slide>
             </swiper-container>
        </div>
@@ -107,8 +107,7 @@
       loop="true"
       slides-per-view="4"
       speed="800">
-         <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===0? '': 'border-end'"> 
-
+         <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===0? '': 'border-end'" @click="gotoClassLIst('한식')"> 
             <div class="m-0 p-0 rounded-4" style="width: 80%; height: 50%; overflow: hidden;">
                <img src="/images/photos/main/category1.jpg"  style="transition: all 0.2s ease-out;">
 
@@ -125,15 +124,47 @@
               </p>
             </div>
          </swiper-slide>
-         <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===1? '': 'border-end'"> 
+         <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===1? '': 'border-end'" @click="gotoClassLIst('중식')"> 
             <div class="m-0 p-0 rounded-4" style="width: 80%; height: 50%; overflow:hidden">
                <img src="/images/photos/main/category2.jpg" class="rounded-4"/>
             </div>
             <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 40%;">
               <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
+                <p class="fs-5 m-0 m-0 p-0">중식</p>
+              </span>
+              <p class="fs-5 m-0 mt-3 p-0">짜vs짬 부vs찍</p>
+              <p class="fs-6 m-0 mt-3 p-0">
+                <span class="badge rounded-pill text-bg-light">#짜장면</span>
+                <span class="badge rounded-pill text-bg-light ms-1">#짬뽕</span>
+                <span class="badge rounded-pill text-bg-light ms-1">#탕수육</span>
+              </p>
+            </div>
+         </swiper-slide>
+         <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===2? '': 'border-end'" @click="gotoClassLIst('일식')"> 
+            <div class="m-0 p-0 rounded-4" style="width: 80%; height: 50%; overflow:hidden">
+               <img src="/images/photos/main/category3.jpg" class="rounded-4"/>
+            </div>
+            <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 40%;">
+              <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
+                <p class="fs-5 m-0 m-0 p-0">일식</p>
+              </span>
+              <p class="fs-5 m-0 mt-3 p-0">입맛만은 가까운 사이</p>
+              <p class="fs-6 m-0 mt-3 p-0">
+                <span class="badge rounded-pill text-bg-light">#초밥</span>
+                <span class="badge rounded-pill text-bg-light ms-1">#라멘</span>
+                <span class="badge rounded-pill text-bg-light ms-1">#규동</span>
+              </p>
+            </div>
+         </swiper-slide>
+         <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===3? '': 'border-end'" @click="gotoClassLIst('양식')"> 
+            <div class="m-0 p-0 rounded-4" style="width: 80%; height: 50%; overflow:hidden">
+               <img src="/images/photos/main/category4.jpg" class="rounded-4"/>
+            </div>
+            <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 40%;">
+              <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
                 <p class="fs-5 m-0 m-0 p-0">양식</p>
               </span>
-              <p class="fs-5 m-0 mt-3 p-0">송파에서는 먹기 힘든</p>
+              <p class="fs-5 m-0 mt-3 p-0">it타워 근처에는 없어요</p>
               <p class="fs-6 m-0 mt-3 p-0">
                 <span class="badge rounded-pill text-bg-light">#파스타</span>
                 <span class="badge rounded-pill text-bg-light ms-1">#스테이크</span>
@@ -141,9 +172,9 @@
               </p>
             </div>
          </swiper-slide>
-         <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===2? '': 'border-end'"> 
+         <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===4? '': 'border-end'" @click="gotoClassLIst('디저트')"> 
             <div class="m-0 p-0 rounded-4" style="width: 80%; height: 50%; overflow:hidden">
-               <img src="/images/photos/main/category3.jpg" class="rounded-4"/>
+               <img src="/images/photos/main/category5.jpg" class="rounded-4"/>
             </div>
             <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 40%;">
               <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
@@ -157,35 +188,19 @@
               </p>
             </div>
          </swiper-slide>
-         <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===3? '': 'border-end'"> 
+         <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===5? '': 'border-end'" @click="gotoClassLIst('베이커리')"> 
             <div class="m-0 p-0 rounded-4" style="width: 80%; height: 50%; overflow:hidden">
-               <img src="/images/photos/main/category4.jpg" class="rounded-4"/>
+               <img src="/images/photos/main/category6.jpg" class="rounded-4"/>
             </div>
             <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 40%;">
               <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
-                <p class="fs-5 m-0 m-0 p-0">간식</p>
+                <p class="fs-5 m-0 m-0 p-0">베이커리</p>
               </span>
-              <p class="fs-5 m-0 mt-3 p-0">뽀로로가 필요없는 비법</p>
+              <p class="fs-5 m-0 mt-3 p-0">거부 할 수 없는 냄새</p>
               <p class="fs-6 m-0 mt-3 p-0">
-                <span class="badge rounded-pill text-bg-light">#떡볶이</span>
-                <span class="badge rounded-pill text-bg-light ms-1">#핫도그</span>
-                <span class="badge rounded-pill text-bg-light ms-1">#쿠키</span>
-              </p>
-            </div>
-         </swiper-slide>
-         <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===4? '': 'border-end'"> 
-            <div class="m-0 p-0 rounded-4" style="width: 80%; height: 50%; overflow:hidden">
-               <img src="/images/photos/main/category5.jpg" class="rounded-4"/>
-            </div>
-            <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 40%;">
-              <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10;">
-                <p class="fs-5 m-0 m-0 p-0">퓨전</p>
-              </span>
-              <p class="fs-5 m-0 mt-3 p-0">없는 건 이유가 있다</p>
-              <p class="fs-6 m-0 mt-3 p-0">
-                <span class="badge rounded-pill text-bg-light">#북극곰 폴라베어</span>
-                <span class="badge rounded-pill text-bg-light ms-1">#고추장 파스타</span>
-                <span class="badge rounded-pill text-bg-light ms-1">#된장 피자</span>
+                <span class="badge rounded-pill text-bg-light">#찰깨빵</span>
+                <span class="badge rounded-pill text-bg-light ms-1">#크로아상</span>
+                <span class="badge rounded-pill text-bg-light ms-1">#식빵</span>
               </p>
             </div>
          </swiper-slide>
@@ -256,7 +271,7 @@
                   <p> {{ r.mnickname}} | {{dateFormat(r.rdate)}}</p>
                 </div>
                 <div style="height: 40%">
-                  <img :src="`${axios.defaults.baseURL}/recipe/thumbattach/${r.rno}`" class="rounded-4" style="width: 50%;"/>
+                  <img :src="`${axios.defaults.baseURL}/recipe/thumbattach/${r.rno}`" class="rounded-4" style="width: 50%;" @click="gotoRecipeDetail(r.rno)"/>
                 </div>
                 <div class="d-flex align-items-center justify-content-center" style="height: 30%">
                   <p class="m-0 p-3 text-center" style="width: 100%; height:75%; display: -webkit-box; word-wrap: break-word; -webkit-line-clamp: 4; -webkit-box-orient: vertical; text-overflow: ellipsis; overflow: hidden;">
@@ -413,8 +428,8 @@ onMounted( () => {
 
   function setLastIndex(){
     lastIndex.value = categorySwiper.swiper.realIndex + 3;
-    if(lastIndex.value >= 5){
-      lastIndex.value -= 5;
+    if(lastIndex.value >= 6){
+      lastIndex.value -= 6;
     }
   }
 }
@@ -434,6 +449,14 @@ function runAuto(){
 
 function gotoClassDetail(cno){
   router.push(`class/ClassDetailView?cno=${cno}`);
+}
+
+function gotoRecipeDetail(rno){
+  router.push(`recipe/recipeDetailView?rno=${rno}`);
+}
+
+function gotoClassLIst(category){
+  router.push(`class/classListView?pageNo=1&searchTitle=category&searchText=${category}`);
 }
 </script>
    

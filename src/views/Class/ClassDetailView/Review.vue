@@ -6,13 +6,15 @@
         <div class="star m-2">
             <img src="/images/photos/ic_star.png">
         </div>
-        <div class="m-2"  style="font-weight: bold;">{{ avgCrratio }}</div>
+        <div style="font-weight: bold;">{{ avgCrratio }} 점</div>
     </div>
 
     <!-- 댓글 등록 -->
     <!-- 로그인 한 유저만 등록 가능 v-show로 -->
     <div class="d-flex p-2 m-2 border rounded bg-light" v-if="store.state.userId != ''">
-        <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;">
+        <!-- <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;"> -->
+        <!-- http://localhost/member/mattach/test12345@naver.com -->
+        <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${mid}`" style="width: 50px; height: 50px;">
         <div class="flex-grow-1 row my-3">
              <div class="d-flex mb-1">
                   <div class="me-3" style="font-weight: bold;"></div>
@@ -131,25 +133,52 @@
         </div>
     </div>
 
-<div class="d-flex p-5 m-5" style="justify-content: center; color: grey; font-weight: bold;" v-if="!isReview">등록된 리뷰가 없습니다. </div>
+    <div class="d-flex p-5 m-5" style="justify-content: center; color: grey; font-weight: bold;" v-if="!isReview">등록된 리뷰가 없습니다. </div>
+
+    <!--페이지네이션-->
+    <div class="text-center" v-if="page.pager.totalRows!==0">
+        <button class="initial btn btn-sm" @click="changePageNo(1)"> 처음 </button>
+        <button class="prev btn btn-sm" v-if="page.pager.groupNo>1" @click="changePageNo(page.pager.startPageNo-1)">이전</button>
+        <button class="btn btn-sm" v-for="pageNo in page.pager.pageArray" :key="pageNo" @click="changePageNo(pageNo)">{{pageNo}}</button>
+        <button class="btn btn-sm" v-if="page.pager.groupNo<page.pager.totalGroupNo" @click="changePageNo(page.pager.endPageNo+1)">다음</button>
+        <button class="last btn btn-sm" @click="changePageNo(page.pager.totalPageNo)">마지막</button>
+    </div>
 
 </template>
 
 <script setup>
 import classAPI from '@/apis/classAPI';
 import store from '@/store';
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import { useRoute } from 'vue-router';
+import axios from 'axios';
 
+const mid = store.state.userId
+const reviewMid = ref()
 
+//댓글
 const reviewInit = ref({});
 const review = ref({});
 const reviewArray = ref([]);
+
+//클래스 번호 가져오기
 const route = useRoute();
 const cno = route.query.cno;
 
+//v-if 변수
 const isReview = ref(true);
 const isReviewArray = ref([]);
+
+//페이지네이션 변수
+//const pageNo = ref(route.query.pageNo||1);
+const pageNo = ref(1);
+const page=ref({
+    pager:{}
+})
+//const pager = ref({})
+
+//리뷰 등록 전 초기 평점
+let avgCrratio = ref(0);
 
 //별점 체크 디폴트값 설정
 const starClick = ref(0);
@@ -166,14 +195,9 @@ function starCheck(index) {
 
 //별점 수정 함수
 function starCheckUpdate(index, starIndex) {
-    //console.log("어레이인덱스",index)  
-    //console.log("별인덱스",starIndex)
     reviewArray.value[index].crratio = starIndex;
     //return classAPI.reviewUpdate(JSON.parse(JSON.stringify(reviewArray.value[index])));
 }
-
-//리뷰 등록 전 초기 평점 선언
-let avgCrratio = ref(0);
 
 //날짜 형식 함수
 function dateFormat(date) {
@@ -182,7 +206,6 @@ function dateFormat(date) {
     '-' + (date.getDate() < 10 ? "0" + date .getDate() : date.getDate());
     return dateFormat;
 }
-
 
 async function reviewInsertValid() {
     //출결 여부 확인 후 출결한 사람에 한해서 댓글 등록할 수 있도록 해주기
@@ -253,22 +276,23 @@ async function reviewInsert() {
 
 //------- review data read function ---------------------------------------------------------------------------------------------- 
 
-
-async function getReview(cno) {
-    console.log("클래스번호", cno)
+async function getReview(cno, pageNo) {
     try{
-        const response1 = await classAPI.reviewRead(cno);
-        reviewArray.value = response1.data.classReviewList;
+        const response = await classAPI.reviewRead(cno, pageNo);
+        reviewArray.value = response.data.classReviewList;
+        page.value.pager= response.data.pager;
+
         if (reviewArray.value.length==0) {
         isReview.value = false
         } else {
-            avgCrratio.value = response1.data.avgCrratio;
+            avgCrratio.value = response.data.avgCrratio;
             for(let i=0; i<reviewArray.value.length; i++){
                 reviewArray.value[i].crdate = dateFormat(new Date(reviewArray.value[i].crdate));
                 // review 정보 수정 취소 버튼 클릭시 초기값으로 돌려주기 위한 설정
                 reviewArray.value[i].originalCrtitle = reviewArray.value[i].crtitle;
                 reviewArray.value[i].originalCrcontent = reviewArray.value[i].crcontent;
                 reviewArray.value[i].originalCrratio = reviewArray.value[i].crratio;
+                //reviewMid.value[i] = reviewArray.value[i].mid
                 if(reviewArray.value[i].mid == store.state.userId) {
                     isWriter.value[i] = true;
                 } else {
@@ -283,9 +307,15 @@ async function getReview(cno) {
     console.log("리뷰어레이 길이:" , reviewArray.value.length);
     console.log("리뷰 목록:", JSON.parse(JSON.stringify(reviewArray.value)));
     console.log("isWriter", isWriter.value)
+    console.log("reviewArray.value", reviewArray.value)
 }
 
-getReview(cno);
+getReview(cno, pageNo.value);
+
+//페이지를 변경했을 때 해당 페이지의 댓글을 가져오는 함수
+function changePageNo(pageNo){
+    getReview(cno, pageNo);
+}
 
 //------- review data update function ---------------------------------------------------------------------------------------------- 
 

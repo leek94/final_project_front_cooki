@@ -76,8 +76,8 @@ function qnaRegister(qnaData){
     return axios.post("/class/qnaRegister", qnaData);
 }
 
-function qnaRead(cno){
-    return axios.get("/class/qnaList/" + cno);
+function qnaRead(cno, pageNo=1){
+    return axios.get("/class/qnaList/" + cno, {params: {pageNo:pageNo}});
 }
 
 function qnaUpdate(qnaData){
@@ -96,8 +96,8 @@ function reviewRegister(reviewData) {
     return axios.post("/class/reviewRegister", reviewData)
 }
 
-function reviewRead(cno){
-    return axios.get("/class/reviewList/" + cno)
+function reviewRead(cno, pageNo=1){
+    return axios.get("/class/reviewList/" + cno, {params: {pageNo:pageNo}})
 }
 
 function reviewUpdate(reviewData){
@@ -120,6 +120,9 @@ function reopenClass(reformData){
 }
 function reopenClassCurri(reformCurri){
     return axios.post("/class/reopenCurriInsert",reformCurri)
+}
+function deleteClass(cno){
+    return axios.put("/class/classDelete/"+cno);
 }
 export default {
     classRegister,
@@ -148,6 +151,7 @@ export default {
     getParticpantList,
     saveAttedenceList,
     reopenClass,
-    reopenClassCurri
+    reopenClassCurri,
+    deleteClass
 
 }

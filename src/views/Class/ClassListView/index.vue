@@ -155,7 +155,6 @@ const setActive = (index) => {
 //pager
 function changePageNo(argpageNo){
     router.push(`/class/classListView?pageNo=${argpageNo}&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=${data.value.searchSort}`);
-    
 }
 
 //같은 페이지->같은 페이지로 이동했을 때 

@@ -8,20 +8,34 @@
         </div>
  
         <hr class="mt-0"/>
-        <div class="d-flex" style="flex-wrap: wrap;" >
+        <div class="d-flex" style="flex-wrap: wrap;" v-if="page.pager.totalRows !==0">
             <div class="qcard" v-for="(recards,index) in recipeCard" :key="index" @click="routerLinkto(index)">
                     <MypageRecipeCard :objectProp="recards" @click="handleClick(index)"/>
             </div>
         </div>
+
+        <div class="text-center mt-5"  v-if="page.pager.totalRows !==0">
+                <button class="initial btn btn-sm" @click="changePageNo(1)"> 처음 </button>
+                <button class="prev btn btn-sm" v-if="page.pager.groupNo>1" @click="changePageNo(page.pager.startPageNo-1)">이전</button>
+                <button class="btn btn-sm" v-for="pageNo in page.pager.pageArray" :key="pageNo" @click="changePageNo(pageNo)">{{pageNo}}</button>
+                <button  class="btn btn-sm" v-if="page.pager.groupNo<page.pager.totalGroupNo" @click="changePageNo(page.pager.endPageNo+1)">다음</button>
+                <button class="last btn btn-sm" @click="changePageNo(page.pager.totalPageNo)">마지막</button>
+        </div>
+    </div>
+
+    <div v-if="page.pager.totalRows ===0" style="margin-top:100px">
+                <div style="margin: 60px auto; text-align: center">
+                    <h5>검색어어가 존재하지 않습니다.</h5>
+                </div>
     </div>
 </template>
  
 <script setup>
 import memberAPI from '@/apis/memberAPI';
 import MypageRecipeCard from '@/components/MypageRecipeCard.vue';
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useStore } from 'vuex';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
  
 function handleClick(index){
     console.log("내가 찜한 레시피");
@@ -32,9 +46,14 @@ function handleClick(index){
 
 const recipeCard = ref([ ]);
 const countR= computed(()=>recipeCard.value.length)
-
+const route = useRoute();
 const store = useStore();
 const mid = store.state.userId
+
+const page=ref({
+    pager:{}
+})
+const pageNo = ref(route.query.pageNo||1);
 
 //dateFormating (2024-06-28)
 function dateFormat(date) {
@@ -46,11 +65,10 @@ function dateFormat(date) {
 
 //내가 작성한 레시피 정보 읽어오기
 async function myRecipeRead() {
-    console.log("내아이디", mid)
     try{
-        const response = await memberAPI.getMyRecipe(mid);
+        const response = await memberAPI.getMyRecipe(mid, pageNo.value);
         recipeCard.value = response.data.myRecipeList;
-        console.log("레시피카드", recipeCard.value);
+        page.value.pager = response.data.pager;
         for(let i=0; i<recipeCard.value.length; i++) {
             recipeCard.value[i].rdate=dateFormat(new Date(recipeCard.value[i].rdate));
         }
@@ -58,6 +76,7 @@ async function myRecipeRead() {
         console.log(error);
     }
 }
+
 myRecipeRead();
 
 //카드 클릭 시 디테일 페이지로 가는 함수
@@ -65,6 +84,20 @@ const router= useRouter();
 function routerLinkto(index){
     router.push(`/Recipe/RecipeDetailView?rno=${recipeCard.value[index].rno}`);
 }
+
+function changePageNo(argpageNo){
+    router.push(`/Member/MypageView/MyRecipe?pageNo=${argpageNo}`);
+}
+
+watch(route,(newRoute,oldRoute) => {
+    if(newRoute.query.pageNo){ 
+        pageNo.value=newRoute.query.pageNo;
+        myRecipeRead();
+    } else {   
+        //pageNo가 존재하지 않으면 list를 다시 호출하기 위한 초기값을 설정해주는 것
+        pageNo.value=1;
+    }
+})
  </script>
  
  <style scoped>

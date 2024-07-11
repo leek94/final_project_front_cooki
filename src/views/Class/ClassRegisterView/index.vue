@@ -1,7 +1,20 @@
 <template>
-    <div class="d-flex flex-column justify-content-center align-items-center">
+    <div class="d-flex flex-column justify-content-center align-items-center" >
 
-        <div class="d-flex flex-column justify-content-center align-items-center w-50 my-5 p-3 rounded-4" style='background-color: #fff9e2;'>
+        <div class="d-flex flex-column justify-content-center align-items-center mt-5 p-3 rounded-4" style='width:850px'>
+
+            <div class="w-100 my-3">
+                <label class="form-label mb-3 fw-bold">카테고리</label>
+                <div class="d-flex " >
+                    <input type="button" class="category-button" value="한식" :class="{ active: activeIndex === 1 }" @click="handlecategory(1)">
+                    <input type="button" class="category-button" value="중식" :class="{ active: activeIndex === 2 }" @click="handlecategory(2)">
+                    <input type="button" class="category-button" value="일식" :class="{ active: activeIndex === 3 }" @click="handlecategory(3)">
+                    <input type="button" class="category-button" value="양식" :class="{ active: activeIndex === 4 }" @click="handlecategory(4)">
+                    <input type="button" class="category-button" value="디저트" :class="{ active: activeIndex === 5 }" @click="handlecategory(5)">
+                    <input type="button" class="category-button" value="베이커리" :class="{ active: activeIndex === 6 }" @click="handlecategory(6)">
+                </div>
+            </div>
+    
             <div class="w-100 my-3">
                 <label class="form-label mb-3">제목</label>
                 <input type="text" class="form-control" v-model="classes.ctitle" placeholder="클래스 이름을 입력해주세요.">
@@ -33,7 +46,7 @@
             </div>
         </div>
 
-        <div class="d-flex flex-column justify-content-center align-items-start w-50 mb-5 p-3 rounded-4" style='background-color: #fff9e2;'>
+        <div class="d-flex flex-column justify-content-center align-items-start mb-3 p-3 rounded-4" style='width:850px'>
             <div class="w-25 my-3">
                 <label class="form-label mb-3">모집 인원(5~30명 사이의 인원)</label>
                 <input type="number" class="form-control" v-model="classes.cpersoncount" min="5" max="30"  @change="isvalidPersonCount">
@@ -96,40 +109,49 @@
             </div>
         </div>
 
-        <div id="classItems" class="w-50 rounded-4 mb-5 p-3" style='background-color: #fff9e2;'>
-            <h5 class="my-3">주재료</h5>
+
+        <div id="classItems" class="rounded-4 mb-5 p-3" style='background-color: rgba(var(--bs-light-rgb));width:850px'>
+            <h5 class="my-3 fw-bold">주재료</h5>
             <div class="d-flex flex-column align-items-center mb-3">
                 <div class="d-flex justify-content-center align-items-center row w-100 mt-2" v-for="(classitem, index) in classitems" :key="index"  >
                     <div class="col-11 d-flex justify-content-center align-items-center m-0 p-0">
                         <input type="text" class="form-control w-100 me-1" v-model="classitem.ciname" placeholder="예) 다진 돼지고기 600g">
                     </div>
                     <div class="col-1 d-flex justify-content-start align-items-center m-0  p-0">
-                        <button class="btn bg-white me-1 w-50 d-flex justify-content-center align-items-center" v-if="index !== 0" @click="removeClassItem(index)">&#10134;</button>
-                        <button class="btn bg-white w-50 d-flex justify-content-center align-items-center" v-if="index + 1 === classitems.length" @click="addClassItem(index)">&#10133;</button>
+                        <button class="btn bg-white me-1 w-50 d-flex justify-content-center align-items-center text-success" v-if="index !== 0" @click="removeClassItem(index)">
+                            <i class="fa-solid fa-minus"></i>
+                        </button>
+                        <button class="btn bg-white w-50 d-flex justify-content-center align-items-center text-success" v-if="index + 1 === classitems.length" @click="addClassItem(index)">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div id="curiculums" class="w-50 mb-3" v-for="(curiculum, index) in curiculums" :key="index">
-            <div class="d-flex flex-column justify-content-center">
-                <h5 class="mb-3">Step.{{ index+1 }}</h5>
-                <div class="rounded-4 p-3 w-100" style='background-color: #fff9e2;'>
+        <div id="curiculums" class=" mb-3" v-for="(curiculum, index) in curiculums" :key="index" style="width:850px">
+            <div class="d-flex flex-column justify-content-center" >
+                <h5 class="mb-3 fw-bold text-success">Step.{{ index+1 }}</h5>
+                <div class="p-3 w-100" style='background-color: rgba(var(--bs-light-rgb));border-top:1px solid #15a775;border-radius: 0 0 5px 5px' >
                     <div class="cInputForm my-3">
                         <div class="mt-3" style="text-align: center;" v-show="isCuImg[index]"> 
                             <img class="rounded-4" style="width: 250px; height: 250px"/>
                         </div>
+<<<<<<< HEAD
                         <label class="form-label my-3"> 이미지</label>
+=======
+                        <label class="form-label my-3 fw-bold"> 이미지</label>
+>>>>>>> 0ff3302726f1a908eac7db9691661b696516178b
                         <input  type="file" class="form-control" ref="cuImgs" @change="setCuImg($event,index)">
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label mb-3">제목</label>
+                        <label class="form-label mb-3 fw-bold">제목</label>
                         <input type="text" class="form-control" v-model="curiculum.cutitle" placeholder="제목을 입력해주세요.">
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label mb-3">내용</label>
+                    <div class="mb-1">
+                        <label class="form-label mb-3 fw-bold">내용</label>
                         <textarea class="form-control" v-model="curiculum.cucontent" rows="5" 
                         placeholder="커리큘럼을 소개해주세요">
                         </textarea>
@@ -138,12 +160,14 @@
             </div>
         </div>
 
-        <div>
-            <button class="btn btn-outline-warning" @click="removeCu">단계 삭제하기</button>
-            <button class="btn btn-outline-warning" @click="addCu">단계 추가하기</button>
+        <div class="dd mt-3 d-flex text-center mb-5" style="justify-content: center;width:850px" >
+            <button class="prbtn btn" @click="removeCu" style="font-size:18px;">단계 삭제 - </button>
+            <button class="prbtn btn" @click="addCu"   style="font-size: 18px;">단계 추가 +</button>
         </div>
-
-        <button class="btn" @click="submitClass">저장 </button>
+        <div class="d-flex mb-5 text-center">
+            <RouterLink to="/class/ClassListView?pageNo=1"><button class="backList btn btn-outline-secondary btn-sm">취소</button></RouterLink>
+            <button class="backList btn btn-outline-success btn-sm ms-3" @click="submitClass">작성 하기</button>
+        </div>
     </div>
 </template>
 
@@ -191,7 +215,11 @@ const classes = ref({
 
 const presetImg = ref(null);
 let isPreImg = ref(false);
+const activeIndex = ref(null);
 
+const handlecategory = (index) => {
+    activeIndex.value = index;
+};
 
 const classitems = ref([
     {
@@ -424,9 +452,14 @@ function registerCuriculums(cno){
     return classAPI.curriculumRegister(cuFormData);
 }
 
-async function submitClass() {
-    let cno;    
+async function submitClass() { 
+    const iv = isValid();
+    if(!iv){
+        alert("모든 값을 입력해주세요");
+        return
+    }
 
+    let cno;   
     //----- 기본 정보 받기 -----
     try{
         //axios를 통해서 저장한 formData 전달하기
@@ -456,6 +489,40 @@ async function submitClass() {
      
 }
 
+function isValid(){
+    let iv = true;
+    
+    if(!activeIndex.value){
+        iv = false;
+    }
+
+    for(const v of Object.values(classes.value)){
+        if(!v){
+            iv=false;
+            break;
+        }
+    }
+
+    if(presetImg.value.files.length ===0){
+        iv = false
+    }
+
+    for(const v of classitems.value){
+        if(!v.ciname){
+            iv = false;
+            break;
+        }
+    }
+    
+    for(let i=0; i<curiculums.value.length; i++){
+        const cu = curiculums.value[i]
+        if(!cu.cutitle || !cu.cucontent || cuImgs.value[i].files.length ===0){
+            iv = false;
+            break;
+        }  
+    }
+    return iv;
+}
 
 </script>
 
@@ -478,6 +545,40 @@ swiper-slide {
 swiper-slide img {
     width: 100%;
     height: 100%;
+}
+
+.backList{
+    font-size: 1rem;
+    font-weight: bold;
+    padding:1.2rem 2.238rem 1.138rem 2.3rem; 
+    border-radius: 38px;
+    border-width: 2px;
+}
+.prbtn{
+    padding:0.65rem 1.5rem;
+    border:solid 1px #d4d4d4;
+    border-radius: 5px;
+    width: calc(100% - 2rem);
+    margin: 0 0.5rem;
+}
+
+.category-button{
+    margin-right: 0.5rem;
+    padding: 0.8rem 1.4rem;
+    border-radius: 2rem;
+    border: solid 1px #d4d4d4;
+    background-color: #fff;
+    margin: 0 10px;
+}
+
+.active{
+    background-color:#04AA6D !important;
+    color:#fff !important;
+}
+
+.select-button option:hover {
+  background-color: #04AA6D;
+  color: white;
 }
 
 </style>

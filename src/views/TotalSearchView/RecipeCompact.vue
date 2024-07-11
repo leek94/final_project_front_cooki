@@ -11,12 +11,12 @@
                 </div>
                 <div  v-if="recipeCardes.length !== 0 && data.searchText!==''">
                     <ul class="main-img d-flex">
-                        <RecipeCard v-for="(recard, index) in recipeCardes" :key="index" :objectProp="recard" @click="handleClick(index)"/>
+                        <RecipeCard v-for="(recard, index) in recipeCardes" :key="index" :objectProp="recard" @click="routerLinkTo(recard.rno)" @like="handleLike"/>
                     
                     </ul>
 
-                    <div class="d-flex justify-content-center">
-                        <button class="plus-button btn" @click="MovetoList">더보기</button>
+                    <div class="d-flex justify-content-center" v-if="recipeCardes.length !== page.pager.totalRows">
+                        <button class="plus-button btn" @click="appendList">더보기</button>
                     </div>
                 </div>
                     
@@ -35,16 +35,10 @@ const route=useRoute();
 const router=useRouter();
 
 const recipeCardes = ref([
-{
-    },
 ]);
-
-function handleClick(index) {
-    console.log(recipeCardes.value[index].isActive);
-    recipeCardes.value[index].isActive = !recipeCardes.value[index].isActive;
-    router.push(`/recipe/recipeDetailView?cno=${recipeCardes.value[index].rno}&pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=1`);
-    console.log(recipeCardes.value[index].isActive);
-}
+const page=ref({
+    pager:{}
+})
 
 const data= ref({
     searchTitle:'all',
@@ -55,13 +49,11 @@ const data= ref({
 data.value.searchTitle=route.query.searchTitle||'all';
 data.value.searchText=route.query.searchText||'';
 
-let countSearchClass= ref(null);
-
+let pageNo=1;
+const perPage=8;
 if(data.value.searchText!==''){
-    getSearchRecipe(1,4);
+    getSearchRecipe();
 }
-
-
 
 function dateFormat(date) {
     let dateFormat = date.getFullYear() +
@@ -70,20 +62,43 @@ function dateFormat(date) {
     return dateFormat;
 }
 
-async function getSearchRecipe(pageNo,perPage){
-    console.log("getclass 실행")
+
+async function getSearchRecipe(){
+
     const response = await recipeAPI.getRecipeList(JSON.parse(JSON.stringify(data.value)), pageNo,perPage)
-    recipeCardes.value=response.data.searchRecipe;
-    console.log(response.data.searchRecipe);
-    countSearchClass.value=recipeCardes.value.length;
-  
-}
-function MovetoList(){
-    router.push(`/recipe/recipeListView?pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=1`)
+
+    let rlData = response.data.searchRecipe
+    page.value.pager =  response.data.pager
+    //for문을 clData 배열에 있는 객체를 가져온다
+    for(let i=0;i<rlData.length;i++){
+            //dateformat
+            let date = new Date(rlData[i].rdate);
+            rlData[i].rdate= dateFormat(date);
+            //classCards 배열에 clData 객체 하나씩 할당 해준다(넣어준다)
+            recipeCardes.value.push(rlData[i])
+        }
 }
 
- function routerLinkTo(index){
-    router.push(`/recipe/recipeDetailView?cno=${recipeCardes.value[index].rno}&pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=1`);
+async function appendList(){
+    pageNo+=1
+    getSearchRecipe()
+}
+
+ function routerLinkTo(rno){
+    router.push(`/recipe/recipeDetailView?rno=${rno}&pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=1`);
+}
+
+function handleLike(rno){
+    for(let i=0; i<recipeCardes.value.length; i++){
+        if(recipeCardes.value[i].rno === rno){
+            recipeCardes.value[i].islike = !recipeCardes.value[i].islike;
+            if(recipeCardes.value[i].islike){
+                recipeCardes.value[i].likecount += 1;
+            }else{
+                recipeCardes.value[i].likecount -= 1;
+            }
+        }
+    }
 }
 
 watch(route,(newRoute,oldRoute)=>{

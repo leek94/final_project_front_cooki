@@ -58,20 +58,20 @@ function login(member){
 
 }
 
-function myClassHistory(mid) {
-    return axios.get("/member/myClassHistory/" + mid);
+function myClassHistory(mid,pageNo) {
+    return axios.get("/member/myClassHistory", {params:{mid,pageNo}} );
 }
 
-function myNowClass(mid) {
-    return axios.get("/member/myNowClass/" + mid);
+function myNowClass(mid, pageNo) {
+    return axios.get("/member/myNowClass", {params:{mid,pageNo}} );
 }
 
-function editorRecruitHistory(mid) {
-    return axios.get("/member/editorRecruitHistory/" + mid);
+function editorRecruitHistory(mid, pageNo) {
+    return axios.get("/member/editorRecruitHistory", {params:{mid,pageNo}});
 }
 
-function editorNowRecruit(mid) {
-    return axios.get("/member/editorNowRecruit/" + mid);
+function editorNowRecruit(mid, pageNo) {
+    return axios.get("/member/editorNowRecruit", {params:{mid,pageNo}});
 }
 
 function getEditorProfile(mid,mrole){
@@ -113,12 +113,24 @@ function updatePhonenum(member){
 }
 
 //마이페이지 내가 작성한 레시피 읽기
-function getMyRecipe(mid) {
-    return axios.get("/member/myRecipe/" + mid)
+function getMyRecipe(mid,pageNo) {
+    return axios.get("/member/myRecipe", {params:{mid,pageNo}});
 }
 
 function getMyLikeRecipe(mid) {
-    return axios.get("/member/myLikeRecipe/" + mid)
+    return axios.get("/member/myLikeRecipe/" + mid);
+}
+
+function searchId(member) {
+    return axios.post("/member/searchId", member);
+}
+
+function searchPW(member){
+    return axios.post("/member/searchPw", member)
+}
+
+function idCheck(mid){
+    return axios.get("/member/idCheck/" + mid)
 }
 
 export default{
@@ -144,4 +156,7 @@ export default{
     getMyRecipe,
     getMyLikeRecipe,
     updatePhonenum,
+    searchId,
+    searchPW,
+    idCheck,
 }

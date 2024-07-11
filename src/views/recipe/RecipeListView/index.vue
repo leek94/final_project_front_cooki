@@ -12,11 +12,9 @@
                 </p>
 
                 <div class="regist-recipe d-flex align-items-center justify-content-center">
-                    <!-- 라우터로 변경 예정 -->
-                    <RouterLink to="./RecipeRegisterView" class="regist-button">작성하기 &ensp;<i class="fa-solid fa-pen"></i></RouterLink>
+                    <div class="regist-button" @click="goRecipeRegister">작성하기 &ensp;<i class="fa-solid fa-pen"></i></div>
                 </div>
             </div>
-            <RouterLink to="./RecipeDetailView">레시피 디테일</RouterLink>
             <!-- main 시작 -->
             <div class="main-box ss">
                 <!-- 정렬 버튼 -->
@@ -32,7 +30,7 @@
                 
                 <div class="main-box ss">
                     <ul class="main-img d-flex ss">
-                        <RecipeCard v-for="(recard, index) in recipeCard" :key="index" :objectProp="recard" @click="routerLinkto(recard.rno)"/>
+                        <RecipeCard v-for="(recard, index) in recipeCard" :key="index" :objectProp="recard" @click="routerLinkto(recard.rno)" @like="handleLike"/>
                     </ul>
                 </div>
             </div>
@@ -62,6 +60,9 @@ import RecipeCard from '@/components/RecipeCard.vue';
 import recipeAPI from '@/apis/recipeAPI';
 import { ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+
+const store = useStore();
 
 const recipeCard = ref([
     {
@@ -123,7 +124,7 @@ async function searchresult(search){
    data.value.searchText=search.searchText
    data.value.searchTitle=search.searchTitle
    
-    router.push(`/recipe/recipeListView?pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=${data.value.searchSort}`);
+    router.push(`/Recipe/RecipeListView?pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=${data.value.searchSort}`);
 }
 
 // 정렬을 위한 코드
@@ -137,7 +138,26 @@ const setActive = (index) => {
 };
 
 function changePageNo(argpageNo){
-    router.push(`/recipe/recipeListView?pageNo=${argpageNo}&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=${data.value.searchSort}`);
+    router.push(`/Recipe/RecipeListView?pageNo=${argpageNo}&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=${data.value.searchSort}`);
+}
+
+function handleLike(rno){
+    for(let i=0; i<recipeCard.value.length; i++){
+        if(recipeCard.value[i].rno === rno){
+            recipeCard.value[i].islike = !recipeCard.value[i].islike;
+            if(recipeCard.value[i].islike){
+                recipeCard.value[i].likecount += 1;
+            }else{
+                recipeCard.value[i].likecount -= 1;
+            }
+        }
+    }
+}
+
+function goRecipeRegister(){
+    if(store.state.userId !== ""){
+        router.push("/Recipe/RecipeRegisterView");
+    }
 }
 
 //같은 페이지->같은 페이지로 이동했을 때 

@@ -111,8 +111,6 @@
                 </div>
             </div>
 
-        
-
         <!-- 에디터한테만 보이는 화면 -->
         <div class="flex-grow-1 row mx-2 mb-3" v-if="mrole === 'ROLE_EDITOR'">
             <div class="d-flex justify-content-between">

@@ -4,7 +4,7 @@
      <h5 class="text-start mb-4" > - 내가 신청한 클래스 </h5>
          <div class="d-flex" style="font-size:20px">
              <p>총 &ensp;</p>
-             <p style="color:darkseagreen"> {{countClass}}</p>
+             <p style="color:darkseagreen"> {{ page.pager.totalRows }}</p>
              <p>개</p>
          </div>
  

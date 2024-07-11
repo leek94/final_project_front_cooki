@@ -284,7 +284,7 @@ getRecipeData(rno);
 
 .recipe-view-content{
     width: 100%;
-    max-width: 45rem;
+    max-width: 65rem;
     margin: 0 auto;
     padding: 3.75rem 0;
 }

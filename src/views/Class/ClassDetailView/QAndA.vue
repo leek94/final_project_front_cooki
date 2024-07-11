@@ -80,7 +80,7 @@
             <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${qna.mid}`" style="width: 50px; height: 50px;" v-if="isProfileIMGArray[index]">
             <div class="flex-grow-1 row my-3">
                  <div class="d-flex mb-1">
-                      <div class="me-3" style="font-weight: bold;">닉네임</div>
+                      <div class="me-3" style="font-weight: bold;">{{nickname}}</div>
                  </div>
                     <div class="w-100 row pe-5">
                         <div class="me-3" style="font-weight: bold;">제목 : </div>

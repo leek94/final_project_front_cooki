@@ -9,13 +9,13 @@
                     
                     <div class=" p-0 mb-4" style="position: relative; display: flex;" v-if="!showPassword" >
                         <input class="p-2 border" type="password" style="width: 100%;" v-model="member.mpassword" placeholder="비밀번호" />
-                        <button class="border-0 bg-white" style="position: absolute; top: 5px; bottom: 5px; right: 5px;" @click.prevent="showPasswordBtn">
+                        <button type="button" class="border-0 bg-white" style="position: absolute; top: 5px; bottom: 5px; right: 5px;" @click.prevent="showPasswordBtn">
                             <i class="fa-regular fa-eye border-0"></i>
                         </button>
                     </div>
                     <div class=" p-0 mb-4" style="position: relative; display: flex;" v-if="showPassword" >
                         <input class="p-2 border" style="width: 100%;" v-model="member.mpassword" placeholder="비밀번호"/>
-                        <button class="border-0 bg-white" style="position: absolute; top: 5px; bottom: 5px; right: 5px;" @click.prevent="showPasswordBtn">
+                        <button type="button" class="border-0 bg-white" style="position: absolute; top: 5px; bottom: 5px; right: 5px;" @click.prevent="showPasswordBtn">
                             <i class="fa-regular fa-eye-slash border-0"></i>
                         </button>
                     </div>

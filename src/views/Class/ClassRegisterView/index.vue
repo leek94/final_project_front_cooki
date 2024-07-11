@@ -137,11 +137,7 @@
                         <div class="mt-3" style="text-align: center;" v-show="isCuImg[index]"> 
                             <img class="rounded-4" style="width: 250px; height: 250px"/>
                         </div>
-<<<<<<< HEAD
-                        <label class="form-label my-3"> 이미지</label>
-=======
                         <label class="form-label my-3 fw-bold"> 이미지</label>
->>>>>>> 0ff3302726f1a908eac7db9691661b696516178b
                         <input  type="file" class="form-control" ref="cuImgs" @change="setCuImg($event,index)">
                     </div>
 

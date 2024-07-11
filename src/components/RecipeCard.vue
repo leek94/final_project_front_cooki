@@ -12,7 +12,7 @@
                 <div class="date border-left-solid">{{ prop.objectProp.rdate}}</div>
             </div>
             <div class="text text-start">
-                <h4>{{  prop.objectProp.rtitle }}</h4>
+                <h4 class="rtitle">{{  prop.objectProp.rtitle }}</h4>
                 <div class="d-flex justify-content-end">
                     <div class="me-2"><img src="/images/photos/ic_talk.png" width="25px">: {{ prop.objectProp.reviewcount }}</div>
                     <div class="me-2"><i class="fa-solid fa-heart like-heart" style="color:red;">&ensp;</i>{{  prop.objectProp.likecount }}</div>
@@ -134,5 +134,11 @@ ul{
 .image:hover img{
     transform: translate(-50%, -50%) scale(1.1);
     transition: all 0.2s linear;
+}
+.rtitle{
+    -webkit-box-orient: vertical;
+    line-clamp: 2; /* 최대 3줄까지만 표시 */
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 </style>

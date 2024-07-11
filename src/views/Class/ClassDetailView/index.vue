@@ -28,7 +28,7 @@
                         <li class="border-top pt-3 pb-3  ">
                             <div style="display:inline-block;text-align: center ;width:100%;padding:0px 5% 0px 5%;">
                                 <div style="display:inline-block;width:35%; border-right: 1px solid #dee2e6 ; margin-right: 50px;padding-right:50px">
-                                    <span style="display:inline-block;">강의 시간</span>
+                                    <div >강의 시간</div>
                                     <span class="fw-bold" style="display:inline-block;">{{info.cstarttime}}&nbsp;</span>
                                     <span class="fw-bold" style="display:inline-block;">- {{info.cendtime}}</span>
                                 </div>
@@ -58,7 +58,7 @@
                 </div>
     <hr/>
     <div class="d-flex" style="justify-content: end; align-items: center">
-        <div style="font-size: 26px;font-weight: bold; margin-right: 60px;">48,000원</div>
+        <div style="font-size: 26px;font-weight: bold; margin-right: 60px;">{{ info.cprice }}원</div>
             <button class="btn btn-success btn-lg" v-if="applyresult===0" @click="isParticipant(cno)">신청하기</button>
             <button class="btn btn-danger btn-lg" v-if="applyresult===1" @click="showDialogCancel">취소하기</button>
         <ClassOverPersonModal id="overPersonModal"/>
@@ -195,6 +195,8 @@ async function detailInfo(cno){
     let deadline = new Date(info.value.cdday);
     //클래스 dday 하루 전에 신청 마감 
     deadline.setDate(deadline.getDate() -1);
+    let date = new Date(info.value.cdday);
+    info.value.cdday= dateFormat(date);
     //클래스 참여자 수 
     countPerson.value= response.data.participants;
     console.log("몇명인지 확인 : " + countPerson.value);
@@ -363,6 +365,7 @@ async function realCancelDialog(cno){
     margin:0 auto;
     padding:6rem 0;
 }
+
 .ClassTitle{
     margin-top:30px;
     margin-bottom: 60px;
@@ -372,6 +375,7 @@ async function realCancelDialog(cno){
     text-align: start;
 
 }
+
 
 .ClassContent{
     resize:none;

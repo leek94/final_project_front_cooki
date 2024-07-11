@@ -73,7 +73,7 @@
         
     
         <!-- 댓글 수정하기 -->
-        <div class="d-flex p-2 m-2 border rounded" style="background-color: #FDFFAB;" v-if="isQnaArray[index]">
+        <div class="d-flex p-2 m-2 border rounded" style="background-color: #FCF6DE;" v-if="isQnaArray[index]">
             <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;">
             <div class="flex-grow-1 row my-3">
                  <div class="d-flex mb-1">
@@ -98,7 +98,7 @@
             <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;">
             <div class="flex-grow-1 row my-3">
                  <div class="d-flex mb-1">
-                      <div class="me-3" style="font-weight: bold;">닉네임</div>
+                      <div class="me-3" style="font-weight: bold;">에디터</div>
                  </div>
        
                     <div class="w-100 row pe-5">
@@ -118,7 +118,7 @@
                 <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;">
                 <div class="flex-grow-1 row my-3">
                     <div class="d-flex mb-1">
-                        <div class="me-3" style="font-weight: bold;">닉네임</div>
+                        <div class="me-3" style="font-weight: bold;">에디터</div>
                         <div style="color: grey; font-size: small">{{ qna.qreplydate }}</div>
                     </div>
                     <div style="color: grey;">
@@ -139,6 +139,14 @@
 
     <div class="d-flex p-5 m-5" style="justify-content: center; color: grey; font-weight: bold;" v-if="!isQna">등록된 문의가 없습니다. </div>
 
+    <!--페이지네이션-->
+    <div class="text-center" v-if="page.pager.totalRows!==0">
+        <button class="initial btn btn-sm" @click="changePageNo(1)"> 처음 </button>
+        <button class="prev btn btn-sm" v-if="page.pager.groupNo>1" @click="changePageNo(page.pager.startPageNo-1)">이전</button>
+        <button class="btn btn-sm" v-for="pageNo in page.pager.pageArray" :key="pageNo" @click="changePageNo(pageNo)">{{pageNo}}</button>
+        <button class="btn btn-sm" v-if="page.pager.groupNo<page.pager.totalGroupNo" @click="changePageNo(page.pager.endPageNo+1)">다음</button>
+        <button class="last btn btn-sm" @click="changePageNo(page.pager.totalPageNo)">마지막</button>
+    </div>
 </template>
 
 <script setup>
@@ -147,23 +155,31 @@ import classAPI from '@/apis/classAPI';
 import { useStore } from 'vuex';
 import { useRoute } from 'vue-router';
 
-// 추후 변경 예정
+//클래스 번호 가져오기
 const route = useRoute();
 const cno = route.query.cno;
 
+//v-if 변수
 const isQna = ref(true);
 const isQnaArray = ref([]);
 const isWrite = ref(false);
 const isWriteArray = ref([]);
+const isWriter = ref([]);
+const isEditor = ref([]);
 
+//댓글
 const qnaInit  = ref({});
 const qna = ref({});
 const qnaArray = ref([]);
 
 const store = useStore();
 
-const isWriter = ref([]);
-const isEditor = ref([]);
+//페이지네이션 변수
+//const pageNo = ref(route.query.pageNo||1);
+const pageNo = ref(1);
+const page=ref({
+    pager:{}
+})
 
 
 
@@ -196,11 +212,22 @@ async function qnaInsert() {
 
 //------- qna data read function ---------------------------------------------------------------------------------------------- 
 
-async function getQna(cno){
+//날짜 형식 함수
+function dateFormat(date) {
+    let dateFormat = date.getFullYear() +
+    '-' + ((date.getMonth() +1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) +
+    '-' + (date.getDate() < 10 ? "0" + date .getDate() : date.getDate());
+    return dateFormat;
+}
+
+async function getQna(cno, pageNo) {
     console.log("게시글번호: ", cno)
     try{
-        const response = await classAPI.qnaRead(cno);
+        const response = await classAPI.qnaRead(cno, pageNo);
         qnaArray.value = response.data.qnaList;
+        page.value.pager = response.data.pager;
+        //const pager = ref({}) 
+        //pager.value 안되는 이유.....?
         if(qnaArray.value.length==0) {
             isQna.value = false
         } else {
@@ -255,14 +282,11 @@ async function getQna(cno){
     console.log("작성자배열값", isWriter.value)
 }
 
-getQna(cno);
+getQna(cno, pageNo.value);
 
-//dateFormating (2024-06-28)
-function dateFormat(date) {
-    let dateFormat = date.getFullYear() +
-    '-' + ((date.getMonth() +1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) +
-    '-' + (date.getDate() < 10 ? "0" + date .getDate() : date.getDate());
-    return dateFormat;
+//페이지를 변경했을 때 해당 페이지의 댓글을 가져오는 함수
+function changePageNo(pageNo){
+    getQna(cno, pageNo);
 }
 
 //------- qna data update function ---------------------------------------------------------------------------------------------- 

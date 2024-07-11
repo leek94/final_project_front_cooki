@@ -11,7 +11,7 @@
                 </div>
                 <div  v-if="recipeCardes.length !== 0 && data.searchText!==''">
                     <ul class="main-img d-flex">
-                        <RecipeCard v-for="(recard, index) in recipeCardes" :key="index" :objectProp="recard" @click="handleClick(index)"/>
+                        <RecipeCard v-for="(recard, index) in recipeCardes" :key="index" :objectProp="recard" @click="handleClick(index)" @like="handleLike"/>
                     
                     </ul>
 
@@ -84,6 +84,19 @@ function MovetoList(){
 
  function routerLinkTo(index){
     router.push(`/recipe/recipeDetailView?cno=${recipeCardes.value[index].rno}&pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=1`);
+}
+
+function handleLike(rno){
+    for(let i=0; i<recipeCardes.value.length; i++){
+        if(recipeCardes.value[i].rno === rno){
+            recipeCardes.value[i].islike = !recipeCardes.value[i].islike;
+            if(recipeCardes.value[i].islike){
+                recipeCardes.value[i].likecount += 1;
+            }else{
+                recipeCardes.value[i].likecount -= 1;
+            }
+        }
+    }
 }
 
 watch(route,(newRoute,oldRoute)=>{

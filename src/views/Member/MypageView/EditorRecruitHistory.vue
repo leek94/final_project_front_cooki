@@ -45,6 +45,9 @@ function dateFormat(date) {
 
 const store = useStore();
 
+//문의 처리를 위한 변수
+const classQnaArray = ref([]);
+
 async function editorRecruitHistoryRead() {
     let mid = store.state.userId;
     console.log("내아이디: ", mid)
@@ -59,7 +62,17 @@ async function editorRecruitHistoryRead() {
             const response2 = await classAPI.classNowPerson(cno);
             cookClasses.value[i].nowPerson = response2.data.nowPerson;
             console.log("신청한 사람수", cookClasses.value[i].nowPerson)
-            
+            //클래스 미답변 문의댓글 갯수를 카운트
+            cookClasses.value[i].qreplyNullCount = 0;
+            const response3 = await classAPI.qnaRead(cno);
+            classQnaArray.value = response3.data.qnaList;
+            for(let j=0; j<classQnaArray.value.length; j++) {
+                if(classQnaArray.value[j].qreply==null) {
+                    cookClasses.value[i].qreplyNullCount += 1;
+                }
+            }
+            console.log("classQnaArray.value", classQnaArray.value)
+            console.log("cookClasses.value", cookClasses.value)
         }
     } catch(error) {
         console.log(error);

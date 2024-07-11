@@ -360,7 +360,6 @@ async function realCancelDialog(cno){
     // 모집인원 조회해야함
 }
 
-
 </script>
 
 <style scoped>

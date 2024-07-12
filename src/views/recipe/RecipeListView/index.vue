@@ -159,6 +159,8 @@ function goRecipeRegister(){
         router.push('/Member/LoginView');
         return;
     }
+    router.push("/Recipe/RecipeRegisterView");
+    return;
 }
 
 //같은 페이지->같은 페이지로 이동했을 때 

@@ -203,7 +203,10 @@ async function getReview(rno) {
     console.log("reviewArray.value", reviewArray.value)
 }
 
-getReview(rno);
+if(store.state.userId !== ""){
+    getReview(rno)
+}
+
 
 //------- review data update function ---------------------------------------------------------------------------------------------- 
 

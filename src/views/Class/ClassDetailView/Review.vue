@@ -286,22 +286,24 @@ const isProfileIMGArray = ref([]);
 let nickname = ref();
 
 async function getReview(cno, pageNo) {
-    try{
+        if(store.state.userId !== ""){
         //댓글 작성을 위한 로그인한 유저 닉네임 가져오는 로직
         const response = await memberAPI.getMyProfile(store.state.userId);
         nickname.value = response.data.member.mnickname
         console.log("닉네임", response.data.member.mnickname)
-
+        }
         const response1 = await classAPI.reviewRead(cno, pageNo);
         reviewArray.value = response1.data.classReviewList;
         page.value.pager= response1.data.pager;
 
         //댓글 등록 시에 보여지는 프로필 이미지 가져오는 로직
-        const response2 = await memberAPI.getMyProfile(store.state.userId);
-        if(response2.data.member.mimgoname==null) {
-            isProfileIMG.value = false;
-        } else {
-            isProfileIMG.value = true;
+        if(store.state.userId !== ""){
+            const response2 = await memberAPI.getMyProfile(store.state.userId);
+            if(response2.data.member.mimgoname==null) {
+                isProfileIMG.value = false;
+            } else {
+                isProfileIMG.value = true;
+            }
         }
 
         if (reviewArray.value.length==0) {
@@ -324,17 +326,17 @@ async function getReview(cno, pageNo) {
                 //등록된 댓글 프로필 이미지 가져오는 로직
                 //댓글배열의 mid를 매개변수로 axios 요청을 통해 받아오는 mimgoname이 null 값일 경우 public 이미지로 지정하는 v-if
                 //댓글배열의 mid를 매개변수로 axios 요청을 통해 받아오는 mimgoname 값이 있을 경우 img :src에 경로 지정하는 v-if 
-                const response3 = await memberAPI.getMyProfile(reviewArray.value[i].mid)
-                if(response3.data.member.mimgoname==null) {
-                    isProfileIMGArray.value[i] = false
-                } else {
-                    isProfileIMGArray.value[i] = true
+                if(store.state.userId !== ""){
+                    const response3 = await memberAPI.getMyProfile(reviewArray.value[i].mid)
+                    if(response3.data.member.mimgoname==null) {
+                        isProfileIMGArray.value[i] = false
+                    } else {
+                        isProfileIMGArray.value[i] = true
+                    }
                 }
             }
         }
-    } catch(error) {
-        console.log(error);
-    }
+ 
     console.log("별점 평균:" , avgCrratio.value);
     console.log("리뷰어레이 길이:" , reviewArray.value.length);
     console.log("리뷰 목록:", JSON.parse(JSON.stringify(reviewArray.value)));

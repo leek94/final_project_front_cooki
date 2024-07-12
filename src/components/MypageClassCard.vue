@@ -10,8 +10,8 @@
                                 <img :src="`${axios.defaults.baseURL}/class/thumbattach/${prop.objectProp.cno}/1`"> 
                             </div>
                             <div class="text-start" >
-                                <div class="class-text text-start">
-                                    <h6 style="font-weight: bold">{{ prop.objectProp.ctitle }}</h6>
+                                <div class="ctitle class-text text-start">
+                                    <div class="ctitle" style="font-weight: bold">{{ prop.objectProp.ctitle }}</div>
                                 </div>
                                 <div>
                                     <h6>모집강사 : {{ prop.objectProp.mname }}</h6>
@@ -28,7 +28,7 @@
                                 <!-- 클래스 카드의 버튼들은 해당 클래스를 개설한 에디터롤의 유저에게만 보여짐 -->
                                 <div v-if="store.state.mrole=='ROLE_EDITOR' && prop.objectProp.mid==store.state.userId">
                                     <button class="btn btn-sm w-100 mb-1"  @click.stop="participantList(index)">출석확인</button>
-                                    <button class="btn btn-sm w-100 mb-1">클래스 다시 열기</button>
+                                    <button class="btn btn-sm w-100 mb-1"  @click.stop="ReopenClass()">클래스 다시 열기</button>
                                     <button class="btn btn-sm w-100 mb-1" v-if="checker()>0">수정하기</button>
                                     <button class="btn btn-sm w-100">미답변 문의 <span style="color: red; font-weight: bold;">{{prop.objectProp.qreplyNullCount}}</span>개</button>
                                 </div>
@@ -44,8 +44,9 @@
 
 <script setup>
 import axios from 'axios';
+import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
-
+const router= useRouter();
 const store = useStore();
 const prop= defineProps([ "class","objectProp"])
 // D-Day 구하는 함수
@@ -58,7 +59,10 @@ const diff = cday - today; // 초 단위로 나와서 밑에서 변경해줘야�
 const diffDays = Math.ceil(diff / (1000 * 60 * 60 * 24));
 return diffDays
 }
-
+//클래스 다시 열기 => updateform으로 이동 
+function ReopenClass(){
+    router.push(`/class/classUpdateView?cno=${prop.objectProp.cno}&type=reopen`)
+} 
 console.log(prop.style)
 console.log("mid", prop.objectProp.mid)
 console.log("mid", store.state.userId)
@@ -134,5 +138,10 @@ console.log("mid", store.state.userId)
     background-color: #15a775;
     color: white;
 }
-
+.ctitle{
+    -webkit-box-orient: vertical;
+    line-clamp: 2; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 </style>

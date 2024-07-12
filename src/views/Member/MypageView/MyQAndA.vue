@@ -139,9 +139,7 @@ watch(route,(newRoute,oldRoute) => {
     font-weight: bold;
 }
 .qcont{
-   /* 텍스트 바디 한줄로 표시하는 css*/
-   display: -webkit-box; /* 웹킷 기반 브라우저에서 다음 속성을 사용하기 위한 설정 */
-   -webkit-line-clamp: 2; /* 원하는 줄 수 지정 */
+   line-clamp: 2; /* 원하는 줄 수 지정 */
    -webkit-box-orient: vertical; /* 수직으로 텍스트를 표시 */
    overflow: hidden; /* 넘치는 부분을 숨김 */
 

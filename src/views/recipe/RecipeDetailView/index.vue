@@ -12,7 +12,10 @@
                     <span class="label">레시피</span>
                     <h3 class="mb-4">{{ cookRecipes.rtitle}}</h3>
                     <div class="d-flex">
-                        <p class="me-3">{{ cookRecipes.rdate }}</p>
+                        <p class="me-3 fw-bold">{{ cookRecipes.rdate }}</p>
+                    </div>
+                    <div class="d-flex mt-4">
+                        <p class="me-3 fw-bold">{{ cookRecipes.mnickname }}</p>
                     </div>
                 </div>
             </div>
@@ -30,7 +33,7 @@
             <!-- 재료 -->
              <RecipeItems :objectProp="recipeItems" />
 
-            <div class="recipe-step mt-3">
+            <div class="recipe-step mt-5">
                 <div class="recipe-step-tit text-start">
                     <h4>한 단계씩 따라해 보세요😄</h4>
                 </div>
@@ -92,7 +95,7 @@ let searchText = route.query.searchText;
 let searchSort = route.query.searchSort;
 
 const cookRecipes = ref({
-    rtitle:'자작자작 서울식 소불고기',rdate:'2024.06.11 08:00' , rcontent:'촉촉하게, 감칠맛 가득 불고기 만드는 법! 좋아하는 채소와 떡, 당면 등 재료를 마음껏 추가해 완성',
+    rtitle:'',rdate:'' , rcontent:'',
     islike: false,
 });
 
@@ -106,6 +109,13 @@ const recipeCurriculumes = ref([
 
 let recipeItems = ref([]);
 register();
+
+function dateFormat(date) {
+    let dateFormat = date.getFullYear() +
+    '-' + ((date.getMonth() +1) < 10 ? "0" + (date.getMonth() + 1) : (date.getMonth() + 1)) +
+    '-' + (date.getDate() < 10 ? "0" + date .getDate() : date.getDate());
+    return dateFormat;
+}
 
 async function changeLike() {
     if(store.state.userId===""){
@@ -184,6 +194,8 @@ async function getRecipeData(rno){
     try{
         const response = await recipeAPI.recipeRead(rno);
         cookRecipes.value = response.data
+        let rdate=new Date(cookRecipes.value.rdate)
+        cookRecipes.value.rdate = dateFormat(rdate);
         console.log("디테일 성공");
     } catch{
         console.log("디테일 실패");
@@ -200,6 +212,7 @@ async function getRecipeData(rno){
         const response = await recipeAPI.processandItemRead(rno);
         const itemsData = response.data.recipeItems;
         for(let i=0; i<itemsData.length; i++){
+            
             Object.keys(itemsData[i]).forEach((keys)=>{
                 const content = itemsData[i][keys]
                 if(typeof content === "string"){

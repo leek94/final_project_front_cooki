@@ -172,8 +172,8 @@
         </div>
         <div class="d-flex mb-5 text-center">
             <RouterLink to="/recipe/classListView?pageNo=1"><button class="backList btn btn-outline-secondary btn-sm">취소</button></RouterLink>
-            <button class="backList btn btn-outline-success btn-sm ms-3" @click="submitClass">수정</button>
-            <button class="backList btn btn-outline-success btn-sm ms-3" @click="reopenClass">다시 열기</button>
+            <button class="backList btn btn-outline-success btn-sm ms-3"  v-if="type!=='reopen'" @click="submitClass">수정</button>
+            <button class="backList btn btn-outline-success btn-sm ms-3" v-if="type==='reopen'"  @click="reopenClass">다시 열기</button>
         </div>
     </div>
 </template>
@@ -190,9 +190,11 @@ import { useRoute } from 'vue-router';
 
 register();
 const route = useRoute();
-const cno = route.query.qno;
+const cno = route.query.cno;
 const imgCount = ref();
 let cuRow;
+const type= route.query.type
+console.log("ee"+type);
 
 const format = (date) => {
   const day = date.getDate();
@@ -381,7 +383,9 @@ function setTime(){
         isStart= false;
     }
 }
+function checkExpression(){
 
+}
 function execDaumPostcode() {
         new window.daum.Postcode({
             oncomplete: function(data) {
@@ -531,6 +535,12 @@ function updateCuriculum(index){
 }
 
 async function submitClass() {
+    const iv = isValid();
+    if(!iv){
+        alert("모든 값을 입력해주세요");
+        return
+    }
+
     let cno;    
 
     //----- 클래스 업데이트 -----
@@ -556,6 +566,12 @@ async function submitClass() {
 
 // 클래스 다시 열기---------------------------------------------------------------
 async function reopenClass(){
+    const iv = isValid();
+    if(!iv){
+        alert("모든 값을 입력해주세요");
+        return
+    }
+
     const initialLength=curiculums.value.length;
     let initCno=classes.value.cno;
     //class thumbnail을 받기 위해 formdata로 전송
@@ -615,6 +631,45 @@ async function reopenClass(){
         }
     }
     const response3= await classAPI.reopenClassCurri(curFormData);
+}
+function isValid(){
+    let iv = true;
+    
+    if(!activeIndex.value){
+        console.log("ddd")
+        iv = false;
+    }
+    if( classes.value.ctitle===null || 
+    classes.value.ccontent===null || 
+    classes.value.cpersoncount===null || 
+    classes.value.cdday=== null || 
+    classes.value.cstarttime=== null ||
+    classes.value.cendtim=== null || 
+    classes.value.caddress=== "" ||
+    classes.value.cdetailaddress=== "" ||
+    classes.value.cprice===null 
+    ) {
+        iv = false;
+    }
+
+    for(const v of classitems.value){
+        if(!v.ciname){
+            iv = false;
+            break;
+        }
+    }
+    
+    for(let i=0; i<curiculums.value.length; i++){
+        const cu = curiculums.value[i]
+        if(!cu.cutitle || !cu.cucontent){
+            iv = false;
+        }else if(i>=nowCuImgs.value.length){
+            if(!isCuImg.value[i]){
+                iv = false;
+            }
+        }  
+    }
+    return iv;
 }
 </script>
 

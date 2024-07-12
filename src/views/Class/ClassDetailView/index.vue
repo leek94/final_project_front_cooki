@@ -353,10 +353,10 @@ async function realCancelDialog(cno){
 .ClassTitle{
     margin-top:30px;
     margin-bottom: 60px;
-    margin-left:30px;
     font-size: 1.6rem;
     font-weight: bold;
     text-align: start;
+    word-wrap: break-word;
 
 }
 

@@ -24,7 +24,7 @@ function curriculumAndItemRead(cno) {
 
 //클래스 기본 정보 업데이트
 function classUpdate(classItems) {
-    return axios.put("/class/classUpdate", classItems);
+    return axios.post("/class/classUpdate", classItems);
 }
 
 //클래스 재료 정보 업데이트

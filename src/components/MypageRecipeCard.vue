@@ -19,7 +19,7 @@
                                 <div class="date border-left-solid">{{prop.objectProp.rdate}}</div>
                             </div>
                             <div class="text text-start">
-                                <div style="font-size: 20px; font-weight: bold">{{prop.objectProp.rtitle }}</div>
+                                <div class="rtitle" style="font-size: 20px; font-weight: bold">{{prop.objectProp.rtitle }}</div>
                                 <div class="d-flex justify-content-end mt-2">
                                     <div class="me-2"><i class="fa-solid fa-heart like-heart" style="color:red;">&ensp;</i>{{ prop.objectProp.likecount }}</div>
                                     <div><i class="fa-solid fa-eye">&ensp;</i>{{ prop.objectProp.rhitcount }}</div>
@@ -151,5 +151,10 @@ watch(prop, (newprop,oldprop) => {
     margin:0 1rem;
     width:245px;
  }
-
+.rtitle{
+    -webkit-box-orient: vertical;
+    line-clamp: 2; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 </style>

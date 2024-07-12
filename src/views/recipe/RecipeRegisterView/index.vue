@@ -10,8 +10,8 @@
                     <input type="button" class="category-button" value="중식" :class="{ active: activeIndex === 2 }" @click="handlecategory(2)">
                     <input type="button" class="category-button" value="일식" :class="{ active: activeIndex === 3 }" @click="handlecategory(3)">
                     <input type="button" class="category-button" value="양식" :class="{ active: activeIndex === 4 }" @click="handlecategory(4)">
-                    <input type="button" class="category-button" value="디저트" :class="{ active: activeIndex === 5 }" @click="handlecategory(5)">
-                    <input type="button" class="category-button" value="베이커리" :class="{ active: activeIndex === 6 }" @click="handlecategory(6)">
+                    <input type="button" class="category-button" value="베이커리" :class="{ active: activeIndex === 5 }" @click="handlecategory(5)">
+                    <input type="button" class="category-button" value="기타" :class="{ active: activeIndex === 6 }" @click="handlecategory(6)">
                 </div>
             </div>
             

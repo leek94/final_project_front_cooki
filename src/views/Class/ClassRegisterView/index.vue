@@ -175,10 +175,12 @@ import {ko} from "date-fns/locale";
 import { register } from 'swiper/element/bundle';
 import classAPI from '@/apis/classAPI';
 import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 
 register();
 
 const store = useStore();
+const router = useRouter();
 
 const format = (date) => {
   const day = date.getDate();
@@ -482,6 +484,7 @@ async function submitClass() {
     //여러 단계의 커리큘럼을 받기 위해 커리큘럼 배열의 길이만큼 for문 실행
     //<back>에 전달시 사진 하나하나를 여러번 전달해주는 문법 
     const response = await registerCuriculums(cno);
+    router.push(`/class/classDetailView?cno=${cno}`)
      
 }
 

@@ -28,7 +28,7 @@
                 <input type="button" class="category-button" value="일식" :class="{ active: activeIndex === '일식' }" @click="handlecategory('일식')">
                 <input type="button" class="category-button" value="양식" :class="{ active: activeIndex === '양식' }" @click="handlecategory('양식')">
                 <input type="button" class="category-button" value="디저트" :class="{ active: activeIndex === '디저트' }" @click="handlecategory('디저트')">
-                <input type="button" class="category-button" value="베이커리" :class="{ active: activeIndex === '베이커리' }" @click="handlecategory('베이커리')">
+                <input type="button" class="category-button" value="기타" :class="{ active: activeIndex === '기타' }" @click="handlecategory('기타')">
             </div>
         </div>
     </div>

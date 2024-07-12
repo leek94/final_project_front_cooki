@@ -225,6 +225,11 @@ watch(route,(newRoute,oldRoute) => {
     color: #fff;
     text-decoration: none;
     font-weight: bold;
+    cursor: pointer;
+}
+
+.regist-button:hover{
+    color: #15a775;
 }
 
 .top-box > img {

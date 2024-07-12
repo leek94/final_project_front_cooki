@@ -275,7 +275,7 @@ getRecipeData(rno);
 
 .inner{
     width: 100%;
-    max-width: 65rem;
+    max-width: 55rem;
     margin: 0 auto;
     text-align: left;
 }
@@ -298,7 +298,7 @@ getRecipeData(rno);
 
 .recipe-view-content{
     width: 100%;
-    max-width: 65rem;
+    max-width: 55rem;
     margin: 0 auto;
     padding: 3.75rem 0;
 }

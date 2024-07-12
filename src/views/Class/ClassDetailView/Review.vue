@@ -16,7 +16,7 @@
         <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${store.state.userId}`" style="width: 50px; height: 50px;" v-if="isProfileIMG">
         <div class="flex-grow-1 row my-3">
              <div class="d-flex mb-1">
-                  <div class="me-3" style="font-weight: bold;"></div>
+                  <div class="me-3" style="font-weight: bold;">{{ nickname }}</div>
              </div>
                 <!-- 별점 체크 -->
                 <!-- onclick 이벤트로 클릭스 하얀별에서 노란별로 바뀌고 폼 저장할 때 별점도 입력되게 하기 -->
@@ -101,12 +101,16 @@
             <!-- 리뷰 수정 -->
             <!-- 로그인 한 유저만 등록 가능 v-show로 -->
             <div class="d-flex p-2 m-2 border rounded bg-light" v-if="isReviewArray[index]">
-                <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;">
+                <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;" v-if="!isProfileIMGArray[index]">
+                <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${review.mid}`" style="width: 50px; height: 50px;" v-if="isProfileIMGArray[index]">
                 <div class="flex-grow-1 row my-3">
                     <div class="d-flex mb-1">
                         <div class="me-3" style="font-weight: bold;">{{ review.memberMid }}</div>
                     </div>
-                    <form>
+                    
+                        <div class="d-flex mb-1">
+                            <div class="me-3" style="font-weight: bold;">{{nickname}}</div>
+                        </div>
                         <!-- 별점 체크 수정 -->
                         <div class="d-flex pb-2" style="align-items: center;">
                             <div class="star" v-for="starIndex in 5" :key="starIndex" @click="starCheckUpdate(index,starIndex)">
@@ -117,6 +121,7 @@
                             <h6 class="m-2">평점을 입력해주세요</h6>
                         </div>
                         <!-- 문의 내용 수정 -->
+                        
                         <div class="w-100 row pe-5">
                             <div class="me-3" style="font-weight: bold;">제목 : </div>
                             <input class="p-3 ms-3 me-3 border rounded" style="color: grey;" v-model="review.crtitle">
@@ -127,7 +132,7 @@
                             <button class="px-2 mx-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="reviewUpdate(index)">등록</button>
                             <button class="px-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="reviewClose(index)">닫기</button>
                         </div>
-                    </form>
+                    
                 </div>
             </div>
         </div>
@@ -278,18 +283,27 @@ async function reviewInsert() {
 const isProfileIMG = ref();
 const isProfileIMGArray = ref([]);
 
+let nickname = ref();
+
 async function getReview(cno, pageNo) {
-    try{
+        if(store.state.userId !== ""){
+        //댓글 작성을 위한 로그인한 유저 닉네임 가져오는 로직
+        const response = await memberAPI.getMyProfile(store.state.userId);
+        nickname.value = response.data.member.mnickname
+        console.log("닉네임", response.data.member.mnickname)
+        }
         const response1 = await classAPI.reviewRead(cno, pageNo);
         reviewArray.value = response1.data.classReviewList;
         page.value.pager= response1.data.pager;
 
         //댓글 등록 시에 보여지는 프로필 이미지 가져오는 로직
-        const response2 = await memberAPI.getMyProfile(store.state.userId);
-        if(response2.data.member.mimgoname==null) {
-            isProfileIMG.value = false;
-        } else {
-            isProfileIMG.value = true;
+        if(store.state.userId !== ""){
+            const response2 = await memberAPI.getMyProfile(store.state.userId);
+            if(response2.data.member.mimgoname==null) {
+                isProfileIMG.value = false;
+            } else {
+                isProfileIMG.value = true;
+            }
         }
 
         if (reviewArray.value.length==0) {
@@ -312,17 +326,17 @@ async function getReview(cno, pageNo) {
                 //등록된 댓글 프로필 이미지 가져오는 로직
                 //댓글배열의 mid를 매개변수로 axios 요청을 통해 받아오는 mimgoname이 null 값일 경우 public 이미지로 지정하는 v-if
                 //댓글배열의 mid를 매개변수로 axios 요청을 통해 받아오는 mimgoname 값이 있을 경우 img :src에 경로 지정하는 v-if 
-                const response3 = await memberAPI.getMyProfile(reviewArray.value[i].mid)
-                if(response3.data.member.mimgoname==null) {
-                    isProfileIMGArray.value[i] = false
-                } else {
-                    isProfileIMGArray.value[i] = true
+                if(store.state.userId !== ""){
+                    const response3 = await memberAPI.getMyProfile(reviewArray.value[i].mid)
+                    if(response3.data.member.mimgoname==null) {
+                        isProfileIMGArray.value[i] = false
+                    } else {
+                        isProfileIMGArray.value[i] = true
+                    }
                 }
             }
         }
-    } catch(error) {
-        console.log(error);
-    }
+ 
     console.log("별점 평균:" , avgCrratio.value);
     console.log("리뷰어레이 길이:" , reviewArray.value.length);
     console.log("리뷰 목록:", JSON.parse(JSON.stringify(reviewArray.value)));

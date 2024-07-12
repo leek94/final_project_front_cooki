@@ -21,7 +21,8 @@
             </div>
             <div class="qcont mt-4"  style="font-size: 17px; font-weight:bold ;color:black;">
                 <diV style="padding:0 20px;">
-                   {{ qnaCard[index].qcontent}}</diV>
+                   {{ qnaCard[index].qcontent}}
+                </diV>
             </div>
             <div class="qdate mt-4 text-start" style="padding:0 20px; color:gray">{{ qnaCard[index].qdate }}</div>
         </div>     
@@ -138,10 +139,10 @@ watch(route,(newRoute,oldRoute) => {
     border-radius: 10px;
     font-weight: bold;
 }
+
 .qcont{
    line-clamp: 2; /* 원하는 줄 수 지정 */
    -webkit-box-orient: vertical; /* 수직으로 텍스트를 표시 */
    overflow: hidden; /* 넘치는 부분을 숨김 */
-
 }
 </style>

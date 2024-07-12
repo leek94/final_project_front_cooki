@@ -120,6 +120,7 @@ function dateFormat(date) {
 async function changeLike() {
     if(store.state.userId===""){
         router.push('/Member/LoginView');
+        return
     }
     let btn = document.getElementById("like");
     const islike = cookRecipes.value.islike;
@@ -274,7 +275,7 @@ getRecipeData(rno);
 
 .inner{
     width: 100%;
-    max-width: 45rem;
+    max-width: 65rem;
     margin: 0 auto;
     text-align: left;
 }
@@ -297,7 +298,7 @@ getRecipeData(rno);
 
 .recipe-view-content{
     width: 100%;
-    max-width: 45rem;
+    max-width: 65rem;
     margin: 0 auto;
     padding: 3.75rem 0;
 }

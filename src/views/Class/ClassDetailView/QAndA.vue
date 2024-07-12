@@ -80,7 +80,7 @@
             <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${qna.mid}`" style="width: 50px; height: 50px;" v-if="isProfileIMGArray[index]">
             <div class="flex-grow-1 row my-3">
                  <div class="d-flex mb-1">
-                      <div class="me-3" style="font-weight: bold;">닉네임</div>
+                      <div class="me-3" style="font-weight: bold;">{{nickname}}</div>
                  </div>
                     <div class="w-100 row pe-5">
                         <div class="me-3" style="font-weight: bold;">제목 : </div>
@@ -238,17 +238,19 @@ function dateFormat(date) {
 async function getQna(cno, pageNo) {
     console.log("게시글번호: ", cno)
 
-    //댓글 등록 시에 보여지는 프로필 이미지 가져오는 로직
-    const response1 = await memberAPI.getMyProfile(store.state.userId);
-    if(response1.data.member.mimgoname==null) {
-        isProfileIMG.value = false;
-    } else {
-        isProfileIMG.value = true;
-    }
+    if(store.state.userId !== ""){
+        //댓글 등록 시에 보여지는 프로필 이미지 가져오는 로직
+        const response1 = await memberAPI.getMyProfile(store.state.userId);
+        if(response1.data.member.mimgoname==null) {
+            isProfileIMG.value = false;
+        } else {
+            isProfileIMG.value = true;
+        }
 
-    //댓글 작성을 위한 로그인한 유저 닉네임 가져오는 로직
-    nickname.value = response1.data.member.mnickname
+        //댓글 작성을 위한 로그인한 유저 닉네임 가져오는 로직
+        nickname.value = response1.data.member.mnickname
     console.log("닉네임", response1.data.member.mnickname)
+    }
     
     try{
         const response2 = await classAPI.qnaRead(cno, pageNo);

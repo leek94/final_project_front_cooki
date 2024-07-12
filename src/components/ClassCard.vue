@@ -7,7 +7,7 @@
             </div>
             <div class="text-start" >
                 <div class=" class-text text-start">
-                    <h4 class="classti">{{ prop.objectProp.ctitle }}</h4>
+                    <h4 class="classti" style="height:65px;">{{ prop.objectProp.ctitle }}</h4>
                 </div>
                 <div>
                     <h6>모집강사 : {{ prop.objectProp.mname }}</h6>

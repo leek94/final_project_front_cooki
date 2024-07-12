@@ -30,7 +30,7 @@
                                     <button class="btn btn-sm w-100 mb-1"  @click.stop="participantList(index)">출석확인</button>
                                     <button class="btn btn-sm w-100 mb-1"  @click.stop="ReopenClass()">클래스 다시 열기</button>
                                     <button class="btn btn-sm w-100 mb-1" v-if="checker()>0">수정하기</button>
-                                    <button class="btn btn-sm w-100">미답변 문의 <span style="color: red; font-weight: bold;">{{prop.objectProp.qreplyNullCount}}</span>개</button>
+                                    <button class="btn btn-sm w-100" @click.stop="qna()">미답변 문의 <span style="color: red; font-weight: bold;">{{prop.objectProp.qreplyNullCount}}</span>개</button>
                                 </div>
                             </div>
                         </div>
@@ -43,10 +43,11 @@
 </template>
 
 <script setup>
+import router from '@/router';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
-const router= useRouter();
+
 const store = useStore();
 const prop= defineProps([ "class","objectProp"])
 // D-Day 구하는 함수
@@ -59,10 +60,22 @@ const diff = cday - today; // 초 단위로 나와서 밑에서 변경해줘야�
 const diffDays = Math.ceil(diff / (1000 * 60 * 60 * 24));
 return diffDays
 }
+
 //클래스 다시 열기 => updateform으로 이동 
 function ReopenClass(){
     router.push(`/class/classUpdateView?cno=${prop.objectProp.cno}&type=reopen`)
 } 
+
+
+// 출석 확인 하는 페이지로 이동
+function participantList() {
+    router.push(`/Class/ParticipantCheckView?cno=${prop.objectProp.cno}`)
+}
+
+function qna() {
+    router.push(`/Class/ClassDetailView/QAndA?cno=${prop.objectProp.cno}`)
+}
+
 console.log(prop.style)
 console.log("mid", prop.objectProp.mid)
 console.log("mid", store.state.userId)

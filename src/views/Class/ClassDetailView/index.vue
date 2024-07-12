@@ -123,10 +123,10 @@ const route= useRoute();
 register();
 //list에서 query로 받아오는 값들
 let cno=route.query.cno;
-let pageNo= route.query.pageNo;
-let searchTitle = route.query.searchTitle;
-let searchText = route.query.searchText;
-let searchSort = route.query.searchSort;
+let pageNo= route.query.pageNo||1;
+let searchTitle = route.query.searchTitle||'all';
+let searchText = route.query.searchText||'';
+let searchSort = route.query.searchSort||0;
 
 //클래스 신청 성공 시 모달
 let registerModal=null;

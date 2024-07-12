@@ -93,10 +93,10 @@ const route = useRoute();
 const rno = route.query.rno;
 const router = useRouter();
 
-let pageNo= route.query.pageNo;
-let searchTitle = route.query.searchTitle;
-let searchText = route.query.searchText;
-let searchSort = route.query.searchSort;
+let pageNo= route.query.pageNo||1;
+let searchTitle = route.query.searchTitle||'all';
+let searchText = route.query.searchText||'';
+let searchSort = route.query.searchSort||0;
 
 const cookRecipes = ref({
     rtitle:'',rdate:'' , rcontent:'',

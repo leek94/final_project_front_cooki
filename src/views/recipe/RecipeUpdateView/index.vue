@@ -105,9 +105,10 @@ import recipeAPI from '@/apis/recipeAPI';
 import EditorNowRecruit from '@/views/Member/MypageView/EditorNowRecruit.vue';
 import axios from 'axios';
 import { ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
-const route = useRoute()
+const route = useRoute();
+const router = useRouter();
 
 const presetImg = ref(null);
 let isPreImg = ref(false);
@@ -277,6 +278,8 @@ async function submitClass(){
         }
     }
     const response5= recipeAPI.processUpdate(processFormdata);
+    router.push(`./RecipeDetailView?rno=${rno}`);
+
 }
 
 </script>

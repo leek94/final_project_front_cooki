@@ -359,7 +359,12 @@ async function realCancelDialog(cno){
     CancelModal.hide();
     // 모집인원 조회해야함
 }
-
+function gotoupdatepage(){
+    router.push(`/class/classUpdateView?cno=${cno}`)
+}
+function gotodelete(){
+    const response = classAPI.deleteClass();
+}
 </script>
 
 <style scoped>

@@ -28,7 +28,7 @@
     
     <div v-if="page.pager.totalRows===0" style="margin-top:100px">
                 <div style="margin: 60px auto; text-align: center">
-                    <h5>검색어어가 존재하지 않습니다.</h5>
+                    <h5>클래스가 존재하지 않습니다.</h5>
                 </div>
     </div>
  </template>

@@ -137,7 +137,7 @@ ul{
 }
 .rtitle{
     -webkit-box-orient: vertical;
-    line-clamp: 2; /* 최대 3줄까지만 표시 */
+    line-clamp: 2; 
     overflow: hidden;
     text-overflow: ellipsis;
 }

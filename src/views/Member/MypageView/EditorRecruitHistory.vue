@@ -50,15 +50,6 @@ const page=ref({
 })
 const pageNo = ref(route.query.pageNo||1);
 
-// 출석 확인 하는 페이지로 이동
-function participantList(index) {
-    router.push(`/Class/ParticipantCheckView?cno=${cookClasses.value[index].cno}`)
-}
-
-//클래스 다시 열기 => updateform으로 이동 
-function ReopenClass(index){
-    router.push(`/class/classUpdateView?cno=${cookClasses.value[index].cno}`)
-}
 //dateFormating (2024-06-28)
 function dateFormat(date) {
     let dateFormat = date.getFullYear() +

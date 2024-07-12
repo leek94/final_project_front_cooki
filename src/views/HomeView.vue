@@ -178,13 +178,13 @@
             </div>
             <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 40%;">
               <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
-                <p class="fs-5 m-0 m-0 p-0">디저트</p>
+                <p class="fs-5 m-0 m-0 p-0">베이커리</p>
               </span>
               <p class="fs-5 m-0 mt-3 p-0">빵이 없다면???</p>
               <p class="fs-6 m-0 mt-3 p-0">
-                <span class="badge rounded-pill text-bg-light">#쿠키</span>
-                <span class="badge rounded-pill text-bg-light ms-1">#도넛</span>
-                <span class="badge rounded-pill text-bg-light ms-1">#찹쌀떡</span>
+                <span class="badge rounded-pill text-bg-light">#찰깨빵</span>
+                <span class="badge rounded-pill text-bg-light ms-1">#크로아상</span>
+                <span class="badge rounded-pill text-bg-light ms-1">#식빵</span>
               </p>
             </div>
          </swiper-slide>
@@ -194,9 +194,9 @@
             </div>
             <div class="m-0 p-0 d-flex flex-column justify-content-start align-items-start" style="width: 80%; height: 40%;">
               <span class="d-flex justify-content-center align-items-center badge rounded-pill text-bg-success m-0 mt-5 p-0" style=" width: 30%; height: 10%;">
-                <p class="fs-5 m-0 m-0 p-0">베이커리</p>
+                <p class="fs-5 m-0 m-0 p-0">기타</p>
               </span>
-              <p class="fs-5 m-0 mt-3 p-0">거부 할 수 없는 냄새</p>
+              <p class="fs-5 m-0 mt-3 p-0">아무거나</p>
               <p class="fs-6 m-0 mt-3 p-0">
                 <span class="badge rounded-pill text-bg-light">#찰깨빵</span>
                 <span class="badge rounded-pill text-bg-light ms-1">#크로아상</span>

@@ -33,23 +33,47 @@
             speed="800"
             space-between="30"
             autoplay-delay="3000">
-            <swiper-slide>
-              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[0].cno}/1`" class="rounded-4" @click="gotoClassDetail(classes[0].cno)"/>
+            <swiper-slide class="container" style="position: relative; text-align: start;">
+              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[0].cno}/1`" class="rounded-4" />
+              <div class="overlay rounded-4 ps-5" @click="gotoClassDetail(classes[0].cno)">
+                <img src="/images/assets/il_ribbon.png" style="z-index: 999; width: 10%; height: 10%; display: block;">
+                <h2 class="mt-5">{{ classes[0].ctitle }}</h2>
+              </div>
             </swiper-slide>
-            <swiper-slide>
-              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[1].cno}/1`" class="rounded-4" @click="gotoClassDetail(classes[1].cno)"/>
+            <swiper-slide  class="container" style="position: relative; text-align: start;">
+              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[1].cno}/1`" class="rounded-4"/>
+              <div class="overlay rounded-4 ps-5" @click="gotoClassDetail(classes[1].cno)">
+                <img src="/images/assets/il_ribbon.png" style="z-index: 999; width: 10%; height: 10%; display: block;">
+                <h2 class="mt-5">{{ classes[1].ctitle }}</h2>
+              </div>
             </swiper-slide>
-            <swiper-slide>
-              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[2].cno}/1`" class="rounded-4" @click="gotoClassDetail(classes[2].cno)"/>
+            <swiper-slide class="container" style="position: relative; text-align: start;">
+              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[2].cno}/1`" class="rounded-4"/>
+              <div class="overlay rounded-4 ps-5" @click="gotoClassDetail(classes[2].cno)">
+                <img src="/images/assets/il_ribbon.png" style="z-index: 999; width: 10%; height: 10%; display: block;">
+                <h2 class="mt-5">{{ classes[2].ctitle }}</h2>
+              </div>
             </swiper-slide>
-            <swiper-slide>
-              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[3].cno}/1`" class="rounded-4" @click="gotoClassDetail(classes[3].cno)"/>
+            <swiper-slide class="container" style="position: relative; text-align: start;">
+              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[3].cno}/1`" class="rounded-4"/>
+              <div class="overlay rounded-4 ps-5" @click="gotoClassDetail(classes[3].cno)">
+                <img src="/images/assets/il_ribbon.png" style="z-index: 999; width: 10%; height: 10%; display: block;">
+                <h2 class="mt-5">{{ classes[3].ctitle }}</h2>
+              </div>
             </swiper-slide>
-            <swiper-slide>
-              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[4].cno}/1`" class="rounded-4" @click="gotoClassDetail(classes[4].cno)"/>
+            <swiper-slide class="container" style="position: relative; text-align: start;">
+              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[4].cno}/1`" class="rounded-4"/>
+              <div class="overlay rounded-4 ps-5" @click="gotoClassDetail(classes[4].cno)">
+                <img src="/images/assets/il_ribbon.png" style="z-index: 999; width: 10%; height: 10%; display: block;">
+                <h2 class="mt-5">{{ classes[4].ctitle }}</h2>
+              </div>
             </swiper-slide>
-            <swiper-slide>
-              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[5].cno}/1`" class="rounded-4" @click="gotoClassDetail(classes[5].cno)"/>
+            <swiper-slide class="container" style="position: relative; text-align: start;"> 
+              <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[5].cno}/1`" class="rounded-4"/>
+              <div class="overlay rounded-4 ps-5" @click="gotoClassDetail(classes[5].cno)">
+                <img src="/images/assets/il_ribbon.png" style="z-index: 999; width: 10%; height: 10%; display: block;">
+                <h2 class="mt-5">{{ classes[5].ctitle }}</h2>
+              </div>
             </swiper-slide>
             </swiper-container>
        </div>
@@ -503,5 +527,24 @@ height: 100%;
 transform: scale(1.1);
 transition: all 0.2s linear;
 }
+
+.overlay {
+            position: absolute;
+            top: 0;
+            left: 10;
+            width: 96%;
+            height: 100%;
+            justify-content: start;
+            align-items: start;
+            background: rgb(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.2s;
+            color: white;
+	}
+
+.container:hover .overlay {
+            opacity: 1;
+}
+  
 
 </style>

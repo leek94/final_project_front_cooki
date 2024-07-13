@@ -289,7 +289,7 @@ function linktoRegister(){
 }
 .regit{
     position:fixed;
-    bottom:120px;
+    bottom:335px;
     right:175px;
 }
 .regitBtn > img{
@@ -300,7 +300,7 @@ function linktoRegister(){
 }
 .showRegit{
     position:fixed;
-    bottom:130px;
+    bottom:347px;
     right:45px;
     padding:12px 55px;
     margin-bottom: 20px;

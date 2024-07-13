@@ -22,7 +22,7 @@
             <div class="recipe-view-content">
                 <div class="recipe-content">
                     <div class="content-top">
-                        <h4>{{ cookRecipes.rcontent }}</h4>
+                        <h4 style="overflow: hidden; white-space: pre-wrap">{{ cookRecipes.rcontent }}</h4>
                     </div>
                     <img :src="`${axios.defaults.baseURL}/recipe/thumbattach/${rno}`" width="100%">
                 </div>
@@ -70,7 +70,7 @@
             <div style="text-align: center; margin-top: 100px;">
             <RouterLink :to="`/Recipe/RecipeListView?pageNo=${pageNo}&searchTitle=${searchTitle}&searchText=${searchText}&searchSort=${searchSort}`"><button class="backList btn btn-outline-success btn-sm">목록으로</button></RouterLink>
             </div>
-            <div style="text-align: center; margin-top: 30px;">
+            <div style="text-align: center; margin-top: 30px;" v-if="store.state.userId===cookRecipes.mid">
             <button class="backList btn btn-outline-success btn-sm me-3" @click="gotoupdatepage">수정하기</button>
             <button class="backList btn btn-outline-success btn-sm" @clcik="gotodelete">삭제하기</button>
             </div>
@@ -234,6 +234,15 @@ async function getRecipeData(rno){
 }
 
 getRecipeData(rno);
+
+function gotoupdatepage(){
+    router.push(`/recipe/recipeUpdateView?rno=${route.query.rno}`)
+}
+
+function gotodelete(){
+    const response= recipeAPI.deleteRecipe(route.query.rno)
+    router.push(`/recipe/recipeListView`)
+}
 </script>
 
 <style scoped>

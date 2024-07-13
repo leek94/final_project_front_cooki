@@ -38,8 +38,8 @@
         <div v-for="(review, index) in reviewArray" :key="index">
             <!-- 등록된 리뷰 보기 -->
             <div class="d-flex p-1" v-if="!isReviewArray[index]">
-                <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;" v-if="!isProfileIMGArray[index]">
-                <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${review.mid}`" style="width: 50px; height: 50px;" v-if="isProfileIMGArray[index]">
+                <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;" v-if="!review.mimgoname">
+                <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${review.mid}`" style="width: 50px; height: 50px;" v-if="review.mimgoname">
                 <div class="flex-grow-1 row my-3">
                     <div class="d-flex mb-1">
                         <div class="me-3" style="font-weight: bold;">{{ review.mnickname }}</div>
@@ -62,8 +62,8 @@
             <!-- 리뷰 수정 -->
             <!-- 로그인 한 유저만 등록 가능 v-show로 -->
             <div class="d-flex p-2 m-2 border rounded bg-light" v-if="isReviewArray[index]">
-                <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;" v-if="!isProfileIMGArray[index]">
-                <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${review.mid}`" style="width: 50px; height: 50px;" v-if="isProfileIMGArray[index]">
+                <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;" v-if="!review.mnickname">
+                <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${review.mid}`" style="width: 50px; height: 50px;" v-if="review.mnickname">
                 <div class="flex-grow-1 row my-3">
                     <div class="d-flex mb-1">
                         <div class="me-3" style="font-weight: bold;">{{ nickname }}</div>
@@ -105,6 +105,11 @@ const reviewArray = ref([]);
 const route = useRoute();
 const rno = route.query.rno;
 
+const pageNo = ref(1);
+const page=ref({
+    pager:{}
+})
+
 //v-if 변수
 const isReview = ref(true);
 const isReviewArray = ref([]);
@@ -145,67 +150,54 @@ async function reviewInsert() {
 
 //댓글 등록 시 프로필 이미지를 바인딩 하기 위한 변수
 const isProfileIMG = ref();
-const isProfileIMGArray = ref([]);
 
 let nickname = ref();
 
 async function getReview(rno) {
 
     //댓글 작성을 위한 로그인한 유저 닉네임 가져오는 로직
+    if(store.state.userId !== ""){
     const response = await memberAPI.getMyProfile(store.state.userId);
     nickname.value = response.data.member.mnickname
     console.log("닉네임", response.data.member.mnickname)
+    }
 
     try{
-        const response1 = await recipeAPI.recipeReviewList(rno);
+        const response1 = await recipeAPI.recipeReviewList(rno, pageNo.value);
         reviewArray.value = response1.data
-
-        //댓글 등록 시에 보여지는 프로필 이미지 가져오는 로직
-        const response2 = await memberAPI.getMyProfile(store.state.userId);
-        if(response2.data.member.mimgoname==null) {
-            isProfileIMG.value = false;
-        } else {
-            isProfileIMG.value = true;
+        if(store.state.userId !== ""){
+            //댓글 등록 시에 보여지는 프로필 이미지 가져오는 로직
+            const response2 = await memberAPI.getMyProfile(store.state.userId);
+            if(response2.data.member.mimgoname==null) {
+                isProfileIMG.value = false;
+            } else {
+                isProfileIMG.value = true;
+            }
         }
 
-        if (reviewArray.value.length==0) {
-        isReview.value = false
+        if (reviewArray.value.length === 0) {
+            isReview.value = false
         } else {
             for(let i=0; i<reviewArray.value.length; i++){
                 reviewArray.value[i].rrdate = dateFormat(new Date(reviewArray.value[i].rrdate));
                 // review 정보 수정 취소 버튼 클릭시 초기값으로 돌려주기 위한 설정
                 reviewArray.value[i].originalRrtitle = reviewArray.value[i].rrtitle;
                 reviewArray.value[i].originalRrcontent = reviewArray.value[i].rrcontent;
-               
-                if(reviewArray.value[i].mid == store.state.userId) {
+                
+                if(reviewArray.value[i].mid === store.state.userId) {
                     isWriter.value[i] = true;
                 } else {
                     isWriter.value[i] = false;
                 }
-                
-                //등록된 댓글 프로필 이미지 가져오는 로직
-                //댓글배열의 mid를 매개변수로 axios 요청을 통해 받아오는 mimgoname이 null 값일 경우 public 이미지로 지정하는 v-if
-                //댓글배열의 mid를 매개변수로 axios 요청을 통해 받아오는 mimgoname 값이 있을 경우 img :src에 경로 지정하는 v-if 
-                const response3 = await memberAPI.getMyProfile(reviewArray.value[i].mid)
-                if(response3.data.member.mimgoname==null) {
-                    isProfileIMGArray.value[i] = false
-                } else {
-                    isProfileIMGArray.value[i] = true
-                }
+            
             }
         }
     } catch(error) {
         console.log(error);
     }
-    console.log("리뷰어레이 길이:" , reviewArray.value.length);
-    console.log("리뷰 목록:", JSON.parse(JSON.stringify(reviewArray.value)));
-    console.log("isWriter", isWriter.value)
-    console.log("reviewArray.value", reviewArray.value)
 }
 
-if(store.state.userId !== ""){
-    getReview(rno)
-}
+getReview(rno)
 
 
 //------- review data update function ---------------------------------------------------------------------------------------------- 

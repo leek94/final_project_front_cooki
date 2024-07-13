@@ -12,7 +12,7 @@
                 <div class="date border-left-solid">{{ prop.objectProp.rdate}}</div>
             </div>
             <div class="text text-start">
-                <h4 class="rtitle" style="height:65px;">{{  prop.objectProp.rtitle }}</h4>
+                <h4 class="rtitle" style="height:60px;">{{  prop.objectProp.rtitle }}</h4>
                 <div class="d-flex justify-content-end">
                     <div class="me-2"><img src="/images/photos/ic_talk.png" width="25px">: {{ prop.objectProp.reviewcount }}</div>
                     <div class="me-2"><i class="fa-solid fa-heart like-heart" style="color:red;">&ensp;</i>{{  prop.objectProp.likecount }}</div>

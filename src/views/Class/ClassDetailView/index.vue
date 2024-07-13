@@ -47,9 +47,9 @@
                         <div class="d-flex" style="margin: 20px">
                             <div class="justify-content-center" style="text-align: center;">
                                 <img class="rounded-circle" style=" width:50px; height:50px; margin-right: 30px;" 
-                                src="/images/photos/profile.png" v-if="!isEditorProfile">
+                                src="/images/photos/profile.png" v-if="!info.mimgoname">
                                 <img class="rounded-circle" style=" width:50px; height:50px; margin-right: 30px;" 
-                                :src="`${axios.defaults.baseURL}/member/mattach/${info.mid}`" v-if="isEditorProfile">
+                                :src="`${axios.defaults.baseURL}/member/mattach/${info.mid}`" v-if="info.mimgoname">
                             </div>
                           <span style="align-content: center;">{{info.mnickname}}</span>
                         </div>
@@ -95,11 +95,11 @@
         <div style="text-align: center; margin-top: 100px;">
             <RouterLink :to="`/Class/ClassListView?pageNo=${pageNo}&searchTitle=${searchTitle}&searchText=${searchText}&searchSort=${searchSort}`"><button class="backList btn btn-outline-success btn-sm">목록으로</button></RouterLink>
         </div>
-        <div style="text-align: center; margin-top: 30px;">
+        <div style="text-align: center; margin-top: 30px;" v-if="store.state.userId===info.mid">
             <button class="backList btn btn-outline-success btn-sm me-3" @click="gotoupdatepage">수정하기</button>
-            <button class="backList btn btn-outline-success btn-sm" @clcik="gotodelete">삭제하기</button>
+            <button class="backList btn btn-outline-success btn-sm" @click="gotodelete">삭제하기</button>
         </div>
-        </div>
+    </div>
         
 </template>
 
@@ -114,10 +114,11 @@ import { Modal } from 'bootstrap';
 import classAPI from '@/apis/classAPI';
 import memberAPI from '@/apis/memberAPI';
 import axios from 'axios';
-import store from '@/store';
 import { useRoute, useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 const router = useRouter();
 const route= useRoute();
+const store= useStore();
 
 // register Swiper custom elements
 register();
@@ -163,9 +164,9 @@ let info = ref({
     cpersoncount:null,
     mnickname:"",
     cprice:"",
-    mid:""
+    mid:"",
+    mimgoname:""
 });
-
 //클래스 디테일 
 detailInfo(cno);
 console.log(cno);
@@ -182,8 +183,6 @@ function dateFormat(date) {
     '-' + (date.getDate() < 10 ? "0" + date .getDate() : date.getDate());
     return dateFormat;
 }
-
-const isEditorProfile = ref();
 
 // 클래스 디테일 정보 받기 
 // class 기본 정보, 신청자 수, 마감이 되었는 지, 내가 신청을 했는지 여부 
@@ -246,15 +245,6 @@ async function detailInfo(cno){
         }
     }
 
-
-
-    //댓글 등록 시에 보여지는 프로필 이미지 가져오는 로직
-    const response4 = await memberAPI.getMyProfile(info.value.mid);
-    if(response4.data.member.mimgoname==null) {
-        isEditorProfile.value = false;
-    } else {
-        isEditorProfile.value = true;
-    }
 }
 
 function checker(){
@@ -267,7 +257,7 @@ function checker(){
 }
 
 //for문으로 몇개의 이미지를 출력해야 하는 지를 알기 위한 상태값 
-const imgcount=ref(null);
+let imgcount=ref(null);
 
 thumbimgcount(cno);
 
@@ -355,15 +345,17 @@ async function realCancelDialog(cno){
     const response1 = await classAPI.classNowPerson(cno);
     console.log("취소후 확인 인원: " + response1.data.nowPerson);
     countPerson.value = response1.data.nowPerson;
-    applyresult.value=0;
+    applyresult.value=0; 
     CancelModal.hide();
     // 모집인원 조회해야함
 }
 function gotoupdatepage(){
     router.push(`/class/classUpdateView?cno=${cno}`)
 }
+
 function gotodelete(){
-    const response = classAPI.deleteClass();
+    const response = classAPI.deleteClass(info.value.cno);
+    router.push("/class/classListView")
 }
 </script>
 

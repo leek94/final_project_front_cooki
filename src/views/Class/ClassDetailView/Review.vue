@@ -11,7 +11,7 @@
 
     <!-- 댓글 등록 -->
     <!-- 로그인 한 유저만 등록 가능 v-show로 -->
-    <div class="d-flex p-2 m-2 border rounded bg-light" v-if="store.state.userId != ''">
+    <div class="d-flex p-2 m-2 border rounded bg-light" v-if="store.state.userId != '' && isParticipant == 1">
         <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;" v-if="!store.state.mimgoname">
         <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${store.state.userId}`" style="width: 50px; height: 50px;" v-if="store.state.mimgoname">
         <div class="flex-grow-1 row my-3">
@@ -26,7 +26,7 @@
                         <div v-show="index<=starClick"><img src="/images/photos/ic_star.png"> </div>
                         <div v-show="index>starClick"><img src="/images/photos/ic_star_white.png"></div>                
                     </div>
-                    <h6 class="m-2">평점을 입력해주세요</h6>
+                    <h6 class="m-2">별점을 입력해주세요</h6>
                 </div>
                 
                 <!-- 리뷰 내용 입력 -->
@@ -50,11 +50,11 @@
         </div>
     </div>
     <!-- 로그인 안했을 경우 v-if-->
-    <div class="d-flex p-2 m-2 border rounded bg-light" style="color: gray;" v-if="store.state.userId == ''">
+    <div class="d-flex p-2 m-2 border rounded bg-light" style="color: gray;" v-if="store.state.userId == '' || isParticipant == 0">
         <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;">
         <div class="flex-grow-1 row my-3" style="align-items: center;">
 
-            <h6 class="m-1"><RouterLink to="/Member/LoginView">로그인</RouterLink> 하시고 리뷰를 남겨보세요.</h6>
+            <h6 class="m-1">리뷰는 해당 클래스의 출석자에 한해서만 작성이 가능합니다 </h6>
         </div>
     </div>   
 
@@ -158,19 +158,24 @@ import { useRoute } from 'vue-router';
 import axios from 'axios';
 import { useStore } from 'vuex';
 
+//클래스 번호 가져오기
+const route = useRoute();
+const cno = route.query.cno;
+
 //댓글
 const reviewInit = ref({});
 const review = ref({});
 const reviewArray = ref([]);
 const store =useStore();
 
-//클래스 번호 가져오기
-const route = useRoute();
-const cno = route.query.cno;
+//댓글 유효성 검사를 위한 출석리트스
+const participantList = ref([]);
+const isParticipant = ref(0);
 
 //v-if 변수
 const isReview = ref(true);
 const isReviewArray = ref([]);
+
 
 //페이지네이션 변수
 //const pageNo = ref(route.query.pageNo||1);
@@ -210,51 +215,47 @@ function dateFormat(date) {
     return dateFormat;
 }
 
+
 async function reviewInsertValid() {
     //출결 여부 확인 후 출결한 사람에 한해서 댓글 등록할 수 있도록 해주기
-   
-    /*
-    const response = await classAPI.classRead(cno);
-    console.log("강의날짜: " , response.data.classes.cdday);
-    
-    //강의 날짜 체크
-    let today = new Date();
-    //console.log("오늘날짜: " , today); //Fri Jul 05 2024 11:36:36 GMT+0900 (한국 표준시)
-    let dday = new Date(response.data.classes.cdday);
-    //console.log("강의날짜데이터포맷팅: " , dday);
-    let dayCheck = false;
-    let testday1 = new Date("2025-06-01"); //오늘 7월 5일 true
+    const response = await classAPI.getParticpantList(cno);
+    participantList.value = response.data.participantList;
+    console.log("출석리스트", participantList.value);
+    for(let i=0; i<participantList.value.length; i++) {
+        console.log("participantList.value[i].mid",participantList.value[i].mid)
+        console.log("participantList.value[i].isParticipant", participantList.value[i].isParticipant)
+        if(participantList.value[i].mid === store.state.userId && participantList.value[i].isParticipant ==='1') {
+            isParticipant.value = 1;
+        } 
+        
+    }
+    console.log("isParticipant.value" , isParticipant.value)
+}
+reviewInsertValid()
+
  
-    //console.log("오늘연도",today.getFullYear(),"클래스연도",testday1.getFullYear())
-    if(today.getFullYear()>testday1.getFullYear()) {
-        //console.log("오늘연도",today.getFullYear(),"클래스연도",testday1.getFullYear())
-        dayCheck = true;
-    } else if (today.getFullYear()==testday1.getFullYear()) {
-        if(today.getMonth()>testday1.getMonth()) {
-            dayCheck = true;
-        } else if (today.getMonth()==testday1.getMonth()) {
-            if(today.getDate()>=testday1.getDate()){
-                dayCheck = true;
-            }
-        }
+/*
+async function reviewInsertValid() {
+    //출결 여부 확인 후 출결한 사람에 한해서 댓글 등록할 수 있도록 해주기
+    const response = await classAPI.getParticpantList(cno);
+    participantList.value = response.data.participantList;
+    console.log("출석리스트", participantList.value);
+    console.log("participantList.value.length", participantList.value.length)
+    for(let i=0; i<participantList.value.length; i++) {
+        if(participantList.value[i].mid === store.state.userId && participantList.value[i].isParticipant ==='1') {
+            isParticipant.value = 1;
+        } 
     }
-    console.log("데이체크 결과", dayCheck)
-
-    //강의 시간 체크
-    let nowtime = new Date().getHours();
-    let endtime = new Date(response.data.classes.cendtime).getHours();
-    let testtime = new Date("Fri Jul 05 2024 13:57:09").getHours();
-    console.log("nowtime:", nowtime, ", testtime ", testtime, ", endtime: ", endtime);
-    let timeCheck = false;
-    if(nowtime>testtime) {
-        timeCheck = true;
+    console.log("isParticipant.value", isParticipant.value)
+    if(isParticipant.value == 1) {
+        reviewInsert()
+    } else {
+        alert("리뷰 댓글은 해당 클래스의 출석자에 한해서만 작성이 가능합니다 ")
     }
-    console.log("타임체크 결과", timeCheck)
-    */
-
+   
 }
 
-//reviewInsertValid();
+*/
 
 //------- review data insert function ---------------------------------------------------------------------------------------------- 
 
@@ -262,15 +263,19 @@ async function reviewInsert() {
     //reviewArray.value.push({crtitle: review.value.crtitle, crcontent: review.value.crcontent, crratio: review.value.crratio })
     reviewInit.value = {crtitle: reviewInit.value.crtitle, crcontent: reviewInit.value.crcontent, crratio: reviewInit.value.crratio, cno: cno};
     console.log("리뷰데이터: ", JSON.parse(JSON.stringify(reviewInit.value)));
+    
     try{
-        const response  = await classAPI.reviewRegister(JSON.parse(JSON.stringify(reviewInit.value)));
-        isReview.value = true
-        getReview(cno);
-        console.log("리뷰있는지확인: " , isReview.value)
-        reviewInit.value.crtitle = '';
-        reviewInit.value.crcontent = '';
-        starClick.value = 0;
-        
+        if(reviewInit.value.crtitle == null || reviewInit.value.crtitle == '' || reviewInit.value.crcontent == null || reviewInit.value.crcontent == '' || starClick.value == 0) {
+            alert("별점, 제목, 내용을 모두 입력해주세요")
+        } else {
+            const response  = await classAPI.reviewRegister(JSON.parse(JSON.stringify(reviewInit.value)));
+            isReview.value = true
+            getReview(cno);
+            console.log("리뷰있는지확인: " , isReview.value)
+            reviewInit.value.crtitle = '';
+            reviewInit.value.crcontent = '';
+            starClick.value = 0;
+        }    
     } catch (error) {
         console.log(error);
     }

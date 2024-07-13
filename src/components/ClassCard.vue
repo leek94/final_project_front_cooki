@@ -106,8 +106,10 @@ return diffDays
     transition: all 0.2s linear;
 }
 .classti{
+    display: -webkit-box;
+    word-wrap: break-word;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    line-clamp: 2; /* 최대 3줄까지만 표시 */
     overflow: hidden;
     text-overflow: ellipsis;
 

@@ -11,7 +11,7 @@
                             </div>
                             <div class="text-start" >
                                 <div class="ctitle class-text text-start">
-                                    <div class="ctitle" style="font-weight: bold">{{ prop.objectProp.ctitle }}</div>
+                                    <div class="ctitle" style="font-weight: bold; height: 60px;">{{ prop.objectProp.ctitle }}</div>
                                 </div>
                                 <div>
                                     <h6>모집강사 : {{ prop.objectProp.mname }}</h6>
@@ -152,9 +152,12 @@ console.log("mid", store.state.userId)
     color: white;
 }
 .ctitle{
+    display: -webkit-box;
+    word-wrap: break-word;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    line-clamp: 2; 
     overflow: hidden;
     text-overflow: ellipsis;
+
 }
 </style>

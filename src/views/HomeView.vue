@@ -20,7 +20,7 @@
            <h1>요리 초보를 위한</h1>
            <h1>추천 클래스</h1>
            </div>
-           <span class="d-flex justify-content-between align-items-center badge rounded-pill text-bg-success m-0 p-0" style=" width: 80%; height: 15%;">
+           <span class="d-flex justify-content-between align-items-center badge rounded-pill text-bg-success m-0 p-0" style=" width: 80%; height: 15%;" @click="showMoreClass">
               <p class="fs-5 m-0 ms-4 p-0">클래스 더보기</p>
               <p class="fs-5 m-0 me-4 p-0">&#10011;</p>
            </span>
@@ -458,6 +458,10 @@ function gotoRecipeDetail(rno){
 
 function gotoClassLIst(category){
   router.push(`class/classListView?pageNo=1&searchTitle=category&searchText=${category}`);
+}
+
+function showMoreClass(){
+  router.push("/Class/ClassListView")
 }
 </script>
    

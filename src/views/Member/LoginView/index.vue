@@ -60,30 +60,34 @@ const midResultError = ref(false);
 const router = useRouter()
 
 async function handleLogin(){
+    console.log("로그인 실행")
     // 아무 값도 넣지 않았을 경우
     if(member.value.mid === "" || member.value.mpassword === ""){
         console.log("아이디 또는 비밀번호가 없습니다.");
         loginModal.show();
         // 정규화 형식이 맞을 경우 타는 if문
     } else if(midResultError.value !== true){
+        console.log("정규화 통과")
         try{
-        const data = JSON.parse(JSON.stringify(member.value));
-        //아이디와 토큰을 return받음
-        const response = await memberAPI.login(data);
-        console.log(response.data.mid)
-        if(response.data.result==="success"){
-            //store에서 saveAuth action을 실행시키기 위한 payload값 세팅
-            const payload={
-                userId:response.data.mid,
-                accessToken:response.data.accessToken,
-                mrole:response.data.mrole
-            };
-            store.dispatch("saveAuth",payload);
-            router.push("/")
-        } else { // 받아온 값이 success가 아닐경우 - 아이디와 비밀번호가 틀린 경우
-            console.log("로그인 실패");
-            loginModal.show();
-        }
+            const data = JSON.parse(JSON.stringify(member.value));
+            //아이디와 토큰을 return받음
+            console.log("정규화 통과1")
+            const response = await memberAPI.login(data);
+            console.log(response.data.mid)
+            console.log("정규화 통과2")
+            if(response.data.result==="success"){
+                //store에서 saveAuth action을 실행시키기 위한 payload값 세팅
+                const payload={
+                    userId:response.data.mid,
+                    accessToken:response.data.accessToken,
+                    mrole:response.data.mrole
+                };
+                store.dispatch("saveAuth",payload);
+                router.push("/")
+            } else { // 받아온 값이 success가 아닐경우 - 아이디와 비밀번호가 틀린 경우
+                console.log("로그인 실패");
+                loginModal.show();
+            }
         }catch(error){
             console.log(error);
         }

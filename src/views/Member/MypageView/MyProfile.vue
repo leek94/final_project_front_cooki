@@ -5,7 +5,7 @@
         
         <div class="row mx-2 mb-3">
             <li class="green-point m-3" >프로필 사진</li>
-            <img class="mx-3 mb-3 mt-1 " style="width: 160px; height: 150px" v-show="isPreImg === 0" src="/images/photos/profile.png"/> 
+            <img class="mx-3 mb-3 mt-1 " style="width: 160px; height: 145px" v-show="isPreImg === 0" src="/images/photos/profile.png"/> 
             <img class="myimg mx-3 mb-3 mt-1" style="width: 160px; height: 160px" v-show="isPreImg=== 2" :src="`${axios.defaults.baseURL}/member/mattach/${store.state.userId}`"/>
             <img class="myimg preImg mx-3 mb-3 mt-1"  style="width: 160px; height: 160px" v-show="isPreImg===1"/>
             <div class="input-group w-100">
@@ -30,7 +30,7 @@
             </li>
             <div class="d-flex input-group input-group-box" v-if="!editingMnickname">
                 <div class="mnicknameinput d-flex bg-light" style="height:50px; align-items: center">
-                    <div >{{ member.mnickname  }}</div>
+                    <div >{{ member.mnickname }}</div>
                 </div>
                 <button class="btn border" style="height:50px" type="button" id="button-addon2" @click="changeMnickname">변경</button>
             </div>
@@ -38,7 +38,7 @@
                 <input type="text" class="form-control input-box" v-model="member.mnickname" aria-label="Recipient's username" aria-describedby="button-addon2" @keyup="mnicknameCheck">
                 <button class="btn border" type="button" id="button-addon2" @click="savenickname" >저장</button>
             </div>
-            <div class="checkError m-2" v-if="mnicknameResultError">올바른 형식의 닉네임을 입력해주세요</div>
+            <div class="checkError m-2" v-if="mnicknameResultError">한글로된 닉네임을 입력해주세요</div>
         </div>
 
         <div class="flex-grow-1 row mx-2 mb-3">
@@ -152,8 +152,9 @@ import { useStore } from 'vuex';
 import axios from 'axios';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import store from '@/store';
 const router = useRouter();
-const store = useStore();
+// const store = useStore();
 
 const memberImg = ref(null);
 
@@ -176,6 +177,18 @@ async function submitImg(){
         myPageFormdata.append("mattach", preAttach.files[0]);
         try{
             const response = await memberAPI.updateImg(myPageFormdata);
+            console.log("콘솔실행1");
+            // 사진 변경시 imgoname이 있는지 확인하고 DB에서 값을 받아와서 '임시' 값을 넣어줌
+            // mutation으로 할 경우 localstorage에 저장이 안되서 action으로 사용 -> 다른 값도 다 넣어줘야함 action이 그렇게 설정되어 있음
+            const payload ={
+                userId:store.state.userId,
+                accessToken:store.state.accessToken,
+                mrole:store.state.mrole,
+                mimgoname:"임시이름 발급",
+                mnickname:store.state.mnickname
+            }
+            store.dispatch("saveAuth", payload);
+            console.log("콘솔실행2");
             router.go(0);
         } catch(error){
             console.log("에러남" + error);
@@ -259,6 +272,7 @@ function setPreviewImg(e){
 async function deletImg() {
     isPreImg.value = 0;
     await memberAPI.deleteMemberImg(store.state.userId);
+    store.dispatch("deleteImg")
     router.go(0);
 }
 
@@ -292,8 +306,6 @@ function mpasswordMatchCheck(){
 
     return mpasswordCheckResult;
 }
-
-
 
 // 비밀번호 업데이트
 async function changePassword() {
@@ -333,10 +345,19 @@ async function updateNickname(){
 function savenickname(){
     if(mnicknameResultError.value===false){
         editingMnickname.value= !editingMnickname.value;
+        const payload ={
+                userId:store.state.userId,
+                accessToken:store.state.accessToken,
+                mrole:store.state.mrole,
+                mimgoname:store.state.mimgoname,
+                mnickname:member.value.mnickname
+            }
+            store.dispatch("saveAuth", payload);
         updateNickname();
     }
 }
 
+// 핸드폰 번호 변경
 async function savephonenum() {
     if(mphonenumResultError.value===false){
         editingPhonenum.value = !editingPhonenum.value;

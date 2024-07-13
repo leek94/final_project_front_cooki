@@ -94,6 +94,10 @@ const store= createStore({
     context.commit("setMrole",payload.mrole);
     localStorage.setItem("mrole",payload.mrole);
    },
+   deleteImg(context){
+    context.commit("setMimgoname","")
+    localStorage.removeItem("mimgoname");
+   }
   },
   modules: {
     classes:classes

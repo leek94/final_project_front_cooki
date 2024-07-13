@@ -287,7 +287,7 @@
            >
             <swiper-slide v-for="(r, index) in recipe" :key="index">
               <div class="d-flex flex-column m-0 p-0" style="width:100%; height: 100%;">
-                <div class="d-flex flex-column justify-content-center align-items-start ms-3" style="height: 30%;">
+                <div class="d-flex flex-column justify-content-center align-items-start mx-5" style="height: 30%;">
                   <h3 class="text-start" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;">
                     {{r.rtitle}}
                   </h3>

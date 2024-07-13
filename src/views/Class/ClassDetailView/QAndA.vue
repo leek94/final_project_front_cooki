@@ -205,12 +205,18 @@ const page=ref({
 async function qnaInsert() {
     try{
         qnaInit.value = {qtitle: qnaInit.value.qtitle, qcontent: qnaInit.value.qcontent, cno: cno};
-        const response = await classAPI.qnaRegister(JSON.parse(JSON.stringify(qnaInit.value)));
-        isQna.value = true
-        getQna(cno);
-        qnaInit.value.qtitle = '';
-        qnaInit.value.qcontent = '';
-        console.log("작성자배열값", isWriter.value)
+        console.log("qnaInit.value.qtitle", qnaInit.value.qtitle)
+        console.log("qnaInit.value.qcontent", qnaInit.value.qcontent)
+        if(qnaInit.value.qtitle == null || qnaInit.value.qtitle == '' || qnaInit.value.qcontent == null || qnaInit.value.qcontent == '') {
+            alert("제목과 내용을 모두 입력해주세요")
+        } else {
+            const response = await classAPI.qnaRegister(JSON.parse(JSON.stringify(qnaInit.value)));
+            isQna.value = true
+            getQna(cno);
+            qnaInit.value.qtitle = '';
+            qnaInit.value.qcontent = '';
+            console.log("작성자배열값", isWriter.value)
+        }
     } catch(error) {
         console.log(error);
     }

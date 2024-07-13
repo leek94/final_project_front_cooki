@@ -26,7 +26,12 @@
 
     <div v-if="page.pager.totalRows ===0" style="margin-top:100px">
                 <div style="margin: 60px auto; text-align: center">
-                    <h5>검색어어가 존재하지 않습니다.</h5>
+                    <h5>내가 신청한 클래스가 없습니다.</h5>
+                    <div style="text-align: center; margin-top: 30px;">
+                        <RouterLink class="" to="/Class/ClassListView" style="text-align: center; text-decoration: none;font-size: 17px">
+                            <button class="backList btn btn-outline-success">클래스 신청하기</button>
+                        </RouterLink>
+                    </div>
                 </div>
     </div>
  </template>
@@ -106,4 +111,23 @@ watch(route,(newRoute,oldRoute) => {
  </script>
  
  <style scoped>
+.btn:hover {
+    background-color: #15a775;
+    color: white;
+    font-weight: bold;
+}
+
+.btn:active {
+    background-color: #15a775;
+    color: white;
+    font-weight: bold;
+}
+
+.backList{
+    font-size: 1rem;
+    font-weight: bold;
+    padding:1.5rem 2.938rem 1.438rem 3rem; 
+    border-radius: 38px;
+
+}
  </style>

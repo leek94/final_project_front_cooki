@@ -378,4 +378,15 @@ async function reviewDelete(index) {
 </script>
 
 <style scoped>
+.btn:hover {
+    background-color: #15a775;
+    color: white;
+    font-weight: bold;
+}
+
+.btn:active {
+    background-color: #15a775;
+    color: white;
+    font-weight: bold;
+}
 </style>

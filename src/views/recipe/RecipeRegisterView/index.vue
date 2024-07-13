@@ -17,7 +17,7 @@
             
             <div class="w-100 my-3">
                 <label class="form-label mb-3 fw-bold">제목</label>
-                <input type="text" class="form-control" v-model="recipe.rtitle" placeholder="클래스 이름을 입력해주세요.">
+                <input type="text" class="form-control" v-model="recipe.rtitle" placeholder="레시피 이름을 입력해주세요.">
             </div>
     
             <div class="w-100 mb-3">

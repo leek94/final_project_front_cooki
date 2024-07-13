@@ -492,4 +492,5 @@ function awardsRemove(index){
     flex:1 1 auto
 
 }
+
 </style>

@@ -4,11 +4,11 @@
     <!-- 댓글 등록 -->
     <!-- 로그인 한 유저만 등록 가능 v-show로 -->
     <div class="d-flex p-2 m-2 border rounded bg-light" v-if="store.state.userId != ''">
-        <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;" v-if="!isProfileIMG">
-        <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${store.state.userId}`" style="width: 50px; height: 50px;" v-if="isProfileIMG">
+        <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;" v-if="!store.state.mimgoname">
+        <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${store.state.userId}`" style="width: 50px; height: 50px;" v-if="store.state.mimgoname">
         <div class="flex-grow-1 row my-3">
              <div class="d-flex mb-1">
-                  <div class="me-3" style="font-weight: bold;">{{nickname}}</div>
+                  <div class="me-3" style="font-weight: bold;">{{$store.state.mnickname}}</div>
              </div>            
                 <!-- 리뷰 내용 입력 -->
                 <div class="w-100 row pe-5">
@@ -90,11 +90,10 @@
 
 <script setup>
 import recipeAPI from '@/apis/recipeAPI';
-import store from '@/store';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
-import memberAPI from '@/apis/memberAPI';
+import { useStore } from 'vuex';
 
 //댓글
 const reviewInit = ref({});
@@ -105,6 +104,7 @@ const reviewArray = ref([]);
 const route = useRoute();
 const rno = route.query.rno;
 
+const store = useStore();
 const pageNo = ref(1);
 const page=ref({
     pager:{}
@@ -149,32 +149,13 @@ async function reviewInsert() {
 //------- review data read function ---------------------------------------------------------------------------------------------- 
 
 //댓글 등록 시 프로필 이미지를 바인딩 하기 위한 변수
-const isProfileIMG = ref();
-
-let nickname = ref();
 
 async function getReview(rno) {
 
-    //댓글 작성을 위한 로그인한 유저 닉네임 가져오는 로직
-    if(store.state.userId !== ""){
-    const response = await memberAPI.getMyProfile(store.state.userId);
-    nickname.value = response.data.member.mnickname
-    console.log("닉네임", response.data.member.mnickname)
-    }
-
     try{
         const response1 = await recipeAPI.recipeReviewList(rno, pageNo.value);
-        reviewArray.value = response1.data
-        if(store.state.userId !== ""){
-            //댓글 등록 시에 보여지는 프로필 이미지 가져오는 로직
-            const response2 = await memberAPI.getMyProfile(store.state.userId);
-            if(response2.data.member.mimgoname==null) {
-                isProfileIMG.value = false;
-            } else {
-                isProfileIMG.value = true;
-            }
-        }
-
+        reviewArray.value = response1.data.recipeReviews
+        page.value.pager = response1.data.pager;
         if (reviewArray.value.length === 0) {
             isReview.value = false
         } else {

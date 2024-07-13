@@ -234,6 +234,7 @@ async function getRecipe(rno){
         nowRpImgs.value.push(true);
         isRpImg.value.push(false);
     }
+    handlecategory(recipe.value.ctno);
 }
 getRecipe(rno);
 

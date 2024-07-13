@@ -75,12 +75,14 @@ async function handleLogin(){
             const response = await memberAPI.login(data);
             console.log(response.data.mid)
             console.log("정규화 통과2")
+            console.log("오네임 확인" + response.data.mimgoname);
             if(response.data.result==="success"){
                 //store에서 saveAuth action을 실행시키기 위한 payload값 세팅
                 const payload={
                     userId:response.data.mid,
                     accessToken:response.data.accessToken,
-                    mrole:response.data.mrole
+                    mrole:response.data.mrole,
+                    mimgoname:response.data.mimgoname,
                 };
                 store.dispatch("saveAuth",payload);
                 router.push("/")

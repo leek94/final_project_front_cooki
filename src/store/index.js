@@ -8,7 +8,8 @@ const store= createStore({
   state: {
     userId: "",
     accessToken: "",
-    mrole:""
+    mrole:"",
+    mimgoname:"",
   },
 
   // 루트 상태를 읽는 메소드 정의
@@ -16,12 +17,14 @@ const store= createStore({
     getUserId(state, getters, rootState, rootGetters){
       return state.userId;
     },
-
     getAccesstoken(state, getters, rootState, rootGetters){
       return state.accessToken;
     },
     getMrole(state, getters, rootState, rootGetters){
       return state.mrole;
+    },
+    getMimgoname(state, getters, rootState, rootGetters){
+      return state.mimgoname;
     }
   },
 
@@ -36,6 +39,9 @@ const store= createStore({
     },
     setMrole(state, payload) {
       state.mrole = payload;
+    },
+    setMimgoname(state, payload){
+      state.mimgoname = payload;
     }
   },
 
@@ -53,9 +59,11 @@ const store= createStore({
     context.commit("setUserId",payload.userId);
     context.commit("setAccessToken", payload.accessToken);
     context.commit("setMrole",payload.mrole);
+    context.commit("setMimgoname", payload.mimgoname)
     localStorage.setItem("userId", payload.userId);
     localStorage.setItem("accessToken", payload.accessToken);
     localStorage.setItem("mrole",payload.mrole);
+    localStorage.setItem("mimgoname",payload.mimgoname);
     axiosConfig.addAuthHeader(payload.accessToken);
    },
    deleteAuth(context, payload){

@@ -217,7 +217,7 @@ getMyProfile();
 
 // 마이프로필로 값을 가져오는 함수
 async function getMyProfile() {
-    try{
+    try{   
             const response = await memberAPI.getMyProfile(store.state.userId);
             member.value = response.data.member;
             console.log("esdf"+response.data.member.oname);
@@ -225,7 +225,7 @@ async function getMyProfile() {
             if(response.data.member.mimgoname !== null){
                 isPreImg.value = 2;
             }
-
+            // 유저의 권한이 에디터일 경우 수상내역, 경력 불러옴  
         if(store.state.mrole === 'ROLE_EDITOR'){
             const response = await memberAPI.getEditorProfile(store.state.userId, store.state.mrole);
             careers.value = response.data.career;
@@ -236,8 +236,9 @@ async function getMyProfile() {
     }
         
 }
-
+// DB에 사진이 있는지 없는지 확인
 let isPreImg = ref(0);
+
 // 마이프로필 사진 미리 보기를 위한 로직
 function setPreviewImg(e){
     if(e.target.files.length !== 0){

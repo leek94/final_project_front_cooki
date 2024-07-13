@@ -2,17 +2,17 @@
         <div class="d-flex">
             <div class="mypage_bg"> 
                 <div>
-                    <img class="myimg" v-show="preImg === true" width="120px" height="120px" style="margin-top: 120px;" :src="`${axios.defaults.baseURL}/member/mattach/${store.state.userId}`"/>
-                    <img src="/images/photos/profile.png" v-show="preImg === false" width="120px" height="120px" style="margin-top: 120px; ">
+                    <img class="myimg" v-show="store.state.mimgoname" width="120px" height="120px" style="margin-top: 120px;" :src="`${axios.defaults.baseURL}/member/mattach/${store.state.userId}`"/>
+                    <img src="/images/photos/profile.png" v-show="!store.state.mimgoname" width="120px" height="120px" style="margin-top: 120px; ">
                 </div>
                 <div class="d-flex username" style="justify-content: center">
-                    <div style="color:#04AA6D">{{ member.mnickname }}</div>
+                    <div style="color:#04AA6D">{{ store.state.mnickname }}</div>
                     <div> &nbsp; 님</div>
-                 </div>
-                 <div>
+                </div>
+                <div>
                     <button class="btn btn-outline-success btn-md" v-if="store.state.mrole === 'ROLE_USER'" @click="EidtorModal">에디터 신청</button>
                     <EditorRegisterModal id="editorRegisterModal" @close="hideEditorform" @register="editorRegister"/>
-                    </div>
+                </div>
                 <ul style="list-style-type: none;margin-top:80px; padding:0px;">
                     
                     <li><RouterLink to="/Member/MypageView/MyRecipe">나의 레시피</RouterLink></li>
@@ -33,7 +33,6 @@
                         </ul>
                         </li>
                     </ul>
-                    
                 </ul>
             </div>   
             <div class="mypage_cont">
@@ -75,20 +74,6 @@ const member = ref({
     mid: '',
     mnickname: '',
 })
-const preImg = ref(false);
-
-getMypageprofile();
-
-async function getMypageprofile() {
-    const response = await memberAPI.getMyProfile(store.state.userId);
-    member.value = response.data.member;
-
-    if(response.data.member.mimgoname !== null){
-        preImg.value = true;
-    }
-
-
-}
 
 
 // 에디터만 볼 수 있는 페이지를 위한 변수 선언
@@ -101,6 +86,7 @@ console.log("롤", store.state.mrole);
 </script>
 
 <style scoped>
+
 .myimg{
     border-radius: 100px;
 }

@@ -86,7 +86,7 @@ async function handleLogin(){
                     mnickname:response.data.mnickname,
                 };
                 store.dispatch("saveAuth",payload);
-                router.push("/")
+                router.go(-1)
             } else { // 받아온 값이 success가 아닐경우 - 아이디와 비밀번호가 틀린 경우
                 console.log("로그인 실패");
                 loginModal.show();

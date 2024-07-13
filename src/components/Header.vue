@@ -34,10 +34,13 @@
 
 <script setup>
 import store from '@/store';
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRouter } from 'vue-router';
+
+const router= useRouter();
 
 function handleLogout(){
     store.dispatch("deleteAuth");
+    router.push("/");
 }
 
 </script>

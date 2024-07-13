@@ -22,7 +22,7 @@
             <div class="recipe-view-content">
                 <div class="recipe-content">
                     <div class="content-top">
-                        <h4>{{ cookRecipes.rcontent }}</h4>
+                        <h4 style="overflow: hidden; white-space: pre-wrap">{{ cookRecipes.rcontent }}</h4>
                     </div>
                     <img :src="`${axios.defaults.baseURL}/recipe/thumbattach/${rno}`" width="100%">
                 </div>

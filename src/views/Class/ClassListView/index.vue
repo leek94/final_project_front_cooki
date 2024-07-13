@@ -4,9 +4,6 @@
             <div class="recipe-title mb-5"></div>
             <!--검색바-->
             <SearchBar @searchword="searchresult"></SearchBar>
-
-            <!-- 작성바 & 작성 버튼 -->
-            <RouterLink to="./ClassRegisterView">클래스 등록</RouterLink>
             
             <!-- main 시작 -->
             <div class="main-box ss">
@@ -26,6 +23,16 @@
                     <!-- 클래스 카드 -->
                     <ClassCard v-for="(clcard, index) in classCard" :key="index" :objectProp="clcard"  @click="routerLinkto(index)"></ClassCard>
                     </ul>
+                </div>
+            </div>
+            <div v-if="store.state.mrole==='ROLE_EDITOR'">
+                <div>
+                    <button class="showRegit btn btn-success" @click="linktoRegister">당신의 클래스를<br> 등록해보세요</button>
+                </div>
+                <div class="regit">
+                    <button class="regitBtn btn" @click="linktoRegister" >
+                        <img src="/images/photos/cooki.png"/>
+                    </button>
                 </div>
             </div>
             <!--pagination-->
@@ -55,6 +62,9 @@ import SearchBar from '@/components/SearchBar.vue';
 import { Modal } from 'bootstrap';
 import { onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+
+const store=useStore();
 
 let searchModal=null;
 onMounted(()=>{
@@ -175,6 +185,10 @@ watch(route,(newRoute,oldRoute) => {
     }
 })
 
+
+function linktoRegister(){
+    router.push("/class/classRegisterView")
+}
 </script>
 
 <style scoped>
@@ -272,6 +286,27 @@ watch(route,(newRoute,oldRoute) => {
     padding: 0;
     margin: 0;
     flex-wrap: wrap;
+}
+.regit{
+    position:fixed;
+    bottom:120px;
+    right:175px;
+}
+.regitBtn > img{
+    position:absolute;
+    width:80px;
+    height:90px;
+    font-weight: 800;
+}
+.showRegit{
+    position:fixed;
+    bottom:130px;
+    right:45px;
+    padding:12px 55px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    border-radius: 40px;
+
 }
 
 </style>

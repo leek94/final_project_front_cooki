@@ -35,42 +35,42 @@
             autoplay-delay="3000">
             <swiper-slide class="container" style="position: relative; text-align: start;">
               <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[0].cno}/1`" class="rounded-4" />
-              <div class="overlay rounded-4 ps-5" @click="gotoClassDetail(classes[0].cno)">
+              <div class="overlay rounded-4 px-5" @click="gotoClassDetail(classes[0].cno)">
                 <img src="/images/assets/il_ribbon.png" style="z-index: 999; width: 10%; height: 10%; display: block;">
                 <h2 class="mt-5">{{ classes[0].ctitle }}</h2>
               </div>
             </swiper-slide>
             <swiper-slide  class="container" style="position: relative; text-align: start;">
               <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[1].cno}/1`" class="rounded-4"/>
-              <div class="overlay rounded-4 ps-5" @click="gotoClassDetail(classes[1].cno)">
+              <div class="overlay rounded-4 px-5" @click="gotoClassDetail(classes[1].cno)">
                 <img src="/images/assets/il_ribbon.png" style="z-index: 999; width: 10%; height: 10%; display: block;">
                 <h2 class="mt-5">{{ classes[1].ctitle }}</h2>
               </div>
             </swiper-slide>
             <swiper-slide class="container" style="position: relative; text-align: start;">
               <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[2].cno}/1`" class="rounded-4"/>
-              <div class="overlay rounded-4 ps-5" @click="gotoClassDetail(classes[2].cno)">
+              <div class="overlay rounded-4 px-5" @click="gotoClassDetail(classes[2].cno)">
                 <img src="/images/assets/il_ribbon.png" style="z-index: 999; width: 10%; height: 10%; display: block;">
                 <h2 class="mt-5">{{ classes[2].ctitle }}</h2>
               </div>
             </swiper-slide>
             <swiper-slide class="container" style="position: relative; text-align: start;">
               <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[3].cno}/1`" class="rounded-4"/>
-              <div class="overlay rounded-4 ps-5" @click="gotoClassDetail(classes[3].cno)">
+              <div class="overlay rounded-4 px-5" @click="gotoClassDetail(classes[3].cno)">
                 <img src="/images/assets/il_ribbon.png" style="z-index: 999; width: 10%; height: 10%; display: block;">
                 <h2 class="mt-5">{{ classes[3].ctitle }}</h2>
               </div>
             </swiper-slide>
             <swiper-slide class="container" style="position: relative; text-align: start;">
               <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[4].cno}/1`" class="rounded-4"/>
-              <div class="overlay rounded-4 ps-5" @click="gotoClassDetail(classes[4].cno)">
+              <div class="overlay rounded-4 px-5" @click="gotoClassDetail(classes[4].cno)">
                 <img src="/images/assets/il_ribbon.png" style="z-index: 999; width: 10%; height: 10%; display: block;">
                 <h2 class="mt-5">{{ classes[4].ctitle }}</h2>
               </div>
             </swiper-slide>
             <swiper-slide class="container" style="position: relative; text-align: start;"> 
               <img :src="`${axios.defaults.baseURL}/class/thumbattach/${classes[5].cno}/1`" class="rounded-4"/>
-              <div class="overlay rounded-4 ps-5" @click="gotoClassDetail(classes[5].cno)">
+              <div class="overlay rounded-4 px-5" @click="gotoClassDetail(classes[5].cno)">
                 <img src="/images/assets/il_ribbon.png" style="z-index: 999; width: 10%; height: 10%; display: block;">
                 <h2 class="mt-5">{{ classes[5].ctitle }}</h2>
               </div>
@@ -354,7 +354,7 @@
 </template>
    
 <script setup>
-import { onBeforeMount, onMounted, ref} from 'vue';
+import { onMounted, ref} from 'vue';
 import { register } from 'swiper/element/bundle';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
@@ -462,13 +462,13 @@ onMounted( () => {
 
 function stopAuto(){
   const classCenterSwiper = document.querySelector('.classCenterSwiper');
-  classCenterSwiper.swiper.autoplay.pause();
+  classCenterSwiper.swiper.autoplay.stop();
   isRun.value = !isRun.value;
 }
      
 function runAuto(){
   const classCenterSwiper = document.querySelector('.classCenterSwiper');
-  classCenterSwiper.swiper.autoplay.resume();
+  classCenterSwiper.swiper.autoplay.start();
   isRun.value = !isRun.value;
 }
 

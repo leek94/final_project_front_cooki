@@ -284,7 +284,6 @@
            space-between="30" 
            loop="true"
            speed="800"
-           autoplay-delay="3000"
            >
             <swiper-slide v-for="(r, index) in recipe" :key="index">
               <div class="d-flex flex-column m-0 p-0" style="width:100%; height: 100%;">
@@ -437,11 +436,11 @@ onMounted( () => {
   });
 
   left3.addEventListener("click", () => {
-    recipeCenterSwiper.swiper.slidePrev();
+    recipeCenterSwiper.swiper.slideNext();
   })
 
   right3.addEventListener("click", () => {
-    recipeCenterSwiper.swiper.slideNext();
+    recipeCenterSwiper.swiper.slidePrev();
   });
 
   function setProgressbar(){

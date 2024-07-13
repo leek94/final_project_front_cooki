@@ -83,6 +83,7 @@ async function handleLogin(){
                     accessToken:response.data.accessToken,
                     mrole:response.data.mrole,
                     mimgoname:response.data.mimgoname,
+                    mnickname:response.data.mnickname,
                 };
                 store.dispatch("saveAuth",payload);
                 router.push("/")

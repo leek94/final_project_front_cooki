@@ -10,6 +10,7 @@ const store= createStore({
     accessToken: "",
     mrole:"",
     mimgoname:"",
+    mnickname:"",
   },
 
   // 루트 상태를 읽는 메소드 정의
@@ -25,6 +26,9 @@ const store= createStore({
     },
     getMimgoname(state, getters, rootState, rootGetters){
       return state.mimgoname;
+    },
+    getMnickname(state, getters, rootState, rootGetters){
+      return state.mnickname;
     }
   },
 
@@ -42,6 +46,9 @@ const store= createStore({
     },
     setMimgoname(state, payload){
       state.mimgoname = payload;
+    },
+    setMnickname(state, payload){
+      state.mnickname = payload;
     }
   },
 
@@ -51,6 +58,8 @@ const store= createStore({
     const accessToken = localStorage.getItem("accessToken") || "";
     context.commit("setAccessToken",accessToken);
     context.commit("setMrole",localStorage.getItem("mrole") || "");
+    context.commit("setMimgoname",localStorage.getItem("mimgoname") || "");
+    context.commit("setMnickname",localStorage.getItem("mnickname") || "");
     if(accessToken !==""){
       axiosConfig.addAuthHeader(accessToken);
     }
@@ -60,19 +69,25 @@ const store= createStore({
     context.commit("setAccessToken", payload.accessToken);
     context.commit("setMrole",payload.mrole);
     context.commit("setMimgoname", payload.mimgoname)
+    context.commit("setMnickname", payload.mnickname)
     localStorage.setItem("userId", payload.userId);
     localStorage.setItem("accessToken", payload.accessToken);
     localStorage.setItem("mrole",payload.mrole);
     localStorage.setItem("mimgoname",payload.mimgoname);
+    localStorage.setItem("mnickname",payload.mnickname);
     axiosConfig.addAuthHeader(payload.accessToken);
    },
    deleteAuth(context, payload){
     context.commit("setUserId","");
     context.commit("setAccessToken","");
-    context.commit("setMrole","")
+    context.commit("setMrole","");
+    context.commit("setMimgoname","")
+    context.commit("setMnickname","")
     localStorage.removeItem("userId");
     localStorage.removeItem("accessToken");
     localStorage.removeItem("mrole");
+    localStorage.removeItem("mimgoname");
+    localStorage.removeItem("mnickname");
     axiosConfig.removeAuthHeader();
    },
    changeMrole(context, payload){

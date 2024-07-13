@@ -96,8 +96,8 @@
             <RouterLink :to="`/Class/ClassListView?pageNo=${pageNo}&searchTitle=${searchTitle}&searchText=${searchText}&searchSort=${searchSort}`"><button class="backList btn btn-outline-success btn-sm">목록으로</button></RouterLink>
         </div>
         <div style="text-align: end; margin-top: 30px;" v-if="store.state.userId===info.mid">
-            <button class="editbtn btn me-3" @click="gotoupdatepage">수정하기</button>
-            <button class="editbtn btn" @click="gotodelete">삭제하기</button>
+            <button class="editbtn btn me-3" style="color:black" @click="gotoupdatepage">수정하기</button>
+            <button class="editbtn btn" style="color:#d44e25" @click="gotodelete">삭제하기</button>
         </div>
     </div>
         
@@ -425,5 +425,6 @@ li{
 }
 .editbtn{
     font-size: 18px;
+    font-weight: bold;
 }
 </style>

@@ -130,6 +130,10 @@ function dateFormat(date) {
 //------- review data insert function ---------------------------------------------------------------------------------------------- 
 
 async function reviewInsert() {
+    if(!reviewInit.value.rrtitle || !reviewInit.value.rrcontent){
+        alert("제목과 내용을 입력해주세요");
+        return;
+    }
     reviewInit.value = {rrtitle: reviewInit.value.rrtitle, rrcontent: reviewInit.value.rrcontent, rno: rno, mid: store.state.userId};
     console.log("리뷰데이터: ", JSON.parse(JSON.stringify(reviewInit.value)));
     try{

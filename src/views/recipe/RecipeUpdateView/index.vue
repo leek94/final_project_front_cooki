@@ -11,7 +11,7 @@
                     <input type="button" class="category-button" value="일식" :class="{ active: activeIndex === 3 }" @click="handlecategory(3)">
                     <input type="button" class="category-button" value="양식" :class="{ active: activeIndex === 4 }" @click="handlecategory(4)">
                     <input type="button" class="category-button" value="디저트" :class="{ active: activeIndex === 5 }" @click="handlecategory(5)">
-                    <input type="button" class="category-button" value="베이커리" :class="{ active: activeIndex === 6 }" @click="handlecategory(6)">
+                    <input type="button" class="category-button" value="기타" :class="{ active: activeIndex === 6 }" @click="handlecategory(6)">
                 </div>
             </div>
 
@@ -241,6 +241,12 @@ getRecipe(rno);
 //recipe Update------------------------------------------------------------
 
 async function submitClass(){
+    const iv = isValid();
+    if(!iv){
+        alert("모든 값을 입력해주세요");
+        return
+    }
+
     const recipeFormdata= new FormData();
     recipeFormdata.append("rno", rno);
     recipeFormdata.append("rtitle",recipe.value.rtitle);
@@ -278,10 +284,40 @@ async function submitClass(){
         }
     }
     const response5= recipeAPI.processUpdate(processFormdata);
-    router.push(`./RecipeDetailView?rno=${rno}`);
+    router.push(`/recipe/recipeDetailView?rno=${route.query.rno}`);
 
 }
 
+function isValid(){
+    let iv = true;
+    
+    if(!activeIndex.value){
+        iv = false;
+    }
+    if( recipe.value.rtitle===null || 
+    recipe.value.rcontent===null) {
+        iv = false;
+    }
+
+    for(const v of recipeItems.value){
+        if(!v.riname){
+            iv = false;
+            break;
+        }
+    }
+    
+    for(let i=0; i<recipeProcesses.value.length; i++){
+        const cu = recipeProcesses.value[i]
+        if(!cu.rptitle || !cu.rpcontent){
+            iv = false;
+        }else if(i>=nowRpImgs.value.length){
+            if(!isRpImg.value[i]){
+                iv = false;
+            }
+        }  
+    }
+    return iv;
+}
 </script>
 
 <style scoped>

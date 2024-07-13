@@ -186,8 +186,9 @@ import {ko} from "date-fns/locale";
 import { register } from 'swiper/element/bundle';
 import classAPI from '@/apis/classAPI';
 import axios from 'axios';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
+const router= useRouter();
 register();
 const route = useRoute();
 const cno = route.query.cno;
@@ -562,6 +563,7 @@ async function submitClass() {
     for(let i=0; i<curiculums.value.length; i++) {
         const response = await updateCuriculum(i);
     }
+    router.push(`/class/classDetailView?cno=${route.query.cno}`)
 }
 
 // 클래스 다시 열기---------------------------------------------------------------

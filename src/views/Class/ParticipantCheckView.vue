@@ -27,8 +27,8 @@
                         <td>{{ cookClass.cdday }}</td>
                         <td>{{ cookClass.cstarttime }}</td>
                         <td>{{ cookClass.mid }}</td>
-                        <td><button class="btn_red btn btn-md" v-if="cookClass.isParticipant==0"  @click="changeDataFalse(index)">결석</button>
-                            <button class="btn_red btn btn-md active" v-if="cookClass.isParticipant==1"  @click="changeDataTrue(index)">출석</button>
+                        <td><button class="btn_red btn btn-md" v-if="cookClass.isParticipant==='0'"  @click="changeDataFalse(index)">결석</button>
+                            <button class="btn_red btn btn-md active" v-if="cookClass.isParticipant==='1'"  @click="changeDataTrue(index)">출석</button>
                         </td>
                     </tr>
                 </tbody>
@@ -54,7 +54,7 @@ const cookClasses = ref([
         cstarttime:"", 
         mid:"", 
         isActive: false,
-        isParticipant:0,
+        isParticipant:"0",
     }
 ])
 
@@ -79,11 +79,11 @@ async function getParticpantList(classNum){
 
 // isparticipant가 1이면 출석 0 이면 결석
 function changeDataFalse(index){
-    cookClasses.value[index].isParticipant  = 1;
+    cookClasses.value[index].isParticipant  = '1';
 }
 
 function changeDataTrue(index){
-    cookClasses.value[index].isParticipant  = 0;
+    cookClasses.value[index].isParticipant  = '0';
 }
 
 function dateFormat(date) {

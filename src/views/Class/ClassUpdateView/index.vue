@@ -171,7 +171,7 @@
             <button class="prbtn btn" @click="addCu"  style="font-size: 18px;">단계 추가 +</button>
         </div>
         <div class="d-flex mb-5 text-center">
-            <RouterLink to="/recipe/classListView?pageNo=1"><button class="backList btn btn-outline-secondary btn-sm">취소</button></RouterLink>
+            <RouterLink to="/class/classListView?pageNo=1"><button class="backList btn btn-outline-secondary btn-sm">취소</button></RouterLink>
             <button class="backList btn btn-outline-success btn-sm ms-3"  v-if="type!=='reopen'" @click="submitClass">수정</button>
             <button class="backList btn btn-outline-success btn-sm ms-3" v-if="type==='reopen'"  @click="reopenClass">다시 열기</button>
         </div>
@@ -633,6 +633,7 @@ async function reopenClass(){
         }
     }
     const response3= await classAPI.reopenClassCurri(curFormData);
+    router.push(`/class/classDetailView?cno=${route.query.cno}`)
 }
 function isValid(){
     let iv = true;

@@ -95,11 +95,11 @@
         <div style="text-align: center; margin-top: 100px;">
             <RouterLink :to="`/Class/ClassListView?pageNo=${pageNo}&searchTitle=${searchTitle}&searchText=${searchText}&searchSort=${searchSort}`"><button class="backList btn btn-outline-success btn-sm">목록으로</button></RouterLink>
         </div>
-        <div style="text-align: center; margin-top: 30px;" v-if="store.state.mid===info.mid">
+        <div style="text-align: center; margin-top: 30px;" v-if="store.state.userId===info.mid">
             <button class="backList btn btn-outline-success btn-sm me-3" @click="gotoupdatepage">수정하기</button>
-            <button class="backList btn btn-outline-success btn-sm" @clcik="gotodelete">삭제하기</button>
+            <button class="backList btn btn-outline-success btn-sm" @click="gotodelete">삭제하기</button>
         </div>
-        </div>
+    </div>
         
 </template>
 
@@ -114,10 +114,11 @@ import { Modal } from 'bootstrap';
 import classAPI from '@/apis/classAPI';
 import memberAPI from '@/apis/memberAPI';
 import axios from 'axios';
-import store from '@/store';
 import { useRoute, useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 const router = useRouter();
 const route= useRoute();
+const store= useStore();
 
 // register Swiper custom elements
 register();
@@ -344,15 +345,17 @@ async function realCancelDialog(cno){
     const response1 = await classAPI.classNowPerson(cno);
     console.log("취소후 확인 인원: " + response1.data.nowPerson);
     countPerson.value = response1.data.nowPerson;
-    applyresult.value=0;
+    applyresult.value=0; 
     CancelModal.hide();
     // 모집인원 조회해야함
 }
 function gotoupdatepage(){
     router.push(`/class/classUpdateView?cno=${cno}`)
 }
+
 function gotodelete(){
-    const response = classAPI.deleteClass();
+    const response = classAPI.deleteClass(info.value.cno);
+    router.push("/class/classListView")
 }
 </script>
 

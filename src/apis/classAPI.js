@@ -122,7 +122,7 @@ function reopenClassCurri(reformCurri){
     return axios.post("/class/reopenCurriInsert",reformCurri)
 }
 function deleteClass(cno){
-    return axios.put("/class/classDelete/"+cno);
+    return axios.get("/class/classDelete/"+cno);
 }
 export default {
     classRegister,

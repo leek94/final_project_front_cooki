@@ -12,11 +12,11 @@
     <!-- 댓글 등록 -->
     <!-- 로그인 한 유저만 등록 가능 v-show로 -->
     <div class="d-flex p-2 m-2 border rounded bg-light" v-if="store.state.userId != ''">
-        <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;" v-if="!isProfileIMG">
-        <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${store.state.userId}`" style="width: 50px; height: 50px;" v-if="isProfileIMG">
+        <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;" v-if="!store.state.mimgoname">
+        <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${store.state.userId}`" style="width: 50px; height: 50px;" v-if="store.state.mimgoname">
         <div class="flex-grow-1 row my-3">
              <div class="d-flex mb-1">
-                  <div class="me-3" style="font-weight: bold;">{{ nickname }}</div>
+                  <div class="me-3" style="font-weight: bold;">{{ $store.state.mnickname }}</div>
              </div>
                 <!-- 별점 체크 -->
                 <!-- onclick 이벤트로 클릭스 하얀별에서 노란별로 바뀌고 폼 저장할 때 별점도 입력되게 하기 -->
@@ -153,16 +153,16 @@
 
 <script setup>
 import classAPI from '@/apis/classAPI';
-import store from '@/store';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
-import memberAPI from '@/apis/memberAPI';
+import { useStore } from 'vuex';
 
 //댓글
 const reviewInit = ref({});
 const review = ref({});
 const reviewArray = ref([]);
+const store =useStore();
 
 //클래스 번호 가져오기
 const route = useRoute();
@@ -280,31 +280,12 @@ async function reviewInsert() {
 //------- review data read function ---------------------------------------------------------------------------------------------- 
 
 //댓글 등록 시 프로필 이미지를 바인딩 하기 위한 변수
-const isProfileIMG = ref();
-const isProfileIMGArray = ref([]);
-
-let nickname = ref();
 
 async function getReview(cno, pageNo) {
-        if(store.state.userId !== ""){
-        //댓글 작성을 위한 로그인한 유저 닉네임 가져오는 로직
-        const response = await memberAPI.getMyProfile(store.state.userId);
-        nickname.value = response.data.member.mnickname
-        console.log("닉네임", response.data.member.mnickname)
-        }
+
         const response1 = await classAPI.reviewRead(cno, pageNo);
         reviewArray.value = response1.data.classReviewList;
         page.value.pager= response1.data.pager;
-
-        //댓글 등록 시에 보여지는 프로필 이미지 가져오는 로직
-        if(store.state.userId !== ""){
-            const response2 = await memberAPI.getMyProfile(store.state.userId);
-            if(response2.data.member.mimgoname==null) {
-                isProfileIMG.value = false;
-            } else {
-                isProfileIMG.value = true;
-            }
-        }
 
         if (reviewArray.value.length==0) {
         isReview.value = false

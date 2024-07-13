@@ -437,6 +437,7 @@ async function getClass(cno) {
         const addresses = classes.value.caddress.split(",");
         classes.value.caddress = addresses[0];
         classes.value.cdetailaddress = addresses[1];
+        handlecategory(classes.value.ctno);
     } catch(error) {
         console.log(error);
     }

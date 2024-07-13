@@ -37,8 +37,8 @@ function recipeIncreaseHitcount(rno){
     return axios.get("/recipe/recipeIncreaseHitcount/"+rno);
 }
 
-function recipeReviewList(rno){
-    return axios.get("/recipe/reviewList/" + rno);
+function recipeReviewList(rno, pageNo){
+    return axios.get("/recipe/reviewList/" + rno, {params:{pageNo}});
 }
 
 function registerRecipeReview(recipeReview){

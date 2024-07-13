@@ -4,7 +4,9 @@
         <div class="d-flex" style="margin: 20px; width:30%">
             <div class="justify-content-center" style="align-content: center;">
                 <img class="rounded-circle" style=" width:70px; height:70px; margin-right: 30px;" 
-                src="https://cdn.class101.net/images/7ee5dd7f-be19-4e0c-89b1-d250ef0a2e2f/1920xauto.webp">
+                src="/images/photos/profile.png" v-if="!mimgoname">
+                <img class="rounded-circle" style=" width:70px; height:70px; margin-right: 30px;" 
+                :src="`${axios.defaults.baseURL}/member/mattach/${mid}`" v-if="mimgoname">
             </div>
             <span style="align-content: center; font-weight: bold; font-size: 20px">{{ mnickname }}</span>
         </div>
@@ -32,10 +34,15 @@ import memberAPI from '@/apis/memberAPI';
 import store from '@/store';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
+import axios from 'axios';
 
 const route= useRoute();
 
 let cno =  route.query.cno;
+
+const mid = ref();
+
+const mimgoname=ref();
 
 const mnickname=ref();
 
@@ -50,10 +57,12 @@ const awardinfo=ref({
 info(cno);
 async function info(cno){
     const response=await memberAPI.getCreatorInfo(cno);
+    
     careerinfo.value=response.data.career;
-
     awardinfo.value=response.data.awards;
+    mid.value = response.data.mid;
     mnickname.value= response.data.mnickname;
+    mimgoname.value = response.data.mimgoname;
 }
 
 </script>

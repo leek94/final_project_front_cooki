@@ -355,7 +355,8 @@ function dateFormat(rdate) {
     return dateFormat;
 }
 
-onBeforeMount(async()=>{
+getBi()
+async function getBi(){
   try{
     const response = await searchAPI.getBestClassRecipe(number);
     classes.value = response.data.classes;
@@ -367,7 +368,7 @@ onBeforeMount(async()=>{
   }catch{
     console.log("bi fail");
   }
-})
+}
 
 onMounted( () => {
   const classCenterSwiper = document.querySelector('.classCenterSwiper');

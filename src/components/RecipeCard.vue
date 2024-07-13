@@ -136,8 +136,10 @@ ul{
     transition: all 0.2s linear;
 }
 .rtitle{
+    display: -webkit-box;
+    word-wrap: break-word;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    line-clamp: 2; 
     overflow: hidden;
     text-overflow: ellipsis;
 }

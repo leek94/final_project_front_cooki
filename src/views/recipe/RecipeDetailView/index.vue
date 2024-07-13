@@ -57,7 +57,7 @@
                                 <span>Step {{ recipe.rporder}}.</span>
                                 <span>{{ recipe.rptitle }}</span>
                             </p>
-                            <p class="step-desc mt-2 text-start">
+                            <p class="step-desc mt-2 text-start" style="overflow: hidden; white-space: pre-wrap">
                                 {{ recipe.rpcontent }}
                             </p>
                             

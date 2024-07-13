@@ -58,7 +58,7 @@
                 </div>
     <hr/>
     <div class="d-flex" style="justify-content: end; align-items: center">
-        <div style="font-size: 26px;font-weight: bold; margin-right: 60px;">{{ info.cprice }}원</div>
+        <div style="font-size: 26px;font-weight: bold; margin-right: 50px;">{{ info.cprice }}원</div>
             <button class="btn btn-success btn-lg" v-if="applyresult===0" @click="isParticipant(cno)">신청하기</button>
             <button class="btn btn-danger btn-lg" v-if="applyresult===1" @click="showDialogCancel">취소하기</button>
         <ClassOverPersonModal id="overPersonModal"/>
@@ -68,7 +68,7 @@
     </div>
     </div>
         </div>
-        <hr class="mt-5"/>
+        <hr class="mt-3"/>
                 <pre class="ClassContent mt-5" style="overflow: hidden; white-space: pre-wrap" >{{ info.ccontent }}
               </pre>
                 <hr style="border-width:5px; margin:10px 0px"/>
@@ -95,9 +95,9 @@
         <div style="text-align: center; margin-top: 100px;">
             <RouterLink :to="`/Class/ClassListView?pageNo=${pageNo}&searchTitle=${searchTitle}&searchText=${searchText}&searchSort=${searchSort}`"><button class="backList btn btn-outline-success btn-sm">목록으로</button></RouterLink>
         </div>
-        <div style="text-align: center; margin-top: 30px;" v-if="store.state.userId===info.mid">
-            <button class="backList btn btn-outline-success btn-sm me-3" @click="gotoupdatepage">수정하기</button>
-            <button class="backList btn btn-outline-success btn-sm" @click="gotodelete">삭제하기</button>
+        <div style="text-align: end; margin-top: 30px;" v-if="store.state.userId===info.mid">
+            <button class="editbtn btn me-3" style="color:black" @click="gotoupdatepage">수정하기</button>
+            <button class="editbtn btn" style="color:#d44e25" @click="gotodelete">삭제하기</button>
         </div>
     </div>
         
@@ -421,7 +421,10 @@ li{
     font-size: 1rem;
     font-weight: bold;
     padding:1.5rem 2.938rem 1.438rem 3rem; 
-    border-radius: 38px;
-
+    border-radius: 36px;
+}
+.editbtn{
+    font-size: 18px;
+    font-weight: bold;
 }
 </style>

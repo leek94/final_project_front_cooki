@@ -65,8 +65,8 @@
         <div v-for="(review, index) in reviewArray" :key="index">
             <!-- 등록된 리뷰 보기 -->
             <div class="d-flex p-1" v-if="!isReviewArray[index]">
-                <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;" v-if="!isProfileIMGArray[index]">
-                <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${review.mid}`" style="width: 50px; height: 50px;" v-if="isProfileIMGArray[index]">
+                <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;" v-if="!review.mimgoname">
+                <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${review.mid}`" style="width: 50px; height: 50px;" v-if="review.mimgoname">
                 <div class="flex-grow-1 row my-3">
                     <div class="d-flex mb-1">
                         <div class="me-3" style="font-weight: bold;">{{ review.mnickname }}</div>
@@ -101,8 +101,8 @@
             <!-- 리뷰 수정 -->
             <!-- 로그인 한 유저만 등록 가능 v-show로 -->
             <div class="d-flex p-2 m-2 border rounded bg-light" v-if="isReviewArray[index]">
-                <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;" v-if="!isProfileIMGArray[index]">
-                <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${review.mid}`" style="width: 50px; height: 50px;" v-if="isProfileIMGArray[index]">
+                <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;" v-if="!review.mimgoname">
+                <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${review.mid}`" style="width: 50px; height: 50px;" v-if="review.mimgoname">
                 <div class="flex-grow-1 row my-3">
                     <div class="d-flex mb-1">
                         <div class="me-3" style="font-weight: bold;">{{ review.memberMid }}</div>
@@ -323,17 +323,6 @@ async function getReview(cno, pageNo) {
                     isWriter.value[i] = false;
                 }
                 
-                //등록된 댓글 프로필 이미지 가져오는 로직
-                //댓글배열의 mid를 매개변수로 axios 요청을 통해 받아오는 mimgoname이 null 값일 경우 public 이미지로 지정하는 v-if
-                //댓글배열의 mid를 매개변수로 axios 요청을 통해 받아오는 mimgoname 값이 있을 경우 img :src에 경로 지정하는 v-if 
-                if(store.state.userId !== ""){
-                    const response3 = await memberAPI.getMyProfile(reviewArray.value[i].mid)
-                    if(response3.data.member.mimgoname==null) {
-                        isProfileIMGArray.value[i] = false
-                    } else {
-                        isProfileIMGArray.value[i] = true
-                    }
-                }
             }
         }
  

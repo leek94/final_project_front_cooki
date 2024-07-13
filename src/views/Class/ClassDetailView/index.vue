@@ -95,7 +95,7 @@
         <div style="text-align: center; margin-top: 100px;">
             <RouterLink :to="`/Class/ClassListView?pageNo=${pageNo}&searchTitle=${searchTitle}&searchText=${searchText}&searchSort=${searchSort}`"><button class="backList btn btn-outline-success btn-sm">목록으로</button></RouterLink>
         </div>
-        <div style="text-align: center; margin-top: 30px;">
+        <div style="text-align: center; margin-top: 30px;" v-if="store.state.mid===info.mid">
             <button class="backList btn btn-outline-success btn-sm me-3" @click="gotoupdatepage">수정하기</button>
             <button class="backList btn btn-outline-success btn-sm" @clcik="gotodelete">삭제하기</button>
         </div>
@@ -166,7 +166,6 @@ let info = ref({
     mid:"",
     mimgoname:""
 });
-
 //클래스 디테일 
 detailInfo(cno);
 console.log(cno);

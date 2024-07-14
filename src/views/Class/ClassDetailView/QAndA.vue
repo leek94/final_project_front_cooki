@@ -98,8 +98,8 @@
         <!-- 로그인 한 유저만 등록 가능 v-show로 -->
         <!-- 대댓글 등록하기 -->
         <div class="d-flex p-2 ms-5 me-2 border rounded" style="background-color: #D9EDBF;" v-if="isWriteArray[index]">
-            <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;" v-if="!isEditorProfileIMGArray[index]">
-            <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${editorMid}`" style="width: 50px; height: 50px;" v-if="isEditorProfileIMGArray[index]">
+            <img class="m-3 rounded-circle" src="/images/photos/profile.png" style="width: 50px; height: 50px;"  v-if="!editorImgoname">
+            <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${editorMid}`" style="width: 50px; height: 50px;" v-if="editorImgoname">
             <div class="flex-grow-1 row my-3">
                  <div class="d-flex mb-1">
                       <div class="me-3" style="font-weight: bold;">{{nickname}} <span style="font-size:small;">(editor)</span></div>

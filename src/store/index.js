@@ -45,7 +45,9 @@ const store= createStore({
       state.mrole = payload;
     },
     setMimgoname(state, payload){
-      state.mimgoname = payload;
+      if(payload !== "null" || payload){
+        state.mimgoname = payload;
+      }
     },
     setMnickname(state, payload){
       state.mnickname = payload;
@@ -58,7 +60,7 @@ const store= createStore({
     const accessToken = localStorage.getItem("accessToken") || "";
     context.commit("setAccessToken",accessToken);
     context.commit("setMrole",localStorage.getItem("mrole") || "");
-    context.commit("setMimgoname",localStorage.getItem("mimgoname") || "");
+    context.commit("setMimgoname",localStorage.getItem("mimgoname") !== 'null'? localStorage.getItem("mimgoname"): '' || null);
     context.commit("setMnickname",localStorage.getItem("mnickname") || "");
     if(accessToken !==""){
       axiosConfig.addAuthHeader(accessToken);

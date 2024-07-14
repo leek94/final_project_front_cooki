@@ -75,7 +75,9 @@ const store= createStore({
     localStorage.setItem("userId", payload.userId);
     localStorage.setItem("accessToken", payload.accessToken);
     localStorage.setItem("mrole",payload.mrole);
-    localStorage.setItem("mimgoname",payload.mimgoname);
+    if(payload !== "null" || payload){
+      localStorage.setItem("mimgoname",payload.mimgoname);
+    }
     localStorage.setItem("mnickname",payload.mnickname);
     axiosConfig.addAuthHeader(payload.accessToken);
    },

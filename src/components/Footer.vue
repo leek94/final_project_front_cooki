@@ -18,16 +18,16 @@
         <div class="footer_right" style="margin-right:8rem">
             <ul style="color: #666; font-size: 13px">
                 <ul class="d-flex">
-                    <li class="me-4">손혜선</li>
-                    <li class="mb-1"> github: https://github.com/shyeseon</li>
+                    <li class="me-4">이경환</li>
+                    <li class="mb-2"> github: https://github.com/leek94</li>
                 </ul>
                 <ul class="d-flex">
-                    <li class="me-4">손혜선</li>
-                    <li class="mb-1"> github: https://github.com/shyeseon</li>
+                    <li class="me-4">권우상</li>
+                    <li class="mb-2"> github: https://github.com/wskwon0624</li>
                 </ul>
                 <ul class="d-flex">
-                    <li class="me-4">손혜선</li>
-                    <li class="mb-1"> github: https://github.com/shyeseon</li>
+                    <li class="me-4">변혜미</li>
+                    <li class="mb-2"> github: https://github.com/hyemi00720</li>
                 </ul>
                 <ul class="d-flex">
                     <li class="me-4">손혜선</li>

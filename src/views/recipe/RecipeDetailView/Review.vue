@@ -162,10 +162,10 @@ async function reviewInsert() {
 
 //댓글 등록 시 프로필 이미지를 바인딩 하기 위한 변수
 
-async function getReview(rno) {
+async function getReview(rno, pageNo) {
 
     try{
-        const response1 = await recipeAPI.recipeReviewList(rno, pageNo.value);
+        const response1 = await recipeAPI.recipeReviewList(rno, pageNo);
         reviewArray.value = response1.data.recipeReviews
         page.value.pager = response1.data.pager;
         if (reviewArray.value.length === 0) {
@@ -190,7 +190,7 @@ async function getReview(rno) {
     }
 }
 
-getReview(rno)
+getReview(rno, pageNo.value)
 
 
 //------- review data update function ---------------------------------------------------------------------------------------------- 

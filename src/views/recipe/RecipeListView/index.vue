@@ -39,7 +39,7 @@
             <div class="text-center" v-if="page.pager.totalRows!==0">
                 <button class="initial btn btn-sm" @click="changePageNo(1)"> 처음 </button>
                 <button class="prev btn btn-sm" v-if="page.pager.groupNo>1" @click="changePageNo(page.pager.startPageNo-1)">이전</button>
-                <button class="btn btn-sm" v-for="pageNo in page.pager.pageArray" :key="pageNo" @click="changePageNo(pageNo)">{{pageNo}}</button>
+                <button class="btn btn-sm" :class="pageNo===page.pager.pageNo? 'btn-active': ''" v-for="pageNo in page.pager.pageArray" :key="pageNo" @click="changePageNo(pageNo)">{{pageNo}}</button>
                 <button  class="btn btn-sm" v-if="page.pager.groupNo<page.pager.totalGroupNo" @click="changePageNo(page.pager.endPageNo+1)">다음</button>
                 <button class="last btn btn-sm" @click="changePageNo(page.pager.totalPageNo)">마지막</button>
             </div>
@@ -297,7 +297,7 @@ watch(route,(newRoute,oldRoute) => {
     font-weight: bold;
 }
 
-.btn:active {
+.btn-active {
     background-color: #15a775;
     color: white;
     font-weight: bold;

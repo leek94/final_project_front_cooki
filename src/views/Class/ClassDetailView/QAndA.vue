@@ -57,7 +57,7 @@
                     
                     <div class="flex-grow-1 row justify-content-start">
                         <!-- 에디터한테만 보여야 하는 버튼 -->
-                        <button class="border-0 bg-white text-start me-5 pe-5" style="font-size: small; color: grey; font-weight: bold;" v-if="(qna.qreply===null || qna.qreply==='') && isEditor" @click="qreplyResist(index)">
+                        <button class="border-0 bg-white text-start me-5 pe-5" style="font-size: small; color: grey; font-weight: bold;" v-if="isEditor && !isWriteArray[index]" @click="qreplyResist(index)">
                             <!-- <img src="/images/photos/ic_talk.png"> -->
                             <img src="/images/photos/ic_comment.png">
                             답글달기

@@ -59,7 +59,7 @@ const emit=defineEmits(['countSearchClass'])
 function handleClick(index) {
     console.log(recipeCardes.value[index].isActive)
     recipeCardes.value[index].isActive = !recipeCardes.value[index].isActive;
-    router.push(`/recipe/recipeDetailView?cno=${recipeCardes.value[index].rno}&pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=1`);
+    router.push(`/recipe/recipeDetailView?rno=${recipeCardes.value[index].rno}&pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=1`);
     console.log(recipeCardes.value[index].isActive)
 }
 
@@ -121,18 +121,15 @@ async function getSearchRecipe(pageNo,perPage){
   
 }
 function MovetoClassList(){
-    router.push(`/recipe/recipeListView?pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=1`)
-}
-
- function routerLinkToRecipeDetail(index){
-    router.push(`/recipe/recipeDetailView?cno=${recipeCardes.value[index].rno}&pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=1`);
-}
-function MovetoRecipeList(){
     router.push(`/class/classListView?pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=1`)
 }
 
+function MovetoRecipeList(){
+    router.push(`/recipe/recipeListView?pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=1`)
+}
+
  function routerLinkTo(index){
-    router.push(`/class/ClassDetailView?cno=${classCards.value[index].cno}&pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=1`);
+    router.push(`/class/classDetailView?cno=${classCards.value[index].cno}&pageNo=1&searchTitle=${data.value.searchTitle}&searchText=${data.value.searchText}&searchSort=1`);
 }
 
 function handleLike(rno){

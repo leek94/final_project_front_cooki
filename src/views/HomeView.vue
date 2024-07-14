@@ -196,7 +196,7 @@
               </p>
             </div>
          </swiper-slide>
-         <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===4? '': 'border-end'" @click="gotoClassLIst('디저트')"> 
+         <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===4? '': 'border-end'" @click="gotoClassLIst('베이커리')"> 
             <div class="m-0 p-0 rounded-4" style="width: 80%; height: 50%; overflow:hidden">
                <img src="/images/photos/main/category5.jpg" class="rounded-4"/>
             </div>
@@ -212,7 +212,7 @@
               </p>
             </div>
          </swiper-slide>
-         <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===5? '': 'border-end'" @click="gotoClassLIst('베이커리')"> 
+         <swiper-slide class="d-felx flex-column m-0 p-0" :class="lastIndex===5? '': 'border-end'" @click="gotoClassLIst('기타')"> 
             <div class="m-0 p-0 rounded-4" style="width: 80%; height: 50%; overflow:hidden">
                <img src="/images/photos/main/category6.jpg" class="rounded-4"/>
             </div>

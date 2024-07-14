@@ -45,7 +45,9 @@ const store= createStore({
       state.mrole = payload;
     },
     setMimgoname(state, payload){
-      state.mimgoname = payload;
+      if(payload !== "null" || payload){
+        state.mimgoname = payload;
+      }
     },
     setMnickname(state, payload){
       state.mnickname = payload;

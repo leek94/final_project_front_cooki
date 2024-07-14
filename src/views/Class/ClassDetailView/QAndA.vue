@@ -57,7 +57,7 @@
                     
                     <div class="flex-grow-1 row justify-content-start">
                         <!-- 에디터한테만 보여야 하는 버튼 -->
-                        <button class="border-0 bg-white text-start me-5 pe-5" style="font-size: small; color: grey; font-weight: bold;" v-if="(qnaArray[index].qreply===null || qnaArray[index].qreply==='') && isEditor[index]" @click="qreplyResist(index)">
+                        <button class="border-0 bg-white text-start me-5 pe-5" style="font-size: small; color: grey; font-weight: bold;" v-if="(qnaArray[index].qreply===null || qnaArray[index].qreply==='') && isEditor" @click="qreplyResist(index)">
                             <!-- <img src="/images/photos/ic_talk.png"> -->
                             <img src="/images/photos/ic_comment.png">
                             답글달기
@@ -108,7 +108,7 @@
                     <div class="w-100 row pe-5">
                         <textarea class="p-3 ms-3 me-3 border rounded" style="color: grey;" placeholder="문의에 대한 답글을 입력해주세요." v-model="qna.qreply"></textarea>
                     </div>
-                    <div class="text-end mt-3 pe-5" v-if="isEditor[index]">
+                    <div class="text-end mt-3 pe-5" v-if="isEditor">
                         <button class="px-2 mx-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="qreplyInsert(index)">등록</button>
                         <button class="px-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;"  @click="qreplyClose(index)">닫기</button>
                     </div>
@@ -132,7 +132,7 @@
                     
                     <div class="flex-grow-1 justify-content-end">
                         <!-- 에디터에게만 보여야 하는 버튼 -->
-                        <div class="text-end  mt-3 pe-5" v-if="isEditor[index]">
+                        <div class="text-end  mt-3 pe-5" v-if="isEditor">
                             <button class="px-2 mx-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="qreplyUpdate(index)">수정</button>
                             <button class="px-2 border rounded bg-white" style="font-size: small; color: grey; font-weight: bold;" @click="qreplyDelete(index)">삭제</button>
                         </div>
@@ -172,7 +172,7 @@ const isQnaArray = ref([]);
 const isWrite = ref(false);
 const isWriteArray = ref([]);
 const isWriter = ref([]);
-const isEditor = ref([]);
+const isEditor = ref();
 
 //댓글
 const qnaInit  = ref({});
@@ -246,9 +246,13 @@ async function getQna(cno, pageNo) {
         const response2 = await classAPI.qnaRead(cno, pageNo);
         qnaArray.value = response2.data.qnaList;
         page.value.pager = response2.data.pager;
+        console.log(typeof store.state.mimgoname +"aaaa");
+        console.log(!store.state.mimgoname);
         if(qnaArray.value.length==0) {
             isQna.value = false
+            console.log(store.state.mimgoname +"ccc");
         } else {
+            console.log(store.state.mimgoname +"bbb");
             //qnaArray 안에 있는 qna들을 반복문을 통해 하나씩 꺼내기
             for(let i=0; qnaArray.value.length; i++){
                 //꺼낸 qna 날짜 값을 dateFormat함수를 호출 하여 2024-06-28와 같은 형태로 바꾸기
@@ -266,20 +270,19 @@ async function getQna(cno, pageNo) {
                 if(store.state.userId==qnaArray.value[i].mid) {
                     isWriter.value[i] = true; 
                 }
-
+            } 
                 //대댓글 에디터 프로필 이미지 가져오는 로직
                 const response4 = await classAPI.classRead(cno)
                 editorMid.value = response4.data.classes.mid;
                 editorImgoname.value = response4.data.classes.mimgoname;
-     
+                nickname.value = response4.data.classes.mnickname;
 
                 //에디터에게만 대댓글 등록, 수정 버튼 보이게 하는 로직
                 if(store.state.userId==editorMid.value) {
-                    isEditor.value[i] = true;
+                    isEditor.value = true;
                 } else {
-                    isEditor.value[i] = false;
+                    isEditor.value = false;
                 }  
-            } 
         }
     } catch(error) {
         console.log(error);
@@ -356,12 +359,10 @@ async function qnaDelete(index) {
 }
 
 //------- qna qreply data insert function ---------------------------------------------------------------------------------------------- 
-
 function qreplyResist(index) {
     isWriteArray.value[index] = !isWriteArray.value[index];
-    isEditor.value[index] = true;
-    console.log("에디터확인: ", isEditor.value)
 }
+
 
 function qreplyInsert(index) {
     qna.value.qreply = qnaArray.value[index].qreply;

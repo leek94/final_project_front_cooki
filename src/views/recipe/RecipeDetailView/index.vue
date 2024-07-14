@@ -70,10 +70,10 @@
             <div style="text-align: center; margin-top: 100px;">
             <RouterLink :to="`/Recipe/RecipeListView?pageNo=${pageNo}&searchTitle=${searchTitle}&searchText=${searchText}&searchSort=${searchSort}`"><button class="backList btn btn-outline-success btn-sm">목록으로</button></RouterLink>
             </div>
-            <div style="text-align: center; margin-top: 30px;" v-if="store.state.userId===cookRecipes.mid">
-            <button class="backList btn btn-outline-success btn-sm me-3" @click="gotoupdatepage">수정하기</button>
-            <button class="backList btn btn-outline-success btn-sm" @clcik="gotodelete">삭제하기</button>
-            </div>
+            <div style="text-align: end; margin-top: 30px;" v-if="store.state.userId===cookRecipes.mid">
+            <button class="editbtn btn me-3" style="color:black" @click="gotoupdatepage">수정하기</button>
+            <button class="editbtn btn" style="color:#d44e25" @click="gotodelete">삭제하기</button>
+        </div>
         </div>
     </div>
 </template>
@@ -421,5 +421,9 @@ ol{
     padding:1.5rem 2.938rem 1.438rem 3rem; 
     border-radius: 38px;
 
+}
+.editbtn{
+    font-size: 18px;
+    font-weight: bold;
 }
 </style>

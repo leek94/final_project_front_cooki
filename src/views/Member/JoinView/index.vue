@@ -470,9 +470,9 @@ async function handleSubmit() {
                         awardsArray.value[i].mid=response.data.mid;
                         memberAPI.setAwards(JSON.parse(JSON.stringify(awardsArray.value[i])));
                     }
-                }
- 
-                router.push("/Member/LoginView")
+
+                }   
+            router.push("/Member/LoginView?pr=join")
 
             }catch(error){
                 console.log("에러남: " + error);

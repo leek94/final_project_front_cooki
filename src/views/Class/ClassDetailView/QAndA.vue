@@ -57,7 +57,7 @@
                     
                     <div class="flex-grow-1 row justify-content-start">
                         <!-- 에디터한테만 보여야 하는 버튼 -->
-                        <button class="border-0 bg-white text-start me-5 pe-5" style="font-size: small; color: grey; font-weight: bold;" v-if="(qnaArray[index].qreply===null || qnaArray[index].qreply==='') && isEditor" @click="qreplyResist(index)">
+                        <button class="border-0 bg-white text-start me-5 pe-5" style="font-size: small; color: grey; font-weight: bold;" v-if="(qna.qreply===null || qna.qreply==='') && isEditor" @click="qreplyResist(index)">
                             <!-- <img src="/images/photos/ic_talk.png"> -->
                             <img src="/images/photos/ic_comment.png">
                             답글달기
@@ -80,7 +80,7 @@
             <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${qna.mid}`" style="width: 50px; height: 50px;" v-if="qna.mimgoname">
             <div class="flex-grow-1 row my-3">
                  <div class="d-flex mb-1">
-                      <div class="me-3" style="font-weight: bold;">{{nickname}}</div>
+                      <div class="me-3" style="font-weight: bold;">{{qna.nickname}}</div>
                  </div>
                     <div class="w-100 row pe-5">
                         <div class="me-3" style="font-weight: bold;">제목 : </div>
@@ -246,15 +246,11 @@ async function getQna(cno, pageNo) {
         const response2 = await classAPI.qnaRead(cno, pageNo);
         qnaArray.value = response2.data.qnaList;
         page.value.pager = response2.data.pager;
-        console.log(typeof store.state.mimgoname +"aaaa");
-        console.log(!store.state.mimgoname);
-        if(qnaArray.value.length==0) {
+        if(qnaArray.value.length===0) {
             isQna.value = false
-            console.log(store.state.mimgoname +"ccc");
         } else {
-            console.log(store.state.mimgoname +"bbb");
             //qnaArray 안에 있는 qna들을 반복문을 통해 하나씩 꺼내기
-            for(let i=0; qnaArray.value.length; i++){
+            for(let i=0; i<qnaArray.value.length; i++){
                 //꺼낸 qna 날짜 값을 dateFormat함수를 호출 하여 2024-06-28와 같은 형태로 바꾸기
                 //이 때 new Date(qnaArray.value[i].qdate)를 해주는 이유는 dateFormat 함수가 제대로 작동하기 위해서는 매개변수가 Date타입이어야 하기 때문
                 //그 전의 무슨 타입이 었는지 궁금하다면 console.log(typeof qnaArray.value[i].qdate); 

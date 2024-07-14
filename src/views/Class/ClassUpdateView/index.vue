@@ -16,7 +16,7 @@
             </div>
     
             <div class="w-100 my-3">
-                <label class="form-label mb-3 fw-bold">제목</label>
+                <label class="form-label mb-3 fw-bold">제목 <span class="text-danger" v-if="type==='reopen'">클래스 이름 변경시 지난 수업 리뷰를 못 불러옵니다</span></label>
                 <input type="text" class="form-control" v-model="classes.ctitle" placeholder="클래스 이름을 입력해주세요.">
             </div>
 

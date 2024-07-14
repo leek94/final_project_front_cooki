@@ -126,15 +126,24 @@ watch(route,(newRoute,oldRoute) => {
  
  <style scoped>
 
+
 .btn:hover {
     background-color: #15a775;
     color: white;
     font-weight: bold;
 }
 
-.btn-active {
+.btn:active {
     background-color: #15a775;
     color: white;
     font-weight: bold;
+}
+
+.backList{
+    font-size: 1rem;
+    font-weight: bold;
+    padding:1.5rem 2.938rem 1.438rem 3rem; 
+    border-radius: 38px;
+
 }
  </style>

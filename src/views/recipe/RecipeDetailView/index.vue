@@ -72,7 +72,7 @@
             </div>
             <div style="text-align: center; margin-top: 30px;" v-if="store.state.userId===cookRecipes.mid">
             <button class="backList btn btn-outline-success btn-sm me-3" @click="gotoupdatepage">수정하기</button>
-            <button class="backList btn btn-outline-success btn-sm" @clcik="gotodelete">삭제하기</button>
+            <button class="backList btn btn-outline-success btn-sm" @click="gotodelete">삭제하기</button>
             </div>
         </div>
     </div>

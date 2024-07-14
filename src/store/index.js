@@ -60,7 +60,7 @@ const store= createStore({
     const accessToken = localStorage.getItem("accessToken") || "";
     context.commit("setAccessToken",accessToken);
     context.commit("setMrole",localStorage.getItem("mrole") || "");
-    context.commit("setMimgoname",localStorage.getItem("mimgoname") || "");
+    context.commit("setMimgoname",localStorage.getItem("mimgoname") !== 'null'? localStorage.getItem("mimgoname"): '' || null);
     context.commit("setMnickname",localStorage.getItem("mnickname") || "");
     if(accessToken !==""){
       axiosConfig.addAuthHeader(accessToken);
@@ -75,9 +75,7 @@ const store= createStore({
     localStorage.setItem("userId", payload.userId);
     localStorage.setItem("accessToken", payload.accessToken);
     localStorage.setItem("mrole",payload.mrole);
-    if(payload !== "null" || payload){
-      localStorage.setItem("mimgoname",payload.mimgoname);
-    }
+    localStorage.setItem("mimgoname",payload.mimgoname);
     localStorage.setItem("mnickname",payload.mnickname);
     axiosConfig.addAuthHeader(payload.accessToken);
    },

@@ -170,6 +170,7 @@ let info = ref({
 //클래스 디테일 
 detailInfo(cno);
 console.log(cno);
+
 //신청 인원 상태 정의 
 let countPerson= ref(0)
 
@@ -201,8 +202,7 @@ async function detailInfo(cno){
     let date = new Date(info.value.cdday);
     info.value.cdday= dateFormat(date);
     //클래스 참여자 수 
-    countPerson.value= response.data.participants;
-    console.log("몇명인지 확인 : " + countPerson.value);
+  
     let todaydf = dateFormat(today);
     let deadlinedf = dateFormat(deadline);
     console.log(todaydf>deadlinedf)
@@ -217,7 +217,7 @@ async function detailInfo(cno){
     const response3 = await classAPI.classNowPerson(cno);
 
     countPerson.value = response3.data.nowPerson;
-
+    console.log("몇명인지 확인 : " + countPerson.value);
     // 날짜가 클래스 오픈 1일 전이면 시간 마감
     if(todaydf>=deadlinedf){
 

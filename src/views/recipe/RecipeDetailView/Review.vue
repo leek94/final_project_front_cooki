@@ -239,6 +239,9 @@ async function reviewDelete(index) {
     }
 }
 
+function changePageNo(pageNo){
+    getReview(rno, pageNo);
+}
 
 </script>
 

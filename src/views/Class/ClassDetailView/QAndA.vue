@@ -94,7 +94,7 @@
                     </div>
             </div>
         </div>
-    
+        
         <!-- 로그인 한 유저만 등록 가능 v-show로 -->
         <!-- 대댓글 등록하기 -->
         <div class="d-flex p-2 ms-5 me-2 border rounded" style="background-color: #D9EDBF;" v-if="isWriteArray[index]">

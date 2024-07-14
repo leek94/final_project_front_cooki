@@ -25,7 +25,7 @@
 
                     <div class="row my-3 px-3">
                         <li class="green-point">이름</li>
-                        <input class="p-2 border" v-model="member.mname" placeholder="한글 이름 2~5자 이내" @keyup="mnameCheck"/>
+                        <input class="p-2 border" v-model="member.mname" placeholder="한글 2~5자 이내" @keyup="mnameCheck"/>
                         <div class="checkError m-1" v-if="mnameResultError">올바른 형식의 이름을 입력해주세요</div>
                     </div>
                     
@@ -37,7 +37,7 @@
                     
                     <div class="row my-3 px-3">
                         <li class="green-point">닉네임</li>
-                        <input class="p-2 border" v-model="member.mnickname" placeholder="3~16자 이내" @keyup="mnicknameCheck"/>
+                        <input class="p-2 border" v-model="member.mnickname" placeholder="한글 4~16자 이내" @keyup="mnicknameCheck"/>
                         <div class="checkError m-1" v-if="mnicknameResultError">올바른 형식의 닉네임을 입력해주세요</div>
                     </div>
                     
@@ -123,16 +123,16 @@
                 <div class="text-start bg-light p-5 my-5">
                     <h4 class="p-2 border-bottom border-dark border-3" style="font-weight: bold;">약관 동의</h4>
                     <div class="mx-2 my-3">
-                        <input class="checkbox me-2 rounded" type="checkbox" name="editor" v-model="checkFirst"/>
-                        <label for="switch"> [필수] 만 14세 이상입니다.</label>
+                        <input class="checkbox me-2 rounded" id="essential1" type="checkbox" name="editor" v-model="checkFirst"/>
+                        <label for="essential1"> [필수] 만 14세 이상입니다.</label>
                     </div>
                     <div class="mx-2 my-3">
-                        <input class="checkbox me-2" type="checkbox" name="editor" v-model="checkSecond">
-                        <label for="switch"> [필수] <a href="https://member.sempio.com/legal/terms-and-condition">이용약관</a> 확인</label>
+                        <input class="checkbox me-2" id="essential2" type="checkbox" name="editor" v-model="checkSecond">
+                        <label for="essential2"> [필수] <a href="https://member.sempio.com/legal/terms-and-condition">이용약관</a> 확인</label>
                     </div>
                     <div class="mx-2 my-3">
-                        <input class="checkbox me-2" type="checkbox" name="editor" v-model="checkThird"/>
-                        <label for="switch"> [필수] <a href="https://member.sempio.com/legal/privacy-policy">개인정보처리방침</a> 확인</label>
+                        <input class="checkbox me-2" id="essential3" type="checkbox" name="editor" v-model="checkThird"/>
+                        <label for="essential3"> [필수] <a href="https://member.sempio.com/legal/privacy-policy">개인정보처리방침</a> 확인</label>
                     </div>
                     <div class="checkError m-1" v-if="checkboxError">필수 조건에 모두 동의해주세요</div>
                     <div class="mx-2 my-3 p-3" style="background-color: #D9EDBF;">
@@ -433,9 +433,10 @@ async function handleSubmit() {
                             awardsArray.value[i].mid=response.data.mid;
                             memberAPI.setAwards(JSON.parse(JSON.stringify(awardsArray.value[i])));
                         }
-                    }   
-                router.push("/Member/LoginView")
 
+                    }   
+                router.push("/Member/LoginView?pr=join")
+                
                 }catch(error){
                     console.log("에러남: " + error);
                 }
@@ -471,8 +472,9 @@ async function handleSubmit() {
                         awardsArray.value[i].mid=response.data.mid;
                         memberAPI.setAwards(JSON.parse(JSON.stringify(awardsArray.value[i])));
                     }
+
                 }   
-            router.push("/Member/LoginView")
+            router.push("/Member/LoginView?pr=join")
 
             }catch(error){
                 console.log("에러남: " + error);

@@ -38,7 +38,7 @@
 import memberAPI from '@/apis/memberAPI';
 import store from '@/store';
 import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import LoginModal from './LoginModal.vue';
 import { Modal } from 'bootstrap';
 
@@ -58,7 +58,9 @@ const showPassword = ref(false);
 const midResultError = ref(false);
 
 const router = useRouter()
+const route = useRoute();
 
+const pr = route.query.pr
 async function handleLogin(){
     console.log("로그인 실행")
     // 아무 값도 넣지 않았을 경우
@@ -86,7 +88,13 @@ async function handleLogin(){
                     mnickname:response.data.mnickname,
                 };
                 store.dispatch("saveAuth",payload);
-                router.go(-1)
+
+                if(pr){
+                    router.push('/');
+                }else{
+                    router.go(-1)
+                }
+
             } else { // 받아온 값이 success가 아닐경우 - 아이디와 비밀번호가 틀린 경우
                 console.log("로그인 실패");
                 loginModal.show();

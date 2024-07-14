@@ -222,9 +222,9 @@
               </span>
               <p class="fs-5 m-0 mt-3 p-0">아무거나</p>
               <p class="fs-6 m-0 mt-3 p-0">
-                <span class="badge rounded-pill text-bg-light">#찰깨빵</span>
-                <span class="badge rounded-pill text-bg-light ms-1">#크로아상</span>
-                <span class="badge rounded-pill text-bg-light ms-1">#식빵</span>
+                <span class="badge rounded-pill text-bg-light">#화채</span>
+                <span class="badge rounded-pill text-bg-light ms-1">#식혜</span>
+                <span class="badge rounded-pill text-bg-light ms-1">#인절미</span>
               </p>
             </div>
          </swiper-slide>

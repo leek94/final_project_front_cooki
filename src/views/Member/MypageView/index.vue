@@ -2,8 +2,8 @@
         <div class="d-flex">
             <div class="mypage_bg"> 
                 <div>
-                    <img class="myimg" v-show="store.state.mimgoname" width="120px" height="120px" style="margin-top: 120px;" :src="`${axios.defaults.baseURL}/member/mattach/${store.state.userId}`"/>
-                    <img src="/images/photos/profile.png" v-show="!store.state.mimgoname" width="120px" height="120px" style="margin-top: 120px; ">
+                    <img class="myimg" v-if="store.state.mimgoname" width="120px" height="120px" style="margin-top: 120px;" :src="`${axios.defaults.baseURL}/member/mattach/${store.state.userId}`"/>
+                    <img src="/images/photos/profile.png" v-if="!store.state.mimgoname" width="120px" height="120px" style="margin-top: 120px; ">
                 </div>
                 <div class="d-flex username" style="justify-content: center">
                     <div style="color:#04AA6D">{{ store.state.mnickname }}</div>

@@ -634,7 +634,7 @@ async function reopenClass(){
         }
     }
     const response3= await classAPI.reopenClassCurri(curFormData);
-    router.push(`/class/classDetailView?cno=${route.query.cno}`)
+    router.push(`/class/classDetailView?cno=${classes.value.cno}`)
 }
 function isValid(){
     let iv = true;

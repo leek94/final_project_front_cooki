@@ -38,7 +38,7 @@ function recipeIncreaseHitcount(rno){
 }
 
 function recipeReviewList(rno, pageNo){
-    return axios.post("/recipe/reviewList/" + rno, {params:{pageNo}});
+    return axios.get("/recipe/reviewList/" + rno, {params:{pageNo}});
 }
 
 function registerRecipeReview(recipeReview){

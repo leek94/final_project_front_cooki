@@ -25,7 +25,6 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue';
 import axios from 'axios';
 import { useStore } from 'vuex';
 import recipeAPI from '@/apis/recipeAPI';

@@ -147,7 +147,7 @@ const activeIndex = ref(null);
 activeIndex.value=parseInt(route.query.searchSort)||0;
 
 //watch로 다시 getclasslist 함수가 실행될 때 
-//같은 페이지에서 같은페이지로 이동하면서 검색어 갑을 다시 setting 해준다 
+//같은 페이지에서 같은페이지로 이동하면서 검색어 값을 다시 setting 해준다 
 async function searchresult(search){
    data.value.searchText=search.searchText
    data.value.searchTitle=search.searchTitle

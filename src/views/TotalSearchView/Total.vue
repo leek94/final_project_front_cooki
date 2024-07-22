@@ -55,7 +55,6 @@ import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();
 const router = useRouter();
-const emit=defineEmits(['countSearchClass'])
 function handleClick(index) {
     console.log(recipeCardes.value[index].isActive)
     recipeCardes.value[index].isActive = !recipeCardes.value[index].isActive;
@@ -102,7 +101,6 @@ async function getSearchClass(pageNo,perPage){
     const response = await searchAPI.getSearchClass(JSON.parse(JSON.stringify(data.value)), pageNo,perPage)
     classCards.value=response.data.searchClass;
     countSearchClass.value=classCards.value.length;
-    emit("countSearchClass",countSearchClass.value)
     for(let i=0;i<classCards.value.length;i++){
             classCards.value[i].crratio=Math.round(classCards.value[i].crratio*10)/10
             const resoponse2= await classAPI.classNowPerson(classCards.value[i].cno);
@@ -152,7 +150,7 @@ watch(route,(newRoute,oldRoute)=>{
         getSearchClass(1,4)
         getSearchRecipe(1,4)
     } else{
-        data.value.searchText=''
+        data.value.searchText='';
     }
 
 })

@@ -59,7 +59,6 @@ function classOverPerson(cno, cpersoncount){
 
 // 신청을 했었는 지 확인
 function isParticipant(cno){
-    console.log("실행됨 파티시먼트")
     return axios.get("/class/isParticipant/"+cno);
 }
 

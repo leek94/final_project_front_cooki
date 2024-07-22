@@ -1,7 +1,7 @@
 import axios from "axios";
 
 //기본 경로 설정
-axios.defaults.baseURL = "http://localhost/api";
+axios.defaults.baseURL = "http://localhost:88/api";
 
 //AccessToken을 받고나서 다음 요청시 전달할 수 있도록 요청 헤더에 추가
 //로그인 성공했을 때 호출됨

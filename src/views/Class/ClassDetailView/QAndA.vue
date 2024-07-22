@@ -8,7 +8,7 @@
         <img class="m-3 rounded-circle" :src="`${axios.defaults.baseURL}/member/mattach/${store.state.userId}`" style="width: 50px; height: 50px;" v-if="store.state.mimgoname">
         <div class="flex-grow-1 row my-3">
              <div class="d-flex mb-1">
-                  <div class="me-3" style="font-weight: bold;">{{$store.state.mnickname}}</div>
+                  <div class="me-3" style="font-weight: bold;">{{store.state.mnickname}}</div>
              </div>
                 <div class="w-100 row pe-5">
                     <div class="me-3" style="font-weight: bold;">제목 : </div>

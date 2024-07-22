@@ -44,13 +44,13 @@
                     <div class="row my-3 px-3" >
                         <li class="green-point">비밀번호</li>
                            <div class="m-0 p-0" style="position: relative; display: flex;" v-if="!showPassword">
-                               <input class="p-2 border" type="password" style="width: 100%;" v-model="member.mpassword" placeholder="알파벳 대소문자, 숫자를 혼용해서 8자 이상 15장 이하" @keyup="mpasswordCheck"/>
+                               <input class="p-2 border" type="password" style="width: 100%;" v-model="member.mpassword" placeholder="알파벳 대소문자, 숫자를 혼용해서 8자 이상 15자 이하" @keyup="mpasswordCheck"/>
                                <button class="border-0 bg-white" style="position: absolute; top: 5px; bottom: 5px; right: 5px;" @click="showPasswordBtn">
                                    <i class="fa-regular fa-eye border-0"></i>
                                </button>
                            </div>
                            <div class="m-0 p-0" style="position: relative; display: flex;" v-if="showPassword">
-                               <input class="p-2 border" style="width: 100%;" v-model="member.mpassword" placeholder="알파벳 대소문자, 숫자를 혼용해서 8자 이상 15장 이하" @keyup="mpasswordCheck"/>
+                               <input class="p-2 border" style="width: 100%;" v-model="member.mpassword" placeholder="알파벳 대소문자, 숫자를 혼용해서 8자 이상 15자 이하" @keyup="mpasswordCheck"/>
                                <button class="border-0 bg-white" style="position: absolute; top: 5px; bottom: 5px; right: 5px;" @click="showPasswordBtn">
                                    <i class="fa-regular fa-eye-slash border-0"></i>
                                </button>
@@ -383,7 +383,6 @@ async function handleSubmit() {
         console.log("빈칸&정규식 통과");
         let hasEmptyCareer = false;
         let hasEmptyAward = false;
-
 
         if(member.value.isEditor === true) {
             for(let i = 0; i<careerArray.value.length; i++){

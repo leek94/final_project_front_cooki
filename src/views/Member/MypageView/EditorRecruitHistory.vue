@@ -87,6 +87,7 @@ async function editorRecruitHistoryRead() {
             const response3 = await classAPI.qnaRead(cno);
             classQnaArray.value = response3.data.qnaList;
             for(let j=0; j<classQnaArray.value.length; j++) {
+                //classQnaArray의 각 인덱스별로 qreply가 null인지 확인 후 null이라면 cookClasses의 인덱스별 qreplyNullCount에 1씩 더해줌
                 if(classQnaArray.value[j].qreply==null) {
                     cookClasses.value[i].qreplyNullCount += 1;
                 }

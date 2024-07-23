@@ -6,7 +6,7 @@
         <!-- <h4 style="font-weight: bold;">에디터 신청폼</h4> -->
     </template>
     <template v-slot:body>
-        <diV>
+        <div>
             <div class="text-start my-3">
                 <!-- <h5 class=" p-2 border-bottom border-dark border-1" >추가 정보</h5> -->
                     <!-- 경력 추가 -->
@@ -35,7 +35,7 @@
                         <div class="checkError m-1" v-if="cacontentNullError">빈칸을 채워주세요</div>
                     </div>
             </div>
-        </diV>
+        </div>
     </template>
 
     <template v-slot:footer>
@@ -59,7 +59,12 @@ const isEditor = ref(true);
 const emit=defineEmits(['close','register'])
 
 async function registerEditor() {
-    
+    const is = isValid();
+    if(!is){
+        alert("모든 값을 입력해주세요");
+        return;
+    }
+
     console.log("에디터 레지스터 실행")
     // 부모 요소에 전달
     emit('register');
@@ -170,6 +175,25 @@ function joinFormSubmit() {
 
 }
 
+function isValid(){
+    let is = true;
+    
+    for(let i=0; i<careerArray.value.length; i++){
+        if (!careerArray.value[i].cacontent){
+            is = false;
+            break;
+        }
+    }
+
+    for(let i=0; i<awardsArray.value.length; i++){
+        if(!awardsArray.value[i].acontent){
+            is = false;
+            break;
+        }
+    }
+
+    return is;
+}
 </script>
 
 <style scoped>

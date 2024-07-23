@@ -255,6 +255,7 @@ let isPreImg = ref(0);
 // 마이프로필 사진 미리 보기를 위한 로직
 function setPreviewImg(e){
     if(e.target.files.length !== 0){
+        fileResultError.value = false;
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.readAsDataURL(file);

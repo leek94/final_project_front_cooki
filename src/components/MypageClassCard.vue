@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="info d-flex mb-3">
                                     <div class="class-date border-left-solid me-3">강의날짜 : {{ prop.objectProp.cdday }}</div>
-                                    <div class="dday-box" :class="prop.class" >D-{{ checker() }}</div>
+                                    <div class="dday-box" :class="prop.class" v-if="checker()>0">D-{{ checker() }}</div>
                                 </div>
 
                                 <!-- 클래스 카드의 버튼들은 해당 클래스를 개설한 에디터롤의 유저에게만 보여짐 -->

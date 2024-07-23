@@ -430,6 +430,9 @@ async function getClass(cno) {
         // <backend>에서 map 으로 전달 받기 때문에 response.data가 아닌 response.data.classes로 get 해야함
         classes.value = response.data.classes;
         classes.value.cdday = new Date(classes.value.cdday);
+        if(type === "reopen"){
+            classes.value.cdday = null;
+        }
         const stime = classes.value.cstarttime.split(":");
         classes.value.cstarttime =  { hours:stime[0], minutes:stime[1]};
         const etime = classes.value.cendtime.split(":");

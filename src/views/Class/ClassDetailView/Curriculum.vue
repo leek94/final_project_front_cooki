@@ -1,6 +1,6 @@
 <template>
        
-            <Items :objectProp="citems"/>
+            <Items :objectProp="citems" ref="abcde"/>
 
     <h4 class="fw-bold" style="margin-top:80px">커리큘럼</h4>
     <div class="curriculum mt-5 ">
@@ -44,6 +44,8 @@ const curriculum=ref([
 
 let citems = ref([]);
 
+let abcde = ref([])
+console.log("aaaaa"+abcde.value);
 curri(cno);
 async function curri(cno){
     const response = await classAPI.curriculumAndItemRead(cno);

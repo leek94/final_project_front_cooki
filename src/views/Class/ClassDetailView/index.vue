@@ -24,7 +24,7 @@
                         <span>{{info.caddress}} </span></li>
                         <li class="border-top pt-3 pb-3"><span>날짜 &ensp;</span>
                         <span>{{info.cdday}} </span>
-                        <span class="fw-bold ps-3" v-if="checker()-1>0" style="font-size: large; color:crimson">모집 마감 D-{{checker()}}</span></li>
+                        <span class="fw-bold ps-3"  style="font-size: large; color:crimson">모집 마감 D-{{checker()}}</span></li>
                         <li class="border-top pt-3 pb-3  ">
                             <div style="display:inline-block;text-align: center ;width:100%;padding:0px 5% 0px 5%;">
                                 <div style="display:inline-block;width:35%; border-right: 1px solid #dee2e6 ; margin-right: 50px;padding-right:50px">

@@ -56,6 +56,7 @@ const today = new Date();
 // 날짜 형태가 2024-06-20여야만 가능 아니면 형태를 변경해서 넣어줘야함
 
 const cday = new Date(prop.objectProp.cdday);
+cday.setDate(cday.getDate()-1);
 const diff = cday - today; // 초 단위로 나와서 밑에서 변경해줘야함
 const diffDays = Math.ceil(diff / (1000 * 60 * 60 * 24));
 return diffDays

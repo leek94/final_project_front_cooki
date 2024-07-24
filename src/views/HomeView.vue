@@ -368,7 +368,7 @@ const isRun = ref(true);
 const number = 6;
 
 const classes = ref([{},{},{},{},{},{}]);
-const recipe = ref({});
+const recipe = ref([{},{},{},{},{},{}]);
 
 function dateFormat(rdate) {
     const date = new Date(rdate);

@@ -192,11 +192,15 @@ const router= useRouter();
 register();
 const route = useRoute();
 const cno = route.query.cno;
+//지금 클래스의 db에 들어있는 썸네일 이미지 수 필요한 이유는 이를 알아야 썸네일 이미지를 전부 받아 올 수 있기 때문
 const imgCount = ref();
+
 let cuRow;
+//클래수를 수정하는 것인지 혹은 다시 열기 하기 위한 것인지를 알기 위해 쿼리스트링으로 받은 값
 const type= route.query.type
 console.log("ee"+type);
 
+//달력부분 출력 형태를 변경해 주느 부분(vue3 datepicker)
 const format = (date) => {
   const day = date.getDate();
   const month = date.getMonth() + 1;
@@ -205,13 +209,17 @@ const format = (date) => {
   return ` ${year}년 ${month}월 ${day}일`;
 }
 
+//달려과 시간 부분은 vue3 datepicker 참조
+//달력부분 날짜 정해주는 부분
 const minDate = new Date();
 minDate.setDate(minDate.getDate() + 7);
 const maxDate = new Date();
 maxDate.setDate(maxDate.getDate() + 28);
 
+//강의 시간쪽들 변수
 const minTime = ref(null);
 const maxTime = ref(null);
+//시작 시간이 안정해 지면 끝나는 시간에 값이 안들어가게 하기 위해 필요한 변수
 let isStart = true;
 
 const classes = ref({
@@ -226,8 +234,12 @@ const classes = ref({
     cprice:null
 })
 
+//클래스 미리보기 여부를 위한 벼수들
+//ref로 이어져있는 input
 const presetImg = ref(null);
+//변수가 참일 경우 기존 db에있던 이지가 나옴
 const nowPreImg = ref(true);
+//변수가 참일 경우 새로 등록한 이미지들이 나옴
 const isPreImg = ref(false);
 
 const classitems = ref([
@@ -244,27 +256,37 @@ const curiculums = ref([
     }
 ])
 
+//커리큘럼 미리보기를 위한 변수들  커리큘럼은 여러개의 객체가 배열로 들어오기 미리보기 관련 변수들도 배열이 되어야함
+//ref로 이어져있는 input
 const cuImgs = ref([]);
+//변수가 참일 경우 기존 db에있던 이지가 나옴 
 const nowCuImgs = ref([]);
+//변수가 참일 경우 새로 등록한 이미지들이 나옴
 const isCuImg = ref([]);
-    
+   
+//카테고리 번호 들어가는 곳
 const activeIndex = ref(null);
-
+//카테고리 변수 바꿔주는 함수
 const handlecategory = (index) => {
     activeIndex.value = index;
 };
 
+//클래스 부분 썸네일 이미지 미리보기 관련 부분
 function setPreviewImg(e){
+    //if문 조건은 input에 하나 이상의 이미지가 올라 왔음을 뜻함
     if(e.target.files.length > 0){
+        //새로 이미지가 올라왔으니 새로 올라온 이미지를 보여주고 db에있는 이미지를 안보여주도록 값을 바꿔주는 부분
         isPreImg.value = true;
         nowPreImg.value = false;
-
+        //쿼리 셀렉터로 스와이퍼 선택
         const swiper = document.querySelector(".mySwiper2");  
 
+        //만약에 이전에 올라왔던 이미지가 있다면 삭제 해주는 부분
         while(swiper.hasChildNodes()){
             swiper.removeChild(swiper.firstChild);
         }
 
+        //reader를 통해 이미지 파일 url을 생성해주고 이를 swiper의 appendSlid함수를 통해 추가 시켜줌 여기 e.target.result는 url
         for(let img of e.target.files){
             const reader = new FileReader(); 
             reader.readAsDataURL(img);
@@ -275,6 +297,7 @@ function setPreviewImg(e){
                 );
             }
         }
+    //input창을 열었지만 아무런 이미지도 올리지 않고 취소햇을 때를 위한 부분 기존 db에있던 이미지를 보여주고 새로 올린 이미지를 안보이게 해줌
     }else{
         isPreImg.value = false;
         nowPreImg.value = true;
@@ -302,6 +325,7 @@ function swipePrve(){
     swiper.swiper.slidePrev();
 }
 
+//버튼 눌렀을 때 재료칸  추가되는 부분
 function addClassItem(index){
     const newItem = {
         ciname: "",
@@ -309,13 +333,16 @@ function addClassItem(index){
     classitems.value.push(newItem);
 }
 
+//버튼 눌렀을 때 재료칸 삭제되는 부분
 function removeClassItem(index){
     classitems.value.splice(index,1);
 }
 
+//커리큘럼 미리보기 이미지 관련 함수
 function setCuImg(event,index){
     const nowCu = event.target.parentElement.firstChild;
 
+    //input태그에 이미지가 들어왔을 경우 reader를 이용해 url생성 그리고 img태그에 src로 넣어줌
     if(event.target.files.length !== 0){
         const file  = event.target.files[0]
         const reader = new FileReader();
@@ -324,12 +351,15 @@ function setCuImg(event,index){
 
         const img  = nowCu.querySelector("img");
         img.src = e.target.result;
+        //index + 1이 nowCuImgs.value.length 보다 작거나 같다는 기존 db에 이미지가 들어가 있는 부분이라는 뜻 따라서 기존 db에서 불러온 이미지를 안보이게 처리해 주어야함
         if(index +1  <= nowCuImgs.value.length){
             nowCuImgs.value[index] = false;
         }
         isCuImg.value[index] = true;
         }
+    //input에 이미지를 안넣고 취소한경우 
     }else{
+        //index + 1이 nowCuImgs.value.length 보다 작거나 같다는 기존 db에 이미지가 들어가 있는 부분이라는 뜻 따라서 기존 db에서 불러온 이미지를 보이게 해주어야 함
         if(index +1  <= nowCuImgs.value.length){
             nowCuImgs.value[index] = true;
         }
@@ -337,6 +367,7 @@ function setCuImg(event,index){
     }
 }
 
+//커리큘럼 추가부분
 function addCu(){
     const newCuriculum =     {
         cuorder: curiculums.value.length+1,
@@ -348,10 +379,13 @@ function addCu(){
     isCuImg.value.push(false);
 }
 
+//커리큘럼 삭제 부분
 function removeCu(){
     
     if(curiculums.value.length > 1){
         curiculums.value.splice(-1,1);
+        //커리큘럼은 밑에서 부터 한 개씩만 삭제됨 이 때 수정 혹은 다시 열기를 하면서 커리큘럼 단계를 삭제 혹은 추가를 했을 수가 있음
+        //따라서 기존 db미리보기 배열과 올린 이미지 배열은 길이가 다를 수 있음 그래서 둘의 길이를  확인하여 같을 때에만 기존 db 이미지 보여주기 배열의 마지막 변수를 삭제함
         if(nowCuImgs.value.length === isCuImg.value.length){
             nowCuImgs.value.splice(-1,1);
         }
@@ -359,6 +393,7 @@ function removeCu(){
     }
 }
 
+//시작 시간에 따른 끝나는 시간 설정 부분
 function setTime(){
     if(classes.value.cstarttime !== null){
         
@@ -387,6 +422,8 @@ function setTime(){
 function checkExpression(){
 
 }
+
+//다음 주소 api부분
 function execDaumPostcode() {
         new window.daum.Postcode({
             oncomplete: function(data) {
@@ -573,6 +610,7 @@ async function submitClass() {
 
 // 클래스 다시 열기---------------------------------------------------------------
 async function reopenClass(){
+    //유효성 검사 부분
     const iv = isValid();
     if(!iv){
         alert("모든 값을 입력해주세요");

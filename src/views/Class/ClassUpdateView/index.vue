@@ -449,7 +449,7 @@ async function getClass(cno) {
 }
 
 getClass(cno);
-
+let initialLength=null;
 async function getCurriclumAndItem(cno) {
     try{
         //<back>에서 map<String, Object>로 보내주는 커리큘럼과 재료 data 가져오기
@@ -458,6 +458,7 @@ async function getCurriclumAndItem(cno) {
         // response.data -> map의 object로 접근하기
         // response.data.curriculum -> 각 속성의 값을 가져오기
         curiculums.value = response.data.curriculums;
+        initialLength= curiculums.value.length;
         for(let i=0; i<curiculums.value.length; i++){
             nowCuImgs.value.push(true);
             isCuImg.value.push(false);
@@ -577,8 +578,9 @@ async function reopenClass(){
         alert("모든 값을 입력해주세요");
         return
     }
-
-    const initialLength=curiculums.value.length;
+    console.log("init"+initialLength);
+    console.log("nowlength"+curiculums.value.length);
+    
     let initCno=classes.value.cno;
     //class thumbnail을 받기 위해 formdata로 전송
     const reformData= new FormData();
@@ -621,11 +623,15 @@ async function reopenClass(){
     // 커리 큘럼---------------------------------------------------------------------
     const curFormData= new FormData();
     for(let i=0; i<curiculums.value.length;i++){
+        //다시 열 전 기존의 cno
         curFormData.append("initCno",initCno);
-        console.log("dd"+initCno)
+        //다시 열 클래스의 cno
         curFormData.append("cno",classes.value.cno);
+        //수정하기 전 curriculum의 길이
         curFormData.append("initialLength",initialLength);
+        //바뀐 curriculum의 길이
         curFormData.append("nowLength",curiculums.value.length);
+        //커리큘럼은 dto를 새로 생성해 dto안에 curriculum list로 전달  
         curFormData.append("curriculums["+i+"].cuorder",i+1)
         curFormData.append("curriculums["+i+"].cutitle",curiculums.value[i].cutitle)
         curFormData.append("curriculums["+i+"].cucontent",curiculums.value[i].cucontent)
@@ -636,7 +642,7 @@ async function reopenClass(){
             curFormData.append("curriculums["+i+"].cuimg",clmf.files[0])
         }
     }
-    const response3= await classAPI.reopenClassCurri(curFormData);
+    const response3= classAPI.reopenClassCurri(curFormData);
     router.push(`/class/classDetailView?cno=${classes.value.cno}`)
 }
 function isValid(){
